@@ -21,7 +21,7 @@ public class InputManager : MonoBehaviour
 
         playerInput = GetComponent<PlayerInput>();
         playerInputActionAsset = new PlayerInputActionAsset();
-        playerInputActionAsset.Player.Enable();
+        playerInputActionAsset.Player.Enable(); //
     }
 
     public static PlayerInputActionAsset.PlayerActions PlayerActions => playerInputActionAsset.Player;
