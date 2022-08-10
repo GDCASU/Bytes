@@ -134,6 +134,15 @@ public partial class @PlayerInputActionAsset : IInputActionCollection2, IDisposa
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""aaac01d8-bd04-4197-b172-8d427a4da80f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -530,6 +539,17 @@ public partial class @PlayerInputActionAsset : IInputActionCollection2, IDisposa
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""SwitchWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""821ec9b9-6fd6-4fe0-86e7-2b4a6fdcf595"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1129,6 +1149,7 @@ public partial class @PlayerInputActionAsset : IInputActionCollection2, IDisposa
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
         m_Player_SwitchWeapon = m_Player.FindAction("SwitchWeapon", throwIfNotFound: true);
+        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1212,6 +1233,7 @@ public partial class @PlayerInputActionAsset : IInputActionCollection2, IDisposa
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Block;
     private readonly InputAction m_Player_SwitchWeapon;
+    private readonly InputAction m_Player_Dash;
     public struct PlayerActions
     {
         private @PlayerInputActionAsset m_Wrapper;
@@ -1228,6 +1250,7 @@ public partial class @PlayerInputActionAsset : IInputActionCollection2, IDisposa
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @Block => m_Wrapper.m_Player_Block;
         public InputAction @SwitchWeapon => m_Wrapper.m_Player_SwitchWeapon;
+        public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1273,6 +1296,9 @@ public partial class @PlayerInputActionAsset : IInputActionCollection2, IDisposa
                 @SwitchWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapon;
+                @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1313,6 +1339,9 @@ public partial class @PlayerInputActionAsset : IInputActionCollection2, IDisposa
                 @SwitchWeapon.started += instance.OnSwitchWeapon;
                 @SwitchWeapon.performed += instance.OnSwitchWeapon;
                 @SwitchWeapon.canceled += instance.OnSwitchWeapon;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
             }
         }
     }
@@ -1481,6 +1510,7 @@ public partial class @PlayerInputActionAsset : IInputActionCollection2, IDisposa
         void OnReload(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

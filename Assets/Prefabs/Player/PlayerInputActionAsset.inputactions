@@ -112,6 +112,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "aaac01d8-bd04-4197-b172-8d427a4da80f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -508,6 +517,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "821ec9b9-6fd6-4fe0-86e7-2b4a6fdcf595",
+                    "path": "<Keyboard>/rightShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

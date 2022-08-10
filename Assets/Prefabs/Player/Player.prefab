@@ -89,7 +89,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 453805490}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 646967955}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Weapon Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 170006946440683318}
   - component: {fileID: 170006946440683320}
   - component: {fileID: 1123291124}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Event System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3384,7 +3384,7 @@ GameObject:
   - component: {fileID: 2268690721096539326}
   - component: {fileID: 2268690721096539324}
   - component: {fileID: 2268690721096539325}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Stamina Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3461,7 +3461,7 @@ GameObject:
   - component: {fileID: 2268690721169480756}
   - component: {fileID: 2268690721169480757}
   - component: {fileID: 2268690721169480755}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Stamina Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5212,7 +5212,7 @@ GameObject:
   - component: {fileID: 3723664287192167154}
   - component: {fileID: 7616452329654053970}
   - component: {fileID: 637134210}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Player Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -8184,7 +8184,7 @@ GameObject:
   - component: {fileID: 6181723294126060280}
   - component: {fileID: 6181723294126060285}
   - component: {fileID: 6181723294126060282}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8398,6 +8398,37 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &6327328853570295428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4335333147057852204}
+  m_Layer: 0
+  m_Name: Ground Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4335333147057852204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6327328853570295428}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8225854368876441687}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6383913138255828826
 GameObject:
   m_ObjectHideFlags: 0
@@ -11930,7 +11961,7 @@ GameObject:
   - component: {fileID: 5331444266740828653}
   - component: {fileID: 1947202455}
   - component: {fileID: 1501375669}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -11951,6 +11982,7 @@ Transform:
   m_Children:
   - {fileID: 6181723294126060280}
   - {fileID: 3610357520889994798}
+  - {fileID: 4335333147057852204}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12098,6 +12130,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 4d4ad9ee-55f5-4440-8008-806fcd3c7485
     m_ActionName: Player/SwitchWeapon[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aaac01d8-bd04-4197-b172-8d427a4da80f
+    m_ActionName: Player/Dash[/Keyboard/rightShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -12219,6 +12255,17 @@ MonoBehaviour:
     maxYVelocity: 0
     wallJumpHeightStrenght: 5
     wallJumpNormalStrength: 5
+  dashVariables:
+    canDash: 1
+    setUpDash: 0
+    groundChecker: {fileID: 4335333147057852204}
+    groundMask:
+      serializedVersion: 2
+      m_Bits: 8
+    gCheckRadius: 0.2
+    dashForce: 50
+    initialCooldown: 1
+    groundedCooldown: 0.1
   isGrounded: 0
   isSprinting: 0
   onFakeGround: 0

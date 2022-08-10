@@ -21,6 +21,7 @@ public partial class PlayerController : MonoBehaviour
     public JumpVariables jumpVariables = new JumpVariables();
     public VaultVariables vaultVariables = new VaultVariables();
     public ClimbVariables climbVariables = new ClimbVariables();
+    public DashVariables dashVariables = new DashVariables();
     #endregion
 
     #region Player States
@@ -151,6 +152,15 @@ public partial class PlayerController : MonoBehaviour
             if (crouchMechanic) CrouchInput();
             MovementInput();
             if (jumpMechanic) JumpInput();
+            DashInput();
+            if (Physics.CheckSphere(dashVariables.groundChecker.position, dashVariables.gCheckRadius, 
+                dashVariables.groundMask) && dashVariables.setUpDash)
+            {
+                print("On the ground!");
+                dashVariables.setUpDash = false;
+                StartCoroutine(GroundedCooldown());
+            }
+                
         }
     }
     private void FixedUpdate()
