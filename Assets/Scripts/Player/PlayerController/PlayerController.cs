@@ -153,14 +153,7 @@ public partial class PlayerController : MonoBehaviour
             MovementInput();
             if (jumpMechanic) JumpInput();
             DashInput();
-            if (Physics.CheckSphere(dashVariables.groundChecker.position, dashVariables.gCheckRadius, 
-                dashVariables.groundMask) && dashVariables.setUpDash)
-            {
-                print("On the ground!");
-                dashVariables.setUpDash = false;
-                StartCoroutine(GroundedCooldown());
-            }
-                
+            if (dashVariables.setUpDash) CheckGroundBeforeDash();
         }
     }
     private void FixedUpdate()
