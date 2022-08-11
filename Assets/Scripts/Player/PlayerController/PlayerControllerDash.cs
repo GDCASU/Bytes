@@ -10,12 +10,12 @@ public partial class PlayerController
         [HideInInspector] public bool canDash = true;
         [HideInInspector] public bool setUpDash = false;
 
-        [Header("Ground Checking")]
+/*        [Header("Ground Checking")]
         public Transform groundChecker;
         public float gCheckRadius = 0.1f;
-        public LayerMask groundMask;
+        public LayerMask groundMask;*/
 
-        [Header("Dash Variables")]
+        // [Header("Dash Variables")]
         public float dashForce = 10.0f;
         public float initialCooldown = 1.0f;
         public float groundedCooldown = 0.1f;
@@ -42,7 +42,7 @@ public partial class PlayerController
     /// <summary>
     /// Check if the player is on the ground after dashing and the initial cooldown passed.
     /// </summary>
-    private void CheckGroundBeforeDash()
+    /*private void CheckGroundBeforeDash()
     {
         if (Physics.CheckSphere(dashVariables.groundChecker.position, dashVariables.gCheckRadius, dashVariables.groundMask))
         {
@@ -50,7 +50,7 @@ public partial class PlayerController
             dashVariables.setUpDash = false;
             StartCoroutine(GroundedCooldown());
         }
-    }
+    }*/
 
     /// <summary>
     /// Initial cooldown that happens after the player dashes.
@@ -67,6 +67,7 @@ public partial class PlayerController
     /// </summary>
     private IEnumerator GroundedCooldown()
     {
+        dashVariables.setUpDash = false;
         yield return new WaitForSeconds(dashVariables.groundedCooldown);
         dashVariables.canDash = true;
         print("Player can dash again."); // For debugging only

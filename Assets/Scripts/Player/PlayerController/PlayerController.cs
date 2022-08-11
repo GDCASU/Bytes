@@ -153,7 +153,7 @@ public partial class PlayerController : MonoBehaviour
             MovementInput();
             if (jumpMechanic) JumpInput();
             DashInput();
-            if (dashVariables.setUpDash) CheckGroundBeforeDash();
+            if (dashVariables.setUpDash && isGrounded) StartCoroutine(GroundedCooldown());
         }
     }
     private void FixedUpdate()

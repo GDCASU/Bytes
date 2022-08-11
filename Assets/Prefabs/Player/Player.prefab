@@ -8413,7 +8413,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4335333147057852204
 Transform:
   m_ObjectHideFlags: 0
@@ -12258,11 +12258,6 @@ MonoBehaviour:
   dashVariables:
     canDash: 1
     setUpDash: 0
-    groundChecker: {fileID: 4335333147057852204}
-    groundMask:
-      serializedVersion: 2
-      m_Bits: 8
-    gCheckRadius: 0.2
     dashForce: 50
     initialCooldown: 1
     groundedCooldown: 0.1
