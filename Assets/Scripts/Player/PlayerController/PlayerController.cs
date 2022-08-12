@@ -21,6 +21,7 @@ public partial class PlayerController : MonoBehaviour
     public JumpVariables jumpVariables = new JumpVariables();
     public VaultVariables vaultVariables = new VaultVariables();
     public ClimbVariables climbVariables = new ClimbVariables();
+    public DashVariables dashVariables = new DashVariables();
     #endregion
 
     #region Player States
@@ -151,6 +152,8 @@ public partial class PlayerController : MonoBehaviour
             if (crouchMechanic) CrouchInput();
             MovementInput();
             if (jumpMechanic) JumpInput();
+            DashInput();
+            if (dashVariables.setUpDash && isGrounded) StartCoroutine(GroundedCooldown());
         }
     }
     private void FixedUpdate()
