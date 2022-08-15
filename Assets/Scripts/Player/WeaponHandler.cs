@@ -9,17 +9,28 @@ public class WeaponHandler : MonoBehaviour
     private Transform handler;
     [SerializeField]
     private int currentWeaponIndex = 0;
+    [SerializeField] // Maybe remove this variable being serialized if the player has no weapons to start with or given a starter weapon.
+    private GameObject[] weaponObjects; 
     [SerializeField]
-    private GameObject[] weaponObjects;
+    private int maxWeapons = 2;
 
     private IWeapon[] weapons;
     private IWeapon currentWeapon;
+
+    private int numOfWeapons = 0;
 
     private void Awake()
     {
         weapons = new IWeapon[weaponObjects.Length];
         for (int i = 0; i < weaponObjects.Length; i++)
-            weapons[i] = weaponObjects[i].GetComponent<IWeapon>();
+        {
+            if (weaponObjects[i] != null)
+            {
+                weapons[i] = weaponObjects[i].GetComponent<IWeapon>(); 
+                numOfWeapons++;
+            }
+        }
+            
 
         currentWeapon = weapons[currentWeaponIndex];
     }
@@ -55,7 +66,7 @@ public class WeaponHandler : MonoBehaviour
 
     private void OnSwitchWeapon(InputAction.CallbackContext context)
     {
-        if (weaponObjects.Length <= 1) return;
+        if (numOfWeapons <= 1) return;
 
         weaponObjects[currentWeaponIndex].SetActive(false);
 
@@ -76,4 +87,9 @@ public class WeaponHandler : MonoBehaviour
     private void OnReload(InputAction.CallbackContext context) => currentWeapon.Reload();
     private void OnShoot(InputAction.CallbackContext context) => currentWeapon.Shoot(context.phase == InputActionPhase.Performed);
     private void OnStrike(InputAction.CallbackContext context) => currentWeapon.Strike();
+
+    public void ReplaceWeapon()
+    {
+
+    }
 }
