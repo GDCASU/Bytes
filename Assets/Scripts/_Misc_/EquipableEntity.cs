@@ -11,11 +11,6 @@ public class EquipableEntity: MonoBehaviour
     [SerializeField]
     public EntityType entityType;
 
-    private void Start()
-    {
-        isEquiped = false;
-    }
-
     public bool CheckIfEquiped() => isEquiped;
 
     public void ChangeEquip()

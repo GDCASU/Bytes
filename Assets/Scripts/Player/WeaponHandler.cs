@@ -9,7 +9,7 @@ public class WeaponHandler : MonoBehaviour
     private Transform handler;
     [SerializeField]
     private int currentWeaponIndex = 0;
-    [SerializeField] // Maybe remove this variable being serialized if the player has no weapons to start with or given a starter weapon.
+    [SerializeField] // Maybe remove the "SerializeField" so that the maxWeapons variable is used for this array
     private GameObject[] weaponObjects; 
     [SerializeField]
     private int maxWeapons = 2;
@@ -21,8 +21,8 @@ public class WeaponHandler : MonoBehaviour
 
     private void Awake()
     {
-        weapons = new IWeapon[weaponObjects.Length];
-        for (int i = 0; i < weaponObjects.Length; i++)
+        weapons = new IWeapon[maxWeapons];
+        for (int i = 0; i < maxWeapons; i++)
         {
             if (weaponObjects[i] != null)
             {
@@ -88,8 +88,23 @@ public class WeaponHandler : MonoBehaviour
     private void OnShoot(InputAction.CallbackContext context) => currentWeapon.Shoot(context.phase == InputActionPhase.Performed);
     private void OnStrike(InputAction.CallbackContext context) => currentWeapon.Strike();
 
-    public void ReplaceWeapon()
+    public void AddNewWeapon(GameObject newWeapon)
     {
-
+        for (int i = 0; i < maxWeapons; i++)
+        {
+            if (weaponObjects[i] == null)
+            {
+                weaponObjects[i] = newWeapon;
+                newWeapon.GetComponent<Collider>().enabled = false;
+                newWeapon.transform.position = handler.position;
+                newWeapon.transform.rotation = handler.rotation;
+                newWeapon.transform.parent = handler.transform;
+                weapons[i] = weaponObjects[i].GetComponent<IWeapon>();
+                newWeapon.GetComponent<EquipableEntity>().ChangeEquip();
+                newWeapon.SetActive(false);
+                numOfWeapons++;
+                break;
+            }
+        }
     }
 }
