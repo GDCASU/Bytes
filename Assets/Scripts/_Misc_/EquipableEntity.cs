@@ -13,8 +13,7 @@ public class EquipableEntity: MonoBehaviour
 
     public bool CheckIfEquiped() => isEquiped;
 
-    public void ChangeEquip()
-    {
-        isEquiped = !isEquiped;
-    }
+    public void Equip() => isEquiped = true;
+
+    public void Unequip() => isEquiped = false;
 }
