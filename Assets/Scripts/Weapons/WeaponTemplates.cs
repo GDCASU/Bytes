@@ -3,7 +3,18 @@ using UnityEngine.InputSystem;
 
 public abstract class IWeapon: MonoBehaviour
 {
-    protected Animator animator;
+    public Animator animator;
+
+    protected virtual void Start()
+    {
+        if (transform.parent == null)
+            animator.enabled = false;
+    }
+    public virtual void OnAnimatorIK()
+    {
+        animator.rootPosition = transform.localPosition;
+        animator.Play("Rest");
+    }
 
     public abstract void Block(bool isStarting);
     public abstract void Reload();

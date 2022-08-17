@@ -90,14 +90,15 @@ public class WeaponHandler : MonoBehaviour
     private void SetNewWeapon(GameObject newWeapon, int weaponIndex)
     {
         weaponObjects[weaponIndex] = newWeapon;
-        weaponObjects[weaponIndex].GetComponent<Collider>().enabled = false;
-        //weaponObjects[weaponIndex].transform.position = handler.position;
-        //weaponObjects[weaponIndex].transform.rotation = handler.rotation;
-        weaponObjects[weaponIndex].transform.parent = handler.transform;
+        weaponObjects[weaponIndex].transform.SetParent(handler);
         weaponObjects[weaponIndex].transform.localPosition = Vector3.zero;
         weaponObjects[weaponIndex].transform.localRotation = Quaternion.identity;
-        weapons[weaponIndex] = weaponObjects[weaponIndex].GetComponent<IWeapon>();
+        weaponObjects[weaponIndex].GetComponent<Collider>().enabled = false;
         weaponObjects[weaponIndex].GetComponent<EquipableEntity>().Equip();
+
+        weapons[weaponIndex] = weaponObjects[weaponIndex].GetComponent<IWeapon>();
+        weapons[weaponIndex].animator.enabled = true;
+        weapons[weaponIndex].OnAnimatorIK();
     }
 
     private void OnBlock(InputAction.CallbackContext context) => currentWeapon.Block(context.phase == InputActionPhase.Performed);
@@ -123,10 +124,10 @@ public class WeaponHandler : MonoBehaviour
         else
         {
             // Replace current weapon with the new one
-            weaponObjects[currentWeaponIndex].transform.parent = null;
-            weaponObjects[currentWeaponIndex].transform.position = newWeapon.transform.position;
+            weapons[currentWeaponIndex].animator.enabled = false;
             weaponObjects[currentWeaponIndex].GetComponent<Collider>().enabled = true;
             weaponObjects[currentWeaponIndex].GetComponent<EquipableEntity>().Unequip();
+            weaponObjects[currentWeaponIndex].transform.SetParent(null);
             SetNewWeapon(newWeapon, currentWeaponIndex);
         }
     }
