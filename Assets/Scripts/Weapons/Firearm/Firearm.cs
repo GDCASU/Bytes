@@ -5,6 +5,12 @@ using UnityEngine.InputSystem;
 
 public partial class Firearm : RangedWeapon
 {
+    [Header("Specialized Properties")]
+    [SerializeField]
+    private bool isAutomatic;
+
+    private bool wasFiringPinActivated = true;
+
     private WaitForSeconds cooldownWait;
     private WaitForSeconds reloadWait;
 
@@ -22,7 +28,7 @@ public partial class Firearm : RangedWeapon
 
     private void Update()
     {
-        if (isTriggerDown && canFire)
+        if (wasFiringPinActivated && canFire)
         {
             if (!isReloading && currentAmmo <= 0)
             {
@@ -31,19 +37,21 @@ public partial class Firearm : RangedWeapon
             else
             {
                 FireBullet();
+                if (!isAutomatic)
+                    wasFiringPinActivated = false;
             }
         }
     }
 
     public override void Shoot(bool isStarting)
     {
-        isTriggerDown = isStarting;
+        wasFiringPinActivated = isStarting;
     }
 
     private void FireBullet()
     {
         Ray ray = new Ray(projectileSpawn.position, projectileSpawn.forward);
-        Instantiate(projectile, projectileSpawn.position, Quaternion.identity).GetComponent<Projectile>().Launch(ray, launchSpeed);
+        Instantiate(projectile, projectileSpawn.position, Quaternion.identity).GetComponent<Projectile>().Launch(ray, isProjectileInstant ? 0 : launchSpeed);
         currentAmmo--;
         StartCoroutine(Cooldown());
 

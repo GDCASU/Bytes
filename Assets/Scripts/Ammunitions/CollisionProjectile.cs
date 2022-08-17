@@ -33,13 +33,4 @@ public class CollisionProjectile : Projectile
         }
         Destroy(gameObject);
     }
-
-    protected virtual void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(Tags.Player) || other.CompareTag(Tags.Enemy))
-        {
-            other.transform.GetComponent<ICharacter>().TakeDamage(impactDamage);
-        }
-        Destroy(gameObject);
-    }
 }

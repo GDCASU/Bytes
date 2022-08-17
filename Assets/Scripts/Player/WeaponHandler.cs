@@ -12,14 +12,14 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField]
     private GameObject[] weaponObjects;
 
-    private IWeapon[] weapons;
-    private IWeapon currentWeapon;
+    private Weapon[] weapons;
+    private Weapon currentWeapon;
 
     private void Awake()
     {
-        weapons = new IWeapon[weaponObjects.Length];
+        weapons = new Weapon[weaponObjects.Length];
         for (int i = 0; i < weaponObjects.Length; i++)
-            weapons[i] = weaponObjects[i].GetComponent<IWeapon>();
+            weapons[i] = weaponObjects[i].GetComponent<Weapon>();
 
         currentWeapon = weapons[currentWeaponIndex];
     }

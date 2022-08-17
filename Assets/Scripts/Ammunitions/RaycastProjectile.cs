@@ -5,9 +5,9 @@ using UnityEngine;
 public class RaycastProjectile : Projectile
 {
     [SerializeField]
-    protected bool isInstant;
-    [SerializeField]
     protected float maxRange;
+    [SerializeField]
+    private float width;
 
     private float launchSpeed;
     protected float buttDistanceAlongRay = 0f;
@@ -21,7 +21,7 @@ public class RaycastProjectile : Projectile
     public override void Launch(Ray ray, float launchSpeed)
     {
         RaycastHit hit;
-        if (isInstant)
+        if (launchSpeed <= 0)
         {
             if (Physics.Raycast(ray, out hit, maxRange))
             {
@@ -50,7 +50,11 @@ public class RaycastProjectile : Projectile
     protected virtual void FixedUpdate()
     {
         RaycastHit hit;
-        if (Physics.Raycast(bulletButt, ray.direction, out hit, launchSpeed))
+        if (
+            width <= 0 ?
+            Physics.Raycast(bulletButt, ray.direction, out hit, launchSpeed) :
+            Physics.SphereCast(bulletButt, width, ray.direction, out hit, launchSpeed)
+            )
         {
             if (hit.transform.CompareTag("Player") || hit.transform.CompareTag("Enemy"))
             {

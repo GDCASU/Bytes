@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public abstract class IWeapon: MonoBehaviour
+public abstract class Weapon: MonoBehaviour
 {
     protected Animator animator;
 
@@ -11,7 +11,7 @@ public abstract class IWeapon: MonoBehaviour
     public abstract void Strike();
 }
 
-public abstract class MeleeWeapon : IWeapon
+public abstract class MeleeWeapon : Weapon
 {
     [Header("Basic Properties")]
     [SerializeField]
@@ -25,7 +25,7 @@ public abstract class MeleeWeapon : IWeapon
     public override void Shoot(bool isStarting) { }
 }
 
-public abstract class RangedWeapon: IWeapon
+public abstract class RangedWeapon: Weapon
 {
     [Header("Basic Properties")]
     [SerializeField]
@@ -34,6 +34,8 @@ public abstract class RangedWeapon: IWeapon
     protected float fireRate;
     [SerializeField]
     protected float reloadTime;
+    [SerializeField]
+    protected bool isProjectileInstant;
     [SerializeField]
     protected float launchSpeed;
     [SerializeField]
@@ -45,7 +47,6 @@ public abstract class RangedWeapon: IWeapon
     protected int currentAmmo;
 
     protected bool canFire = true;
-    protected bool isTriggerDown = false;
     protected bool isReloading = false;
 
     public override void Block(bool isStarting) { }
