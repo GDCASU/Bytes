@@ -27,7 +27,7 @@ public class RaycastProjectile : Projectile
             {
                 if (hit.transform.CompareTag("Player") || hit.transform.CompareTag("Enemy"))
                 {
-                    hit.transform.GetComponent<ICharacter>().TakeDamage(impactDamage);
+                    hit.transform.GetComponent<ICharacter>().ReceiveDamage(impactDamage);
                 }
             }
             Destroy(this);
@@ -58,8 +58,9 @@ public class RaycastProjectile : Projectile
         {
             if (hit.transform.CompareTag("Player") || hit.transform.CompareTag("Enemy"))
             {
-                hit.transform.GetComponent<ICharacter>().TakeDamage(impactDamage);
+                hit.transform.root.GetComponent<ICharacter>().ReceiveDamage(impactDamage);
             }
+            
             Destroy(gameObject);
         }
 

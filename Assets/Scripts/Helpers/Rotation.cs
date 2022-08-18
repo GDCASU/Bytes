@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Rotation
 {
-    public static float GetAngularDirection_2D(float fromAngle, Vector2 toDirection)
+    public static int GetAngularDirection_2D(float fromAngle, Vector2 toDirection)
     {
         float angle1 = Mathf.Acos(toDirection.x);
         float angle2 = Mathf.Asin(toDirection.y);
@@ -82,8 +82,56 @@ public class Rotation
         return newAngle;
     }
 
+    public static int GetVerticalAngularDirection(float fromAngle, Vector3 toDirection)
+    {
+        float directionAngle = Mathf.Asin(toDirection.y) * Mathf.Rad2Deg;
+        fromAngle = (fromAngle >= 270f && fromAngle <= 360f) ? 360f - fromAngle : -fromAngle;
+
+        if (directionAngle < fromAngle)
+        {
+            return 1;
+        }
+        else if (directionAngle > fromAngle)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
     public static float GetVerticalAngularDisplacement(float fromAngle, Vector3 toDirection, float maxAngleStep)
     {
-        return 0;
+        float directionAngle = Mathf.Asin(toDirection.y) * Mathf.Rad2Deg;
+        fromAngle = (fromAngle >= 270f && fromAngle <= 360f) ? 360f - fromAngle : -fromAngle;
+
+        if (directionAngle < fromAngle)
+        {
+            return Mathf.Min(fromAngle - directionAngle, maxAngleStep);
+        }
+        else if (directionAngle > fromAngle)
+        {
+            return -Mathf.Min(directionAngle - fromAngle, maxAngleStep);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public static float RotateVerticalAngleToDirection(float fromAngle, Vector3 toDirection, float maxAngleStep)
+    {
+        float newAngle = fromAngle + RotateVerticalAngleToDirection(fromAngle, toDirection, maxAngleStep);
+
+        if (newAngle < 0f)
+        {
+            newAngle += 360f;
+        }
+        else if (newAngle > 360f)
+        {
+            newAngle -= 360f;
+        }
+
+        return newAngle;
     }
 }

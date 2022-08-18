@@ -10,6 +10,7 @@ public enum CharacterType: int
 
 public interface ICharacter
 {
+    public void ReceiveDamage(float damage);
+    public void ReceiveHealth(float addedHealth);
     public Transform[] GetDetectionPoints();
-    public void TakeDamage(float damage);
 }

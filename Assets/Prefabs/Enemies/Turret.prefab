@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &209226298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 209226299}
+  m_Layer: 6
+  m_Name: Aim Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &209226299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209226298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4078760485659362099}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4078760484872816492
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,9 +43,9 @@ GameObject:
   - component: {fileID: 4078760484872816528}
   - component: {fileID: 4078760484872816495}
   - component: {fileID: 4078760484872816494}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Post
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +141,7 @@ GameObject:
   - component: {fileID: 4078760484924197650}
   - component: {fileID: 4078760484924197649}
   - component: {fileID: 4078760484924197648}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078760484987504186}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bullet Spawn 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,9 +266,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078760485379707158}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Post Container
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -271,9 +302,9 @@ GameObject:
   - component: {fileID: 4078760485498260333}
   - component: {fileID: 4078760485498260332}
   - component: {fileID: 4078760485498260331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrel 2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -369,9 +400,9 @@ GameObject:
   - component: {fileID: 4078760485501376593}
   - component: {fileID: 4078760485501376592}
   - component: {fileID: 4078760485501376559}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrel 1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -467,9 +498,9 @@ GameObject:
   - component: {fileID: 4078760485601881495}
   - component: {fileID: 4078760485601881494}
   - component: {fileID: 4078760485601881493}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bolt
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -562,10 +593,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078760485659362099}
+  - component: {fileID: 1382212979472855112}
   - component: {fileID: 4078760485659362100}
-  m_Layer: 0
-  m_Name: TrackingTurret
-  m_TagString: Untagged
+  - component: {fileID: 1421047355}
+  m_Layer: 6
+  m_Name: Turret
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -577,15 +610,37 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4078760485659362098}
-  m_LocalRotation: {x: 0, y: -0.31846294, z: 0, w: 0.94793534}
-  m_LocalPosition: {x: 3.61, y: 3.725, z: 8.54}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4078760486329786811}
+  - {fileID: 209226299}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -37.14, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1382212979472855112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078760485659362098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 265546c2814b76b488f0ccdfa950a542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 40
+  detectionPoints:
+  - {fileID: 4078760484872816493}
+  - {fileID: 4078760486134778522}
+  - {fileID: 4078760484924196079}
+  droopAngle: 60
+  droopRotationSpeed: 20
+  verticalRotator: {fileID: 4078760486037521347}
+  health: 0
 --- !u!114 &4078760485659362100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,19 +653,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc1922ab556d1843a9d2bcf067f4b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 4031053056027186170, guid: be1c03e9c88d86a47834ff11ab352494, type: 3}
+  targetType: 3
+  detectionDistance: 10
+  launchSpeed: 12
+  fireRate: 10
+  spread: 5
+  bullet: {fileID: 7163302306377974615, guid: 39b36fa5eefe33a4bb1a8c623ad44c63, type: 3}
   bulletSpawns:
   - {fileID: 4078760485938372547}
   - {fileID: 4078760484987504186}
-  bulletLaunchSpeed: 20
-  fireRate: 6
-  spread: 1
-  detectionDistance: 10
-  horizontalRotationSpeed: 200
-  verticalRotationSpeed: 100
+  horizontalRotationSpeed: 125
+  verticalRotationSpeed: 75
   maxVerticalAngle: 60
+  aimPivot: {fileID: 209226299}
   horizontalRotator: {fileID: 4078760485379707158}
   verticalRotator: {fileID: 4078760486037521347}
+--- !u!64 &1421047355
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078760485659362098}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &4078760485938372546
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,7 +691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078760485938372547}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bullet Spawn 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -651,9 +722,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078760486037521347}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head Container
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -691,9 +762,9 @@ GameObject:
   - component: {fileID: 4078760486134778525}
   - component: {fileID: 4078760486134778524}
   - component: {fileID: 4078760486134778523}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Base
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -785,9 +856,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078760486329786811}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

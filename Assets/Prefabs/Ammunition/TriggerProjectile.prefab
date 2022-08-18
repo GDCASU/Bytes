@@ -109,9 +109,9 @@ GameObject:
   - component: {fileID: 7163302306377974611}
   - component: {fileID: 1477738880164909426}
   - component: {fileID: 2689162791033593916}
-  - component: {fileID: -2828935593339908593}
+  - component: {fileID: 6427453794181260337}
   m_Layer: 0
-  m_Name: CollisionProjectileBullet
+  m_Name: TriggerProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,13 +157,13 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7163302306377974615}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-2828935593339908593
+--- !u!114 &6427453794181260337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7163302306377974615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c1129bc6423a8441933fec3af5c55eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b65269794bae624a8654660852009bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   impactDamage: 10

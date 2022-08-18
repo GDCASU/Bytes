@@ -9,8 +9,13 @@ public class Player : MonoBehaviour, ICharacter
 
     public Transform[] GetDetectionPoints() => detectionPoints;
 
-    public void TakeDamage(float damage)
+    public void ReceiveDamage(float damage)
     {
-        Debug.Log("Player has received " + damage + " damage.");
+        
+    }
+
+    public void ReceiveHealth(float health)
+    {
+        
     }
 }

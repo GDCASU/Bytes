@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionProjectile : Projectile
+public class TriggerProjectile : Projectile
 {
     private Rigidbody body;
 
@@ -25,11 +25,11 @@ public class CollisionProjectile : Projectile
         if (age >= lifetime) Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.transform.CompareTag(Tags.Player) || collision.transform.CompareTag(Tags.Enemy))
+        if (other.CompareTag(Tags.Player) || other.CompareTag(Tags.Enemy))
         {
-            collision.transform.root.GetComponent<ICharacter>().ReceiveDamage(impactDamage);
+            other.transform.root.GetComponent<ICharacter>().ReceiveDamage(impactDamage);
         }
         Destroy(gameObject);
     }

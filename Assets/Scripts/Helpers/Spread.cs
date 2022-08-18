@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spread
 {
-    public static Vector3 DeviatingDirection(Transform origin, float maxSpread)
+    public static Vector3 DeviateFromForwardDirection(Transform origin, float maxSpread)
     {
         Vector2 spreadDirection = Random.insideUnitCircle.normalized;
         Vector3 offsetDirection = new Vector3(origin.right.x * spreadDirection.x, origin.up.y * spreadDirection.y, 0f);

@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Dummy : MonoBehaviour, IEnemy
 {
-    public Transform[] GetDetectionPoints() => new Transform[] { transform };
-
-    public void TakeDamage(float damage)
+    public void ReceiveDamage(float damage)
     {
-        Debug.Log("Dummy has received " + damage + " damage.");
+        print("Dummy has received " + damage + " damage.");
     }
+
+    public void ReceiveHealth(float addedHealth)
+    {
+        print("Dummy has received " + addedHealth + " health.");
+    }
+
+    public Transform[] GetDetectionPoints() => new Transform[] { transform };
 }
