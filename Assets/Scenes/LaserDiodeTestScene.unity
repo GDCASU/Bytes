@@ -445,7 +445,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c24eb798d59db4fb596ca69cc231cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserStartPoint: 0
+  laserMaxDistance: 100
   damage: 1
+  isFlickering: 1
+  flickerStartDelay: 0.5
+  flickerTime: 1
 --- !u!120 &1235065413
 LineRenderer:
   m_ObjectHideFlags: 0
