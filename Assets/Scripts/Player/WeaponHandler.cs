@@ -12,6 +12,7 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField]
     private GameObject[] weaponObjects;
     
+    private GameObject currentWeaponObject;
     private IWeapon[] weapons;
     private IWeapon currentWeapon;
 
@@ -36,7 +37,7 @@ public class WeaponHandler : MonoBehaviour
             }
         }
 
-        currentWeapon = weapons[currentWeaponIndex];
+        SetCurrentWeapon(0);
     }
 
     private void OnEnable()
@@ -72,7 +73,7 @@ public class WeaponHandler : MonoBehaviour
     {
         if (numOfWeapons <= 1) return;
 
-        weaponObjects[currentWeaponIndex].SetActive(false);
+        currentWeaponObject.SetActive(false);
 
         if (context.ReadValue<float>() > 0)
         {
@@ -83,8 +84,14 @@ public class WeaponHandler : MonoBehaviour
             currentWeaponIndex = currentWeaponIndex + 1 < weaponObjects.Length ? currentWeaponIndex + 1 : 0;
         }
 
-        weaponObjects[currentWeaponIndex].SetActive(true);
-        currentWeapon = weapons[currentWeaponIndex];
+        SetCurrentWeapon(currentWeaponIndex);
+        currentWeaponObject.SetActive(true);
+    }
+
+    private void SetCurrentWeapon(int weaponIndex)
+    {
+        currentWeaponObject = weaponObjects[weaponIndex];
+        currentWeapon = weapons[weaponIndex];
     }
 
     private void SetNewWeapon(GameObject newWeapon, int weaponIndex)
@@ -97,8 +104,6 @@ public class WeaponHandler : MonoBehaviour
         weaponObjects[weaponIndex].GetComponent<EquipableEntity>().Equip();
 
         weapons[weaponIndex] = weaponObjects[weaponIndex].GetComponent<IWeapon>();
-        weapons[weaponIndex].animator.enabled = true;
-        weapons[weaponIndex].OnAnimatorIK();
     }
 
     private void OnBlock(InputAction.CallbackContext context) => currentWeapon.Block(context.phase == InputActionPhase.Performed);
@@ -124,11 +129,17 @@ public class WeaponHandler : MonoBehaviour
         else
         {
             // Replace current weapon with the new one
-            weapons[currentWeaponIndex].animator.enabled = false;
-            weaponObjects[currentWeaponIndex].GetComponent<Collider>().enabled = true;
-            weaponObjects[currentWeaponIndex].GetComponent<EquipableEntity>().Unequip();
-            weaponObjects[currentWeaponIndex].transform.SetParent(null);
+            // *Note: disabling and activating a gameobject shall ensure the animator does not mess with positioning when overriding parent transforms.
+            currentWeaponObject.SetActive(false);
+            currentWeaponObject.GetComponent<Collider>().enabled = true;
+            currentWeaponObject.GetComponent<EquipableEntity>().Unequip();
+            currentWeaponObject.transform.SetParent(null);
+            currentWeaponObject.SetActive(true);
+
+            newWeapon.SetActive(false);
             SetNewWeapon(newWeapon, currentWeaponIndex);
+            SetCurrentWeapon(currentWeaponIndex);
+            newWeapon.SetActive(true);
         }
     }
 }
