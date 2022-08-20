@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3226518914422725896}
   - component: {fileID: 3226518914422725899}
   - component: {fileID: 3226518914422725898}
+  - component: {fileID: 4565389427344022822}
   m_Layer: 0
   m_Name: Laser Diode
   m_TagString: Untagged
@@ -99,6 +100,25 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &4565389427344022822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226518914422725901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8c24eb798d59db4fb596ca69cc231cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserDir: {x: 1, y: 0, z: 0}
+  laserMaxDistance: 100
+  laserRadius: 1.5
+  damage: 1
+  isFlickering: 0
+  flickerStartDelay: 0.5
+  flickerTime: 1
 --- !u!1 &3226518915838482084
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,7 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3226518915838482085}
   - component: {fileID: 3226518915838482083}
-  - component: {fileID: 3226518915838482082}
   m_Layer: 0
   m_Name: Fire Point
   m_TagString: Untagged
@@ -231,22 +250,3 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &3226518915838482082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3226518915838482084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8c24eb798d59db4fb596ca69cc231cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  laserDir: {x: 1, y: 0, z: 0}
-  laserStartBuffer: 0
-  laserMaxDistance: 100
-  damage: 1
-  isFlickering: 0
-  flickerStartDelay: 0.5
-  flickerTime: 1

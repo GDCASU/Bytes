@@ -549,7 +549,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823008176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 2.5, z: 10}
+  m_LocalPosition: {x: 10, y: 6.65, z: 10}
   m_LocalScale: {x: 1, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -786,12 +786,12 @@ PrefabInstance:
     - target: {fileID: 3226518914422725897, guid: a98204f9488b17747b9f5dc6b2af6bdc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9
+      value: -7.5
       objectReference: {fileID: 0}
     - target: {fileID: 3226518914422725897, guid: a98204f9488b17747b9f5dc6b2af6bdc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3226518914422725897, guid: a98204f9488b17747b9f5dc6b2af6bdc,
         type: 3}
@@ -801,7 +801,7 @@ PrefabInstance:
     - target: {fileID: 3226518914422725897, guid: a98204f9488b17747b9f5dc6b2af6bdc,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3226518914422725897, guid: a98204f9488b17747b9f5dc6b2af6bdc,
         type: 3}
@@ -811,12 +811,12 @@ PrefabInstance:
     - target: {fileID: 3226518914422725897, guid: a98204f9488b17747b9f5dc6b2af6bdc,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3226518914422725897, guid: a98204f9488b17747b9f5dc6b2af6bdc,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3226518914422725897, guid: a98204f9488b17747b9f5dc6b2af6bdc,
         type: 3}
@@ -831,12 +831,32 @@ PrefabInstance:
     - target: {fileID: 3226518914422725897, guid: a98204f9488b17747b9f5dc6b2af6bdc,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 270
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3226518914422725901, guid: a98204f9488b17747b9f5dc6b2af6bdc,
         type: 3}
       propertyPath: m_Name
       value: Laser Diode
+      objectReference: {fileID: 0}
+    - target: {fileID: 3226518915838482083, guid: a98204f9488b17747b9f5dc6b2af6bdc,
+        type: 3}
+      propertyPath: m_Positions.Array.data[1].x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3226518915838482083, guid: a98204f9488b17747b9f5dc6b2af6bdc,
+        type: 3}
+      propertyPath: m_Positions.Array.data[1].y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565389427344022822, guid: a98204f9488b17747b9f5dc6b2af6bdc,
+        type: 3}
+      propertyPath: laserDirX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565389427344022822, guid: a98204f9488b17747b9f5dc6b2af6bdc,
+        type: 3}
+      propertyPath: laserStartBuffer.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a98204f9488b17747b9f5dc6b2af6bdc, type: 3}
