@@ -7,46 +7,39 @@ public partial class PlayerController
     [System.Serializable]
     public class InteractVariables
     {
-        [HideInInspector] public Collider[] hitColliders;
-
-        public float interactRadius = 5.0f;
-        public int maxColliders = 10;
+        public float interactRange = 5.0f;
     }
 
     void InteractInput()
     {
-        if (InputManager.PlayerActions.Interact.WasPerformedThisFrame())
+        // Press the 'E' key to interact with a raycast
+        if (InputManager.PlayerActions.Interact.WasPerformedThisFrame() && Physics.Raycast(playerCamera.transform.position,
+            playerCamera.transform.forward, out RaycastHit hit, interactVariables.interactRange))
         {
-            interactVariables.hitColliders = new Collider[interactVariables.maxColliders];
-            int collidersHit = Physics.OverlapSphereNonAlloc(this.gameObject.transform.position, 
-                interactVariables.interactRadius, interactVariables.hitColliders);
-            for (int i = 0; i < collidersHit; i++)
+            if (hit.collider.GetComponent<EquipableEntity>())
             {
-                if (interactVariables.hitColliders[i].GetComponent<EquipableEntity>())
-                {
-                    ExamineEntity(i);
-                }
+                ExamineEntity(hit);
             }
         }
     }
 
-    private void ExamineEntity(int i)
+    private void ExamineEntity(RaycastHit hit)
     {
-        if (!interactVariables.hitColliders[i].GetComponent<EquipableEntity>().CheckIfEquiped())
+        if (!hit.collider.GetComponent<EquipableEntity>().CheckIfEquiped())
         {
-            switch (interactVariables.hitColliders[i].GetComponent<EquipableEntity>().entityType)
+            switch (hit.collider.GetComponent<EquipableEntity>().entityType)
             {
                 case EquipableEntity.EntityType.Weapon:
-                    print("Test Weapon");
-                    this.GetComponent<WeaponHandler>().TakeNewWeapon(interactVariables.hitColliders[i].gameObject);
-                    return;
+                    print("Got Weapon");
+                    this.GetComponent<WeaponHandler>().TakeNewWeapon(hit.collider.gameObject);
+                    break;
                 case EquipableEntity.EntityType.Ability:
-                    print("Test Ability");
-                    // Take new ability here
-                    return;
+                    print("Got Ability");
+                    this.GetComponent<AbilityHandler>().TakeNewAbility(hit.collider.gameObject);
+                    break;
                 default:
                     Debug.LogError("Equipable entity has an unrecognizable type.");
-                    return;
+                    break;
             }
         }
     }

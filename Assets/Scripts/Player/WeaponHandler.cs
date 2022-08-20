@@ -133,6 +133,8 @@ public class WeaponHandler : MonoBehaviour
             currentWeaponObject.SetActive(false);
             currentWeaponObject.GetComponent<Collider>().enabled = true;
             currentWeaponObject.GetComponent<EquipableEntity>().Unequip();
+            currentWeaponObject.transform.position = newWeapon.transform.position;
+            currentWeaponObject.transform.rotation = newWeapon.transform.rotation;
             currentWeaponObject.transform.SetParent(null);
             currentWeaponObject.SetActive(true);
 

@@ -15,10 +15,13 @@ public partial class PlayerController
         public float initialCooldown = 1.0f;
         public float groundedCooldown = 0.1f;
     }
+
+    private bool isDashEnabled = false;
+
     void DashInput()
     {
         // Press the right shift key to dash
-        if(InputManager.PlayerActions.Dash.WasPerformedThisFrame() && dashVariables.canDash)
+        if(isDashEnabled && InputManager.PlayerActions.Dash.WasPerformedThisFrame() && dashVariables.canDash)
         {
             Vector3 dashDirection = new Vector3(0, 0, 1) * dashVariables.dashForce;
             float xDir = InputManager.PlayerActions.Move.ReadValue<Vector2>().x;
@@ -32,6 +35,11 @@ public partial class PlayerController
             dashVariables.canDash = false;
             StartCoroutine(InitialCooldown());
         }
+    }
+
+    public void EnableDash(bool isEnabled)
+    {
+        isDashEnabled = isEnabled;
     }
 
     /// <summary>

@@ -5,11 +5,13 @@ using UnityEngine;
 public class EquipableEntity: MonoBehaviour
 {
     public enum EntityType { Weapon = 0, Ability = 1 }
+    public enum AbilityType { None = 0, Dash = 1 }
+
+    public EntityType entityType;
+    public AbilityType abilityType; // Only used if the entity type is Ability
 
     [SerializeField] 
     private bool isEquiped;
-    [SerializeField]
-    public EntityType entityType;
 
     public bool CheckIfEquiped() => isEquiped;
 
