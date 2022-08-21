@@ -5,7 +5,7 @@ using UnityEngine;
 public class LaserDiode : MonoBehaviour
 {
     [Header("Laser Variables")]
-    public Vector3 laserStartBuffer = Vector3.zero;
+    public Vector3 laserStartBuffer = Vector3.zero;  // TODO: Utilize the start buffer for the raycast as well or remove the buffer entirely.
     [Range(-1, 1)] public float laserDirX;
     [Range(-1, 1)] public float laserDirY;
     [Range(-1, 1)] public float laserDirZ;
@@ -20,25 +20,32 @@ public class LaserDiode : MonoBehaviour
 
     private Transform laserPoint;
     private LineRenderer lineRenderer;
-    private Vector3 laserDir;
+    private Vector3 localLaserDirection;
+    private Vector3 worldLaserDirection;
     private bool isOn;
 
     private void Awake()
     {
         laserPoint = this.transform.GetChild(0);
         lineRenderer = laserPoint.GetComponent<LineRenderer>();
-        laserDir = new Vector3(laserDirX, laserDirY, laserDirZ);
         if (isFlickering) InvokeRepeating("FlickerLaser", flickerStartDelay, flickerTime);
         isOn = true;
     }
 
     private void FixedUpdate()
     {
-        laserDir = new Vector3(laserDirX, laserDirY, laserDirZ); // Keep this line if the laser direction can change
+        /*
+         * The laser directions relative to the world and relative to 'Laser Diode' should both be tracked since `Physics.Raycast()` deals with
+         * world directions whilst `lineRenderer.SetPosition()` deals with local directions. Plus, directions should be vectors with a magnitude of 1.
+         * - Cristion Domingez
+         */
+        // NOTE: Keep these lines if the laser direction can change.
+        localLaserDirection = new Vector3(laserDirX, laserDirY, laserDirZ).normalized; 
+        worldLaserDirection = transform.TransformDirection(localLaserDirection);
+
         if (isOn)
         {
-            Vector3 laserVector = Vector3.zero;
-            if (Physics.Raycast(laserPoint.position, laserDir, out RaycastHit hit, laserMaxDistance))
+            if (Physics.Raycast(laserPoint.position, worldLaserDirection, out RaycastHit hit, laserMaxDistance))
             {
                 GameObject player = hit.collider.gameObject;
                 if (player.CompareTag("Player") &&
@@ -47,24 +54,22 @@ public class LaserDiode : MonoBehaviour
                     // Cause damage to the player
                     player.GetComponent<Player>().TakeDamage(damage);
                     lineRenderer.SetPosition(0, laserStartBuffer);
-                    lineRenderer.SetPosition(1, new Vector3(0, (hit.distance) * 2, 0) - hit.transform.position);
+                    lineRenderer.SetPosition(1, new Vector3(0, (hit.distance) * 2, 0) - hit.transform.position);  // TODO: Modify.
                 }
                 else
                 {
                     // Laser extends to the object it hits
-                    laserVector = laserDir * ((hit.distance));
                     lineRenderer.SetPosition(0, laserStartBuffer);
-                    lineRenderer.SetPosition(1, laserVector);
-                    Debug.DrawRay(laserPoint.position, transform.TransformDirection(laserVector), Color.yellow);
+                    lineRenderer.SetPosition(1, transform.InverseTransformPoint(hit.point));
+                    Debug.DrawRay(laserPoint.position, worldLaserDirection * hit.distance);
                 }
             }
             else
             {
                 // If nothing is hit, laser extends to its maximum distance that was set
-                laserVector = laserDir * laserMaxDistance;
                 lineRenderer.SetPosition(0, laserStartBuffer);
-                lineRenderer.SetPosition(1, laserVector);
-                Debug.DrawRay(laserPoint.position, transform.TransformDirection(laserDir) * laserMaxDistance, Color.red);
+                lineRenderer.SetPosition(1, localLaserDirection * laserMaxDistance);
+                Debug.DrawRay(laserPoint.position, worldLaserDirection * laserMaxDistance);
             }
         }
     }
