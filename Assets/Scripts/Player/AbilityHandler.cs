@@ -15,6 +15,15 @@ public class AbilityHandler : MonoBehaviour
 
     public void TakeNewAbility(GameObject newAbility)
     {
+        foreach (GameObject abilityObj in abilityObjects)
+        {
+            if (abilityObj.GetComponent<EquipableEntity>().abilityType == newAbility.GetComponent<EquipableEntity>().abilityType)
+            {
+                print($"The {newAbility.GetComponent<EquipableEntity>().abilityType} ability is already with the player.");
+                return;
+            }
+        }
+
         if (abilityObjects.Count < maxAbilities)
         {
             abilityObjects.Enqueue(newAbility);
@@ -25,19 +34,16 @@ public class AbilityHandler : MonoBehaviour
             abilityObjects.Enqueue(newAbility);
         }
         newAbility.gameObject.SetActive(false);
-        
-        foreach (GameObject abilityObject in abilityObjects)
+
+        switch (newAbility.GetComponent<EquipableEntity>().abilityType)
         {
-            switch(abilityObject.GetComponent<EquipableEntity>().abilityType)
-            {
-                case EquipableEntity.AbilityType.Dash:
-                    this.GetComponent<PlayerController>().EnableDash(true);
-                    print("Player can dash!");
-                    break;
-                default:
-                    Debug.LogError("Unknown ability type received...");
-                    break;
-            }
+            case EquipableEntity.AbilityType.Dash:
+                this.GetComponent<PlayerController>().EnableDash(true);
+                print("Player can dash!");
+                break;
+            default:
+                Debug.LogError("Unknown ability type received...");
+                break;
         }
     }
 

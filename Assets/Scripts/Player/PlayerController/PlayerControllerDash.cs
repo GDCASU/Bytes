@@ -37,10 +37,7 @@ public partial class PlayerController
         }
     }
 
-    public void EnableDash(bool isEnabled)
-    {
-        isDashEnabled = isEnabled;
-    }
+    public void EnableDash(bool isEnabled) => isDashEnabled = isEnabled;
 
     /// <summary>
     /// Initial cooldown that happens after the player dashes.
