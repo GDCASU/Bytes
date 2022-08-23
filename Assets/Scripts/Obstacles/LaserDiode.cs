@@ -5,7 +5,6 @@ using UnityEngine;
 public class LaserDiode : MonoBehaviour
 {
     [Header("Laser Variables")]
-    public Vector3 laserStartBuffer = Vector3.zero;  // TODO: Utilize the start buffer for the raycast as well or remove the buffer entirely.
     [Range(-1, 1)] public float laserDirX;
     [Range(-1, 1)] public float laserDirY;
     [Range(-1, 1)] public float laserDirZ;
@@ -18,7 +17,7 @@ public class LaserDiode : MonoBehaviour
     public float flickerStartDelay = 0.5f;
     public float flickerTime = 1.0f;
 
-    private Transform laserPoint;
+    private Transform firePoint;
     private LineRenderer lineRenderer;
     private Vector3 localLaserDirection;
     private Vector3 worldLaserDirection;
@@ -26,8 +25,8 @@ public class LaserDiode : MonoBehaviour
 
     private void Awake()
     {
-        laserPoint = this.transform.GetChild(0);
-        lineRenderer = laserPoint.GetComponent<LineRenderer>();
+        firePoint = this.transform.GetChild(0);
+        lineRenderer = firePoint.GetComponent<LineRenderer>();
         if (isFlickering) InvokeRepeating("FlickerLaser", flickerStartDelay, flickerTime);
         isOn = true;
     }
@@ -45,32 +44,31 @@ public class LaserDiode : MonoBehaviour
 
         if (isOn)
         {
-            if (Physics.Raycast(laserPoint.position, worldLaserDirection, out RaycastHit hit, laserMaxDistance))
+            UseLaser();
+        }
+    }
+
+    private void UseLaser()
+    {
+        // NOTE: Check where the laser hits from the beginning to the end of it. Adjust the GameObject's model and colliders
+        // to fit with the laser's hit limits.
+        if (Physics.SphereCast(firePoint.position, laserRadius, worldLaserDirection, out RaycastHit hit, laserMaxDistance))
+        {
+            GameObject objectHit = hit.collider.gameObject;
+            if (objectHit.CompareTag("Player") && objectHit.GetComponent<Player>())
             {
-                GameObject player = hit.collider.gameObject;
-                if (player.CompareTag("Player") &&
-                    player.GetComponent<Player>())
-                {
-                    // Cause damage to the player
-                    player.GetComponent<Player>().TakeDamage(damage);
-                    lineRenderer.SetPosition(0, laserStartBuffer);
-                    lineRenderer.SetPosition(1, new Vector3(0, (hit.distance) * 2, 0) - hit.transform.position);  // TODO: Modify.
-                }
-                else
-                {
-                    // Laser extends to the object it hits
-                    lineRenderer.SetPosition(0, laserStartBuffer);
-                    lineRenderer.SetPosition(1, transform.InverseTransformPoint(hit.point));
-                    Debug.DrawRay(laserPoint.position, worldLaserDirection * hit.distance);
-                }
+                // Cause damage to the player
+                objectHit.GetComponent<Player>().TakeDamage(damage);
             }
-            else
-            {
-                // If nothing is hit, laser extends to its maximum distance that was set
-                lineRenderer.SetPosition(0, laserStartBuffer);
-                lineRenderer.SetPosition(1, localLaserDirection * laserMaxDistance);
-                Debug.DrawRay(laserPoint.position, worldLaserDirection * laserMaxDistance);
-            }
+            // Laser extends to the object it hits
+            lineRenderer.SetPosition(0, Vector3.zero);
+            lineRenderer.SetPosition(1, localLaserDirection * hit.distance);
+        }
+        else
+        {
+            // If nothing is hit, laser extends to its maximum distance that was set
+            lineRenderer.SetPosition(0, Vector3.zero);
+            lineRenderer.SetPosition(1, localLaserDirection * laserMaxDistance);
         }
     }
 
@@ -86,6 +84,7 @@ public class LaserDiode : MonoBehaviour
         }
         else
         {
+            UseLaser(); // Check if SphereCast hit object before showing line renderer.
             lineRenderer.enabled = true;
             isOn = true;
         }

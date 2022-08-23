@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028328, g: 0.22571322, b: 0.30692163, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -778,6 +778,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 980579646, guid: a98204f9488b17747b9f5dc6b2af6bdc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: daeb0f77626b3774bb112b9b102b942d, type: 2}
     - target: {fileID: 3226518914422725897, guid: a98204f9488b17747b9f5dc6b2af6bdc,
         type: 3}
       propertyPath: m_RootOrder
@@ -837,6 +841,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Laser Diode
+      objectReference: {fileID: 0}
+    - target: {fileID: 3226518915838482083, guid: a98204f9488b17747b9f5dc6b2af6bdc,
+        type: 3}
+      propertyPath: m_UseWorldSpace
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565389427344022822, guid: a98204f9488b17747b9f5dc6b2af6bdc,
+        type: 3}
+      propertyPath: laserRadius
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565389427344022822, guid: a98204f9488b17747b9f5dc6b2af6bdc,
+        type: 3}
+      propertyPath: isFlickering
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565389427344022822, guid: a98204f9488b17747b9f5dc6b2af6bdc,
+        type: 3}
+      propertyPath: laserMaxDistance
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a98204f9488b17747b9f5dc6b2af6bdc, type: 3}
