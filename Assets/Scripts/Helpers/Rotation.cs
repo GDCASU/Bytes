@@ -1,74 +1,84 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: 19 Aug. 2022
+ */
+
 using UnityEngine;
 
-public class Rotation
+public static class Rotation
 {
-    public static int GetAngularDirection_2D(float fromAngle, Vector2 toDirection)
+    /// <summary>
+    /// In a unit circle, returns the absolute smallest angular displacement (w.r.t to the x-axis) from a starting unit vector to a destination unit vector.
+    /// </summary>
+    /// <param name="startingAngle"> Starting unit vector's angle from the x-axis in the [0, 360] range. </param>
+    /// <param name="destinationVector"> Destination unit vector. </param>
+    /// <param name="followingUnityStandard"> Following Unity standard shall return a positive displacement when the direction is clockwise and negative
+    /// when the direction is counterclockwise; ignoring the standard shall return vice-versa. </param>
+    /// <returns> Angular displacement in the [-360, 360] range. </returns>
+    public static float GetHorizontalAngularDisplacement(float startingAngle, Vector2 destinationVector, bool followingUnityStandard = true)
     {
-        float angle1 = Mathf.Acos(toDirection.x);
-        float angle2 = Mathf.Asin(toDirection.y);
-        float directionAngle = (angle2 < 0f ? angle1 : 2 * Mathf.PI - angle1) * Mathf.Rad2Deg;
-
-        float clockwiseDistance, counterClockwiseDistance;
-        if (directionAngle < fromAngle)
+        float cosAngle = Mathf.Acos(destinationVector.x);
+        if (followingUnityStandard)
         {
-            clockwiseDistance = 360f - fromAngle + directionAngle;
-            counterClockwiseDistance = fromAngle - directionAngle;
+            float destinationAngle = (destinationVector.y > 0f ? Constants.Math.PI_2 - cosAngle : cosAngle) * Mathf.Rad2Deg;
+
+            float clockwiseDistance, counterClockwiseDistance;
+            if (destinationAngle > startingAngle)
+            {
+                clockwiseDistance = destinationAngle - startingAngle;
+                counterClockwiseDistance = 360f - destinationAngle + startingAngle;
+            }
+            else
+            {
+                clockwiseDistance = 360f - startingAngle + destinationAngle;
+                counterClockwiseDistance = startingAngle - destinationAngle;
+            }
+
+            if (clockwiseDistance < counterClockwiseDistance)
+                return clockwiseDistance;
+            else if (clockwiseDistance > counterClockwiseDistance)
+                return -counterClockwiseDistance;
+            else
+                return 0;
         }
         else
         {
-            clockwiseDistance = directionAngle - fromAngle;
-            counterClockwiseDistance = 360f - directionAngle + fromAngle;
-        }
+            float destinationAngle = (destinationVector.y > 0f ? cosAngle : Constants.Math.PI_2 - cosAngle) * Mathf.Rad2Deg;
 
-        if (clockwiseDistance < counterClockwiseDistance)
-        {
-            return 1;
-        }
-        else if (clockwiseDistance > counterClockwiseDistance)
-        {
-            return -1;
-        }
-        else
-        {
-            return 0;
+            float counterClockwiseDistance, clockwiseDistance;
+            if (destinationAngle > startingAngle)
+            {
+                counterClockwiseDistance = destinationAngle - startingAngle;
+                clockwiseDistance = 360f - destinationAngle + startingAngle;
+            }
+            else
+            {
+                counterClockwiseDistance = 360f - startingAngle + destinationAngle;
+                clockwiseDistance = startingAngle - destinationAngle;
+            }
+
+            if (counterClockwiseDistance < clockwiseDistance)
+                return counterClockwiseDistance;
+            else if (counterClockwiseDistance > clockwiseDistance)
+                return -clockwiseDistance;
+            else
+                return 0;
         }
     }
 
-    public static float GetAngularDisplacement_2D(float fromAngle, Vector2 toDirection, float maxAngleStep)
+    /// <summary>
+    /// In a unit circle, rotates the current unit vector to a target unit vector w.r.t to the x-axis.
+    /// </summary>
+    /// <param name="currentAngle"> Current unit vector's angle from the x-axis in the [0, 360] range. </param>
+    /// <param name="targetVector"> Target unit vector. </param>
+    /// <param name="maxDegreesDelta"> Max angle in degrees the current vector is allowed to rotate. </param>
+    /// <param name="followingUnityStandard"> Do angles grow in the clockwise direction? </param>
+    /// <returns> Angle, in the [0, 360] range, of the current vector after rotating towards the target vector. </returns>
+    public static float RotateTowardHorizontalVector(float currentAngle, Vector2 targetVector, float maxDegreesDelta, bool followingUnityStandard = true)
     {
-        float angle1 = Mathf.Acos(toDirection.x);
-        float angle2 = Mathf.Asin(toDirection.y);
-        float directionAngle = (angle2 < 0f ? angle1 : 2 * Mathf.PI - angle1) * Mathf.Rad2Deg;
-
-        float clockwiseDistance, counterClockwiseDistance;
-        if (directionAngle < fromAngle)
-        {
-            clockwiseDistance = 360f - fromAngle + directionAngle;
-            counterClockwiseDistance = fromAngle - directionAngle;
-        }
-        else
-        {
-            clockwiseDistance = directionAngle - fromAngle;
-            counterClockwiseDistance = 360f - directionAngle + fromAngle;
-        }
-
-        if (clockwiseDistance < counterClockwiseDistance)
-        {
-            return Mathf.Min(clockwiseDistance, maxAngleStep);
-        }
-        else if (clockwiseDistance > counterClockwiseDistance)
-        {
-            return -Mathf.Min(counterClockwiseDistance, maxAngleStep);
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
-    public static float RotateAngleToDirection_2D(float fromAngle, Vector2 toDirection, float maxAngleStep)
-    {
-        float newAngle = fromAngle + GetAngularDisplacement_2D(fromAngle, toDirection, maxAngleStep);
+        float displacement = GetHorizontalAngularDisplacement(currentAngle, targetVector, followingUnityStandard);
+        float degreesDelta = displacement >= 0 ? Mathf.Min(displacement, maxDegreesDelta) : Mathf.Max(displacement, -maxDegreesDelta);
+        float newAngle = currentAngle + degreesDelta;
 
         if (newAngle < 0f)
         {
@@ -82,46 +92,42 @@ public class Rotation
         return newAngle;
     }
 
-    public static int GetVerticalAngularDirection(float fromAngle, Vector3 toDirection)
+    /// <summary>
+    /// In a unit sphere, returns the absolute smallest angular displacement (w.r.t to the xz-plane) from a starting unit vector to a destination unit vector.
+    /// </summary>
+    /// <param name="startingAngle"> Starting unit vector's angle from the xz-plane in the [0, 90] and [270, 360] ranges. </param>
+    /// <param name="destinationVector"> Destination unit vector. </param>
+    /// <param name="followingUnityStandard"> Following Unity standard shall return a positive displacement when the direction is clockwise and negative
+    /// when the direction is counterclockwise; ignoring the standard shall return vice-versa. </param>
+    /// <returns> Angular displacement in the [-180, 180] range. </returns>
+    public static float GetVerticalAngularDisplacement(float startingAngle, Vector3 destinationVector, bool followingUnityStandard = true)
     {
-        float directionAngle = Mathf.Asin(toDirection.y) * Mathf.Rad2Deg;
-        fromAngle = (fromAngle >= 270f && fromAngle <= 360f) ? 360f - fromAngle : -fromAngle;
+        float destinationAngle = Mathf.Asin(destinationVector.y) * Mathf.Rad2Deg;
+        startingAngle = (startingAngle <= 90) ? startingAngle : startingAngle - 360f;
 
-        if (directionAngle < fromAngle)
+        if (followingUnityStandard)
         {
-            return 1;
-        }
-        else if (directionAngle > fromAngle)
-        {
-            return -1;
+            return -destinationAngle - startingAngle;
         }
         else
         {
-            return 0;
-        }
-    }
-    public static float GetVerticalAngularDisplacement(float fromAngle, Vector3 toDirection, float maxAngleStep)
-    {
-        float directionAngle = Mathf.Asin(toDirection.y) * Mathf.Rad2Deg;
-        fromAngle = (fromAngle >= 270f && fromAngle <= 360f) ? 360f - fromAngle : -fromAngle;
-
-        if (directionAngle < fromAngle)
-        {
-            return Mathf.Min(fromAngle - directionAngle, maxAngleStep);
-        }
-        else if (directionAngle > fromAngle)
-        {
-            return -Mathf.Min(directionAngle - fromAngle, maxAngleStep);
-        }
-        else
-        {
-            return 0;
+            return destinationAngle - startingAngle;
         }
     }
 
-    public static float RotateVerticalAngleToDirection(float fromAngle, Vector3 toDirection, float maxAngleStep)
+    /// <summary>
+    /// In a unit sphere, rotates the current unit vector to a target unit vector w.r.t to the xz-plane.
+    /// </summary>
+    /// <param name="currentAngle"> Current unit vector's angle from the xz-plane in the [0, 90] and [270, 360] ranges. </param>
+    /// <param name="targetVector"> Target unit vector. </param>
+    /// <param name="maxDegreesDelta"> Max angle in degrees the current vector is allowed to rotate. </param>
+    /// /// <param name="followingUnityStandard"> Do angles grow in the clockwise direction? </param>
+    /// <returns> Angle, in the [0, 90] and [270, 360] ranges, of the current vector after rotating towards the target vector. </returns>
+    public static float RotateTowardsVerticalVector(float currentAngle, Vector3 targetVector, float maxDegreesDelta, bool followingUnityStandard = true)
     {
-        float newAngle = fromAngle + RotateVerticalAngleToDirection(fromAngle, toDirection, maxAngleStep);
+        float displacement = GetVerticalAngularDisplacement(currentAngle, targetVector, followingUnityStandard);
+        float degreesDelta = displacement >= 0 ? Mathf.Min(displacement, maxDegreesDelta) : Mathf.Max(displacement, -maxDegreesDelta);
+        float newAngle = currentAngle + degreesDelta;
 
         if (newAngle < 0f)
         {

@@ -3,7 +3,21 @@ using UnityEngine.InputSystem;
 
 public abstract class Weapon: MonoBehaviour
 {
+    protected CharacterType wielder;
+    protected CharacterType Target
+    {
+        get
+        {
+            if (wielder == CharacterType.Player)
+                return CharacterType.Enemy;
+            else
+                return CharacterType.Player;
+        }
+    }
+
     protected Animator animator;
+
+    protected void OnEnable() => wielder = PlayerController.singleton.GetComponent<Character>().Type;
 
     public abstract void Block(bool isStarting);
     public abstract void Reload();

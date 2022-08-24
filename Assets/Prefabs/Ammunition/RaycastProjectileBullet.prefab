@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7163302306377974608}
   - component: {fileID: 7163302306377974609}
   - component: {fileID: 2104053451812614757}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RaycastProjectileBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +97,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactDamage: 10
-  lifetime: 2.5
-  isInstant: 0
+  <Lifespan>k__BackingField: 2.5
   maxRange: 0
+  width: 0

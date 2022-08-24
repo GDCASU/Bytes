@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 209226299}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Aim Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 4078760484872816528}
   - component: {fileID: 4078760484872816495}
   - component: {fileID: 4078760484872816494}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Post
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 4078760484924197650}
   - component: {fileID: 4078760484924197649}
   - component: {fileID: 4078760484924197648}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078760484987504186}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Bullet Spawn 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078760485379707158}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Post Container
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 4078760485498260333}
   - component: {fileID: 4078760485498260332}
   - component: {fileID: 4078760485498260331}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Barrel 2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 4078760485501376593}
   - component: {fileID: 4078760485501376592}
   - component: {fileID: 4078760485501376559}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Barrel 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 4078760485601881495}
   - component: {fileID: 4078760485601881494}
   - component: {fileID: 4078760485601881493}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Bolt
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -595,8 +595,7 @@ GameObject:
   - component: {fileID: 4078760485659362099}
   - component: {fileID: 1382212979472855112}
   - component: {fileID: 4078760485659362100}
-  - component: {fileID: 1421047355}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Turret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -632,15 +631,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 265546c2814b76b488f0ccdfa950a542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 40
-  detectionPoints:
-  - {fileID: 4078760484872816493}
-  - {fileID: 4078760486134778522}
-  - {fileID: 4078760484924196079}
+  <Type>k__BackingField: 1
+  <MaxHealth>k__BackingField: 40
+  <DetectionPoints>k__BackingField:
+  - {fileID: 209226299}
+  <Health>k__BackingField: 0
   droopAngle: 60
-  droopRotationSpeed: 20
+  droopRotationSpeed: 25
   verticalRotator: {fileID: 4078760486037521347}
-  health: 0
 --- !u!114 &4078760485659362100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,8 +651,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc1922ab556d1843a9d2bcf067f4b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetType: 3
+  targetType: 0
   detectionDistance: 10
+  radarPulseRate: 4
+  horizontalRotationSpeed: 130
+  verticalRotationSpeed: 50
+  maxVerticalAngle: 60
+  aimPivot: {fileID: 209226299}
+  horizontalRotator: {fileID: 4078760485379707158}
+  verticalRotator: {fileID: 4078760486037521347}
   launchSpeed: 12
   fireRate: 10
   spread: 5
@@ -662,26 +667,6 @@ MonoBehaviour:
   bulletSpawns:
   - {fileID: 4078760485938372547}
   - {fileID: 4078760484987504186}
-  horizontalRotationSpeed: 125
-  verticalRotationSpeed: 75
-  maxVerticalAngle: 60
-  aimPivot: {fileID: 209226299}
-  horizontalRotator: {fileID: 4078760485379707158}
-  verticalRotator: {fileID: 4078760486037521347}
---- !u!64 &1421047355
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4078760485659362098}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &4078760485938372546
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,7 +676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078760485938372547}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Bullet Spawn 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -722,7 +707,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078760486037521347}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Head Container
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -762,7 +747,7 @@ GameObject:
   - component: {fileID: 4078760486134778525}
   - component: {fileID: 4078760486134778524}
   - component: {fileID: 4078760486134778523}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Base
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -856,7 +841,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4078760486329786811}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Model
   m_TagString: Enemy
   m_Icon: {fileID: 0}

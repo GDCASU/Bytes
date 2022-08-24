@@ -5,12 +5,14 @@
 
 using UnityEngine;
 
-public class PredictiveAiming
+public static class AimPrediction
 {
     /* 
      * FirstOrderIntercept: Calculation of how far ahead of the target a shooter needs to aim based on speed, projectile speed, and distance.
      */
-    // FirstOrderIntercept utilizing absolute target position
+    /// <summary>
+    /// Returns the position to launch a projectile at to hit the target, utilizing absolute target position and velocity.
+    /// </summary>
     public static Vector3 FirstOrderIntercept(
         Vector3 shooterPosition,
         Vector3 shooterVelocity,
@@ -30,7 +32,9 @@ public class PredictiveAiming
         return targetPosition + t * (targetRelativeVelocity);
     }
 
-    // FirstOrderIntercept utilizing relative target position
+    /// <summary>
+    /// Returns the time a projectile shall hit the target, utilizing relative target position and velocity.
+    /// </summary>
     public static float FirstOrderInterceptTime
     (
         float shotSpeed,
@@ -82,12 +86,16 @@ public class PredictiveAiming
             return Mathf.Max(-b / (2f * a), 0f); //don't shoot back in time
     }
 
-    public static bool CalculateTrajectory(float TargetDistance, float ProjectileVelocity, out float CalculatedAngle)
+    /// <summary>
+    /// Calculates the angle of trajectory to launch a gravity-bound projectile to reach a target.
+    /// </summary>
+    /// <returns> Boolean representing whether the projectile can reach the target's distance with the provided velocity. </returns>
+    public static bool CalculateTrajectory(float targetDistance, float projectileVelocity, out float calculatedAngle)
     {
-        CalculatedAngle = 0.5f * (Mathf.Asin((-Physics.gravity.y * TargetDistance) / (ProjectileVelocity * ProjectileVelocity)) * Mathf.Rad2Deg);
-        if (float.IsNaN(CalculatedAngle))
+        calculatedAngle = 0.5f * (Mathf.Asin((-Physics.gravity.y * targetDistance) / (projectileVelocity * projectileVelocity)) * Mathf.Rad2Deg);
+        if (float.IsNaN(calculatedAngle))
         {
-            CalculatedAngle = 0;
+            calculatedAngle = 0;
             return false;
         }
         return true;

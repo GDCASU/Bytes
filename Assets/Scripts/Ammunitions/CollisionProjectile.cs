@@ -6,31 +6,27 @@ public class CollisionProjectile : Projectile
 {
     private Rigidbody body;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
-        gameObject.SetActive(false);
+        base.Awake();
         body = GetComponent<Rigidbody>();
     }
 
-    public override void Launch(Ray ray, float launchSpeed)
+    public override void Launch(Ray ray, float launchSpeed, CharacterType targetType)
     {
-        gameObject.SetActive(true);
-        transform.rotation = Quaternion.LookRotation(ray.direction);
-        body.AddForce(ray.direction * launchSpeed, ForceMode.VelocityChange);
-    }
+        CommenceAging();
+        this.targetType = targetType;
 
-    protected virtual void Update()
-    {
-        age += Time.deltaTime;
-        if (age >= lifetime) Destroy(gameObject);
+        transform.rotation = Quaternion.LookRotation(ray.direction);
+        body.velocity = ray.direction * launchSpeed;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag(Tags.Player) || collision.transform.CompareTag(Tags.Enemy))
+        if (collision.transform.CompareTag(targetType.ToString()))
         {
-            collision.transform.root.GetComponent<ICharacter>().ReceiveDamage(impactDamage);
+            collision.transform.root.GetComponent<Character>().ReceiveDamage(impactDamage);
         }
-        Destroy(gameObject);
+        Perish();
     }
 }

@@ -9,8 +9,6 @@ public partial class Firearm : RangedWeapon
     [SerializeField]
     private bool isAutomatic;
 
-    private bool wasFiringPinActivated = true;
-
     private WaitForSeconds cooldownWait;
     private WaitForSeconds reloadWait;
 
@@ -26,41 +24,46 @@ public partial class Firearm : RangedWeapon
         reloadWait = new WaitForSeconds(reloadTime);
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (wasFiringPinActivated && canFire)
-        {
-            if (!isReloading && currentAmmo <= 0)
-            {
-                StartCoroutine(UndergoReload());
-            }
-            else
-            {
-                FireBullet();
-                if (!isAutomatic)
-                    wasFiringPinActivated = false;
-            }
-        }
+        StopAllCoroutines();
+        animator.StopPlayback();
     }
 
     public override void Shoot(bool isStarting)
     {
-        wasFiringPinActivated = isStarting;
+        if (isAutomatic)
+        {
+            canFire = isStarting;
+            if (isStarting)
+            {
+                StartCoroutine(ContinouslyFireBullets());
+            }
+        }
+        else
+        {
+            if (isStarting && !isReloading)
+            {
+                if (currentAmmo > 0)
+                    FireBullet();
+                else
+                    StartCoroutine(UndergoReload());
+            }
+        }
     }
 
     private void FireBullet()
     {
         Ray ray = new Ray(projectileSpawn.position, projectileSpawn.forward);
-        Instantiate(projectile, projectileSpawn.position, Quaternion.identity).GetComponent<Projectile>().Launch(ray, isProjectileInstant ? 0 : launchSpeed);
+        Instantiate(projectile, projectileSpawn.position, Quaternion.identity).GetComponent<Projectile>().Launch(ray, isProjectileInstant ? 0 : launchSpeed, Target);
         currentAmmo--;
-        StartCoroutine(Cooldown());
 
         animator.SetTrigger("Shoot");
     }
 
     public override void Strike()
     {
-        Debug.Log("Strike");
+        print("Strike");
     }
 
     public override void Reload()
@@ -69,22 +72,32 @@ public partial class Firearm : RangedWeapon
         StartCoroutine(UndergoReload());
     }
 
-    private IEnumerator Cooldown()
+    private IEnumerator ContinouslyFireBullets()
     {
-        canFire = false;
-        yield return cooldownWait;
-        canFire = true;
+        while (canFire)
+        {
+            if (!isReloading)
+            {
+                if (currentAmmo <= 0)
+                {
+                    yield return StartCoroutine(UndergoReload());
+                    continue;
+                }
+
+                FireBullet();
+            }
+            
+            yield return cooldownWait;
+        }
     }
 
     private IEnumerator UndergoReload()
     {
         animator.SetBool("MustReload", true);
 
-        canFire = false;
         isReloading = true;
         yield return reloadWait;
         currentAmmo = maxAmmo;
-        canFire = true;
         isReloading = false;
     }
 }

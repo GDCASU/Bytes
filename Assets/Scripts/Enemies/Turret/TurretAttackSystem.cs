@@ -1,6 +1,13 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: 10 Aug. 2022
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class TurretAttackSystem : MonoBehaviour
 {
@@ -8,27 +15,17 @@ public class TurretAttackSystem : MonoBehaviour
     [SerializeField]
     private CharacterType targetType = CharacterType.Player;
     [SerializeField]
-    private float detectionDistance = 2f;
-
-    [Header("Bullet")]
+    private float detectionDistance;
     [SerializeField]
-    private float launchSpeed = 12f;
-    [SerializeField]
-    private float fireRate = 9f;
-    [SerializeField]
-    private float spread = 0.5f;
-    [SerializeField]
-    private GameObject bullet;
-    [SerializeField]
-    private Transform[] bulletSpawns;
+    private float radarPulseRate;
 
     [Header("Rotation")]
     [SerializeField]
-    private float horizontalRotationSpeed = 200f;
+    private float horizontalRotationSpeed;
     [SerializeField]
-    private float verticalRotationSpeed = 100f;
+    private float verticalRotationSpeed;
     [SerializeField, Range(0f, 90f)]
-    private float maxVerticalAngle = 60f;
+    private float maxVerticalAngle;
     [SerializeField]
     private Transform aimPivot;
     [SerializeField]
@@ -36,79 +33,147 @@ public class TurretAttackSystem : MonoBehaviour
     [SerializeField]
     private Transform verticalRotator;
 
-    private int bulletSpawnIndex = 0;
-    private float horizontalAnglesPerFixedUpdate;
-    private float verticalAnglesPerFixedUpdate;
+    [Header("Bullet")]
+    [SerializeField]
+    private float launchSpeed;
+    [SerializeField]
+    private int fireRate;
+    [SerializeField]
+    private float spread;
+    [SerializeField]
+    private GameObject bullet;
+    [SerializeField]
+    private Transform[] bulletSpawns;
 
     private Transform visibleTarget;
     private Rigidbody visibleTargetBody;
-    private ICharacter visibleCharacter;
+    private Character visibleCharacter;
 
-    private bool canShoot = true;
+    private float horizontalAnglesPerFixedUpdate;
+    private float verticalAnglesPerFixedUpdate;
+
+    private ObjectPool<Projectile> bulletPool;
+    private int bulletSpawnIndex;
+    private Action<Action<Projectile>> notifyBulletToDestoySelf;
+
+    private WaitForSeconds pulseWait;
     private WaitForSeconds cooldownWait;
-    private Coroutine cooldownRoutine;
 
     RaycastHit hit;
 
-    private void Awake()
+    private void OnEnable()
+    {
+        float bulletLifespan = bullet.GetComponent<Projectile>().Lifespan;
+        int capacity = bulletLifespan > 0f ? Mathf.CeilToInt(bulletLifespan * fireRate) : fireRate;
+
+        bulletPool = new ObjectPool<Projectile>(
+            () =>
+            {
+                Projectile projectile = Instantiate(bullet).GetComponent<Projectile>();
+                projectile.ReturnSelfTo((p) => bulletPool.Release(p));
+                notifyBulletToDestoySelf += projectile.ReturnSelfTo;
+                return projectile;
+            },
+            (p) => p.gameObject.SetActive(true),
+            (p) => p.gameObject.SetActive(false),
+            (p) =>
+            {
+                if (p)
+                {
+                    notifyBulletToDestoySelf -= p.ReturnSelfTo;
+                    Destroy(p.gameObject);
+                }
+            },
+            false,
+            capacity,
+            capacity + 1
+        );
+    }
+
+    private void OnValidate()
     {
         horizontalAnglesPerFixedUpdate = horizontalRotationSpeed * Time.fixedDeltaTime;
         verticalAnglesPerFixedUpdate = verticalRotationSpeed * Time.fixedDeltaTime;
+        pulseWait = new WaitForSeconds(1f / radarPulseRate);
         cooldownWait = new WaitForSeconds(1f / fireRate);
     }
 
-    private void Update()
+    private void Start() => StartCoroutine(EmitRadarPulse());
+
+    private void OnDisable()
     {
-        if (visibleTarget && canShoot)
+        StopAllCoroutines();
+        bulletPool.Clear();
+        notifyBulletToDestoySelf?.Invoke(null);
+    }
+
+    private IEnumerator EmitRadarPulse()
+    {
+        while (true)
         {
-            Shoot();
+            while (!visibleTarget)
+            {
+                CheckForTargetsInRange();
+                yield return pulseWait;
+            }
+
+            Coroutine trackRoutine = StartCoroutine(TrackTarget());
+            StartCoroutine(Shoot());
+            yield return trackRoutine;
         }
     }
 
-    private void FixedUpdate()
+    private IEnumerator TrackTarget()
     {
-        if (!visibleTarget)
-        {
-            CheckForTargetsInRange();
-        }
-        else
+        while (visibleTarget)
         {
             Vector3 visiblePointPosition;
-            if (IsTargetVisible(visibleTarget, visibleCharacter.GetDetectionPoints(), out visiblePointPosition))
-                TrackTarget(visiblePointPosition);
+            if (IsTargetVisible(visibleTarget, visibleCharacter.DetectionPoints, out visiblePointPosition))
+                RotateTowardsTarget(visiblePointPosition);
             else
             {
                 visibleTarget = null;
                 visibleTargetBody = null;
             }
+
+            yield return Constants.WaitFor.fixedUpdate;
         }
     }
 
-    private void OnDisable()
+    private IEnumerator Shoot()
     {
-        if (cooldownRoutine != null)
+        while (visibleTarget)
         {
-            StopCoroutine(cooldownRoutine);
+            Transform bulletSpawn = bulletSpawns[bulletSpawnIndex];
+            Vector3 direction = Spread.DeviateFromForwardDirection(bulletSpawn, spread);
+
+            Projectile projectile = bulletPool.Get();
+            projectile.transform.position = bulletSpawn.position;
+            projectile.transform.rotation = Quaternion.identity;
+            projectile.Launch(new Ray(bulletSpawn.position, direction), launchSpeed, targetType);
+            bulletSpawnIndex = bulletSpawnIndex + 1 < bulletSpawns.Length ? bulletSpawnIndex + 1 : 0;
+
+            yield return cooldownWait;
         }
     }
 
     private void CheckForTargetsInRange()
     {
-        Collider[] colliders = Physics.OverlapSphere(aimPivot.position, detectionDistance, 1 << (int)targetType);
+        Collider[] colliders = Physics.OverlapSphere(aimPivot.position, detectionDistance, targetType.GetLayerMask());
         foreach (Collider collider in colliders)
         {
             if (IsColliderVisible(collider))
             {
-                visibleTarget = collider.transform;
+                visibleTarget = collider.transform.root;
                 visibleTargetBody = collider.GetComponent<Rigidbody>();
-                visibleCharacter = collider.GetComponent<ICharacter>();
+                visibleCharacter = collider.GetComponent<Character>();
                 break;
             }
         }
     }
 
     private bool IsColliderVisible(Collider collider) =>
-        (Physics.Raycast(aimPivot.position, collider.transform.position - aimPivot.position, out hit, detectionDistance) &&
+        (Physics.Raycast(aimPivot.position, collider.transform.position - aimPivot.position, out hit, detectionDistance, targetType.GetLayerMask() | Constants.LayerMask.Environment) &&
         collider == hit.collider &&
         InVerticalSight(hit.point));
 
@@ -116,7 +181,7 @@ public class TurretAttackSystem : MonoBehaviour
     {
         foreach (Transform point in detectionPoints)
         {
-            if (Physics.Raycast(aimPivot.position, point.position - aimPivot.position, out hit, detectionDistance) &&
+            if (Physics.Raycast(aimPivot.position, point.position - aimPivot.position, out hit, detectionDistance, targetType.GetLayerMask() | Constants.LayerMask.Environment) &&
             hit.transform.CompareTag(target.transform.tag) &&
             InVerticalSight(hit.point))
             {
@@ -136,18 +201,18 @@ public class TurretAttackSystem : MonoBehaviour
         return angle >= -maxVerticalAngle && angle <= maxVerticalAngle;
     }
 
-    private void TrackTarget(Vector3 visiblePointPosition)
+    private void RotateTowardsTarget(Vector3 visiblePointPosition)
     {
-        Vector3 predictedTargetPosition = PredictiveAiming.FirstOrderIntercept(aimPivot.position, Vector3.zero, launchSpeed, visiblePointPosition, visibleTargetBody.velocity);
+        Vector3 predictedTargetPosition = AimPrediction.FirstOrderIntercept(aimPivot.position, Vector3.zero, launchSpeed, visiblePointPosition, visibleTargetBody.velocity);
         predictedTargetPosition = aimPivot.InverseTransformPoint(predictedTargetPosition);
-        Vector3 direction = predictedTargetPosition.normalized;
-        Vector2 horizontalDirection = new Vector2(direction.z, -direction.x).normalized;
+        Vector2 horizontalDirection = new Vector2(predictedTargetPosition.z, -predictedTargetPosition.x).normalized;
+        Vector3 verticalDirection = predictedTargetPosition.normalized;
+        
+        float yDegrees = Rotation.RotateTowardHorizontalVector(horizontalRotator.localEulerAngles.y, horizontalDirection, horizontalAnglesPerFixedUpdate);
+        horizontalRotator.localRotation = Quaternion.Euler(0f, yDegrees, 0f);
 
-        float yDisplacement = Rotation.GetAngularDisplacement_2D(horizontalRotator.localEulerAngles.y, horizontalDirection, horizontalAnglesPerFixedUpdate);
-        horizontalRotator.localRotation *= Quaternion.Euler(0f, yDisplacement, 0f);
-
-        float xDisplacement = Rotation.GetVerticalAngularDisplacement(verticalRotator.localEulerAngles.x, direction, verticalAnglesPerFixedUpdate);
-        Quaternion verticalRotation = verticalRotator.localRotation * Quaternion.Euler(xDisplacement, 0f, 0f);
+        float xDegrees = Rotation.RotateTowardsVerticalVector(verticalRotator.localEulerAngles.x, verticalDirection, verticalAnglesPerFixedUpdate);
+        Quaternion verticalRotation = Quaternion.Euler(xDegrees, 0f, 0f);
         if (verticalRotation.eulerAngles.x < 360f - maxVerticalAngle && verticalRotation.eulerAngles.x > 180f)
         {
             verticalRotation = Quaternion.Euler(360f - maxVerticalAngle, 0f, 0f);
@@ -157,23 +222,5 @@ public class TurretAttackSystem : MonoBehaviour
             verticalRotation = Quaternion.Euler(maxVerticalAngle, 0f, 0f);
         }
         verticalRotator.localRotation = verticalRotation;
-    }
-
-    private void Shoot()
-    {
-        Transform bulletSpawn = bulletSpawns[bulletSpawnIndex];
-        Vector3 direction = Spread.DeviateFromForwardDirection(bulletSpawn, spread);
-        Instantiate(bullet, bulletSpawn.position, Quaternion.identity).GetComponent<Projectile>().Launch(new Ray(bulletSpawn.position, direction), launchSpeed);
-        bulletSpawnIndex = bulletSpawnIndex + 1 < bulletSpawns.Length ? bulletSpawnIndex + 1 : 0;
-
-        cooldownRoutine = StartCoroutine(UndergoCooldown());
-    }
-
-    private IEnumerator UndergoCooldown()
-    {
-        canShoot = false;
-        yield return cooldownWait;
-        canShoot = true;
-        cooldownRoutine = null;
     }
 }

@@ -2,19 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, ICharacter
+public class Player : Character
 {
-    [SerializeField]
-    private Transform[] detectionPoints;
-
-    public Transform[] GetDetectionPoints() => detectionPoints;
-
-    public void ReceiveDamage(float damage)
+    public override void ReceiveDamage(float damage)
     {
         
     }
 
-    public void ReceiveHealth(float health)
+    public override void ReceiveHealth(float health)
     {
         
     }

@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dummy : MonoBehaviour, IEnemy
+public class Dummy : Enemy
 {
-    public void ReceiveDamage(float damage)
+    public override void ReceiveDamage(float damage)
     {
-        print("Dummy has received " + damage + " damage.");
+        print(name + " has received " + damage + " damage");
     }
 
-    public void ReceiveHealth(float addedHealth)
+    public override void ReceiveHealth(float health)
     {
-        print("Dummy has received " + addedHealth + " health.");
+        print(name + " has received " + health + "health");
     }
-
-    public Transform[] GetDetectionPoints() => new Transform[] { transform };
 }

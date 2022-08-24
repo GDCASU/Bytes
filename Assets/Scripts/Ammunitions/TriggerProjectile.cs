@@ -6,31 +6,27 @@ public class TriggerProjectile : Projectile
 {
     private Rigidbody body;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
-        gameObject.SetActive(false);
+        base.Awake();
         body = GetComponent<Rigidbody>();
     }
 
-    public override void Launch(Ray ray, float launchSpeed)
+    public override void Launch(Ray ray, float launchSpeed, CharacterType targetType)
     {
-        gameObject.SetActive(true);
-        transform.rotation = Quaternion.LookRotation(ray.direction);
-        body.AddForce(ray.direction * launchSpeed, ForceMode.VelocityChange);
-    }
+        CommenceAging();
+        this.targetType = targetType;
 
-    protected virtual void Update()
-    {
-        age += Time.deltaTime;
-        if (age >= lifetime) Destroy(gameObject);
+        transform.rotation = Quaternion.LookRotation(ray.direction);
+        body.velocity = ray.direction * launchSpeed;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(Tags.Player) || other.CompareTag(Tags.Enemy))
+        if (other.CompareTag(targetType.ToString()))
         {
-            other.transform.root.GetComponent<ICharacter>().ReceiveDamage(impactDamage);
+            other.transform.root.GetComponent<Character>().ReceiveDamage(impactDamage);
         }
-        Destroy(gameObject);
+        Perish();
     }
 }

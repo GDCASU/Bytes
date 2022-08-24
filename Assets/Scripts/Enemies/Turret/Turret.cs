@@ -2,14 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Turret : MonoBehaviour, IEnemy
+public class Turret : Enemy
 {
-    [Header("Basic Properties")]
-    [SerializeField]
-    private float maxHealth;
-    [SerializeField]
-    private Transform[] detectionPoints;
-
     [Header("Death")]
     [SerializeField, Range(-90f, 90f)]
     private float droopAngle;
@@ -18,50 +12,34 @@ public class Turret : MonoBehaviour, IEnemy
     [SerializeField]
     private Transform verticalRotator;
 
-    [Header("Read-Only Properties")]
-    [SerializeField]
-    private float health;
-
     private TurretAttackSystem attackSystem;
 
-    private void Awake()
-    {
-        health = maxHealth;
-        attackSystem = GetComponent<TurretAttackSystem>();
-    }
+    private void Awake() => attackSystem = GetComponent<TurretAttackSystem>();
 
-    public void ReceiveDamage(float damage)
+    public override void ReceiveDamage(float damage)
     {
-        health -= damage;
-        if (health <= 0)
+        Health -= damage;
+        if (Health <= 0)
             StartCoroutine(Perish());
-    }
-
-    public void ReceiveHealth(float addedHealth)
-    {
-        health += addedHealth;
-        if (health > maxHealth)
-            health = maxHealth;
     }
 
     private IEnumerator Perish()
     {
         attackSystem.enabled = false;
-        Quaternion startRotation = verticalRotator.localRotation;
-        Quaternion endRotation = Quaternion.Euler(droopAngle, 0f, 0f);
-        float dyingDuration = (droopAngle - verticalRotator.localEulerAngles.x) / droopRotationSpeed;
+        float initialXAngle = verticalRotator.localEulerAngles.x;
+        if (initialXAngle >= 270f && initialXAngle <= 360f) initialXAngle -= 360f;
+        float finalXAngle = droopAngle;
+        float dyingDuration = (droopAngle - initialXAngle) / droopRotationSpeed;
         float elapsedTime = 0f;
 
         while (elapsedTime < dyingDuration)
         {
-            verticalRotator.localRotation = Quaternion.Lerp(startRotation, endRotation, elapsedTime / dyingDuration);
+            verticalRotator.localRotation = Quaternion.Euler(Mathf.Lerp(initialXAngle, finalXAngle, elapsedTime / dyingDuration), 0f, 0f);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        verticalRotator.localRotation = endRotation;
+        verticalRotator.localRotation = Quaternion.Euler(finalXAngle, 0f, 0f);
 
         enabled = false;
     }
-
-    public Transform[] GetDetectionPoints() => detectionPoints;
 }

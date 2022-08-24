@@ -19,7 +19,11 @@ public class WeaponHandler : MonoBehaviour
     {
         weapons = new Weapon[weaponObjects.Length];
         for (int i = 0; i < weaponObjects.Length; i++)
-            weapons[i] = weaponObjects[i].GetComponent<Weapon>();
+        {
+            if (weaponObjects[i])
+                weapons[i] = weaponObjects[i].GetComponent<Weapon>();
+        }
+            
 
         currentWeapon = weapons[currentWeaponIndex];
     }

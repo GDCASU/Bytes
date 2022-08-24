@@ -9,62 +9,71 @@ public class RaycastProjectile : Projectile
     [SerializeField]
     private float width;
 
-    private float launchSpeed;
+    protected float launchSpeed;
     protected float buttDistanceAlongRay = 0f;
     protected Vector3 bulletButt = Vector3.zero;
+    protected Coroutine travelRoutine;
+    protected WaitForFixedUpdate fixedWait = new WaitForFixedUpdate();
 
-    protected virtual void Awake()
+    public override void Launch(Ray ray, float launchSpeed, CharacterType targetType)
     {
-        gameObject.SetActive(false);
-    }
+        CommenceAging();
+        this.targetType = targetType;
 
-    public override void Launch(Ray ray, float launchSpeed)
-    {
         RaycastHit hit;
         if (launchSpeed <= 0)
         {
             if (Physics.Raycast(ray, out hit, maxRange))
             {
-                if (hit.transform.CompareTag("Player") || hit.transform.CompareTag("Enemy"))
+                if (hit.transform.CompareTag(targetType.ToString()))
                 {
-                    hit.transform.GetComponent<ICharacter>().ReceiveDamage(impactDamage);
+                    hit.transform.GetComponent<Character>().ReceiveDamage(impactDamage);
                 }
             }
-            Destroy(this);
+            Perish();
         }
         else
         {
             this.ray = ray;
             bulletButt = ray.origin;
             this.launchSpeed = launchSpeed * Time.fixedDeltaTime;
-            gameObject.SetActive(true);
+            travelRoutine = StartCoroutine(Travel());
         }
     }
 
-    protected virtual void Update()
+    protected virtual IEnumerator Travel()
     {
-        age += Time.deltaTime;
-        if (age >= lifetime) Destroy(gameObject);
-    }
-
-    protected virtual void FixedUpdate()
-    {
-        RaycastHit hit;
-        if (
-            width <= 0 ?
-            Physics.Raycast(bulletButt, ray.direction, out hit, launchSpeed) :
-            Physics.SphereCast(bulletButt, width, ray.direction, out hit, launchSpeed)
-            )
+        while (true)
         {
-            if (hit.transform.CompareTag("Player") || hit.transform.CompareTag("Enemy"))
-            {
-                hit.transform.root.GetComponent<ICharacter>().ReceiveDamage(impactDamage);
+            RaycastHit hit;
+            if (
+                width <= 0 ?
+                Physics.Raycast(bulletButt, ray.direction, out hit, launchSpeed) :
+                Physics.SphereCast(bulletButt, width, ray.direction, out hit, launchSpeed)
+                )
+                {
+                if (hit.transform.CompareTag(targetType.ToString()))
+                {
+                    hit.transform.root.GetComponent<Character>().ReceiveDamage(impactDamage);
+                }
+                Perish();
             }
-            
-            Destroy(gameObject);
-        }
 
-        buttDistanceAlongRay += launchSpeed;
-        bulletButt = ray.GetPoint(buttDistanceAlongRay);
+            buttDistanceAlongRay += launchSpeed;
+            bulletButt = ray.GetPoint(buttDistanceAlongRay);
+
+            yield return fixedWait;
+        }
+    }
+
+    protected override void Perish()
+    {
+        base.Perish();
+
+        if (travelRoutine != null)
+        {
+            StopCoroutine(travelRoutine);
+            travelRoutine = null;
+        }
     }
 }
