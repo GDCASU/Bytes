@@ -8,12 +8,10 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField]
     private Transform handler;
     [SerializeField]
-    private int currentWeaponIndex = 0;
+    private int currentWeaponIndex;
     [SerializeField]
-    private GameObject[] weaponObjects;
-    
-    private GameObject currentWeaponObject;
     private IWeapon[] weapons;
+
     private IWeapon currentWeapon;
 
     private int maxWeapons = 0;
@@ -21,23 +19,24 @@ public class WeaponHandler : MonoBehaviour
 
     private void Awake()
     {
-        maxWeapons = weaponObjects.Length;
-        weapons = new IWeapon[maxWeapons];
+        maxWeapons = weapons.Length;
         for (int i = 0; i < maxWeapons; i++)
         {
-            if (weaponObjects[i] != null)
+            IWeapon weapon = weapons[i];
+            if (weapon != null)
             {
-                weaponObjects[i].GetComponent<Collider>().enabled = false;
-                weaponObjects[i].transform.position = handler.position;
-                weaponObjects[i].transform.rotation = handler.rotation;
-                weaponObjects[i].transform.parent = handler.transform;
-                weapons[i] = weaponObjects[i].GetComponent<IWeapon>();
-                weaponObjects[i].GetComponent<EquipableEntity>().Equip();
+                weapon.GetComponent<Collider>().enabled = false;
+                weapon.transform.position = handler.position;
+                weapon.transform.rotation = handler.rotation;
+                weapon.transform.parent = handler.transform;
+                weapon.GetComponent<EquipableEntity>().Equip();
                 numOfWeapons++;
             }
         }
 
-        SetCurrentWeapon(0);
+        if (currentWeaponIndex >= maxWeapons)
+            currentWeaponIndex = 0;
+        SetCurrentWeapon(currentWeaponIndex);
     }
 
     private void OnEnable()
@@ -73,37 +72,31 @@ public class WeaponHandler : MonoBehaviour
     {
         if (numOfWeapons <= 1) return;
 
-        currentWeaponObject.SetActive(false);
+        currentWeapon.gameObject.SetActive(false);
 
         if (context.ReadValue<float>() > 0)
         {
-            currentWeaponIndex = currentWeaponIndex - 1 >= 0 ? currentWeaponIndex - 1 : weaponObjects.Length - 1;
+            currentWeaponIndex = currentWeaponIndex - 1 >= 0 ? currentWeaponIndex - 1 : weapons.Length - 1;
         }
         else
         {
-            currentWeaponIndex = currentWeaponIndex + 1 < weaponObjects.Length ? currentWeaponIndex + 1 : 0;
+            currentWeaponIndex = currentWeaponIndex + 1 < weapons.Length ? currentWeaponIndex + 1 : 0;
         }
 
         SetCurrentWeapon(currentWeaponIndex);
-        currentWeaponObject.SetActive(true);
+        currentWeapon.gameObject.SetActive(true);
     }
 
-    private void SetCurrentWeapon(int weaponIndex)
-    {
-        currentWeaponObject = weaponObjects[weaponIndex];
-        currentWeapon = weapons[weaponIndex];
-    }
+    private void SetCurrentWeapon(int weaponIndex) => currentWeapon = weapons[weaponIndex];
 
-    private void SetNewWeapon(GameObject newWeapon, int weaponIndex)
+    private void SetNewWeapon(IWeapon newWeapon, int weaponIndex)
     {
-        weaponObjects[weaponIndex] = newWeapon;
-        weaponObjects[weaponIndex].transform.SetParent(handler);
-        weaponObjects[weaponIndex].transform.localPosition = Vector3.zero;
-        weaponObjects[weaponIndex].transform.localRotation = Quaternion.identity;
-        weaponObjects[weaponIndex].GetComponent<Collider>().enabled = false;
-        weaponObjects[weaponIndex].GetComponent<EquipableEntity>().Equip();
-
-        weapons[weaponIndex] = weaponObjects[weaponIndex].GetComponent<IWeapon>();
+        newWeapon.transform.SetParent(handler);
+        newWeapon.transform.localPosition = Vector3.zero;
+        newWeapon.transform.localRotation = Quaternion.identity;
+        newWeapon.GetComponent<Collider>().enabled = false;
+        newWeapon.GetComponent<EquipableEntity>().Equip();
+        weapons[weaponIndex] = newWeapon;
     }
 
     private void OnBlock(InputAction.CallbackContext context) => currentWeapon.Block(context.phase == InputActionPhase.Performed);
@@ -111,17 +104,17 @@ public class WeaponHandler : MonoBehaviour
     private void OnShoot(InputAction.CallbackContext context) => currentWeapon.Shoot(context.phase == InputActionPhase.Performed);
     private void OnStrike(InputAction.CallbackContext context) => currentWeapon.Strike();
 
-    public void TakeNewWeapon(GameObject newWeapon)
+    public void TakeNewWeapon(IWeapon newWeapon)
     {
         if (numOfWeapons < maxWeapons)
         {
             // Add new weapon to empty slot
             for (int i = 0; i < maxWeapons; i++)
             {
-                if (weaponObjects[i] == null)
+                if (weapons[i] == null)
                 {
                     SetNewWeapon(newWeapon, i);
-                    newWeapon.SetActive(false);
+                    newWeapon.gameObject.SetActive(false);
                     numOfWeapons++;
                 }
             }
@@ -130,18 +123,18 @@ public class WeaponHandler : MonoBehaviour
         {
             // Replace current weapon with the new one
             // *Note: disabling and activating a gameobject shall ensure the animator does not mess with positioning when overriding parent transforms.
-            currentWeaponObject.SetActive(false);
-            currentWeaponObject.GetComponent<Collider>().enabled = true;
-            currentWeaponObject.GetComponent<EquipableEntity>().Unequip();
-            currentWeaponObject.transform.position = newWeapon.transform.position;
-            currentWeaponObject.transform.rotation = newWeapon.transform.rotation;
-            currentWeaponObject.transform.SetParent(null);
-            currentWeaponObject.SetActive(true);
+            currentWeapon.gameObject.SetActive(false);
+            currentWeapon.GetComponent<Collider>().enabled = true;
+            currentWeapon.GetComponent<EquipableEntity>().Unequip();
+            currentWeapon.transform.position = newWeapon.transform.position;
+            currentWeapon.transform.rotation = newWeapon.transform.rotation;
+            currentWeapon.transform.SetParent(null);
+            currentWeapon.gameObject.SetActive(true);
 
-            newWeapon.SetActive(false);
+            newWeapon.gameObject.SetActive(false);
             SetNewWeapon(newWeapon, currentWeaponIndex);
             SetCurrentWeapon(currentWeaponIndex);
-            newWeapon.SetActive(true);
+            newWeapon.gameObject.SetActive(true);
         }
     }
 }

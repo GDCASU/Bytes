@@ -31,11 +31,11 @@ public partial class PlayerController
             {
                 case EquipableEntity.EntityType.Weapon:
                     print("Got Weapon");
-                    this.GetComponent<WeaponHandler>().TakeNewWeapon(hit.collider.gameObject);
+                    this.GetComponent<WeaponHandler>().TakeNewWeapon(hit.transform.GetComponent<IWeapon>());
                     break;
                 case EquipableEntity.EntityType.Ability:
                     print("Got Ability");
-                    this.GetComponent<AbilityHandler>().TakeNewAbility(hit.collider.gameObject);
+                    this.GetComponent<AbilityHandler>().TakeNewAbility(hit.transform.GetComponent<EquipableEntity>());
                     break;
                 default:
                     Debug.LogError("Equipable entity has an unrecognizable type.");

@@ -4,38 +4,38 @@ using UnityEngine;
 
 public class AbilityHandler : MonoBehaviour
 {
-    private Queue abilityObjects;
+    private Queue<EquipableEntity> abilities;
     [SerializeField]
     [Range(0, 5)] private int maxAbilities = 3;
 
     private void Awake()
     {
-        abilityObjects = new Queue();
+        abilities = new Queue<EquipableEntity>();
     }
 
-    public void TakeNewAbility(GameObject newAbility)
+    public void TakeNewAbility(EquipableEntity newAbility)
     {
-        foreach (GameObject abilityObj in abilityObjects)
+        foreach (EquipableEntity ability in abilities)
         {
-            if (abilityObj.GetComponent<EquipableEntity>().abilityType == newAbility.GetComponent<EquipableEntity>().abilityType)
+            if (ability.GetComponent<EquipableEntity>().abilityType == newAbility.abilityType)
             {
-                print($"The {newAbility.GetComponent<EquipableEntity>().abilityType} ability is already with the player.");
+                print($"The {newAbility.abilityType} ability is already with the player.");
                 return;
             }
         }
 
-        if (abilityObjects.Count < maxAbilities)
+        if (abilities.Count < maxAbilities)
         {
-            abilityObjects.Enqueue(newAbility);
+            abilities.Enqueue(newAbility);
         }
         else
         {
-            DisableAbility((GameObject) abilityObjects.Dequeue(), newAbility.transform.position);
-            abilityObjects.Enqueue(newAbility);
+            DisableAbility(abilities.Dequeue(), newAbility.transform.position);
+            abilities.Enqueue(newAbility);
         }
         newAbility.gameObject.SetActive(false);
 
-        switch (newAbility.GetComponent<EquipableEntity>().abilityType)
+        switch (newAbility.abilityType)
         {
             case EquipableEntity.AbilityType.Dash:
                 this.GetComponent<PlayerController>().EnableDash(true);
@@ -47,14 +47,14 @@ public class AbilityHandler : MonoBehaviour
         }
     }
 
-    private void DisableAbility(GameObject oldAbility, Vector3 newAbilityPos)
+    private void DisableAbility(EquipableEntity oldAbility, Vector3 newAbilityPos)
     {
-        switch (oldAbility.GetComponent<EquipableEntity>().abilityType)
+        switch (oldAbility.abilityType)
         {
             case EquipableEntity.AbilityType.Dash:
                 this.GetComponent<PlayerController>().EnableDash(false);
                 oldAbility.transform.position = newAbilityPos;
-                oldAbility.SetActive(true);
+                oldAbility.gameObject.SetActive(true);
                 print("Dash disabled");
                 break;
             default:
