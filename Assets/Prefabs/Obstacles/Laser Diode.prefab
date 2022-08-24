@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 980579646}
   - component: {fileID: 980579645}
   m_Layer: 0
-  m_Name: Model
+  m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: daeb0f77626b3774bb112b9b102b942d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,12 +144,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c24eb798d59db4fb596ca69cc231cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserStartBuffer: {x: 0, y: 0, z: 0}
   laserDirX: 0
   laserDirY: 1
   laserDirZ: 0
-  laserMaxDistance: 100
-  laserRadius: 1.5
+  laserMaxDistance: 50
+  laserRadius: 0.25
   damage: 1
   isFlickering: 0
   flickerStartDelay: 0.5
@@ -165,7 +164,7 @@ GameObject:
   - component: {fileID: 3226518915838482085}
   - component: {fileID: 3226518915838482083}
   m_Layer: 0
-  m_Name: Fire Point
+  m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

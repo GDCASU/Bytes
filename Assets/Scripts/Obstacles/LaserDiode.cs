@@ -17,7 +17,7 @@ public class LaserDiode : MonoBehaviour
     public float flickerStartDelay = 0.5f;
     public float flickerTime = 1.0f;
 
-    private Transform firePoint;
+    private Transform laser;
     private LineRenderer lineRenderer;
     private Vector3 localLaserDirection;
     private Vector3 worldLaserDirection;
@@ -25,8 +25,8 @@ public class LaserDiode : MonoBehaviour
 
     private void Awake()
     {
-        firePoint = this.transform.GetChild(0);
-        lineRenderer = firePoint.GetComponent<LineRenderer>();
+        laser = this.transform.GetChild(0);
+        lineRenderer = laser.GetComponent<LineRenderer>();
         if (isFlickering) InvokeRepeating("FlickerLaser", flickerStartDelay, flickerTime);
         isOn = true;
     }
@@ -52,7 +52,7 @@ public class LaserDiode : MonoBehaviour
     {
         // NOTE: Check where the laser hits from the beginning to the end of it. Adjust the GameObject's model and colliders
         // to fit with the laser's hit limits.
-        if (Physics.SphereCast(firePoint.position, laserRadius, worldLaserDirection, out RaycastHit hit, laserMaxDistance))
+        if (Physics.SphereCast(laser.position, laserRadius, worldLaserDirection, out RaycastHit hit, laserMaxDistance))
         {
             GameObject objectHit = hit.collider.gameObject;
             if (objectHit.CompareTag("Player") && objectHit.GetComponent<Player>())
