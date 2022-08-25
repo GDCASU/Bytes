@@ -55,7 +55,7 @@ public partial class Firearm : RangedWeapon
     private void FireBullet()
     {
         Ray ray = new Ray(projectileSpawn.position, projectileSpawn.forward);
-        Instantiate(projectile, projectileSpawn.position, Quaternion.identity).GetComponent<Projectile>().Launch(ray, isProjectileInstant ? 0 : launchSpeed, Target);
+        projectilePool.Get().Launch(ray, isProjectileInstant ? 0 : launchSpeed, Target);
         currentAmmo--;
 
         animator.SetTrigger("Shoot");

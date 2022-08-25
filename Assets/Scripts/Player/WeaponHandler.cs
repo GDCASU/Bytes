@@ -10,9 +10,9 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField]
     private int currentWeaponIndex;
     [SerializeField]
-    private IWeapon[] weapons;
+    private Weapon[] weapons;
 
-    private IWeapon currentWeapon;
+    private Weapon currentWeapon;
 
     private int maxWeapons = 0;
     private int numOfWeapons = 0;
@@ -22,7 +22,7 @@ public class WeaponHandler : MonoBehaviour
         maxWeapons = weapons.Length;
         for (int i = 0; i < maxWeapons; i++)
         {
-            IWeapon weapon = weapons[i];
+            Weapon weapon = weapons[i];
             if (weapon != null)
             {
                 weapon.GetComponent<Collider>().enabled = false;
@@ -30,6 +30,7 @@ public class WeaponHandler : MonoBehaviour
                 weapon.transform.rotation = handler.rotation;
                 weapon.transform.parent = handler.transform;
                 weapon.GetComponent<EquipableEntity>().Equip();
+                weapon.PrepareWeapon();
                 numOfWeapons++;
             }
         }
@@ -89,22 +90,23 @@ public class WeaponHandler : MonoBehaviour
 
     private void SetCurrentWeapon(int weaponIndex) => currentWeapon = weapons[weaponIndex];
 
-    private void SetNewWeapon(IWeapon newWeapon, int weaponIndex)
+    private void SetNewWeapon(Weapon newWeapon, int weaponIndex)
     {
         newWeapon.transform.SetParent(handler);
         newWeapon.transform.localPosition = Vector3.zero;
         newWeapon.transform.localRotation = Quaternion.identity;
         newWeapon.GetComponent<Collider>().enabled = false;
         newWeapon.GetComponent<EquipableEntity>().Equip();
+        newWeapon.PrepareWeapon();
         weapons[weaponIndex] = newWeapon;
     }
 
-    private void OnBlock(InputAction.CallbackContext context) => currentWeapon.Block(context.phase == InputActionPhase.Performed);
-    private void OnReload(InputAction.CallbackContext context) => currentWeapon.Reload();
-    private void OnShoot(InputAction.CallbackContext context) => currentWeapon.Shoot(context.phase == InputActionPhase.Performed);
-    private void OnStrike(InputAction.CallbackContext context) => currentWeapon.Strike();
+    private void OnBlock(InputAction.CallbackContext context) => currentWeapon?.Block(context.phase == InputActionPhase.Performed);
+    private void OnReload(InputAction.CallbackContext context) => currentWeapon?.Reload();
+    private void OnShoot(InputAction.CallbackContext context) => currentWeapon?.Shoot(context.phase == InputActionPhase.Performed);
+    private void OnStrike(InputAction.CallbackContext context) => currentWeapon?.Strike();
 
-    public void TakeNewWeapon(IWeapon newWeapon)
+    public void TakeNewWeapon(Weapon newWeapon)
     {
         if (numOfWeapons < maxWeapons)
         {
@@ -114,6 +116,7 @@ public class WeaponHandler : MonoBehaviour
                 if (weapons[i] == null)
                 {
                     SetNewWeapon(newWeapon, i);
+                    newWeapon.PrepareWeapon();
                     newWeapon.gameObject.SetActive(false);
                     numOfWeapons++;
                 }
@@ -130,11 +133,13 @@ public class WeaponHandler : MonoBehaviour
             currentWeapon.transform.rotation = newWeapon.transform.rotation;
             currentWeapon.transform.SetParent(null);
             currentWeapon.gameObject.SetActive(true);
+            currentWeapon.NeglectWeapon();
 
             newWeapon.gameObject.SetActive(false);
             SetNewWeapon(newWeapon, currentWeaponIndex);
             SetCurrentWeapon(currentWeaponIndex);
             newWeapon.gameObject.SetActive(true);
+            newWeapon.PrepareWeapon();
         }
     }
 }

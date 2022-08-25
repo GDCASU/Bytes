@@ -41,7 +41,7 @@ public class TurretAttackSystem : MonoBehaviour
     [SerializeField]
     private float spread;
     [SerializeField]
-    private GameObject bullet;
+    private Projectile bullet;
     [SerializeField]
     private Transform[] bulletSpawns;
 
@@ -63,13 +63,13 @@ public class TurretAttackSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        float bulletLifespan = bullet.GetComponent<Projectile>().Lifespan;
+        float bulletLifespan = bullet.Lifespan;
         int capacity = bulletLifespan > 0f ? Mathf.CeilToInt(bulletLifespan * fireRate) : fireRate;
 
         bulletPool = new ObjectPool<Projectile>(
             () =>
             {
-                Projectile projectile = Instantiate(bullet).GetComponent<Projectile>();
+                Projectile projectile = Instantiate(bullet);
                 projectile.ReturnSelfTo((p) => bulletPool.Release(p));
                 notifyBulletToDestoySelf += projectile.ReturnSelfTo;
                 return projectile;
