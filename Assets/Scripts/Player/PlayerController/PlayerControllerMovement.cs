@@ -41,6 +41,7 @@ public partial class PlayerController
         [Range(0, 1)]
         public float inAirControl = .021f;
         public float minAirVelocity = 2f;
+        [HideInInspector] public bool stoodStillBeforeJump = false;
         #endregion
 
         #region Gravity
@@ -177,6 +178,7 @@ public partial class PlayerController
         //Player just landed
         if (groundCheck && (playerState == PlayerState.Jumping || playerState == PlayerState.InAir || playerState == PlayerState.Climbing))
         {
+            baseMovementVariables.stoodStillBeforeJump = false;
             rb.velocity = rb.velocity - Vector3.up * rb.velocity.y;
             float angleOfSurfaceAndVelocity = Vector3.Angle(rb.velocity, (hit.normal - Vector3.up * hit.normal.y));
             if (!onFakeGround && hit.normal.y != 1 && angleOfSurfaceAndVelocity < 5 && z > 0)
@@ -241,7 +243,7 @@ public partial class PlayerController
                 rb.velocity -= currentForwardAndRight * friction;
 
                 newForwardandRight = (transform.right * x + transform.forward * z);
-                if (z != 0 || x != 0)
+                if (!baseMovementVariables.stoodStillBeforeJump && (x != 0 || z != 0))
                 {
                     //If the game detects the player beeing stuck between two surfaces then it guarantees a min velocity to avoid a case where the stuck player's in air velocity would get stuck on zero 
                     Vector3 newVelocity = newForwardandRight.normalized * (currentForwardAndRight.magnitude < .1f && stuckBetweenSurfacesHelper > 1 ?
@@ -249,6 +251,13 @@ public partial class PlayerController
                         currentForwardAndRight * (1f - airControl);
                     if (newVelocity.magnitude < baseMovementVariables.minAirVelocity) newVelocity = newVelocity.normalized * baseMovementVariables.minAirVelocity;
                     rb.velocity = newVelocity + rb.velocity.y * Vector3.up;
+                }
+                else
+                {
+                    baseMovementVariables.stoodStillBeforeJump = true;
+                    print($"X: {x} Z: {z}");
+                    print("currentForwardAndRight: " + currentForwardAndRight);
+                    rb.velocity += new Vector3(x, 0, z).normalized; // Needs to be fixed later
                 }
             }
         }
