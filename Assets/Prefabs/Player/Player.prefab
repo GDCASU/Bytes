@@ -183,7 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 646967955}
   m_Layer: 0
-  m_Name: Weapon Handler
+  m_Name: Weapon Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12089,6 +12089,7 @@ GameObject:
   - component: {fileID: 1947202455}
   - component: {fileID: 1501375669}
   - component: {fileID: 1533742258}
+  - component: {fileID: 1975860786}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -12423,7 +12424,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1a3102a349d114fb9eb029f8a80114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handler: {fileID: 646967955}
+  <WeaponContainer>k__BackingField: {fileID: 646967955}
+  <ProjectileSpawn>k__BackingField: {fileID: 3610357520889994798}
   currentWeaponIndex: 0
   weapons:
   - {fileID: 6576096071312733772}
@@ -12441,6 +12443,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAbilities: 3
+--- !u!114 &1975860786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8225854368876441680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a89060184c6334abedc06ba1317699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8247261416745651063
 GameObject:
   m_ObjectHideFlags: 0
@@ -13245,7 +13259,7 @@ PrefabInstance:
     - target: {fileID: 4324503741607062825, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 4324503741607062825, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
         type: 3}
@@ -13255,7 +13269,7 @@ PrefabInstance:
     - target: {fileID: 4324503741607062825, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.65
       objectReference: {fileID: 0}
     - target: {fileID: 4324503741607062825, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
         type: 3}
@@ -13290,6 +13304,21 @@ PrefabInstance:
     - target: {fileID: 4324503741607062825, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
+      propertyPath: offset.x
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
+      propertyPath: offset.z
+      value: -0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8715611490153474015, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

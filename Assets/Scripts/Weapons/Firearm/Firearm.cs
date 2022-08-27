@@ -12,9 +12,9 @@ public partial class Firearm : RangedWeapon
     private WaitForSeconds cooldownWait;
     private WaitForSeconds reloadWait;
 
-    private void Awake()
+    protected override void Awake()
     {
-        animator = GetComponent<Animator>();
+        base.Awake();
         currentAmmo = maxAmmo;
     }
 
@@ -55,16 +55,15 @@ public partial class Firearm : RangedWeapon
     private void FireBullet()
     {
         Ray ray = new Ray(projectileSpawn.position, projectileSpawn.forward);
-        projectilePool.Get().Launch(ray, isProjectileInstant ? 0 : launchSpeed, Target);
+        Projectile enabledProjectile = projectilePool.Get();
+        enabledProjectile.transform.position = projectileSpawn.position;
+        enabledProjectile.Launch(ray, launchSpeed, Target, visualProjectileSpawn.position);
         currentAmmo--;
 
         animator.SetTrigger("Shoot");
     }
 
-    public override void Strike()
-    {
-        print("Strike");
-    }
+    public override void Strike() { }
 
     public override void Reload()
     {

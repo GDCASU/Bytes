@@ -5,15 +5,13 @@ using UnityEngine.Pool;
 
 public abstract class Projectile: MonoBehaviour
 {
-    [SerializeField]
-    protected float impactDamage;
-    [field: SerializeField]
-    public float Lifespan { get; private set; }
+    [SerializeField] protected float impactDamage;
+    [field: SerializeField] public float Lifespan { get; private set; }
+    [SerializeField] protected ProjectileVisual visual;
 
     protected Ray ray;
     protected CharacterType targetType;
     protected WaitForSeconds ageWait;
-    protected Coroutine ageRoutine;
     protected Action<Projectile> returnSelf;
 
     protected virtual void Awake()
@@ -22,19 +20,21 @@ public abstract class Projectile: MonoBehaviour
         ageWait = new WaitForSeconds(Lifespan);
     }
 
-    protected virtual void OnValidate()
+    protected virtual void OnValidate() => ageWait = new WaitForSeconds(Lifespan);
+
+    protected virtual void OnDisable()
     {
-        ageWait = new WaitForSeconds(Lifespan);
+        if (visual)
+            visual.Stop();
     }
 
-    public abstract void Launch(Ray ray, float launchSpeed, CharacterType targetType);
+    public abstract void Launch(Ray ray, float launchSpeed, CharacterType targetType, Vector3 visualSpawnPosition);
 
-    protected virtual void CommenceAging() => ageRoutine = StartCoroutine(TrackAge());
+    protected virtual void CommenceAging() => StartCoroutine(TrackAge());
 
     protected virtual IEnumerator TrackAge()
     {
         yield return ageWait;
-        ageRoutine = null;
         Perish();
     }
 
@@ -50,10 +50,6 @@ public abstract class Projectile: MonoBehaviour
         else
             Destroy(gameObject);
 
-        if (ageRoutine != null)
-        {
-            StopCoroutine(ageRoutine);
-            ageRoutine = null;
-        }
+        StopCoroutine(TrackAge());
     }
 }

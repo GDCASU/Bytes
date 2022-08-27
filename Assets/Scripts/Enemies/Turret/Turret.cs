@@ -1,3 +1,9 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: 10 Aug. 2022
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +22,22 @@ public class Turret : Enemy
 
     private void Awake() => attackSystem = GetComponent<TurretAttackSystem>();
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        attackSystem.Dev_OnEnable();
+    }
+
+    private void Start()
+    {
+        attackSystem.Dev_Start();
+    }
+
+    private void OnDisable()
+    {
+        attackSystem.Dev_OnDisable();
+    }
+
     public override void ReceiveDamage(float damage)
     {
         Health -= damage;
@@ -25,7 +47,7 @@ public class Turret : Enemy
 
     private IEnumerator Perish()
     {
-        attackSystem.enabled = false;
+        attackSystem.Dev_OnDisable();
         float initialXAngle = verticalRotator.localEulerAngles.x;
         if (initialXAngle >= 270f && initialXAngle <= 360f) initialXAngle -= 360f;
         float finalXAngle = droopAngle;

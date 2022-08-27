@@ -61,11 +61,18 @@ public class TurretAttackSystem : MonoBehaviour
 
     RaycastHit hit;
 
-    private void OnEnable()
+    private void OnValidate()
+    {
+        horizontalAnglesPerFixedUpdate = horizontalRotationSpeed * Time.fixedDeltaTime;
+        verticalAnglesPerFixedUpdate = verticalRotationSpeed * Time.fixedDeltaTime;
+        pulseWait = new WaitForSeconds(1f / radarPulseRate);
+        cooldownWait = new WaitForSeconds(1f / fireRate);
+    }
+
+    public void Dev_OnEnable()
     {
         float bulletLifespan = bullet.Lifespan;
         int capacity = bulletLifespan > 0f ? Mathf.CeilToInt(bulletLifespan * fireRate) : fireRate;
-
         bulletPool = new ObjectPool<Projectile>(
             () =>
             {
@@ -90,17 +97,9 @@ public class TurretAttackSystem : MonoBehaviour
         );
     }
 
-    private void OnValidate()
-    {
-        horizontalAnglesPerFixedUpdate = horizontalRotationSpeed * Time.fixedDeltaTime;
-        verticalAnglesPerFixedUpdate = verticalRotationSpeed * Time.fixedDeltaTime;
-        pulseWait = new WaitForSeconds(1f / radarPulseRate);
-        cooldownWait = new WaitForSeconds(1f / fireRate);
-    }
+    public void Dev_Start() => StartCoroutine(EmitRadarPulse());
 
-    private void Start() => StartCoroutine(EmitRadarPulse());
-
-    private void OnDisable()
+    public void Dev_OnDisable()
     {
         StopAllCoroutines();
         bulletPool.Clear();
@@ -149,8 +148,7 @@ public class TurretAttackSystem : MonoBehaviour
 
             Projectile projectile = bulletPool.Get();
             projectile.transform.position = bulletSpawn.position;
-            projectile.transform.rotation = Quaternion.identity;
-            projectile.Launch(new Ray(bulletSpawn.position, direction), launchSpeed, targetType);
+            projectile.Launch(new Ray(bulletSpawn.position, direction), launchSpeed, targetType, bulletSpawn.position);
             bulletSpawnIndex = bulletSpawnIndex + 1 < bulletSpawns.Length ? bulletSpawnIndex + 1 : 0;
 
             yield return cooldownWait;

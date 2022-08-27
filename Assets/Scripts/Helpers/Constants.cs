@@ -21,6 +21,7 @@ namespace Constants
         public const int Player = 6;
         public const int Enemy = 7;
         public const int Projectile = 8;
+        public const int EquipableEntity = 9;
     }
 
     public static class LayerMask
@@ -29,6 +30,7 @@ namespace Constants
         public const int Player = 1 << Layer.Player;
         public const int Enemy = 1 << Layer.Enemy;
         public const int Projectile = 1 << Layer.Projectile;
+        public const int EquipableEntity = 1 << Layer.EquipableEntity;
     }
 
     public class WaitFor

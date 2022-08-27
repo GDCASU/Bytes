@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 
 public class WeaponHandler : MonoBehaviour
 {
-    [SerializeField]
-    private Transform handler;
+    [field: SerializeField]
+    public Transform WeaponContainer { get; private set; }
+    [field: SerializeField]
+    public Transform ProjectileSpawn { get; protected set; }
     [SerializeField]
     private int currentWeaponIndex;
     [SerializeField]
@@ -25,12 +27,8 @@ public class WeaponHandler : MonoBehaviour
             Weapon weapon = weapons[i];
             if (weapon != null)
             {
-                weapon.GetComponent<Collider>().enabled = false;
-                weapon.transform.position = handler.position;
-                weapon.transform.rotation = handler.rotation;
-                weapon.transform.parent = handler.transform;
-                weapon.GetComponent<EquipableEntity>().Equip();
-                weapon.PrepareWeapon();
+                weapon.PrepareWeapon(this);
+                weapon.gameObject.SetActive(false);
                 numOfWeapons++;
             }
         }
@@ -40,7 +38,7 @@ public class WeaponHandler : MonoBehaviour
         SetCurrentWeapon(currentWeaponIndex);
     }
 
-    private void OnEnable()
+    public void Dev_OnEnable()
     {
         InputManager.PlayerActions.SwitchWeapon.performed += OnSwitchWeapon;
 
@@ -54,7 +52,7 @@ public class WeaponHandler : MonoBehaviour
 
         InputManager.PlayerActions.Strike.performed += OnStrike;
     }
-    private void OnDisable()
+    public void Dev_OnDisable()
     {
         InputManager.PlayerActions.SwitchWeapon.performed -= OnSwitchWeapon;
 
@@ -85,19 +83,17 @@ public class WeaponHandler : MonoBehaviour
         }
 
         SetCurrentWeapon(currentWeaponIndex);
+    }
+
+    private void SetCurrentWeapon(int weaponIndex)
+    {
+        currentWeapon = weapons[weaponIndex];
         currentWeapon.gameObject.SetActive(true);
     }
 
-    private void SetCurrentWeapon(int weaponIndex) => currentWeapon = weapons[weaponIndex];
-
-    private void SetNewWeapon(Weapon newWeapon, int weaponIndex)
+        private void SetNewWeapon(Weapon newWeapon, int weaponIndex)
     {
-        newWeapon.transform.SetParent(handler);
-        newWeapon.transform.localPosition = Vector3.zero;
-        newWeapon.transform.localRotation = Quaternion.identity;
-        newWeapon.GetComponent<Collider>().enabled = false;
-        newWeapon.GetComponent<EquipableEntity>().Equip();
-        newWeapon.PrepareWeapon();
+        newWeapon.PrepareWeapon(this);
         weapons[weaponIndex] = newWeapon;
     }
 
@@ -111,35 +107,19 @@ public class WeaponHandler : MonoBehaviour
         if (numOfWeapons < maxWeapons)
         {
             // Add new weapon to empty slot
-            for (int i = 0; i < maxWeapons; i++)
+            if (weapons[numOfWeapons] == null)
             {
-                if (weapons[i] == null)
-                {
-                    SetNewWeapon(newWeapon, i);
-                    newWeapon.PrepareWeapon();
-                    newWeapon.gameObject.SetActive(false);
-                    numOfWeapons++;
-                }
+                SetNewWeapon(newWeapon, numOfWeapons);
+                newWeapon.gameObject.SetActive(false);
+                numOfWeapons++;
             }
         } 
         else
         {
             // Replace current weapon with the new one
-            // *Note: disabling and activating a gameobject shall ensure the animator does not mess with positioning when overriding parent transforms.
-            currentWeapon.gameObject.SetActive(false);
-            currentWeapon.GetComponent<Collider>().enabled = true;
-            currentWeapon.GetComponent<EquipableEntity>().Unequip();
-            currentWeapon.transform.position = newWeapon.transform.position;
-            currentWeapon.transform.rotation = newWeapon.transform.rotation;
-            currentWeapon.transform.SetParent(null);
-            currentWeapon.gameObject.SetActive(true);
-            currentWeapon.NeglectWeapon();
-
-            newWeapon.gameObject.SetActive(false);
+            currentWeapon.NeglectWeapon(newWeapon.transform.position, newWeapon.transform.rotation);
             SetNewWeapon(newWeapon, currentWeaponIndex);
             SetCurrentWeapon(currentWeaponIndex);
-            newWeapon.gameObject.SetActive(true);
-            newWeapon.PrepareWeapon();
         }
     }
 }
