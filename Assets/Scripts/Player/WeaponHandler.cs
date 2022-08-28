@@ -5,21 +5,16 @@ using UnityEngine.InputSystem;
 
 public class WeaponHandler : MonoBehaviour
 {
-    [field: SerializeField]
-    public Transform WeaponContainer { get; private set; }
-    [field: SerializeField]
-    public Transform ProjectileSpawn { get; protected set; }
-    [SerializeField]
-    private int currentWeaponIndex;
-    [SerializeField]
-    private Weapon[] weapons;
+    [field: SerializeField] public Transform WeaponContainer { get; private set; }
+    [field: SerializeField] public Transform ProjectileSpawn { get; protected set; }
+    [SerializeField] int currentWeaponIndex;
+    [SerializeField] Weapon[] weapons;
 
-    private Weapon currentWeapon;
+    Weapon currentWeapon;
+    int maxWeapons = 0;
+    int numOfWeapons = 0;
 
-    private int maxWeapons = 0;
-    private int numOfWeapons = 0;
-
-    private void Awake()
+    void Awake()
     {
         maxWeapons = weapons.Length;
         for (int i = 0; i < maxWeapons; i++)
@@ -27,7 +22,10 @@ public class WeaponHandler : MonoBehaviour
             Weapon weapon = weapons[i];
             if (weapon != null)
             {
-                weapon.PrepareWeapon(this);
+                WeaponEquipData data = new WeaponEquipData();
+                data.container = WeaponContainer;
+                data.projectileSpawn = ProjectileSpawn;
+                weapon.PrepareWeapon(data);
                 weapon.gameObject.SetActive(false);
                 numOfWeapons++;
             }
@@ -67,7 +65,7 @@ public class WeaponHandler : MonoBehaviour
         InputManager.PlayerActions.Strike.performed -= OnStrike;
     }
 
-    private void OnSwitchWeapon(InputAction.CallbackContext context)
+    void OnSwitchWeapon(InputAction.CallbackContext context)
     {
         if (numOfWeapons <= 1) return;
 
@@ -85,22 +83,25 @@ public class WeaponHandler : MonoBehaviour
         SetCurrentWeapon(currentWeaponIndex);
     }
 
-    private void SetCurrentWeapon(int weaponIndex)
+    void SetCurrentWeapon(int weaponIndex)
     {
         currentWeapon = weapons[weaponIndex];
         currentWeapon.gameObject.SetActive(true);
     }
 
-        private void SetNewWeapon(Weapon newWeapon, int weaponIndex)
+    void SetNewWeapon(Weapon newWeapon, int weaponIndex)
     {
-        newWeapon.PrepareWeapon(this);
+        WeaponEquipData data = new WeaponEquipData();
+        data.container = WeaponContainer;
+        data.projectileSpawn = ProjectileSpawn;
+        newWeapon.PrepareWeapon(data);
         weapons[weaponIndex] = newWeapon;
     }
 
-    private void OnBlock(InputAction.CallbackContext context) => currentWeapon?.Block(context.phase == InputActionPhase.Performed);
-    private void OnReload(InputAction.CallbackContext context) => currentWeapon?.Reload();
-    private void OnShoot(InputAction.CallbackContext context) => currentWeapon?.Shoot(context.phase == InputActionPhase.Performed);
-    private void OnStrike(InputAction.CallbackContext context) => currentWeapon?.Strike();
+    void OnBlock(InputAction.CallbackContext context) => currentWeapon?.Block(context.phase == InputActionPhase.Performed);
+    void OnReload(InputAction.CallbackContext context) => currentWeapon?.Reload();
+    void OnShoot(InputAction.CallbackContext context) => currentWeapon?.Shoot(context.phase == InputActionPhase.Performed);
+    void OnStrike(InputAction.CallbackContext context) => currentWeapon?.Strike();
 
     public void TakeNewWeapon(Weapon newWeapon)
     {
@@ -117,7 +118,10 @@ public class WeaponHandler : MonoBehaviour
         else
         {
             // Replace current weapon with the new one
-            currentWeapon.NeglectWeapon(newWeapon.transform.position, newWeapon.transform.rotation);
+            WeaponUnequipData data = new WeaponUnequipData();
+            data.dropPosition = newWeapon.transform.position;
+            data.dropRotation = newWeapon.transform.rotation;
+            currentWeapon.NeglectWeapon(data);
             SetNewWeapon(newWeapon, currentWeaponIndex);
             SetCurrentWeapon(currentWeaponIndex);
         }

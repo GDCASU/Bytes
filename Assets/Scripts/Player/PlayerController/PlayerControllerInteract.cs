@@ -21,9 +21,9 @@ public partial class PlayerController
         }
     }
 
-    private void ExamineEntity(EquipableEntity entity)
+    void ExamineEntity(EquipableEntity entity)
     {
-        if (!entity.CheckIfEquiped())
+        if (!entity.IsEquipped)
         {
             switch (entity.entityType)
             {
