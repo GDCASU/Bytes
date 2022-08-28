@@ -16,26 +16,24 @@ public partial class PlayerController
         if (InputManager.PlayerActions.Interact.WasPerformedThisFrame() && Physics.Raycast(playerCamera.transform.position,
             playerCamera.transform.forward, out RaycastHit hit, interactVariables.interactRange))
         {
-            if (hit.collider.GetComponent<EquipableEntity>())
-            {
-                ExamineEntity(hit);
-            }
+            EquipableEntity entity = hit.transform.GetComponent<EquipableEntity>();
+            if (entity) ExamineEntity(entity);
         }
     }
 
-    private void ExamineEntity(RaycastHit hit)
+    void ExamineEntity(EquipableEntity entity)
     {
-        if (!hit.collider.GetComponent<EquipableEntity>().CheckIfEquiped())
+        if (!entity.IsEquipped)
         {
-            switch (hit.collider.GetComponent<EquipableEntity>().entityType)
+            switch (entity.entityType)
             {
                 case EquipableEntity.EntityType.Weapon:
                     print("Got Weapon");
-                    this.GetComponent<WeaponHandler>().TakeNewWeapon(hit.transform.GetComponent<IWeapon>());
+                    this.GetComponent<WeaponHandler>().TakeNewWeapon(entity.GetComponent<Weapon>());
                     break;
                 case EquipableEntity.EntityType.Ability:
                     print("Got Ability");
-                    this.GetComponent<AbilityHandler>().TakeNewAbility(hit.transform.GetComponent<EquipableEntity>());
+                    this.GetComponent<AbilityHandler>().TakeNewAbility(entity);
                     break;
                 default:
                     Debug.LogError("Equipable entity has an unrecognizable type.");

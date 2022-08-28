@@ -115,7 +115,7 @@ public partial class PlayerController
         }
 
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, capCollider.radius * transform.lossyScale.x, -transform.up,
-           baseMovementVariables.groundCheckDistance + .01f * transform.lossyScale.y, ~ignores);
+           baseMovementVariables.groundCheckDistance + .01f * transform.lossyScale.y, ~ignores, QueryTriggerInteraction.Ignore);
 
 
         foreach (RaycastHit collision in hits)

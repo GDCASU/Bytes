@@ -27,7 +27,7 @@ public partial class PlayerController
     public void HandleCrouchInput()
     {
         crouchVariables.topIsClear = !Physics.Raycast(transform.position + newForwardandRight.normalized * capCollider.radius,
-            transform.up, capCollider.height + .01f * transform.lossyScale.y, ~ignores); // Check if there's nothing blocking the player from standing up
+            transform.up, capCollider.height + .01f * transform.lossyScale.y, ~ignores, QueryTriggerInteraction.Ignore); // Check if there's nothing blocking the player from standing up
 
         if (isGrounded)
         {

@@ -58,7 +58,7 @@ public class LaserDiode : MonoBehaviour
             if (objectHit.CompareTag("Player") && objectHit.GetComponent<Player>())
             {
                 // Cause damage to the player
-                objectHit.GetComponent<Player>().TakeDamage(damage);
+                objectHit.GetComponent<Player>().ReceiveDamage(damage);
             }
             // Laser extends to the object it hits
             lineRenderer.SetPosition(0, Vector3.zero);
