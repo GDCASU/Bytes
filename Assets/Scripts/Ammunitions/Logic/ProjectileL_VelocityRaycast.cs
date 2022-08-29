@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ProjectileVisual))]
 public class ProjectileL_VelocityRaycast : Projectile
 {
     [SerializeField]
@@ -23,13 +24,9 @@ public class ProjectileL_VelocityRaycast : Projectile
         buttDistanceAlongRay = 0f;
         this.launchSpeed = launchSpeed * Time.fixedDeltaTime;
 
-        if (visual)
-        {
-            ProjectileVisualData data = new ProjectileVisualData();
-            data.startPosition = visualSpawnPosition;
-            visual.Play(data);
-        }
-            
+        ProjectileVisualData data = new ProjectileVisualData();
+        data.startPosition = visualSpawnPosition;
+        visual.Play(data);
 
         StartCoroutine(Travel());
     }
@@ -63,7 +60,6 @@ public class ProjectileL_VelocityRaycast : Projectile
     {
         base.Perish();
         StopCoroutine(Travel());
-        if (visual)
-            visual.Stop();
+        visual.Stop();
     }
 }

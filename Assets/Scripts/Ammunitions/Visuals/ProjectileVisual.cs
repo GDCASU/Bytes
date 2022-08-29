@@ -9,6 +9,8 @@ public struct ProjectileVisualData
 
 public abstract class ProjectileVisual : MonoBehaviour
 {
+    [SerializeField] protected Transform visual;
+
     public Action Finished;
 
     public abstract void Play(ProjectileVisualData data);

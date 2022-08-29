@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileV_Line : ProjectileVisual
+public class ProjectileV_InstantTrail : ProjectileVisual
 {
     [SerializeField] float width;
     [SerializeField] float dissipateDuration;
@@ -12,7 +12,9 @@ public class ProjectileV_Line : ProjectileVisual
 
     void Awake()
     {
-        line = GetComponent<LineRenderer>();
+        if (!line.TryGetComponent(out line))
+            Debug.LogError("Assign a Transform with a Line Renderer to " + name);
+
         originalColor = line.material.color;
         line.startWidth = width;
         line.endWidth = width;
