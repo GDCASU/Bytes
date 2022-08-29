@@ -247,7 +247,6 @@ public partial class PlayerController
                     Vector3 newVelocity = newForwardandRight.normalized *
                         (currentForwardAndRight.magnitude < .1f && stuckBetweenSurfacesHelper > 1 ? 1f : airControl) +
                         currentForwardAndRight;
-                    print(airControl);
                     if (newVelocity.magnitude < baseMovementVariables.minAirVelocity) newVelocity = newVelocity.normalized * baseMovementVariables.minAirVelocity;
                     rb.velocity = newVelocity + rb.velocity.y * Vector3.up;
                 }
