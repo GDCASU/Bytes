@@ -36,7 +36,7 @@ public partial class PlayerController : MonoBehaviour
     #endregion
 
     #region Primitive Variables
-    private float x, z;
+    private float xDir, zDir;
     private float g;
     private float pvX, pvZ;
     private float y;
@@ -171,13 +171,13 @@ public partial class PlayerController : MonoBehaviour
             ApplyGravity();
         }
         rb.velocity += totalVelocityToAdd;
-        if (rb.velocity.magnitude < baseMovementVariables.minVelocity && x == 0 && z == 0 && (isGrounded))        //If the player stops moving set its maxVelocity to walkingSpeed and set its rb velocity to 0
+        if (rb.velocity.magnitude < baseMovementVariables.minVelocity && xDir == 0 && zDir == 0 && (isGrounded))        //If the player stops moving set its maxVelocity to walkingSpeed and set its rb velocity to 0
         {
             rb.velocity = Vector3.zero;
             isSprinting = false;
         }
         if (stuckBetweenSurfacesHelper >= 2) rb.velocity -= rb.velocity.y * Vector3.up;     //Allows the palyer to slide around when stuck between two or more surfaces
-        if (vaultMechanic) ClimbChecks();
+        // if (vaultMechanic) ClimbChecks();
     }
 
     public void UpdateRespawnPoint() => lastViablePosition = transform.position;
@@ -199,8 +199,8 @@ public partial class PlayerController : MonoBehaviour
     public void ResetSprintSpeed() => baseMovementVariables.maxSprintVelocity = baseMovementVariables.originalSprintSpeed;
     public void DisableMovement()
     {
-        x = 0;
-        z = 0;
+        xDir = 0;
+        zDir = 0;
         movementDisabled = true;
     }
     public void EnableMovement() => movementDisabled = false;

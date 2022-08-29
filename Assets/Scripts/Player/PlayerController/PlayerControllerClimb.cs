@@ -57,7 +57,7 @@ public partial class PlayerController
         if (climbVariables._climbingCooldown > 0) climbVariables._climbingCooldown -= Time.fixedDeltaTime;
         if (playerState == PlayerState.InAir && vaultVariables.forwardCheck     //Check that the player is in the air and there is a valid wall in front of their center
             && rb.velocity.y > climbVariables.maxNegativeVelocityToClimb           //Check that player is not falling too fast to be able to start climbing
-            && (z > 0 || currentForwardAndRight.magnitude > 0f)                 //Check that the player pressed the forward input or that the current forwardAndRight is  bigger than 0
+            && (zDir > 0 || currentForwardAndRight.magnitude > 0f)                 //Check that the player pressed the forward input or that the current forwardAndRight is  bigger than 0
             && climbVariables._climbingCooldown <= 0)                           //Check that the climbing ability is not on cooldown
         {
             previousState = playerState;
@@ -100,8 +100,8 @@ public partial class PlayerController
                 yield break;
             }
             //Add the up and side forces based on the players input if they are not past their max velocities
-            rb.velocity += upwardDirection.normalized * ((z > 0 && rb.velocity.y < climbVariables.maxClimbingVelocity) ? climbAcceleration : 0f);
-            rb.velocity += (currentForwardAndRight.magnitude < climbVariables.maxClimbStrafeVelocity) ? playerOnWallRightDirection * x * climbingStrafe : Vector3.zero - currentForwardAndRight * climbVariables.climbingStrafeFriction;
+            rb.velocity += upwardDirection.normalized * ((zDir > 0 && rb.velocity.y < climbVariables.maxClimbingVelocity) ? climbAcceleration : 0f);
+            rb.velocity += (currentForwardAndRight.magnitude < climbVariables.maxClimbStrafeVelocity) ? playerOnWallRightDirection * xDir * climbingStrafe : Vector3.zero - currentForwardAndRight * climbVariables.climbingStrafeFriction;
             climbAcceleration -= climbVariables.climbAccelerationDecreaser;
             climbingTime -= Time.fixedDeltaTime;
             climbingStrafe -= climbVariables.climbStrafeDecreaser;

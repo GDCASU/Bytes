@@ -53,7 +53,7 @@ public partial class PlayerController
         airControl = jumpVariables.jumpInAirControl;
         if (inAirJump)
         {
-            if ((x != 0 || z != 0)) rb.velocity = newForwardandRight.normalized * ((currentForwardAndRight.magnitude < baseMovementVariables.maxSprintVelocity) ? baseMovementVariables.maxSprintVelocity : currentForwardAndRight.magnitude);
+            if ((xDir != 0 || zDir != 0)) rb.velocity = newForwardandRight.normalized * ((currentForwardAndRight.magnitude < baseMovementVariables.maxSprintVelocity) ? baseMovementVariables.maxSprintVelocity : currentForwardAndRight.magnitude);
             else rb.velocity = Vector3.zero;
         }
         else rb.velocity -= rb.velocity.y * Vector3.up;
