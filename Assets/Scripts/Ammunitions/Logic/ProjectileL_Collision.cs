@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ProjectileVisual))]
 public class ProjectileL_Collision : Projectile
 {
     protected Rigidbody body;
@@ -20,12 +21,9 @@ public class ProjectileL_Collision : Projectile
         transform.rotation = Quaternion.LookRotation(ray.direction);
         body.velocity = ray.direction * launchSpeed;
 
-        if (visual)
-        {
-            ProjectileVisualData data = new ProjectileVisualData();
-            data.startPosition = visualSpawnPosition;
-            visual.Play(data);
-        }   
+        ProjectileVisualData data = new ProjectileVisualData();
+        data.startPosition = visualSpawnPosition;
+        visual.Play(data);
     }
 
     protected void OnCollisionEnter(Collision collision)
@@ -33,14 +31,12 @@ public class ProjectileL_Collision : Projectile
         if (collision.gameObject.layer == targetType.GetLayer())
         {
             collision.transform.root.GetComponent<Character>().ReceiveDamage(impactDamage);
-            if (visual)
-                visual.Stop();
+            visual.Stop();
             Perish();
         }
         else if (collision.gameObject.layer == Constants.Layer.Environment)
         {
-            if (visual)
-                visual.Stop();
+            visual.Stop();
             Perish();
         }
     }

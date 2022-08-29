@@ -86,7 +86,8 @@ public class WeaponHandler : MonoBehaviour
     void SetCurrentWeapon(int weaponIndex)
     {
         currentWeapon = weapons[weaponIndex];
-        currentWeapon.gameObject.SetActive(true);
+        if (currentWeapon)
+            currentWeapon.gameObject.SetActive(true);
     }
 
     void SetNewWeapon(Weapon newWeapon, int weaponIndex)
@@ -98,10 +99,10 @@ public class WeaponHandler : MonoBehaviour
         weapons[weaponIndex] = newWeapon;
     }
 
-    void OnBlock(InputAction.CallbackContext context) => currentWeapon?.Block(context.phase == InputActionPhase.Performed);
-    void OnReload(InputAction.CallbackContext context) => currentWeapon?.Reload();
-    void OnShoot(InputAction.CallbackContext context) => currentWeapon?.Shoot(context.phase == InputActionPhase.Performed);
-    void OnStrike(InputAction.CallbackContext context) => currentWeapon?.Strike();
+    void OnBlock(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Block(context.phase == InputActionPhase.Performed); }
+    void OnReload(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Reload(); }
+    void OnShoot(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Shoot(context.phase == InputActionPhase.Performed); }
+    void OnStrike(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Strike(); }
 
     public void TakeNewWeapon(Weapon newWeapon)
     {
@@ -111,7 +112,10 @@ public class WeaponHandler : MonoBehaviour
             if (weapons[numOfWeapons] == null)
             {
                 SetNewWeapon(newWeapon, numOfWeapons);
-                newWeapon.gameObject.SetActive(false);
+                if (currentWeapon)
+                    newWeapon.gameObject.SetActive(false);
+                else
+                    SetCurrentWeapon(numOfWeapons);
                 numOfWeapons++;
             }
         } 

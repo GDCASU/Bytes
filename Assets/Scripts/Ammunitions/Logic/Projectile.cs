@@ -7,8 +7,8 @@ public abstract class Projectile: MonoBehaviour
 {
     [SerializeField] protected float impactDamage;
     [field: SerializeField] public float Lifespan { get; private set; }
-    [SerializeField] protected ProjectileVisual visual;
 
+    protected ProjectileVisual visual;
     protected Ray ray;
     protected CharacterType targetType;
     protected WaitForSeconds ageWait;
@@ -16,6 +16,7 @@ public abstract class Projectile: MonoBehaviour
 
     protected virtual void Awake()
     {
+        visual = GetComponent<ProjectileVisual>();
         transform.SetParent(ProjectileManager.singleton.transform);
         ageWait = new WaitForSeconds(Lifespan);
     }

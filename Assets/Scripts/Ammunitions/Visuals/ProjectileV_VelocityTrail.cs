@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileV_Trail : ProjectileVisual
+public class ProjectileV_VelocityTrail : ProjectileVisual
 {
     [SerializeField] float headWidth;
     [SerializeField] float convergeDuration;
@@ -11,7 +11,9 @@ public class ProjectileV_Trail : ProjectileVisual
 
     void Awake()
     {
-        trail = GetComponent<TrailRenderer>();
+        if (!visual.TryGetComponent(out trail))
+            Debug.LogError("Assign a Transform with a TrailRenderer to " + name);
+
         trail.startWidth = headWidth;
     }
 
@@ -25,7 +27,7 @@ public class ProjectileV_Trail : ProjectileVisual
 
     public override void Play(ProjectileVisualData data)
     {
-        transform.position = data.startPosition;
+        visual.position = data.startPosition;
         trail.Clear();
         StartCoroutine(Converge());
     }
@@ -35,15 +37,15 @@ public class ProjectileV_Trail : ProjectileVisual
     IEnumerator Converge()
     {
         float elapsedTime = 0f;
-        Vector3 startPosition = transform.localPosition;
+        Vector3 startPosition = visual.localPosition;
         Vector3 endPosition = new Vector3(0f, 0f, 0f);
         
         while(elapsedTime < convergeDuration)
         {
-            transform.localPosition = Vector3.Lerp(startPosition, endPosition, elapsedTime / convergeDuration);
+            visual.localPosition = Vector3.Lerp(startPosition, endPosition, elapsedTime / convergeDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        transform.localPosition = endPosition;
+        visual.localPosition = endPosition;
     }
 }

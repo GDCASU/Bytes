@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1388828194}
   - component: {fileID: 1388828193}
   - component: {fileID: 6576096072594345299}
+  - component: {fileID: 1584524808288262364}
   m_Layer: 9
   m_Name: Glock
   m_TagString: Untagged
@@ -84,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityType: 0
   abilityType: 0
-  isEquiped: 0
+  <IsEquipped>k__BackingField: 0
 --- !u!114 &6576096072594345299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,18 +98,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830cf415a13dfc649b6c32ef25a0574b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetPosition: {x: 0.45, y: 0, z: -0.65}
+  offsetPosition: {x: 0.5, y: -0.22, z: 0.4}
   offsetRotation: {x: 0, y: 0, z: 0}
   maxAmmo: 10
   fireRate: 5
-  reloadTime: 1.5
-  isProjectileInstant: 0
+  reloadDuration: 1
   launchSpeed: 20
-  projectile: {fileID: 6427453794181260337, guid: 39b36fa5eefe33a4bb1a8c623ad44c63,
+  projectile: {fileID: 2104053451812614757, guid: 4dc80902a384e454791a8f2f720ece0b,
     type: 3}
   visualProjectileSpawn: {fileID: 4368469367402757710}
   currentAmmo: 0
   isAutomatic: 0
+--- !u!114 &1584524808288262364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4324503741607062822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a896ad58ac471a42878da2f9e5b1140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4324503741732685260
 GameObject:
   m_ObjectHideFlags: 0

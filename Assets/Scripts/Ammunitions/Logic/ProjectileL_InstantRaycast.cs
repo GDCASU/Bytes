@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ProjectileVisual))]
 public class ProjectileL_InstantRaycast : Projectile
 {
     [SerializeField] protected float maxRange;
@@ -10,8 +11,7 @@ public class ProjectileL_InstantRaycast : Projectile
     protected override void Awake()
     {
         base.Awake();
-        if (visual)
-            visual.Finished = Perish;
+        visual.Finished = Perish;
     }
 
     public override void Launch(Ray ray, float launchSpeed, CharacterType targetType, Vector3 visualSpawnPosition)
@@ -29,15 +29,10 @@ public class ProjectileL_InstantRaycast : Projectile
             endLinePosition = hit.point;
         }
 
-        if (visual)
-        {
-            ProjectileVisualData data = new ProjectileVisualData();
-            data.startPosition = visualSpawnPosition;
-            data.endPosition = endLinePosition;
-            visual.Play(data);
-        }
-        else
-            Perish();
+        ProjectileVisualData data = new ProjectileVisualData();
+        data.startPosition = visualSpawnPosition;
+        data.endPosition = endLinePosition;
+        visual.Play(data);
     }
 
     protected override void Perish()
