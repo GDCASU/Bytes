@@ -32,7 +32,8 @@ public partial class PlayerController
         if (_jumpBuffer <= 0) _jumpBuffer = 0;
         if (playerState != PlayerState.Climbing)
         {
-            if (_jumpBuffer > 0 && (isGrounded || _coyoteTimer > 0) && playerState != PlayerState.Jumping && (crouchMechanic ? crouchVariables.topIsClear : true)) StartCoroutine(JumpCoroutine(false));
+            if (_jumpBuffer > 0 && (isGrounded || _coyoteTimer > 0) && playerState != PlayerState.Jumping && (crouchMechanic ? crouchVariables.topIsClear : true))
+                StartCoroutine(JumpCoroutine(false));
             else if (playerState == PlayerState.InAir && _inAirJumps > 0 && _jumpBuffer > 0)
             {
                 _inAirJumps--;

@@ -5,78 +5,141 @@ using UnityEngine.InputSystem;
 
 public partial class Firearm : RangedWeapon
 {
-    private WaitForSeconds cooldownWait;
-    private WaitForSeconds reloadWait;
+    [Header("Specialized Properties")]
+    [SerializeField] bool isAutomatic;
+    
+    bool isTriggerHeld;
+    bool continousRoutineActive;
+    WaitForSeconds shootCooldownWait;
+    WaitForSeconds reloadWait;
 
-    private void Awake()
+    FirearmAnimatorInvoker animInvoker;
+
+    protected override void Awake()
     {
-        animator = GetComponent<Animator>();
+        base.Awake();
         currentAmmo = maxAmmo;
+
+        animInvoker = GetComponent<FirearmAnimatorInvoker>();
+        animInvoker.Bind(animator);
+        FirearmAnimationData data = new FirearmAnimationData();
+        data.shootSpeed = fireRate;
+        data.reloadSpeed = 1f / reloadDuration;
+        animInvoker.SetParameters(data);
     }
 
     protected void OnValidate()
     {
-        cooldownWait = new WaitForSeconds(1f / fireRate);
-        reloadWait = new WaitForSeconds(reloadTime);
+        shootCooldownWait = new WaitForSeconds(1f / fireRate);
+        reloadWait = new WaitForSeconds(reloadDuration);
+
+        if (animInvoker)
+        {
+            FirearmAnimationData data = new FirearmAnimationData();
+            data.shootSpeed = fireRate;
+            data.reloadSpeed = 1f / reloadDuration;
+            animInvoker.SetParameters(data);
+        }
     }
 
-    private void Update()
+    protected override void OnEnable()
     {
-        if (isTriggerDown && canFire)
+        base.OnEnable();
+
+        canFire = true;
+        isReloading = false;
+        isTriggerHeld = false;
+        continousRoutineActive = false;
+
+        animInvoker.ResetAnimator();
+        if (currentAmmo <= 0)
+            StartCoroutine(CR_Reload());
+            
+    }
+
+    void OnDisable() => StopAllCoroutines();
+
+    public override void Shoot(bool isStarting)
+    {
+        if (isAutomatic)
         {
-            if (!isReloading && currentAmmo <= 0)
+            isTriggerHeld = isStarting;
+            if (canFire && !continousRoutineActive && isStarting)
             {
-                StartCoroutine(UndergoReload());
+                StartCoroutine(CR_ContinouslyFireBullets());
             }
-            else
+        }
+        else
+        {
+            if (canFire && isStarting)
             {
-                FireBullet();
+                if (currentAmmo > 0)
+                {
+                    FireBullet();
+                    StartCoroutine(CR_UndergoShootCooldown());
+                }
+                else
+                    StartCoroutine(CR_Reload());
             }
         }
     }
 
-    public override void Shoot(bool isStarting)
-    {
-        isTriggerDown = isStarting;
-    }
-
-    private void FireBullet()
+    void FireBullet()
     {
         Ray ray = new Ray(projectileSpawn.position, projectileSpawn.forward);
-        Instantiate(projectile, projectileSpawn.position, Quaternion.identity).GetComponent<Projectile>().Launch(ray, launchSpeed);
+        Projectile enabledProjectile = projectilePool.Get();
+        enabledProjectile.transform.position = projectileSpawn.position;
+        enabledProjectile.Launch(ray, launchSpeed, Target, visualProjectileSpawn.position);
         currentAmmo--;
-        StartCoroutine(Cooldown());
 
-        animator.SetTrigger("Shoot");
+        animInvoker.Play(FirearmAnimation.Shoot);
     }
 
-    public override void Strike()
-    {
-        Debug.Log("Strike");
-    }
+    public override void Strike() { }
 
     public override void Reload()
     {
-        if (isReloading || currentAmmo == maxAmmo) return;
-        StartCoroutine(UndergoReload());
+        if (!canFire || isReloading || currentAmmo == maxAmmo) return;
+        StartCoroutine(CR_Reload());
     }
 
-    private IEnumerator Cooldown()
+    IEnumerator CR_ContinouslyFireBullets()
+    {
+        continousRoutineActive = true;
+        while (isTriggerHeld)
+        {
+            if (!isReloading)
+            {
+                if (currentAmmo <= 0)
+                {
+                    yield return StartCoroutine(CR_Reload());
+                    continue;
+                }
+
+                FireBullet();
+            }
+
+            yield return StartCoroutine(CR_UndergoShootCooldown());
+        }
+        continousRoutineActive = false;
+    }
+
+    IEnumerator CR_UndergoShootCooldown()
     {
         canFire = false;
-        yield return cooldownWait;
+        yield return shootCooldownWait;
         canFire = true;
     }
 
-    private IEnumerator UndergoReload()
+    IEnumerator CR_Reload()
     {
-        animator.SetBool("MustReload", true);
+        animInvoker.Play(FirearmAnimation.Reload);
 
         canFire = false;
         isReloading = true;
         yield return reloadWait;
         currentAmmo = maxAmmo;
-        canFire = true;
         isReloading = false;
+        canFire = true;
     }
 }

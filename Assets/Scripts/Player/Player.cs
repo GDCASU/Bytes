@@ -2,10 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, ICharacter
+public class Player : Character
 {
-    public void TakeDamage(float damage)
+    WeaponHandler weaponHandler;
+    PlayerUI ui;
+
+    void Awake()
     {
-        Debug.Log("Player has received " + damage + " damage.");
+        ui = GetComponent<PlayerUI>();
+        weaponHandler = GetComponent<WeaponHandler>();
+    }
+
+    void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+            ui.RestrictCursor();
+        else
+            ui.FreeCursor();
+    }
+
+    protected override void OnEnable() => weaponHandler.Dev_OnEnable();
+
+    void OnDisable() => weaponHandler.Dev_OnDisable();
+
+    public override void ReceiveDamage(float damage)
+    {
+        
+    }
+
+    public override void ReceiveHealth(float health)
+    {
+        
     }
 }

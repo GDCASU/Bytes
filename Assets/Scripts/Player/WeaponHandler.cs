@@ -5,31 +5,28 @@ using UnityEngine.InputSystem;
 
 public class WeaponHandler : MonoBehaviour
 {
-    [SerializeField]
-    private Transform handler;
-    [SerializeField]
-    private int currentWeaponIndex;
-    [SerializeField]
-    private IWeapon[] weapons;
+    [field: SerializeField] public Transform WeaponContainer { get; private set; }
+    [field: SerializeField] public Transform ProjectileSpawn { get; protected set; }
+    [SerializeField] int currentWeaponIndex;
+    [SerializeField] Weapon[] weapons;
 
-    private IWeapon currentWeapon;
+    Weapon currentWeapon;
+    int maxWeapons = 0;
+    int numOfWeapons = 0;
 
-    private int maxWeapons = 0;
-    private int numOfWeapons = 0;
-
-    private void Awake()
+    void Awake()
     {
         maxWeapons = weapons.Length;
         for (int i = 0; i < maxWeapons; i++)
         {
-            IWeapon weapon = weapons[i];
+            Weapon weapon = weapons[i];
             if (weapon != null)
             {
-                weapon.GetComponent<Collider>().enabled = false;
-                weapon.transform.position = handler.position;
-                weapon.transform.rotation = handler.rotation;
-                weapon.transform.parent = handler.transform;
-                weapon.GetComponent<EquipableEntity>().Equip();
+                WeaponEquipData data = new WeaponEquipData();
+                data.container = WeaponContainer;
+                data.projectileSpawn = ProjectileSpawn;
+                weapon.PrepareWeapon(data);
+                weapon.gameObject.SetActive(false);
                 numOfWeapons++;
             }
         }
@@ -39,7 +36,7 @@ public class WeaponHandler : MonoBehaviour
         SetCurrentWeapon(currentWeaponIndex);
     }
 
-    private void OnEnable()
+    public void Dev_OnEnable()
     {
         InputManager.PlayerActions.SwitchWeapon.performed += OnSwitchWeapon;
 
@@ -53,7 +50,7 @@ public class WeaponHandler : MonoBehaviour
 
         InputManager.PlayerActions.Strike.performed += OnStrike;
     }
-    private void OnDisable()
+    public void Dev_OnDisable()
     {
         InputManager.PlayerActions.SwitchWeapon.performed -= OnSwitchWeapon;
 
@@ -68,7 +65,7 @@ public class WeaponHandler : MonoBehaviour
         InputManager.PlayerActions.Strike.performed -= OnStrike;
     }
 
-    private void OnSwitchWeapon(InputAction.CallbackContext context)
+    void OnSwitchWeapon(InputAction.CallbackContext context)
     {
         if (numOfWeapons <= 1) return;
 
@@ -84,57 +81,53 @@ public class WeaponHandler : MonoBehaviour
         }
 
         SetCurrentWeapon(currentWeaponIndex);
-        currentWeapon.gameObject.SetActive(true);
     }
 
-    private void SetCurrentWeapon(int weaponIndex) => currentWeapon = weapons[weaponIndex];
-
-    private void SetNewWeapon(IWeapon newWeapon, int weaponIndex)
+    void SetCurrentWeapon(int weaponIndex)
     {
-        newWeapon.transform.SetParent(handler);
-        newWeapon.transform.localPosition = Vector3.zero;
-        newWeapon.transform.localRotation = Quaternion.identity;
-        newWeapon.GetComponent<Collider>().enabled = false;
-        newWeapon.GetComponent<EquipableEntity>().Equip();
+        currentWeapon = weapons[weaponIndex];
+        if (currentWeapon)
+            currentWeapon.gameObject.SetActive(true);
+    }
+
+    void SetNewWeapon(Weapon newWeapon, int weaponIndex)
+    {
+        WeaponEquipData data = new WeaponEquipData();
+        data.container = WeaponContainer;
+        data.projectileSpawn = ProjectileSpawn;
+        newWeapon.PrepareWeapon(data);
         weapons[weaponIndex] = newWeapon;
     }
 
-    private void OnBlock(InputAction.CallbackContext context) => currentWeapon.Block(context.phase == InputActionPhase.Performed);
-    private void OnReload(InputAction.CallbackContext context) => currentWeapon.Reload();
-    private void OnShoot(InputAction.CallbackContext context) => currentWeapon.Shoot(context.phase == InputActionPhase.Performed);
-    private void OnStrike(InputAction.CallbackContext context) => currentWeapon.Strike();
+    void OnBlock(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Block(context.phase == InputActionPhase.Performed); }
+    void OnReload(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Reload(); }
+    void OnShoot(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Shoot(context.phase == InputActionPhase.Performed); }
+    void OnStrike(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Strike(); }
 
-    public void TakeNewWeapon(IWeapon newWeapon)
+    public void TakeNewWeapon(Weapon newWeapon)
     {
         if (numOfWeapons < maxWeapons)
         {
             // Add new weapon to empty slot
-            for (int i = 0; i < maxWeapons; i++)
+            if (weapons[numOfWeapons] == null)
             {
-                if (weapons[i] == null)
-                {
-                    SetNewWeapon(newWeapon, i);
+                SetNewWeapon(newWeapon, numOfWeapons);
+                if (currentWeapon)
                     newWeapon.gameObject.SetActive(false);
-                    numOfWeapons++;
-                }
+                else
+                    SetCurrentWeapon(numOfWeapons);
+                numOfWeapons++;
             }
         } 
         else
         {
             // Replace current weapon with the new one
-            // *Note: disabling and activating a gameobject shall ensure the animator does not mess with positioning when overriding parent transforms.
-            currentWeapon.gameObject.SetActive(false);
-            currentWeapon.GetComponent<Collider>().enabled = true;
-            currentWeapon.GetComponent<EquipableEntity>().Unequip();
-            currentWeapon.transform.position = newWeapon.transform.position;
-            currentWeapon.transform.rotation = newWeapon.transform.rotation;
-            currentWeapon.transform.SetParent(null);
-            currentWeapon.gameObject.SetActive(true);
-
-            newWeapon.gameObject.SetActive(false);
+            WeaponUnequipData data = new WeaponUnequipData();
+            data.dropPosition = newWeapon.transform.position;
+            data.dropRotation = newWeapon.transform.rotation;
+            currentWeapon.NeglectWeapon(data);
             SetNewWeapon(newWeapon, currentWeaponIndex);
             SetCurrentWeapon(currentWeaponIndex);
-            newWeapon.gameObject.SetActive(true);
         }
     }
 }
