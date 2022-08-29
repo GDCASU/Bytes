@@ -68,9 +68,8 @@ public partial class PlayerController
         }
         if (vaultVariables.forwardCheck && currentForwardAndRight.magnitude > 1)
         {
-            velocityAtCollision = currentForwardAndRight;
-            print("Testing...");
-            // if (playerState != PlayerState.Climbing) rb.velocity = Vector3.zero;              //Avoid bouncing
+            velocityAtCollision = currentForwardAndRight;;
+            // if (playerState != PlayerState.Climbing) rb.velocity = Vector3.zero;  // Avoid bouncing
         }
         vaultVariables.kneesCheck = false;
         if (vaultVariables.climbMechanic) HandleClimb();

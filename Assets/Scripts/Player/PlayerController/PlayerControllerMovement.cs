@@ -222,7 +222,7 @@ public partial class PlayerController
         {
             Vector3 direction = feetHit.point - (transform.position - Vector3.up * .5f * transform.lossyScale.y);
             float dist = direction.magnitude;
-            Debug.DrawLine(transform.position - Vector3.up * capCollider.height * .24f, (transform.position - Vector3.up * capCollider.height * .24f) + (direction - rb.velocity.y * Vector3.up));
+            //Debug.DrawLine(transform.position - Vector3.up * capCollider.height * .24f, (transform.position - Vector3.up * capCollider.height * .24f) + (direction - rb.velocity.y * Vector3.up));
             baseMovementVariables.kneesCheck = Physics.Raycast(transform.position - Vector3.up * capCollider.height * .24f, (direction - rb.velocity.y * Vector3.up), dist, ~ignores);
             if (!baseMovementVariables.kneesCheck && playerState == PlayerState.Grounded && (xDir != 0 || zDir != 0))
             {
@@ -244,8 +244,10 @@ public partial class PlayerController
                 if (!Physics.Raycast(transform.position, newForwardandRight, capCollider.radius + 0.1f) && (xDir != 0 || zDir != 0))
                 {
                     //If the game detects the player beeing stuck between two surfaces then it guarantees a min velocity to avoid a case where the stuck player's in air velocity would get stuck on zero 
-                    Vector3 newVelocity = newForwardandRight.normalized * (currentForwardAndRight.magnitude < .1f && stuckBetweenSurfacesHelper > 1 ?
-                        1f : airControl) + currentForwardAndRight * (1f - airControl);
+                    Vector3 newVelocity = newForwardandRight.normalized *
+                        (currentForwardAndRight.magnitude < .1f && stuckBetweenSurfacesHelper > 1 ? 1f : airControl) +
+                        currentForwardAndRight;
+                    print(airControl);
                     if (newVelocity.magnitude < baseMovementVariables.minAirVelocity) newVelocity = newVelocity.normalized * baseMovementVariables.minAirVelocity;
                     rb.velocity = newVelocity + rb.velocity.y * Vector3.up;
                 }

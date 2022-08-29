@@ -60,7 +60,6 @@ public partial class PlayerController
             && (zDir > 0 || currentForwardAndRight.magnitude > 0f)                 //Check that the player pressed the forward input or that the current forwardAndRight is  bigger than 0
             && climbVariables._climbingCooldown <= 0)                           //Check that the climbing ability is not on cooldown
         {
-            print("Here");
             previousState = playerState;
             playerState = PlayerState.Climbing;
             StartCoroutine(ClimbCoroutine());
