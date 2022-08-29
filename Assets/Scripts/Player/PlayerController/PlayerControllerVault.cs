@@ -69,7 +69,8 @@ public partial class PlayerController
         if (vaultVariables.forwardCheck && currentForwardAndRight.magnitude > 1)
         {
             velocityAtCollision = currentForwardAndRight;
-            //if (playerState != PlayerState.Climbing) rb.velocity = Vector3.zero;              //Avoid bouncing
+            print("Testing...");
+            // if (playerState != PlayerState.Climbing) rb.velocity = Vector3.zero;              //Avoid bouncing
         }
         vaultVariables.kneesCheck = false;
         if (vaultVariables.climbMechanic) HandleClimb();
@@ -78,13 +79,12 @@ public partial class PlayerController
     }
     public void HandleVault()
     {
-        if ((playerState == PlayerState.InAir || (playerState == PlayerState.Climbing && surfaceSlope == 0)) && vaultVariables.forwardCheck && !vaultVariables.headCheck && z > 0)
+        if ((playerState == PlayerState.InAir || (playerState == PlayerState.Climbing && surfaceSlope == 0)) && vaultVariables.forwardCheck && !vaultVariables.headCheck && zDir > 0)
         {
             previousState = playerState;
             playerState = PlayerState.Vaulting;
             StartCoroutine(VaultCoroutine());
         }
-
     }
     private IEnumerator VaultCoroutine()
     {

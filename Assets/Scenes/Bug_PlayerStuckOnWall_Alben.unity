@@ -289,6 +289,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1947202455, guid: e2d15272dd5b07347bf136160a82d690, type: 3}
+      propertyPath: jumpVariables.jumpInAirControl
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947202455, guid: e2d15272dd5b07347bf136160a82d690, type: 3}
+      propertyPath: baseMovementVariables.minAirVelocity
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2268690721096539326, guid: e2d15272dd5b07347bf136160a82d690,
         type: 3}
       propertyPath: m_AnchorMax.x

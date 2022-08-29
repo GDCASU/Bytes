@@ -41,7 +41,6 @@ public partial class PlayerController
         [Range(0, 1)]
         public float inAirControl = .021f;
         public float minAirVelocity = 2f;
-        [HideInInspector] public bool stoodStillBeforeJump = false;
         #endregion
 
         #region Gravity
@@ -101,8 +100,8 @@ public partial class PlayerController
         //else if (Input.GetKey(KeyCode.A)) x = -speedIncrease;
         //else x = 0;
 
-        x = InputManager.PlayerActions.Move.ReadValue<Vector2>().x;
-        z = InputManager.PlayerActions.Move.ReadValue<Vector2>().y;
+        xDir = InputManager.PlayerActions.Move.ReadValue<Vector2>().x;
+        zDir = InputManager.PlayerActions.Move.ReadValue<Vector2>().y;
     }
     private void GroundCheck()
     {
@@ -178,11 +177,10 @@ public partial class PlayerController
         //Player just landed
         if (groundCheck && (playerState == PlayerState.Jumping || playerState == PlayerState.InAir || playerState == PlayerState.Climbing))
         {
-            baseMovementVariables.stoodStillBeforeJump = false;
             rb.velocity = rb.velocity - Vector3.up * rb.velocity.y;
             float angleOfSurfaceAndVelocity = Vector3.Angle(rb.velocity, (hit.normal - Vector3.up * hit.normal.y));
-            if (!onFakeGround && hit.normal.y != 1 && angleOfSurfaceAndVelocity < 5 && z > 0)
-                rb.velocity = (groundedRight * x + groundedForward * z).normalized * rb.velocity.magnitude;          //This is to prevent the weird glitch where the player bounces on slopes if they land on them without jumping
+            if (!onFakeGround && hit.normal.y != 1 && angleOfSurfaceAndVelocity < 5 && zDir > 0)
+                rb.velocity = (groundedRight * xDir + groundedForward * zDir).normalized * rb.velocity.magnitude;          //This is to prevent the weird glitch where the player bounces on slopes if they land on them without jumping
             friction = baseMovementVariables.groundFriction;
             _inAirJumps = jumpVariables.inAirJumps;
             previousState = playerState;
@@ -208,7 +206,7 @@ public partial class PlayerController
         isGrounded = groundCheck;
         if (isGrounded)
         {
-            if (x == 0 && z == 0) friction = baseMovementVariables.noInputFriction;
+            if (xDir == 0 && zDir == 0) friction = baseMovementVariables.noInputFriction;
             else friction = baseMovementVariables.groundFriction;
         } 
         //If close to a small step, raise the player to the height of the step for a smoother feeling movement
@@ -226,7 +224,7 @@ public partial class PlayerController
             float dist = direction.magnitude;
             Debug.DrawLine(transform.position - Vector3.up * capCollider.height * .24f, (transform.position - Vector3.up * capCollider.height * .24f) + (direction - rb.velocity.y * Vector3.up));
             baseMovementVariables.kneesCheck = Physics.Raycast(transform.position - Vector3.up * capCollider.height * .24f, (direction - rb.velocity.y * Vector3.up), dist, ~ignores);
-            if (!baseMovementVariables.kneesCheck && playerState == PlayerState.Grounded && (x != 0 || z != 0))
+            if (!baseMovementVariables.kneesCheck && playerState == PlayerState.Grounded && (xDir != 0 || zDir != 0))
             {
                 //StartCoroutine(FakeGround());
                 isGrounded = true;
@@ -242,28 +240,20 @@ public partial class PlayerController
             {
                 rb.velocity -= currentForwardAndRight * friction;
 
-                newForwardandRight = (transform.right * x + transform.forward * z);
-                if (!baseMovementVariables.stoodStillBeforeJump && (x != 0 || z != 0))
+                newForwardandRight = (transform.right * xDir + transform.forward * zDir);
+                if (!Physics.Raycast(transform.position, newForwardandRight, capCollider.radius + 0.1f) && (xDir != 0 || zDir != 0))
                 {
                     //If the game detects the player beeing stuck between two surfaces then it guarantees a min velocity to avoid a case where the stuck player's in air velocity would get stuck on zero 
                     Vector3 newVelocity = newForwardandRight.normalized * (currentForwardAndRight.magnitude < .1f && stuckBetweenSurfacesHelper > 1 ?
-                        1f : currentForwardAndRight.magnitude) * airControl +
-                        currentForwardAndRight * (1f - airControl);
+                        1f : airControl) + currentForwardAndRight * (1f - airControl);
                     if (newVelocity.magnitude < baseMovementVariables.minAirVelocity) newVelocity = newVelocity.normalized * baseMovementVariables.minAirVelocity;
                     rb.velocity = newVelocity + rb.velocity.y * Vector3.up;
-                }
-                else
-                {
-                    baseMovementVariables.stoodStillBeforeJump = true;
-                    print($"X: {x} Z: {z}");
-                    print("currentForwardAndRight: " + currentForwardAndRight);
-                    rb.velocity += new Vector3(x, 0, z).normalized; // Needs to be fixed later
                 }
             }
         }
         else
         {
-            newForwardandRight = (groundedRight.normalized * x + groundedForward.normalized * z);
+            newForwardandRight = (groundedRight.normalized * xDir + groundedForward.normalized * zDir);
             if (hit.normal.y == 1)
             {
                 newForwardandRight = new Vector3(newForwardandRight.x, 0, newForwardandRight.z);
@@ -277,20 +267,20 @@ public partial class PlayerController
             else if (playerState != PlayerState.Sliding)
             {
                 //If the palyer changes direction when going at the maxSpeed then decrease speed for smoother momentum shift
-                if ((z == 0 && x == 0) || (pvX < 0 && x > 0)
-                    || (x < 0 && pvX > 0) || (pvZ < 0 && z > 0)
-                    || (z < 0 && pvZ > 0)) rb.velocity *= .99f; 
-                else if (rb.velocity.magnitude < maxVelocity + 1f && (x!=0 || y!=0)) rb.velocity = newForwardandRight.normalized * maxVelocity;
+                if ((zDir == 0 && xDir == 0) || (pvX < 0 && xDir > 0)
+                    || (xDir < 0 && pvX > 0) || (pvZ < 0 && zDir > 0)
+                    || (zDir < 0 && pvZ > 0)) rb.velocity *= .99f; 
+                else if (rb.velocity.magnitude < maxVelocity + 1f && (xDir!=0 || y!=0)) rb.velocity = newForwardandRight.normalized * maxVelocity;
                 totalVelocityToAdd = Vector3.zero;
             }
 
-            if (rb.velocity.magnitude != maxVelocity || (x == 0 && z == 0))
+            if (rb.velocity.magnitude != maxVelocity || (xDir == 0 && zDir == 0))
             {
                 totalVelocityToAdd -= rb.velocity * friction;
             }
 
-            pvX = x;
-            pvZ = z;
+            pvX = xDir;
+            pvZ = zDir;
         }
     }
     public void ToggleGravity(bool active)
