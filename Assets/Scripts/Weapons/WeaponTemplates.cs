@@ -30,9 +30,11 @@ public abstract class Weapon: MonoBehaviour
         animator = GetComponent<Animator>();
         attachedCollider = GetComponent<Collider>();
         equipableEntity = GetComponent<EquipableEntity>();
+
+        animator.keepAnimatorControllerStateOnDisable = true;
     }
 
-    protected void OnEnable() => wielder = PlayerController.singleton.GetComponent<Character>().Type;
+    protected virtual void OnEnable() => wielder = PlayerController.singleton.GetComponent<Character>().Type;
 
     public abstract void Block(bool isStarting);
     public abstract void Reload();
@@ -60,7 +62,7 @@ public abstract class RangedWeapon: Weapon
     [Header("Basic Properties")]
     [SerializeField] protected int maxAmmo;
     [SerializeField] protected int fireRate;
-    [SerializeField] protected float reloadTime;
+    [SerializeField] protected float reloadDuration;
     [SerializeField] protected float launchSpeed;
     [SerializeField] protected Projectile projectile;
     [SerializeField] protected Transform visualProjectileSpawn;
