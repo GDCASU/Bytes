@@ -14,9 +14,9 @@ public class InputManager : MonoBehaviour
         if (singleton == null && playerInput != null)
             singleton = this;
         else
-            Destroy(gameObject);
+            Debug.LogError("The InputManager is NULL.");
 
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
 
         playerInputActionAsset = new PlayerInputActionAsset();
         playerInputActionAsset.Player.Enable();

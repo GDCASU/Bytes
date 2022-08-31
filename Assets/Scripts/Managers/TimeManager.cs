@@ -14,7 +14,7 @@ public class TimeManager : MonoBehaviour
         if (!singleton)
             singleton = this;
         else
-            Destroy(gameObject);
+            Debug.LogError("The TimeManager is NULL.");
     }
 
     private void OnValidate()

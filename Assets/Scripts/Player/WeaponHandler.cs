@@ -14,7 +14,7 @@ public class WeaponHandler : MonoBehaviour
     int maxWeapons = 0;
     int numOfWeapons = 0;
 
-    void Awake()
+    void Start()
     {
         maxWeapons = weapons.Length;
         for (int i = 0; i < maxWeapons; i++)
