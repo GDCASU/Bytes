@@ -1,3 +1,8 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: ???
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +19,17 @@ public abstract class Character : MonoBehaviour
 
     [field: Header("Read-Only"), SerializeField]
     public float Health { get; protected set; }
+
+    public CharacterType Target
+    {
+        get
+        {
+            if (Type == CharacterType.Player)
+                return CharacterType.Enemy;
+            else
+                return CharacterType.Player;
+        }
+    }
 
     protected virtual void OnEnable()
     {

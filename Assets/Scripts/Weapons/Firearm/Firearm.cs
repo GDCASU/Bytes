@@ -1,3 +1,8 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: ???
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,10 +47,8 @@ public partial class Firearm : RangedWeapon
         }
     }
 
-    protected override void OnEnable()
+    protected void OnEnable()
     {
-        base.OnEnable();
-
         canFire = true;
         isReloading = false;
         isTriggerHeld = false;
@@ -54,7 +57,6 @@ public partial class Firearm : RangedWeapon
         animInvoker.ResetAnimator();
         if (currentAmmo <= 0)
             StartCoroutine(CR_Reload());
-            
     }
 
     void OnDisable() => StopAllCoroutines();

@@ -1,3 +1,8 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: ???
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +15,13 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] int currentWeaponIndex;
     [SerializeField] Weapon[] weapons;
 
+    Character wielder;
+
     Weapon currentWeapon;
     int maxWeapons = 0;
     int numOfWeapons = 0;
+
+    private void Awake() => wielder = GetComponent<Character>();
 
     void Start()
     {
@@ -25,6 +34,7 @@ public class WeaponHandler : MonoBehaviour
                 WeaponEquipData data = new WeaponEquipData();
                 data.container = WeaponContainer;
                 data.projectileSpawn = ProjectileSpawn;
+                data.target = wielder.Target;
                 weapon.PrepareWeapon(data);
                 weapon.gameObject.SetActive(false);
                 numOfWeapons++;
@@ -95,6 +105,7 @@ public class WeaponHandler : MonoBehaviour
         WeaponEquipData data = new WeaponEquipData();
         data.container = WeaponContainer;
         data.projectileSpawn = ProjectileSpawn;
+        data.target = wielder.Target;
         newWeapon.PrepareWeapon(data);
         weapons[weaponIndex] = newWeapon;
     }

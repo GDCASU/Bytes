@@ -1,33 +1,16 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: ???
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : MonoSingleton<LevelManager>
 {
     private int maxScenesInBuild;
-
-    #region Singleton
-    private static LevelManager instance;
-
-    public static LevelManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                Debug.LogError("The LevelManager is NULL.");
-            }
-
-            return instance;
-        }
-    }
-
-    private void Awake()
-    {
-        instance = this;
-    }
-    #endregion
 
     private void Start()
     {

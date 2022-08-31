@@ -19,20 +19,11 @@ public class FirearmAnimatorInvoker : MonoBehaviour
 {
     Animator animator;
 
-    int idleStateID;
-    int shootTriggerID;
-    int mustReloadID;
-    int shootSpeedID;
-    int reloadSpeedID;
-    
-    private void Awake()
-    {
-        idleStateID = Animator.StringToHash("Base Layer.Idle");
-        shootTriggerID = Animator.StringToHash("Shoot");
-        mustReloadID = Animator.StringToHash("MustReload");
-        shootSpeedID = Animator.StringToHash("ShootSpeed");
-        reloadSpeedID = Animator.StringToHash("ReloadSpeed");
-    }
+    int idleStateID = Animator.StringToHash("Base Layer.Idle");
+    int shootTriggerID = Animator.StringToHash("Shoot");
+    int mustReloadID = Animator.StringToHash("MustReload");
+    int shootSpeedID = Animator.StringToHash("ShootSpeed");
+    int reloadSpeedID = Animator.StringToHash("ReloadSpeed");
 
     public void Bind(Animator animator)
     {
