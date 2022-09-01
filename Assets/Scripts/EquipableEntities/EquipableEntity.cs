@@ -21,6 +21,7 @@ public struct WeaponEquipData
 {
     public Transform container;
     public Transform projectileSpawn;
+    public CharacterType target;
 }
 
 public struct WeaponUnequipData

@@ -1,3 +1,8 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: ???
+ */
+
 using System;
 using System.Collections;
 using UnityEngine;
@@ -9,17 +14,7 @@ public abstract class Weapon: MonoBehaviour
     [SerializeField] protected Vector3 offsetPosition;
     [SerializeField] protected Vector3 offsetRotation;
 
-    protected CharacterType wielder;
-    protected CharacterType Target
-    {
-        get
-        {
-            if (wielder == CharacterType.Player)
-                return CharacterType.Enemy;
-            else
-                return CharacterType.Player;
-        }
-    }
+    public CharacterType Target { get; protected set; }
 
     protected Animator animator;
     protected Collider attachedCollider;
@@ -33,8 +28,6 @@ public abstract class Weapon: MonoBehaviour
 
         animator.keepAnimatorControllerStateOnDisable = true;
     }
-
-    protected virtual void OnEnable() => wielder = PlayerController.singleton.GetComponent<Character>().Type;
 
     public abstract void Block(bool isStarting);
     public abstract void Reload();
@@ -88,6 +81,7 @@ public abstract class RangedWeapon: Weapon
         transform.localPosition = offsetPosition;
         transform.localRotation = Quaternion.Euler(offsetRotation);
         projectileSpawn = data.projectileSpawn;
+        Target = data.target;
 
         if (neglectRoutine != null)
         {

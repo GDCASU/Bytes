@@ -1,23 +1,22 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: ???
+ */
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+public class InputManager : MonoSingleton<InputManager>
 {
     private static PlayerInput playerInput;
     private static PlayerInputActionAsset playerInputActionAsset;
-    public static InputManager singleton;
 
-    private void Awake()
+    protected override void Awake()
     {
-        playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
-
-        if (singleton == null && playerInput != null)
-            singleton = this;
-        else
-            Destroy(gameObject);
-
-        DontDestroyOnLoad(gameObject);
-
+        base.Awake();
+        if (!GameObject.FindGameObjectWithTag("Player").TryGetComponent(out playerInput))
+            Debug.LogError("PlayerInput component was not found.");
+        
         playerInputActionAsset = new PlayerInputActionAsset();
         playerInputActionAsset.Player.Enable();
     }

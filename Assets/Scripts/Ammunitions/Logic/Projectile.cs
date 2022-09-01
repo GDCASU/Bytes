@@ -1,7 +1,11 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: ???
+ */
+
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public abstract class Projectile: MonoBehaviour
 {
@@ -17,7 +21,7 @@ public abstract class Projectile: MonoBehaviour
     protected virtual void Awake()
     {
         visual = GetComponent<ProjectileVisual>();
-        transform.SetParent(ProjectileManager.singleton.transform);
+        transform.SetParent(ProjectileManager.Instance.transform);
         ageWait = new WaitForSeconds(Lifespan);
     }
 
