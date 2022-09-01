@@ -1,6 +1,6 @@
 /*
- * Author: Cristion Dominguez
- * Date: ???
+ * Author: Alben Trang, Cristion Dominguez
+ * Date: 8/30/2022
  */
 
 using System.Collections;
@@ -16,6 +16,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     {
         // Make sure player starts in a scene that's in the Build Settings; otherwise, maxScenesInBuild is off by 1.
         maxScenesInBuild = SceneManager.sceneCountInBuildSettings;
+        print($"Loaded scene: { SceneManager.GetActiveScene().name}");
     }
 
     public void ReloadLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
