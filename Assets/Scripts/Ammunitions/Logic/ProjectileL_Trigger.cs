@@ -30,7 +30,7 @@ public class ProjectileL_Trigger : Projectile
     {
         if (other.gameObject.layer == targetType.GetLayer())
         {
-            other.transform.root.GetComponent<Character>().ReceiveDamage(impactDamage);
+            other.GetComponent<Hurtbox>().Owner.GetComponent<Character>().ReceiveDamage(impactDamage);
             visual.Stop();
             Perish();
         }
