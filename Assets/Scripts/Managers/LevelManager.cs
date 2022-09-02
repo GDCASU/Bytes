@@ -19,7 +19,11 @@ public class LevelManager : MonoSingleton<LevelManager>
         print($"Loaded scene: { SceneManager.GetActiveScene().name}");
     }
 
-    public void ReloadLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    public void ReloadLevel()
+    {
+        CheckpointManager.Instance.DontDestroyManager();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
     public void NextLevel()
     {
