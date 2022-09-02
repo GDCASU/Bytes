@@ -21,7 +21,6 @@ public class LevelManager : MonoSingleton<LevelManager>
 
     public void ReloadLevel()
     {
-        CheckpointManager.Instance.DontDestroyManager();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
