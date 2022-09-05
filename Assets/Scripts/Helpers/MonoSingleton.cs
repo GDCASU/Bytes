@@ -28,10 +28,9 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T
             _instance = this as T;
             DontDestroyOnLoad(this.gameObject);
         }
-        
         else
         {
-            // Debug.LogError("Second instance of " + typeof(T) + " was created. Destroying second instance.");
+            // Debug.Log("Second instance of " + typeof(T) + " was created. Destroying second instance.");
             Destroy(this.gameObject);
         }
     }

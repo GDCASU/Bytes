@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /*
  * Author: Alben Trang
@@ -17,16 +18,24 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isEnabled)
+        if (isEnabled && other.gameObject.CompareTag("Player"))
         {
             CheckpointManager.Instance.SetLatestCheckpoint(this.gameObject);
-            DisableCheckpoint();
+            Disable();
         }
     }
 
-    public void DisableCheckpoint()
+    public bool GetEnabled() => isEnabled;
+
+    public void Enable()
     {
-        this.gameObject.GetComponent<Renderer>().material.color = Color.green;
+        isEnabled = true;
+        this.gameObject.GetComponent<Renderer>().material.color = Color.yellow;
+    }
+
+    public void Disable()
+    {
         isEnabled = false;
+        this.gameObject.GetComponent<Renderer>().material.color = Color.green;
     }
 }

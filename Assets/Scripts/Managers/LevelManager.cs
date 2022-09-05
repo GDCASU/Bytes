@@ -28,7 +28,10 @@ public class LevelManager : MonoSingleton<LevelManager>
     {
         int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextLevelIndex < maxScenesInBuild)
+        {
+            CheckpointManager.Instance.ResetManager();
             SceneManager.LoadScene(nextLevelIndex);
+        }
         else
             Debug.LogError("There are no more scenes after this one in the build settings.");
     }
@@ -36,7 +39,10 @@ public class LevelManager : MonoSingleton<LevelManager>
     public void SelectLevel(int selectedIndex)
     {
         if (selectedIndex >= 0 && selectedIndex < maxScenesInBuild)
+        {
+            CheckpointManager.Instance.ResetManager();
             SceneManager.LoadScene(selectedIndex);
+        }
         else
             Debug.LogError("That scene index does not exist in the build settings.");
     }

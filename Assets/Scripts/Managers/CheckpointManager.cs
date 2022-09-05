@@ -9,9 +9,14 @@ using UnityEngine.SceneManagement;
  */
 public class CheckpointManager : MonoSingleton<CheckpointManager>
 {
-    private GameObject[] checkpoints = null;
-    private ArrayList usedCheckpoints = new ArrayList();
+    // Variables that need to be checked again after a scene reloads.
+    private GameObject checkpointHandler;
     private GameObject player;
+
+    // Variables that will be stored since this object is in the DontDestroyOnLoad category.
+    private Vector3 latestCheckpointPos;
+    private bool[] checkpointsEnabled;
+    private bool firstTimeInScene = true;
 
     /*
      * Links about OnEnable
@@ -24,39 +29,62 @@ public class CheckpointManager : MonoSingleton<CheckpointManager>
         SceneManager.sceneLoaded += RespawnPlayer;
     }
 
-    private void Start()
-    {
-        checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
-
     public void RespawnPlayer(Scene scene, LoadSceneMode mode)
-    //public void RespawnPlayer()
     {
-        print("Testing RespawnPlayer...");
-        if (usedCheckpoints != null && usedCheckpoints.Count > 0)
+        if (firstTimeInScene)
         {
-            GameObject latestCheckpoint = (GameObject) usedCheckpoints[usedCheckpoints.Count - 1];
-            player.transform.position = latestCheckpoint.transform.GetChild(0).position;
-            foreach (GameObject usedCP in usedCheckpoints)
+            firstTimeInScene = false;
+            player = GameObject.FindWithTag("Player");
+            latestCheckpointPos = player.transform.position; // After new scene loads, player spawns at scene's start
+            checkpointHandler = GameObject.FindWithTag("Respawn");
+            if (checkpointHandler != null)
             {
-                usedCP.GetComponent<Checkpoint>().DisableCheckpoint();
-                usedCheckpoints.Remove(usedCP);
+                checkpointsEnabled = new bool[checkpointHandler.transform.childCount];
+                for (int i = 0; i < checkpointsEnabled.Length; i++)
+                {
+                    checkpointsEnabled[i] = true;
+                }
             }
-            print("Finished!");
+            else
+            {
+                Debug.LogWarning("There is no empty game object called Checkpoint Handler with the tag 'Respawn'.\n" +
+                    "It can have Checkpoint prefabs as its children.");
+            }
         }
         else
         {
-            print("No checkpoints disabled!");
+            checkpointHandler = GameObject.FindWithTag("Respawn");
+            if (checkpointHandler != null)
+            {
+                for (int i = 0; i < checkpointHandler.transform.childCount; i++)
+                {
+                    if (checkpointsEnabled[i] == false)
+                    {
+                        checkpointHandler.transform.GetChild(i).GetComponent<Checkpoint>().Disable();
+                    }
+                }
+                player = GameObject.FindWithTag("Player");
+                player.transform.position = latestCheckpointPos;
+            }
+            else
+            {
+                Debug.LogWarning("There is no empty game object called Checkpoint Handler with the tag 'Respawn'.\n" +
+                    "It can have Checkpoint prefabs as its children.");
+            }
         }
     }
 
-    public void SetLatestCheckpoint(GameObject newCheckpoint)
+    public void SetLatestCheckpoint(GameObject checkpoint)
     {
-        usedCheckpoints.Add(newCheckpoint);
+        latestCheckpointPos = checkpoint.transform.GetChild(0).position;
+        for (int i = 0; i < checkpointHandler.transform.childCount; i++)
+        {
+            checkpointsEnabled[i] = checkpointHandler.transform.GetChild(i).GetComponent<Checkpoint>().GetEnabled();
+        }
     }
 
-    // public void DontDestroyManager() => DontDestroyOnLoad(this.gameObject);
-
-    public void DestroyManager() => Destroy(this.gameObject);
+    public void ResetManager()
+    {
+        firstTimeInScene = true;
+    }
 }

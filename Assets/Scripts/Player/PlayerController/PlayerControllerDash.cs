@@ -17,6 +17,10 @@ public partial class PlayerController
         public float groundedCooldown = 0.1f;
     }
 
+    /*
+     * This can only become true if the player Interacts with a game object with 
+     * the EquipableEntity script applied to it along with its correct attributes.
+     */
     private bool isDashEnabled = false;
 
     void DashInput()
