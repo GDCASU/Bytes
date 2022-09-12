@@ -29,7 +29,7 @@ public class LevelManager : MonoSingleton<LevelManager>
         int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextLevelIndex < maxScenesInBuild)
         {
-            CheckpointManager.Instance.ResetManager();
+            GameObject.FindWithTag("Respawn").GetComponent<CheckpointData>().DestroyData();
             SceneManager.LoadScene(nextLevelIndex);
         }
         else
@@ -40,7 +40,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     {
         if (selectedIndex >= 0 && selectedIndex < maxScenesInBuild)
         {
-            CheckpointManager.Instance.ResetManager();
+            GameObject.FindWithTag("Respawn").GetComponent<CheckpointData>().DestroyData();
             SceneManager.LoadScene(selectedIndex);
         }
         else

@@ -9,21 +9,18 @@ using UnityEngine.SceneManagement;
  */
 public class CheckpointManager : MonoSingleton<CheckpointManager>
 {
-    // Variables that need to be checked again after a scene reloads.
-    private GameObject checkpointHandler;
-    private GameObject player;
-
-    // Variables that will be stored since this object is in the DontDestroyOnLoad category.
-    private Vector3 latestCheckpointPos;
-    private bool[] checkpointsEnabled;
-    private bool firstTimeInScene = true;
-
     /*
-     * Links about OnEnable
-     * https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnEnable.html
-     * https://forum.unity.com/threads/call-a-function-after-the-scene-is-loaded.1207291/
-     * https://answers.unity.com/questions/1174255/since-onlevelwasloaded-is-deprecated-in-540b15-wha.html
+     * There's no need to add the checkpoints in the Unity Inspector.
+     * However, you should put the Checkpoint game objects in an
+     * empty game object so that they are put in order. Otherwise,
+     * the player may spawn at the wrong checkpoint.
      */
+    [SerializeField] private Transform[] checkpoints;
+    [SerializeField] private Transform CPDataPrefab;
+
+    private Transform CPDataInstance = null;
+    private GameObject player = null;
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += RespawnPlayer;
@@ -31,60 +28,41 @@ public class CheckpointManager : MonoSingleton<CheckpointManager>
 
     public void RespawnPlayer(Scene scene, LoadSceneMode mode)
     {
-        if (firstTimeInScene)
+        // When a scene loads, find the checkpoints because this manager doesn't save them after a scene loads.
+        GameObject[] checkpointObjects = GameObject.FindGameObjectsWithTag("Checkpoint");
+        checkpoints = new Transform[checkpointObjects.Length];
+        for (int i = 0; i < checkpoints.Length; i++)
+            checkpoints[i] = checkpointObjects[i].transform;
+
+        if (GameObject.FindWithTag("Respawn") == null)
         {
-            firstTimeInScene = false;
+            CPDataInstance = Instantiate(CPDataPrefab, null, true);
             player = GameObject.FindWithTag("Player");
-            latestCheckpointPos = player.transform.position; // After new scene loads, player spawns at scene's start
-            checkpointHandler = GameObject.FindWithTag("Respawn");
-            if (checkpointHandler != null)
-            {
-                checkpointsEnabled = new bool[checkpointHandler.transform.childCount];
-                for (int i = 0; i < checkpointsEnabled.Length; i++)
-                {
-                    checkpointsEnabled[i] = true;
-                }
-            }
-            else
-            {
-                Debug.LogWarning("There is no empty game object called Checkpoint Handler with the tag 'Respawn'.\n" +
-                    "It can have Checkpoint prefabs as its children.");
-            }
+            CPDataInstance.GetComponent<CheckpointData>().InitializeData(player.transform.position, checkpoints.Length);
         }
         else
         {
-            checkpointHandler = GameObject.FindWithTag("Respawn");
-            if (checkpointHandler != null)
+            CPDataInstance = GameObject.FindWithTag("Respawn").transform;
+            CheckpointData data = CPDataInstance.GetComponent<CheckpointData>();
+            for (int i = 0; i < checkpoints.Length; i++)
             {
-                for (int i = 0; i < checkpointHandler.transform.childCount; i++)
+                if (data.GetEnabled(i) == false)
                 {
-                    if (checkpointsEnabled[i] == false)
-                    {
-                        checkpointHandler.transform.GetChild(i).GetComponent<Checkpoint>().Disable();
-                    }
+                    checkpoints[i].GetComponent<Checkpoint>().Disable();
                 }
-                player = GameObject.FindWithTag("Player");
-                player.transform.position = latestCheckpointPos;
             }
-            else
-            {
-                Debug.LogWarning("There is no empty game object called Checkpoint Handler with the tag 'Respawn'.\n" +
-                    "It can have Checkpoint prefabs as its children.");
-            }
+            player = GameObject.FindWithTag("Player");
+            player.transform.position = data.GetLatestCheckpointPos();
         }
     }
-
+    
     public void SetLatestCheckpoint(GameObject checkpoint)
     {
-        latestCheckpointPos = checkpoint.transform.GetChild(0).position;
-        for (int i = 0; i < checkpointHandler.transform.childCount; i++)
+        CheckpointData data = CPDataInstance.GetComponent<CheckpointData>();
+        data.SetLatestCheckpointPos(checkpoint.transform.GetChild(0).position);
+        for (int i = 0; i < checkpoints.Length; i++)
         {
-            checkpointsEnabled[i] = checkpointHandler.transform.GetChild(i).GetComponent<Checkpoint>().GetEnabled();
+            data.SetEnabled(i, checkpoints[i].GetComponent<Checkpoint>().GetEnabled());
         }
-    }
-
-    public void ResetManager()
-    {
-        firstTimeInScene = true;
     }
 }

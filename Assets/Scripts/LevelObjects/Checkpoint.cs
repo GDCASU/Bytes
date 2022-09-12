@@ -20,8 +20,8 @@ public class Checkpoint : MonoBehaviour
     {
         if (isEnabled && other.gameObject.CompareTag("Player"))
         {
-            CheckpointManager.Instance.SetLatestCheckpoint(this.gameObject);
             Disable();
+            CheckpointManager.Instance.SetLatestCheckpoint(this.gameObject);
         }
     }
 
