@@ -24,11 +24,13 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T
     protected virtual void Awake()
     {
         if (_instance == null && _instance != this)
+        {
             _instance = this as T;
+        }
         else
         {
-            Debug.LogError("Second instance of " + typeof(T) + " was created. Destroying second instance.");
-            Destroy(this);
+            // Debug.Log("Second instance of " + typeof(T) + " was created. Destroying second instance.");
+            Destroy(this.gameObject);
         }
     }
 

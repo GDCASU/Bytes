@@ -19,13 +19,19 @@ public class LevelManager : MonoSingleton<LevelManager>
         print($"Loaded scene: { SceneManager.GetActiveScene().name}");
     }
 
-    public void ReloadLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    public void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
     public void NextLevel()
     {
         int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextLevelIndex < maxScenesInBuild)
+        {
+            GameObject.FindWithTag("Respawn").GetComponent<CheckpointData>().DestroyData();
             SceneManager.LoadScene(nextLevelIndex);
+        }
         else
             Debug.LogError("There are no more scenes after this one in the build settings.");
     }
@@ -33,7 +39,10 @@ public class LevelManager : MonoSingleton<LevelManager>
     public void SelectLevel(int selectedIndex)
     {
         if (selectedIndex >= 0 && selectedIndex < maxScenesInBuild)
+        {
+            GameObject.FindWithTag("Respawn").GetComponent<CheckpointData>().DestroyData();
             SceneManager.LoadScene(selectedIndex);
+        }
         else
             Debug.LogError("That scene index does not exist in the build settings.");
     }
