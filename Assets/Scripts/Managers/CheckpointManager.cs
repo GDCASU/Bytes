@@ -26,6 +26,11 @@ public class CheckpointManager : MonoSingleton<CheckpointManager>
         SceneManager.sceneLoaded += RespawnPlayer;
     }
 
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= RespawnPlayer;
+    }
+
     public void RespawnPlayer(Scene scene, LoadSceneMode mode)
     {
         // When a scene loads, find the checkpoints because this manager doesn't save them after a scene loads.
