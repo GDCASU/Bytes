@@ -18,7 +18,7 @@ public abstract class Weapon: MonoBehaviour
 
     protected Animator animator;
     protected Collider attachedCollider;
-    protected EquipableEntity equipableEntity; 
+    protected EquipableEntity equipableEntity;
 
     protected virtual void Awake()
     {
