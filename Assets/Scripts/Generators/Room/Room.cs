@@ -10,7 +10,6 @@ public class Room : MonoBehaviour
         if (!entrancewayList[entranceNum].activeInHierarchy)
         {
             entrancewayList[entranceNum].SetActive(true);
-            Debug.Log($"Entrance E{entranceNum + 1} activated for {gameObject.name}");
         }
     }
 }

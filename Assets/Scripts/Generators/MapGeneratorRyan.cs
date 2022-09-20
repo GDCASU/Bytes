@@ -93,7 +93,7 @@ public class MapGeneratorRyan : MonoBehaviour
                                             && Mathf.Abs(roomPositionsList[i].y - roomPositionsList[i + 1].y) <= cellSize);
                 bool HRoomCondition = (roomPositionsList[i].x == roomPositionsList[i + 1].x && roomPositionsList[i].y == roomPositionsList[i + 1].y
                                             && Mathf.Abs(roomPositionsList[i].z - roomPositionsList[i + 1].z) <= cellSize);
-                bool JRoomCondition = false;
+                //bool JRoomCondition = false;
 
                 if (roomChanceRoll <= tRoomSpawnChance && TRoomCondidion)
                 {
@@ -123,11 +123,13 @@ public class MapGeneratorRyan : MonoBehaviour
                 {
                     GenerateGRoom(1, i);
                 }
+                /*
                 if (JRoomCondition)
                 {
                     GenerateJRoom(1, i);
                     i = i + 2;
                 }
+                */
             }
             else
             {
@@ -318,9 +320,10 @@ public class MapGeneratorRyan : MonoBehaviour
             {
                 alreadyGRoom = true;
                 //ActivateEntranceways();
+                Debug.Log("Entranceways are currently a work in progress.");
             }
             else
-                Debug.Log("Error: Generate the rooms before handling the collisions.");
+                Debug.Log("Error: Generate the rooms before activating entrances.");
         }
     }
 }
