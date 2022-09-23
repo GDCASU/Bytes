@@ -3,19 +3,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class LaunchAttack : SingleOrRepeatingAttack
 {
+    enum CooldownType
+    {
+        Silent,
+        FrameUpdater
+    }
+
     [SerializeField] int fireRate;
     [SerializeField] float reloadDuration;
     [SerializeField] float launchSpeed;
     [SerializeField] Projectile projectile;
     [SerializeField] Transform visualProjectileSpawn;
+    [SerializeField] CooldownType cooldownType;
+    [SerializeField] BaseResource resource;
 
     float repeatInterval;
+    ICooldown cooldown;
 
     protected override float RepeatInterval => repeatInterval;
 
     protected override bool CanPerform => true; // ALTER
+
+    public override BaseResource Resource => resource;
+
+    public override ICooldown Cooldown => cooldown;
+
+    private void OnValidate()
+    {
+        repeatInterval = 1f / fireRate;
+        if (cooldownType == CooldownType.Silent && !(cooldown is SilentCooldown))
+        {
+            cooldown = new SilentCooldown(repeatInterval);
+        }
+        else if (cooldownType == CooldownType.FrameUpdater && !(cooldown is FrameUpdaterCooldown))
+        {
+            cooldown = new FrameUpdaterCooldown(this, repeatInterval);
+        }
+    }
 
     protected override void PerformManuever()
     {
@@ -41,22 +68,5 @@ public class LaunchAttack : SingleOrRepeatingAttack
     {
         //
     }
-
-    public override bool AddCooldownObserver(Action<float> cooldownUpdated) => false;
-    public override void RemoveCooldownObserver(Action<float> cooldownUpdated) { }
-
-    public override bool AddResourceObserver(Action<int> resourceUpdated)
-    {
-        //
-        return true;
-    }
-    public override void RemoveResourceObserver(Action<int> resourceUpdated)
-    {
-        //
-    }
-
-    private void OnValidate()
-    {
-        repeatInterval = 1f / fireRate;
-    }
 }
+*/

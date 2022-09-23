@@ -6,17 +6,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoSingleton<InputManager>
+public class PlayerInputHandler: MonoBehaviour
 {
     private static PlayerInput playerInput;
     private static PlayerInputActionAsset playerInputActionAsset;
 
-    protected override void Awake()
+     void Awake()
     {
-        base.Awake();
         if (!GameObject.FindGameObjectWithTag("Player").TryGetComponent(out playerInput))
             Debug.LogError("PlayerInput component was not found.");
-        
+
         playerInputActionAsset = new PlayerInputActionAsset();
         playerInputActionAsset.Player.Enable();
     }
