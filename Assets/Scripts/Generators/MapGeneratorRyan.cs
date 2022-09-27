@@ -27,20 +27,17 @@ public class MapGeneratorRyan : MonoBehaviour
     public int tRoomSpawnChance;
     public int hRoomSpawnChance;
 
-
     [HideInInspector] public float minX, maxX, minY, maxY, minZ, maxZ;
 
-    private List<Vector3> roomPositionsList = new List<Vector3>();
+    //private List<Vector3> roomPositionsList = new List<Vector3>();
     [SerializeField] List<GameObject> roomList = new List<GameObject>();
 
     #region Blueprint
     void GenBlueprint()
     {
         Vector3 curPos = Vector3.zero;
-
-        roomPositionsList.Add(curPos); // Setting first room at Vector3.zero
-
-        while (roomPositionsList.Count < maxRooms)
+        GenerateBlueprintRoom(curPos);
+        while (roomList.Count < maxRooms)
         {
             switch (UnityEngine.Random.Range(1, 7)) // Choosing position of next room
             {
@@ -54,28 +51,32 @@ public class MapGeneratorRyan : MonoBehaviour
             }
 
             bool inRoomList = false;
-            for (int i = roomPositionsList.Count - 1; i > -1; i--) // Looping back through list and Checking for collisions with other rooms
+            for (int i = roomList.Count - 1; i >= 0; i--) // Looping back through list and Checking for collisions with other rooms
             {
-                if (Vector3.Equals(curPos, roomPositionsList[i]))
+                if (Vector3.Equals(curPos, roomList[i].GetComponent<Room>().transform.position))
                 {
                     inRoomList = true;
-                    // Flag collisions somehow
                     break;
                 }
             }
             if (!inRoomList)
             {
-                roomPositionsList.Add(curPos);
+                GenerateBlueprintRoom(curPos);
             }
         }
-        for (int i = 0; i < roomPositionsList.Count; i++)
-        {
-            GenerateBlueprintRoom(i);
-        }
+    }
+
+    private void GenerateBlueprintRoom(Vector3 roomPosition)
+    {
+        GameObject genRoom = Instantiate(bluePrintPrefab, roomPosition, Quaternion.identity) as GameObject;
+        genRoom.name = $"{bluePrintPrefab.name} [{roomList.Count}]";
+        genRoom.transform.SetParent(transform);
+        roomList.Add(genRoom);
     }
     #endregion
 
     #region Rooms
+    /*
     void GenRooms() // Generate Rooms
     {
         GameObject firstRoom = Instantiate(gPrefab, roomPositionsList[0], Quaternion.identity) as GameObject; // Generate Start Room
@@ -93,7 +94,6 @@ public class MapGeneratorRyan : MonoBehaviour
                                             && Mathf.Abs(roomPositionsList[i].y - roomPositionsList[i + 1].y) <= cellSize);
                 bool HRoomCondition = (roomPositionsList[i].x == roomPositionsList[i + 1].x && roomPositionsList[i].y == roomPositionsList[i + 1].y
                                             && Mathf.Abs(roomPositionsList[i].z - roomPositionsList[i + 1].z) <= cellSize);
-                //bool JRoomCondition = false;
 
                 if (roomChanceRoll <= tRoomSpawnChance && TRoomCondidion)
                 {
@@ -123,27 +123,12 @@ public class MapGeneratorRyan : MonoBehaviour
                 {
                     GenerateGRoom(1, i);
                 }
-                /*
-                if (JRoomCondition)
-                {
-                    GenerateJRoom(1, i);
-                    i = i + 2;
-                }
-                */
             }
             else
             {
                 GenerateGRoom(1, i);
             }
         }
-    }
-
-    void GenerateBlueprintRoom(int index)
-    {
-        Vector3 curRoomPos = roomPositionsList[index]; // Generate 'G' Room
-        GameObject genRoom = Instantiate(bluePrintPrefab, curRoomPos, Quaternion.identity) as GameObject;
-        genRoom.name = $"{bluePrintPrefab.name} [{index}]";
-        genRoom.transform.SetParent(transform);
     }
 
     void GenerateGRoom(int roomNum, int index)
@@ -230,10 +215,11 @@ public class MapGeneratorRyan : MonoBehaviour
 
         }
     }
-
+    */
     #endregion
 
     #region Entranceways
+    /*
     void ActivateEntranceways()
     {
         for (int i = 0; i < roomList.Count; i++)
@@ -279,6 +265,7 @@ public class MapGeneratorRyan : MonoBehaviour
             }
         }
     }
+    */
     #endregion
 
     bool alreadyGBlue = false;
@@ -306,7 +293,7 @@ public class MapGeneratorRyan : MonoBehaviour
             if (alreadyGBlue && !alreadyGRoom)
             {
                 alreadyGRoom = true;
-                GenRooms();
+                //GenRooms();
             }
             else if (!alreadyGBlue)
                 Debug.Log("Error: Blueprint needs to be generated before the rooms.");
