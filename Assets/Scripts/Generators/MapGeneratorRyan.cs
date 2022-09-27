@@ -47,13 +47,13 @@ public class MapGeneratorRyan : MonoBehaviour
 
             switch (UnityEngine.Random.Range(1, 7)) // Choosing position of next room
             {
-                case 1: curPos += Vector3.up * cellSize; break; // (0, cellSize, 0) * Cell Unit Size
-                case 2: curPos += Vector3.down * cellSize; break; // (0, cellSize, 0) * Cell Unit Size
-                case 3: curPos += Vector3.right * cellSize; break; // (cellSize, 0, 0) * Cell Unit Size
-                case 4: curPos += Vector3.left * cellSize; break; // (cellSize, 0, 0) * Cell Unit Size
-                case 5: curPos += Vector3.forward * cellSize; break; // (0, 0, cellSize) * Cell Unit Size
-                case 6: curPos += Vector3.back * cellSize; break; // (0, 0, cellSize) * Cell Unit Size
-                default: curPos += Vector3.forward * cellSize; break; // Just in case of bug
+                case 1: curPos += Vector3.right * cellSize; break; // (0, cellSize, 0) * Cell Unit Size
+                case 2: curPos += Vector3.left * cellSize; break; // (0, -cellSize, 0) * Cell Unit Size
+                case 3: curPos += Vector3.forward * cellSize; break; // (cellSize, 0, 0) * Cell Unit Size
+                case 4: curPos += Vector3.back * cellSize; break; // (-cellSize, 0, 0) * Cell Unit Size
+                case 5: curPos += Vector3.up * cellSize; break; // (0, 0, cellSize) * Cell Unit Size
+                case 6: curPos += Vector3.down * cellSize; break; // (0, 0, -cellSize) * Cell Unit Size
+                //default: curPos += Vector3.right * cellSize; break; // Just in case of bug
             }
 
             bool inRoomList = false;

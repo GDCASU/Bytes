@@ -11,8 +11,9 @@ public enum RoomShape
 
 public class Room : MonoBehaviour
 {
+    public RoomShape shape;
     public List<GameObject> entrancewayList;
-
+    
     public GameObject prevRoom;
     public void SetPrev(GameObject room)
     {
