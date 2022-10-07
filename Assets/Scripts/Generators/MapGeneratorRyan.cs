@@ -42,7 +42,8 @@ public class MapGeneratorRyan : MonoBehaviour
 
         while (roomList.Count < maxRooms)
         {
-            GameObject prevRoom = roomList[roomList.Count - backtrackCounter];
+            GameObject prevRoom;
+            prevRoom = roomList[roomList.Count - backtrackCounter];
 
             switch (UnityEngine.Random.Range(1, 7)) // Choosing position of next room
             {
@@ -60,7 +61,7 @@ public class MapGeneratorRyan : MonoBehaviour
                 if (Vector3.Equals(curPos, roomList[i].GetComponent<Room>().transform.position))
                 {
                     inRoomList = true;
-                    if (backtrackCounter - roomList.Count > 1)
+                    if ((roomList.Count - backtrackCounter) > 1)
                         backtrackCounter++;
                     break;
                 }
