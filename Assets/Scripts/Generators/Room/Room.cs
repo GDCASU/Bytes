@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Layouts;
+using UnityEngine.WSA;
 
 public enum RoomShape
 {
@@ -13,7 +15,10 @@ public class Room : MonoBehaviour
 {
     public RoomShape shape;
     public List<GameObject> entrancewayList;
-    
+    public List<GameObject> entrancewayList2;
+
+
+
     public GameObject prevRoom;
     public void SetPrev(GameObject room)
     {
@@ -28,7 +33,15 @@ public class Room : MonoBehaviour
     {
         if (!entrancewayList[entranceNum].activeInHierarchy)
         {
-            entrancewayList[entranceNum].SetActive(true);
+             entrancewayList[entranceNum].SetActive(true);
+        }
+    }
+
+    public void ActivateAltEntrance(int entranceNum)
+    {
+        if (!entrancewayList2[entranceNum].activeInHierarchy)
+        {
+            entrancewayList2[entranceNum].SetActive(true);
         }
     }
 }

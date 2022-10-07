@@ -41,8 +41,8 @@ Transform:
   - {fileID: 7034676910638359368}
   - {fileID: 2785530320456886688}
   - {fileID: 3856629178887768633}
-  - {fileID: 4819613134544001569}
   - {fileID: 641979136406929684}
+  - {fileID: 4819613134544001569}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -65,11 +65,14 @@ MonoBehaviour:
   - {fileID: 2444660535694173414}
   - {fileID: 2764146059034669454}
   - {fileID: 585462708042904459}
+  - {fileID: 2764146059034669454}
+  entrancewayList2:
   - {fileID: 2311464822306251683}
   - {fileID: 3178613387601703990}
   - {fileID: 7176427255495748256}
-  - {fileID: 7618146897068727413}
+  - {fileID: 6037060433016295022}
   - {fileID: 6205623949527400063}
+  - {fileID: 7618146897068727413}
   prevRoom: {fileID: 0}
 --- !u!1 &585462708042904459
 GameObject:
@@ -816,7 +819,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7443141833282919303}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3058261114466511920
 MeshFilter:
@@ -1107,7 +1110,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7443141833282919303}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7391772606329493398
 MeshFilter:

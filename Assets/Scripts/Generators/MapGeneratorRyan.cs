@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor.MPE;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.WSA;
@@ -32,6 +33,12 @@ public class MapGeneratorRyan : MonoBehaviour
     [HideInInspector] public float minX, maxX, minY, maxY, minZ, maxZ;
 
     [SerializeField] List<GameObject> roomList = new List<GameObject>();
+    [SerializeField] int[] linkedRooms;
+
+    private void Start()
+    {
+        linkedRooms = new int[maxRooms];
+    }
 
     #region Blueprint
     void GenBlueprint()
@@ -152,7 +159,7 @@ public class MapGeneratorRyan : MonoBehaviour
                 genRoom.name = $"{gPrefab.name} [{index}]";
                 genRoom.transform.SetParent(transform);
                 if (index >= 1)
-                    genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
+                    genRoom.GetComponent<Room>().prevRoom = roomList[index].GetComponent<Room>().prevRoom;
                 roomList[index] = genRoom;
 
                 break;
@@ -171,20 +178,22 @@ public class MapGeneratorRyan : MonoBehaviour
                 genRoom = Instantiate(tPrefab, curRoomPos, Quaternion.identity) as GameObject;
                 genRoom.name = $"{tPrefab.name} [{index}]";
                 genRoom.transform.SetParent(transform);
+                if (index >= 1)
+                    genRoom.GetComponent<Room>().prevRoom = roomList[index].GetComponent<Room>().prevRoom;
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
-                if (index >= 1)
-                    genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
+                linkedRooms[index + 1] = 1;
                 break;
             case 2:
                 curRoomPos.y = curRoomPos.y - cellSize;
                 genRoom = Instantiate(tPrefab, curRoomPos, Quaternion.identity) as GameObject;
                 genRoom.name = $"{tPrefab.name} [{index}]";
                 genRoom.transform.SetParent(transform);
+                if (index >= 1)
+                    genRoom.GetComponent<Room>().prevRoom = roomList[index].GetComponent<Room>().prevRoom;
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
-                if (index >= 1)
-                    genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
+                linkedRooms[index] = 1;
                 break;
 
             default:
@@ -206,20 +215,20 @@ public class MapGeneratorRyan : MonoBehaviour
                 genRoom = Instantiate(hPrefab, curRoomPos, Quaternion.identity) as GameObject;
                 genRoom.name = $"{hPrefab.name} [{index}]";
                 genRoom.transform.SetParent(transform);
+                if (index >= 1)
+                    genRoom.GetComponent<Room>().prevRoom = roomList[index].GetComponent<Room>().prevRoom;
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
-                if (index >= 1)
-                    genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
                 break;
             case 2:
                 curRoomPos.z = curRoomPos.z - cellSize;
                 genRoom = Instantiate(hPrefab, curRoomPos, Quaternion.identity) as GameObject;
                 genRoom.name = $"{hPrefab.name} [{index}]";
                 genRoom.transform.SetParent(transform);
+                if (index >= 1)
+                    genRoom.GetComponent<Room>().prevRoom = roomList[index].GetComponent<Room>().prevRoom;
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
-                if (index >= 1)
-                    genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
                 break;
 
             default:
@@ -255,13 +264,12 @@ public class MapGeneratorRyan : MonoBehaviour
             Room currentRoom = roomList[currRoomIdx].GetComponent<Room>();
             Room prevRoom = currentRoom.prevRoom.GetComponent<Room>();
 
-            Vector3 currRoomPos = currentRoom.transform.position;
+            Vector3 currRoomPos = transform.position;
             Vector3 prevRoomPos = prevRoom.transform.position;
-            RoomShape currRoomShape = roomList[currRoomIdx].GetComponent<Room>().shape;
 
             // Activate prev room entrance
             // Activate this room entrance
-            if (currRoomShape == RoomShape.General)
+            if (currentRoom.shape == RoomShape.General)
             {
                 // open E0 & E1
                 if (currRoomPos.x < prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (+x ,=y, =z)
@@ -300,9 +308,127 @@ public class MapGeneratorRyan : MonoBehaviour
                     prevRoom.ActivateEntrance(4);
                 }
             }
-            else if (currRoomShape == RoomShape.Tall)
+
+            if (currentRoom.shape == RoomShape.Tall)
             {
-                if (currRoomPos.y == prevRoomPos.y)
+                if (linkedRooms[currRoomIdx] == 1 && linkedRooms[currRoomIdx - 1] == 1) // if curr tall = next cell && prev tall == next cell
+                {
+                    // open E0 & E1
+                    if (currRoomPos.x < prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (+x ,=y, =z)
+                    {
+                        currentRoom.ActivateAltEntrance(0);
+                        prevRoom.ActivateAltEntrance(1);
+                    }
+                    // open E1 & E0
+                    else if (currRoomPos.x > prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (-x ,=y, =z)
+                    {
+                        currentRoom.ActivateAltEntrance(1);
+                        prevRoom.ActivateAltEntrance(0);
+                    }
+                    // open E2 & E3
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z < prevRoomPos.z) // (=x ,=y, +z)
+                    {
+                        currentRoom.ActivateAltEntrance(2);
+                        prevRoom.ActivateAltEntrance(3);
+                    }
+                    // open E3 & E2
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z > prevRoomPos.z) // (=x ,=y, -z)
+                    {
+                        currentRoom.ActivateAltEntrance(3);
+                        prevRoom.ActivateAltEntrance(2);
+                    }
+                    // open E4 & E5
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y < prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,+y, =z)
+                    {
+                        currentRoom.ActivateAltEntrance(4);
+                        prevRoom.ActivateAltEntrance(5);
+                    }
+                    // open E5 & E4
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y > prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,-y, +z)
+                    {
+                        currentRoom.ActivateAltEntrance(5);
+                        prevRoom.ActivateAltEntrance(4);
+                    }
+                }
+                else if (linkedRooms[currRoomIdx] == 1) // if curr tall = next cell && prev tall == first cell
+                {
+                    // open E0 & E1
+                    if (currRoomPos.x < prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (+x ,=y, =z)
+                    {
+                        currentRoom.ActivateAltEntrance(0);
+                        prevRoom.ActivateEntrance(1);
+                    }
+                    // open E1 & E0
+                    else if (currRoomPos.x > prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (-x ,=y, =z)
+                    {
+                        currentRoom.ActivateAltEntrance(1);
+                        prevRoom.ActivateEntrance(0);
+                    }
+                    // open E2 & E3
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z < prevRoomPos.z) // (=x ,=y, +z)
+                    {
+                        currentRoom.ActivateAltEntrance(2);
+                        prevRoom.ActivateEntrance(3);
+                    }
+                    // open E3 & E2
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z > prevRoomPos.z) // (=x ,=y, -z)
+                    {
+                        currentRoom.ActivateAltEntrance(3);
+                        prevRoom.ActivateEntrance(2);
+                    }
+                    // open E4 & E5
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y < prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,+y, =z)
+                    {
+                        currentRoom.ActivateAltEntrance(4);
+                        prevRoom.ActivateEntrance(5);
+                    }
+                    // open E5 & E4
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y > prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,-y, +z)
+                    {
+                        currentRoom.ActivateAltEntrance(5);
+                        prevRoom.ActivateEntrance(4);
+                    }
+                }
+                else if (linkedRooms[currRoomIdx - 1] == 1) // if curr tall = first cell && prev tall == next cell
+                {
+                    // open E0 & E1
+                    if (currRoomPos.x < prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (+x ,=y, =z)
+                    {
+                        currentRoom.ActivateEntrance(0);
+                        prevRoom.ActivateAltEntrance(1);
+                    }
+                    // open E1 & E0
+                    else if (currRoomPos.x > prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (-x ,=y, =z)
+                    {
+                        currentRoom.ActivateEntrance(1);
+                        prevRoom.ActivateAltEntrance(0);
+                    }
+                    // open E2 & E3
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z < prevRoomPos.z) // (=x ,=y, +z)
+                    {
+                        currentRoom.ActivateEntrance(2);
+                        prevRoom.ActivateAltEntrance(3);
+                    }
+                    // open E3 & E2
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z > prevRoomPos.z) // (=x ,=y, -z)
+                    {
+                        currentRoom.ActivateEntrance(3);
+                        prevRoom.ActivateAltEntrance(2);
+                    }
+                    // open E4 & E5
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y < prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,+y, =z)
+                    {
+                        currentRoom.ActivateEntrance(4);
+                        prevRoom.ActivateAltEntrance(5);
+                    }
+                    // open E5 & E4
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y > prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,-y, +z)
+                    {
+                        currentRoom.ActivateEntrance(5);
+                        prevRoom.ActivateAltEntrance(4);
+                    }
+                }
+                else // if curr tall = first cell && prev tall == first cell
                 {
                     // open E0 & E1
                     if (currRoomPos.x < prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (+x ,=y, =z)
@@ -341,64 +467,7 @@ public class MapGeneratorRyan : MonoBehaviour
                         prevRoom.ActivateEntrance(4);
                     }
                 }
-                else
-                {
-                    currRoomPos.y += cellSize;
-                    // open E0 & E1
-                    if (currRoomPos.x < prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (+x ,=y, =z)
-                    {
-                        currentRoom.ActivateEntrance(6);
-                        prevRoom.ActivateEntrance(7);
-                    }
-                    // open E1 & E0
-                    else if (currRoomPos.x > prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (-x ,=y, =z)
-                    {
-                        currentRoom.ActivateEntrance(7);
-                        prevRoom.ActivateEntrance(6);
-                    }
-                    // open E2 & E3
-                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z < prevRoomPos.z) // (=x ,=y, +z)
-                    {
-                        currentRoom.ActivateEntrance(8);
-                        prevRoom.ActivateEntrance(9);
-                    }
-                    // open E3 & E2
-                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z > prevRoomPos.z) // (=x ,=y, -z)
-                    {
-                        currentRoom.ActivateEntrance(9);
-                        prevRoom.ActivateEntrance(8);
-                    }
-                    // open E4 & E5
-                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y < prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,+y, =z)
-                    {
-                        currentRoom.ActivateEntrance(10);
-                        prevRoom.ActivateEntrance(11);
-                    }
-                    // open E5 & E4
-                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y > prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,-y, +z)
-                    {
-                        currentRoom.ActivateEntrance(11);
-                        prevRoom.ActivateEntrance(10);
-                    }
-                }
             }
-            /*
-            else if (currRoomShape == RoomShape.Hall)
-            {
-                if (currRoomPos.y > prevRoomPos.y)
-                {
-
-                }
-                else
-                {
-
-                }
-            }
-            else
-            {
-                Debug.Log($"Error: room at index [{currRoomIdx}] shape not specified");
-            }
-            */
         }
     }
     #endregion
