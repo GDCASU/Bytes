@@ -2,6 +2,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.MPE;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -30,7 +31,6 @@ public class MapGeneratorRyan : MonoBehaviour
 
     [HideInInspector] public float minX, maxX, minY, maxY, minZ, maxZ;
 
-    //private List<Vector3> roomPositionsList = new List<Vector3>();
     [SerializeField] List<GameObject> roomList = new List<GameObject>();
 
     #region Blueprint
@@ -42,8 +42,7 @@ public class MapGeneratorRyan : MonoBehaviour
 
         while (roomList.Count < maxRooms)
         {
-            GameObject prevRoom = new GameObject();
-            prevRoom = roomList[roomList.Count - backtrackCounter];
+            GameObject prevRoom = roomList[roomList.Count - backtrackCounter];
 
             switch (UnityEngine.Random.Range(1, 7)) // Choosing position of next room
             {
@@ -53,7 +52,6 @@ public class MapGeneratorRyan : MonoBehaviour
                 case 4: curPos += Vector3.back * cellSize; break; // (-cellSize, 0, 0) * Cell Unit Size
                 case 5: curPos += Vector3.up * cellSize; break; // (0, 0, cellSize) * Cell Unit Size
                 case 6: curPos += Vector3.down * cellSize; break; // (0, 0, -cellSize) * Cell Unit Size
-                //default: curPos += Vector3.right * cellSize; break; // Just in case of bug
             }
 
             bool inRoomList = false;
@@ -62,7 +60,8 @@ public class MapGeneratorRyan : MonoBehaviour
                 if (Vector3.Equals(curPos, roomList[i].GetComponent<Room>().transform.position))
                 {
                     inRoomList = true;
-                    backtrackCounter++;
+                    if (backtrackCounter - roomList.Count > 1)
+                        backtrackCounter++;
                     break;
                 }
             }
@@ -91,6 +90,7 @@ public class MapGeneratorRyan : MonoBehaviour
         firstRoom.name = $"{gPrefab.name} [{0}]";
         firstRoom.transform.SetParent(transform);
         roomList[0] = firstRoom;
+
 
         for (int i = 1; i < roomList.Count; i++)
         {
@@ -149,7 +149,10 @@ public class MapGeneratorRyan : MonoBehaviour
                 GameObject genRoom = Instantiate(gPrefab, curRoomPos, Quaternion.identity) as GameObject;
                 genRoom.name = $"{gPrefab.name} [{index}]";
                 genRoom.transform.SetParent(transform);
+                if (index >= 1)
+                    genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
                 roomList[index] = genRoom;
+
                 break;
 
         }
@@ -159,6 +162,7 @@ public class MapGeneratorRyan : MonoBehaviour
     {
         Vector3 curRoomPos = roomList[index].transform.position;
         GameObject genRoom = new GameObject();
+
         switch (roomNum)
         {
             case 1:
@@ -167,6 +171,8 @@ public class MapGeneratorRyan : MonoBehaviour
                 genRoom.transform.SetParent(transform);
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
+                if (index >= 1)
+                    genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
                 break;
             case 2:
                 curRoomPos.y = curRoomPos.y - cellSize;
@@ -175,12 +181,13 @@ public class MapGeneratorRyan : MonoBehaviour
                 genRoom.transform.SetParent(transform);
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
+                if (index >= 1)
+                    genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
                 break;
 
             default:
                 Debug.Log("Error: When trying to generate TRoom. Default case selected");
                 break;
-
         }
     }
 
@@ -188,6 +195,9 @@ public class MapGeneratorRyan : MonoBehaviour
     {
         Vector3 curRoomPos = roomList[index].transform.position;
         GameObject genRoom = new GameObject();
+        //if (index >= 1)
+            //genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
+
         switch (roomNum)
         {
             case 1:
@@ -196,6 +206,8 @@ public class MapGeneratorRyan : MonoBehaviour
                 genRoom.transform.SetParent(transform);
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
+                if (index >= 1)
+                    genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
                 break;
             case 2:
                 curRoomPos.z = curRoomPos.z - cellSize;
@@ -204,6 +216,8 @@ public class MapGeneratorRyan : MonoBehaviour
                 genRoom.transform.SetParent(transform);
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
+                if (index >= 1)
+                    genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
                 break;
 
             default:
@@ -232,7 +246,6 @@ public class MapGeneratorRyan : MonoBehaviour
     #endregion
 
     #region Entranceways
-    /*
     void ActivateEntranceways()
     {
         for (int i = 0; i < roomList.Count; i++)
@@ -242,43 +255,13 @@ public class MapGeneratorRyan : MonoBehaviour
                 Room iRoom = roomList[i].GetComponent<Room>();
                 Room jRoom = roomList[j].GetComponent<Room>();
 
-                Vector3 iRoomPos = roomPositionsList[i];
-                Vector3 jRoomPos = roomPositionsList[j];
+                Vector3 iRoomPos = roomList[i].transform.position;
+                Vector3 jRoomPos = roomList[j].transform.position;
 
-                if (iRoomPos == jRoomPos + (Vector3.right * 5)) // if room b4 the current room is on the right
-                {
-                    jRoom.ActivateEntrance(0); // Activate Entrance E0 for current room
-                    iRoom.ActivateEntrance(2); // Activate Entrance E2 for prev. room
-                }
-                if (iRoomPos == jRoomPos + (Vector3.forward * 5)) // if room b4 the current room is on the forward
-                {
-                    jRoom.ActivateEntrance(1); // Activate Entrance E1
-                    iRoom.ActivateEntrance(3); // Activate Entrance E2 for prev. room
-                }
-                if (iRoomPos == jRoomPos + (Vector3.left * 5)) // if room b4 the current room is on the left
-                {
-                    jRoom.ActivateEntrance(2); // Activate Entrance E2
-                    iRoom.ActivateEntrance(0); // Activate Entrance E2 for prev. room
-                }
-                if (iRoomPos == jRoomPos + (Vector3.back * 5)) // if room b4 the current room is on the back
-                {
-                    jRoom.ActivateEntrance(3); // Activate Entrance E3
-                    iRoom.ActivateEntrance(1); // Activate Entrance E2 for prev. room
-                }
-                if (iRoomPos == jRoomPos + (Vector3.up * 5)) // if room b4 the current room is on the up
-                {
-                    jRoom.ActivateEntrance(4); // Activate Entrance E4
-                    iRoom.ActivateEntrance(5); // Activate Entrance E2 for prev. room
-                }
-                if (iRoomPos == jRoomPos + (Vector3.down * 5)) // if room b4 the current room is on the down
-                {
-                    jRoom.ActivateEntrance(5); // Activate Entrance E5
-                    iRoom.ActivateEntrance(4); // Activate Entrance E2 for prev. room
-                }
+                // 
             }
         }
     }
-    */
     #endregion
 
     bool alreadyGBlue = false;
