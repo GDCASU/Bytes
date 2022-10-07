@@ -38,12 +38,17 @@ public class MapGeneratorRyan : MonoBehaviour
     {
         Vector3 curPos = Vector3.zero;
         GenerateBlueprintRoom(curPos, null);
-        int backtrackCounter = 1;
-
+        
+        GameObject prevRoom = null;
         while (roomList.Count < maxRooms)
         {
-            GameObject prevRoom;
-            prevRoom = roomList[roomList.Count - backtrackCounter];
+            foreach (GameObject room in roomList)
+            {
+                if (room.transform.position == curPos)
+                {
+                    prevRoom = room;
+                }
+            }
 
             switch (UnityEngine.Random.Range(1, 7)) // Choosing position of next room
             {
@@ -61,16 +66,13 @@ public class MapGeneratorRyan : MonoBehaviour
                 if (Vector3.Equals(curPos, roomList[i].GetComponent<Room>().transform.position))
                 {
                     inRoomList = true;
-                    if ((roomList.Count - backtrackCounter) > 1)
-                        backtrackCounter++;
+                    Debug.Log("collision");
                     break;
                 }
             }
             if (!inRoomList)
             {
-                GenerateBlueprintRoom(curPos, prevRoom);
-                backtrackCounter = 1;
-            }
+                GenerateBlueprintRoom(curPos, prevRoom);            }
         }
     }
 

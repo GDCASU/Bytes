@@ -23,6 +23,7 @@ public class Room : MonoBehaviour
     {
         return prevRoom;
     }
+
     public void ActivateEntrance(int entranceNum)
     {
         if (!entrancewayList[entranceNum].activeInHierarchy)
