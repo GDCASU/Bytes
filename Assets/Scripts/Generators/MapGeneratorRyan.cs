@@ -66,7 +66,6 @@ public class MapGeneratorRyan : MonoBehaviour
                 if (Vector3.Equals(curPos, roomList[i].GetComponent<Room>().transform.position))
                 {
                     inRoomList = true;
-                    Debug.Log("collision");
                     break;
                 }
             }
@@ -251,18 +250,155 @@ public class MapGeneratorRyan : MonoBehaviour
     #region Entranceways
     void ActivateEntranceways()
     {
-        for (int i = 0; i < roomList.Count; i++)
+        for(int currRoomIdx = 1; currRoomIdx < roomList.Count; currRoomIdx++)
         {
-            for (int j = 0; j < roomList.Count; j++)
+            Room currentRoom = roomList[currRoomIdx].GetComponent<Room>();
+            Room prevRoom = currentRoom.prevRoom.GetComponent<Room>();
+
+            Vector3 currRoomPos = currentRoom.transform.position;
+            Vector3 prevRoomPos = prevRoom.transform.position;
+            RoomShape currRoomShape = roomList[currRoomIdx].GetComponent<Room>().shape;
+
+            // Activate prev room entrance
+            // Activate this room entrance
+            if (currRoomShape == RoomShape.General)
             {
-                Room iRoom = roomList[i].GetComponent<Room>();
-                Room jRoom = roomList[j].GetComponent<Room>();
-
-                Vector3 iRoomPos = roomList[i].transform.position;
-                Vector3 jRoomPos = roomList[j].transform.position;
-
-                // 
+                // open E0 & E1
+                if (currRoomPos.x < prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (+x ,=y, =z)
+                {
+                    currentRoom.ActivateEntrance(0);
+                    prevRoom.ActivateEntrance(1);
+                }
+                // open E1 & E0
+                else if (currRoomPos.x > prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (-x ,=y, =z)
+                {
+                    currentRoom.ActivateEntrance(1);
+                    prevRoom.ActivateEntrance(0);
+                }
+                // open E2 & E3
+                else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z < prevRoomPos.z) // (=x ,=y, +z)
+                {
+                    currentRoom.ActivateEntrance(2);
+                    prevRoom.ActivateEntrance(3);
+                }
+                // open E3 & E2
+                else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z > prevRoomPos.z) // (=x ,=y, -z)
+                {
+                    currentRoom.ActivateEntrance(3);
+                    prevRoom.ActivateEntrance(2);
+                }
+                // open E4 & E5
+                else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y < prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,+y, =z)
+                {
+                    currentRoom.ActivateEntrance(4);
+                    prevRoom.ActivateEntrance(5);
+                }
+                // open E5 & E4
+                else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y > prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,-y, +z)
+                {
+                    currentRoom.ActivateEntrance(5);
+                    prevRoom.ActivateEntrance(4);
+                }
             }
+            else if (currRoomShape == RoomShape.Tall)
+            {
+                if (currRoomPos.y == prevRoomPos.y)
+                {
+                    // open E0 & E1
+                    if (currRoomPos.x < prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (+x ,=y, =z)
+                    {
+                        currentRoom.ActivateEntrance(0);
+                        prevRoom.ActivateEntrance(1);
+                    }
+                    // open E1 & E0
+                    else if (currRoomPos.x > prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (-x ,=y, =z)
+                    {
+                        currentRoom.ActivateEntrance(1);
+                        prevRoom.ActivateEntrance(0);
+                    }
+                    // open E2 & E3
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z < prevRoomPos.z) // (=x ,=y, +z)
+                    {
+                        currentRoom.ActivateEntrance(2);
+                        prevRoom.ActivateEntrance(3);
+                    }
+                    // open E3 & E2
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z > prevRoomPos.z) // (=x ,=y, -z)
+                    {
+                        currentRoom.ActivateEntrance(3);
+                        prevRoom.ActivateEntrance(2);
+                    }
+                    // open E4 & E5
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y < prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,+y, =z)
+                    {
+                        currentRoom.ActivateEntrance(4);
+                        prevRoom.ActivateEntrance(5);
+                    }
+                    // open E5 & E4
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y > prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,-y, +z)
+                    {
+                        currentRoom.ActivateEntrance(5);
+                        prevRoom.ActivateEntrance(4);
+                    }
+                }
+                else
+                {
+                    currRoomPos.y += cellSize;
+                    // open E0 & E1
+                    if (currRoomPos.x < prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (+x ,=y, =z)
+                    {
+                        currentRoom.ActivateEntrance(6);
+                        prevRoom.ActivateEntrance(7);
+                    }
+                    // open E1 & E0
+                    else if (currRoomPos.x > prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (-x ,=y, =z)
+                    {
+                        currentRoom.ActivateEntrance(7);
+                        prevRoom.ActivateEntrance(6);
+                    }
+                    // open E2 & E3
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z < prevRoomPos.z) // (=x ,=y, +z)
+                    {
+                        currentRoom.ActivateEntrance(8);
+                        prevRoom.ActivateEntrance(9);
+                    }
+                    // open E3 & E2
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y == prevRoomPos.y && currRoomPos.z > prevRoomPos.z) // (=x ,=y, -z)
+                    {
+                        currentRoom.ActivateEntrance(9);
+                        prevRoom.ActivateEntrance(8);
+                    }
+                    // open E4 & E5
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y < prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,+y, =z)
+                    {
+                        currentRoom.ActivateEntrance(10);
+                        prevRoom.ActivateEntrance(11);
+                    }
+                    // open E5 & E4
+                    else if (currRoomPos.x == prevRoomPos.x && currRoomPos.y > prevRoomPos.y && currRoomPos.z == prevRoomPos.z) // (=x ,-y, +z)
+                    {
+                        currentRoom.ActivateEntrance(11);
+                        prevRoom.ActivateEntrance(10);
+                    }
+                }
+            }
+            /*
+            else if (currRoomShape == RoomShape.Hall)
+            {
+                if (currRoomPos.y > prevRoomPos.y)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                Debug.Log($"Error: room at index [{currRoomIdx}] shape not specified");
+            }
+            */
         }
     }
     #endregion
@@ -305,8 +441,7 @@ public class MapGeneratorRyan : MonoBehaviour
             if (alreadyGRoom && alreadyGBlue)
             {
                 alreadyGRoom = true;
-                //ActivateEntranceways();
-                Debug.Log("Entranceways are currently a work in progress.");
+                ActivateEntranceways();
             }
             else
                 Debug.Log("Error: Generate the rooms before activating entrances.");
