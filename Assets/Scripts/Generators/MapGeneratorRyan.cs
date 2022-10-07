@@ -30,8 +30,6 @@ public class MapGeneratorRyan : MonoBehaviour
     public int tRoomSpawnChance;
     public int hRoomSpawnChance;
 
-    [HideInInspector] public float minX, maxX, minY, maxY, minZ, maxZ;
-
     [SerializeField] List<GameObject> roomList = new List<GameObject>();
     [SerializeField] int[] linkedRooms;
 
@@ -45,8 +43,8 @@ public class MapGeneratorRyan : MonoBehaviour
     {
         Vector3 curPos = Vector3.zero;
         GenerateBlueprintRoom(curPos, null);
-        
         GameObject prevRoom = null;
+         
         while (roomList.Count < maxRooms)
         {
             foreach (GameObject room in roomList)
