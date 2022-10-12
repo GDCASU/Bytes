@@ -184,8 +184,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.12327129, y: 1, z: 0.07214414}
-  m_Center: {x: 0.002072243, y: 0, z: -0.008339059}
+  m_Size: {x: 0.2495865, y: 0.68000615, z: 0.07214414}
+  m_Center: {x: -0.0067867027, y: 0.2337031, z: -0.008338879}
 --- !u!114 &8103702979758705170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,8 +216,10 @@ MonoBehaviour:
   offsetPosition: {x: 0.5, y: -0.22, z: 0.4}
   offsetRotation: {x: 0, y: 0, z: 0}
   damage: 1
-  strikeSpeed: 3
+  strikeSpeed: 1
   damageBlockedPercentage: 0
+  strikeOffsetPosition: {x: -0.5, y: 0, z: 0.6}
+  strikeOffsetRotation: {x: 20, y: 0, z: 10}
 --- !u!114 &8103702979758705183
 MonoBehaviour:
   m_ObjectHideFlags: 0
