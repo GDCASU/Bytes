@@ -44,7 +44,7 @@ public class ProjectileL_VelocityRaycast : Projectile
             )
             {
                 if (hit.transform.gameObject.layer == targetType.GetLayer())
-                    hit.transform.root.GetComponent<Character>().ReceiveDamage(impactDamage);
+                    hit.transform.GetComponent<Hurtbox>().Owner.GetComponent<Character>().ReceiveDamage(impactDamage);
                 Perish();
             }
 
