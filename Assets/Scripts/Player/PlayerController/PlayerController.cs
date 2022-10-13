@@ -102,7 +102,6 @@ public partial class PlayerController : MonoBehaviour
 
     #region Other
     private WaitForFixedUpdate fixedUpdate;
-    public static PlayerController singleton;
     public LayerMask ignores;
     #endregion
 
@@ -118,13 +117,7 @@ public partial class PlayerController : MonoBehaviour
     };
 
     #endregion
-    private void Awake()
-    {
-        if (singleton == null)
-            singleton = this;
-        else
-            Destroy(gameObject);
-    }
+
     void Start()
     {
         lastViablePosition = transform.position;

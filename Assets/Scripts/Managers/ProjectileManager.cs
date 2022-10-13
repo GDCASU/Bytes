@@ -1,16 +1,13 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: ???
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileManager : MonoBehaviour
+public class ProjectileManager : MonoSingleton<ProjectileManager>
 {
-    public static ProjectileManager singleton;
-
-    private void Awake()
-    {
-        if (singleton == null)
-            singleton = this;
-        else
-            Destroy(gameObject);
-    }
+    
 }
