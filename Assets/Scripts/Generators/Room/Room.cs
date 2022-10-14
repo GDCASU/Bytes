@@ -17,18 +17,6 @@ public class Room : MonoBehaviour
     public List<GameObject> entrancewayList;
     public List<GameObject> entrancewayList2;
 
-
-
-    public GameObject prevRoom;
-    public void SetPrev(GameObject room)
-    {
-        prevRoom = room;
-    }
-    public GameObject GetPrev()
-    {
-        return prevRoom;
-    }
-
     public void ActivateEntrance(int entranceNum)
     {
         if (!entrancewayList[entranceNum].activeInHierarchy)

@@ -31,27 +31,28 @@ public class MapGeneratorRyan : MonoBehaviour
     public int hRoomSpawnChance;
 
     [SerializeField] List<GameObject> roomList = new List<GameObject>();
-    [SerializeField] int[] linkedRooms;
+    [SerializeField] int[] prevRooms;
 
     private void Start()
     {
-        linkedRooms = new int[maxRooms];
+        prevRooms = new int[maxRooms];
     }
 
     #region Blueprint
     void GenBlueprint()
     {
         Vector3 curPos = Vector3.zero;
-        GenerateBlueprintRoom(curPos, null);
-        GameObject prevRoom = null;
-         
+        GenerateBlueprintRoom(curPos);
+        prevRooms[0] = -1;
+        int prevRoomIdx = 0;
+
         while (roomList.Count < maxRooms)
         {
-            foreach (GameObject room in roomList)
+            for (int i = 0; i < roomList.Count; i++)
             {
-                if (room.transform.position == curPos)
+                if (roomList[i].transform.position == curPos)
                 {
-                    prevRoom = room;
+                    prevRoomIdx = i;
                 }
             }
 
@@ -76,17 +77,18 @@ public class MapGeneratorRyan : MonoBehaviour
             }
             if (!inRoomList)
             {
-                GenerateBlueprintRoom(curPos, prevRoom);            }
+                GenerateBlueprintRoom(curPos);
+                prevRooms[roomList.Count - 1] = prevRoomIdx;
+            }
         }
     }
 
-    private void GenerateBlueprintRoom(Vector3 roomPosition, GameObject prevRoom)
+    private void GenerateBlueprintRoom(Vector3 roomPosition)
     {
         GameObject genRoom = Instantiate(bluePrintPrefab, roomPosition, Quaternion.identity) as GameObject;
         genRoom.name = $"{bluePrintPrefab.name} [{roomList.Count}]";
         genRoom.transform.SetParent(transform);
         roomList.Add(genRoom);
-        genRoom.GetComponent<Room>().SetPrev(prevRoom);
     }
     #endregion
 
@@ -97,7 +99,6 @@ public class MapGeneratorRyan : MonoBehaviour
         firstRoom.name = $"{gPrefab.name} [{0}]";
         firstRoom.transform.SetParent(transform);
         roomList[0] = firstRoom;
-
 
         for (int i = 1; i < roomList.Count; i++)
         {
@@ -156,10 +157,7 @@ public class MapGeneratorRyan : MonoBehaviour
                 GameObject genRoom = Instantiate(gPrefab, curRoomPos, Quaternion.identity) as GameObject;
                 genRoom.name = $"{gPrefab.name} [{index}]";
                 genRoom.transform.SetParent(transform);
-                if (index >= 1)
-                    genRoom.GetComponent<Room>().prevRoom = roomList[index].GetComponent<Room>().prevRoom;
                 roomList[index] = genRoom;
-
                 break;
 
         }
@@ -176,22 +174,16 @@ public class MapGeneratorRyan : MonoBehaviour
                 genRoom = Instantiate(tPrefab, curRoomPos, Quaternion.identity) as GameObject;
                 genRoom.name = $"{tPrefab.name} [{index}]";
                 genRoom.transform.SetParent(transform);
-                if (index >= 1)
-                    genRoom.GetComponent<Room>().prevRoom = roomList[index].GetComponent<Room>().prevRoom;
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
-                linkedRooms[index + 1] = 1;
-                break;
+               break;
             case 2:
                 curRoomPos.y = curRoomPos.y - cellSize;
                 genRoom = Instantiate(tPrefab, curRoomPos, Quaternion.identity) as GameObject;
                 genRoom.name = $"{tPrefab.name} [{index}]";
                 genRoom.transform.SetParent(transform);
-                if (index >= 1)
-                    genRoom.GetComponent<Room>().prevRoom = roomList[index].GetComponent<Room>().prevRoom;
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
-                linkedRooms[index] = 1;
                 break;
 
             default:
@@ -204,8 +196,6 @@ public class MapGeneratorRyan : MonoBehaviour
     {
         Vector3 curRoomPos = roomList[index].transform.position;
         GameObject genRoom = new GameObject();
-        //if (index >= 1)
-            //genRoom.GetComponent<Room>().prevRoom = roomList[index - 1];
 
         switch (roomNum)
         {
@@ -213,8 +203,6 @@ public class MapGeneratorRyan : MonoBehaviour
                 genRoom = Instantiate(hPrefab, curRoomPos, Quaternion.identity) as GameObject;
                 genRoom.name = $"{hPrefab.name} [{index}]";
                 genRoom.transform.SetParent(transform);
-                if (index >= 1)
-                    genRoom.GetComponent<Room>().prevRoom = roomList[index].GetComponent<Room>().prevRoom;
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
                 break;
@@ -223,8 +211,6 @@ public class MapGeneratorRyan : MonoBehaviour
                 genRoom = Instantiate(hPrefab, curRoomPos, Quaternion.identity) as GameObject;
                 genRoom.name = $"{hPrefab.name} [{index}]";
                 genRoom.transform.SetParent(transform);
-                if (index >= 1)
-                    genRoom.GetComponent<Room>().prevRoom = roomList[index].GetComponent<Room>().prevRoom;
                 roomList[index] = genRoom;
                 roomList[index + 1] = genRoom;
                 break;
@@ -235,26 +221,10 @@ public class MapGeneratorRyan : MonoBehaviour
 
         }
     }
-    /*
-    void GenerateJRoom(int roomNum, int index)
-    {
-        switch (roomNum)
-        {
-            case 1:
-                Debug.Log("J Room Generated.");
-                Vector3 curRoomPos = roomPositionsList[index]; // Generate 'G' Room
-                GameObject genRoom = Instantiate(jPrefab, curRoomPos, Quaternion.identity) as GameObject;
-                genRoom.name = $"{jPrefab.name} [{index}]";
-                genRoom.transform.SetParent(transform);
-                roomList.Add(genRoom);
-                break;
-
-        }
-    }
-    */
     #endregion
 
     #region Entranceways
+    /*
     void ActivateEntranceways()
     {
         for(int currRoomIdx = 1; currRoomIdx < roomList.Count; currRoomIdx++)
@@ -468,6 +438,7 @@ public class MapGeneratorRyan : MonoBehaviour
             }
         }
     }
+    */
     #endregion
 
     bool alreadyGBlue = false;
@@ -508,7 +479,7 @@ public class MapGeneratorRyan : MonoBehaviour
             if (alreadyGRoom && alreadyGBlue)
             {
                 alreadyGRoom = true;
-                ActivateEntranceways();
+                //ActivateEntranceways();
             }
             else
                 Debug.Log("Error: Generate the rooms before activating entrances.");
