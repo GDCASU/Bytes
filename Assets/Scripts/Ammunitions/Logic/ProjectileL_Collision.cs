@@ -30,7 +30,7 @@ public class ProjectileL_Collision : Projectile
     {
         if (collision.gameObject.layer == targetType.GetLayer())
         {
-            collision.transform.root.GetComponent<Character>().ReceiveDamage(impactDamage);
+            collision.transform.GetComponent<Hurtbox>().Owner.GetComponent<Character>().ReceiveDamage(impactDamage);
             visual.Stop();
             Perish();
         }

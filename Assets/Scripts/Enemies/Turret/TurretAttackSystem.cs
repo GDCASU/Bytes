@@ -162,9 +162,9 @@ public class TurretAttackSystem : MonoBehaviour
         {
             if (IsColliderVisible(collider))
             {
-                visibleTarget = collider.transform.root;
-                visibleTargetBody = collider.GetComponent<Rigidbody>();
-                visibleCharacter = collider.GetComponent<Character>();
+                visibleTarget = collider.transform.GetComponent<Hurtbox>().Owner;
+                visibleTargetBody = visibleTarget.GetComponent<Rigidbody>();
+                visibleCharacter = visibleTarget.GetComponent<Character>();
                 break;
             }
         }
