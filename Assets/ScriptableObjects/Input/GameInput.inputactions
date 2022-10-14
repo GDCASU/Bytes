@@ -1,8 +1,8 @@
 {
-    "name": "PlayerInputActionAsset",
+    "name": "GameInput",
     "maps": [
         {
-            "name": "Player",
+            "name": "Gameplay",
             "id": "560d1d87-3fcc-43a1-907f-c3cafc14ac91",
             "actions": [
                 {
@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Shoot",
+                    "name": "UsePrimaryAbility",
                     "type": "Button",
                     "id": "9fc66a30-9831-4eab-b2e1-c931f48214d0",
                     "expectedControlType": "Button",
@@ -78,7 +78,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Strike",
+                    "name": "UseSecondaryAbility",
                     "type": "Button",
                     "id": "d07abbd8-b0ae-455e-8c2a-e58b69aabc0c",
                     "expectedControlType": "Button",
@@ -87,7 +87,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Reload",
+                    "name": "UseTertiaryAbility",
                     "type": "Button",
                     "id": "0d32cc2b-b336-493a-9746-efcf325cbc65",
                     "expectedControlType": "Button",
@@ -96,7 +96,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Block",
+                    "name": "UseUtility",
+                    "type": "Button",
+                    "id": "3ab50958-be02-4b98-9e81-94948b4620c4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reload",
                     "type": "Button",
                     "id": "a67e15b2-cdb2-44ec-9739-811b40b54743",
                     "expectedControlType": "Button",
@@ -106,9 +115,9 @@
                 },
                 {
                     "name": "SwitchWeapon",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "4d4ad9ee-55f5-4440-8008-806fcd3c7485",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -160,7 +169,7 @@
                 {
                     "name": "",
                     "id": "f2d97cf3-c28d-4651-a6c0-5593b5f76420",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -252,7 +261,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Shoot",
+                    "action": "UsePrimaryAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -263,7 +272,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Shoot",
+                    "action": "UsePrimaryAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -274,7 +283,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Touch",
-                    "action": "Shoot",
+                    "action": "UsePrimaryAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -285,7 +294,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Shoot",
+                    "action": "UsePrimaryAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -296,7 +305,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Shoot",
+                    "action": "UsePrimaryAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -457,55 +466,33 @@
                 {
                     "name": "",
                     "id": "2faeffc6-51c1-4e47-9420-a6311f4b9138",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Strike",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "25ab2781-de97-4274-9bdd-1e5f041bbf7b",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad;Joystick",
-                    "action": "Strike",
+                    "action": "UseSecondaryAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "5eab5a6a-ff78-46ce-9019-3e0c56d61c6b",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Reload",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d561737a-8a05-4b58-ac08-ab99637f3ff4",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad;Joystick",
-                    "action": "Reload",
+                    "action": "UseTertiaryAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "2ca5e03e-ee85-4324-b1f6-b26709d52785",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Block",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -522,6 +509,39 @@
                 },
                 {
                     "name": "",
+                    "id": "3d9ae666-2dfb-49b4-ae29-091a06281030",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1cedd82b-57e9-4f83-9dff-8856518eaca3",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "Scale(factor=2)",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a9324174-a267-4ee3-bba4-d0d0b44e2de0",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "Scale(factor=3)",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "821ec9b9-6fd6-4fe0-86e7-2b4a6fdcf595",
                     "path": "<Keyboard>/rightShift",
                     "interactions": "",
@@ -530,11 +550,22 @@
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e8aec0d-d732-4dff-8664-ee5d4f64d621",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseUtility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "UI",
+            "name": "Menus",
             "id": "2b4441a8-d7f8-43ce-87ce-0a87f0adfb37",
             "actions": [
                 {

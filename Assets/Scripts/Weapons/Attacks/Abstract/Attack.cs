@@ -7,7 +7,8 @@ public abstract class Attack : MonoBehaviour
     public abstract BaseResource Resource { get; }
     public virtual bool HasCooldown { get => Cooldown != null; }
     public abstract ICooldown Cooldown { get; }
-    public abstract bool CanRestoreNow { get; }
+    public abstract bool CanAttemptRestore { get; }
+    public abstract bool IsActive { get; }
     public abstract void Perform(bool isStarting);
     public abstract void RestoreResource();
     public abstract void Interrupt();

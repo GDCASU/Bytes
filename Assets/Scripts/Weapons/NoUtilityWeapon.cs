@@ -22,16 +22,16 @@ public class NoUtilityWeapon : Weapon2
 
     public override void PerformRestoration()
     {
-        if (primaryAttack && secondaryAttack && primaryAttack.CanRestoreNow && secondaryAttack.CanRestoreNow)
+        if (primaryAttack && secondaryAttack && primaryAttack.CanAttemptRestore && secondaryAttack.CanAttemptRestore)
         {
             primaryAttack.RestoreResource();
             secondaryAttack.RestoreResource();
         }
-        else if (primaryAttack && primaryAttack.CanRestoreNow)
+        else if (primaryAttack && primaryAttack.CanAttemptRestore)
         {
             primaryAttack.RestoreResource();
         }
-        else if (secondaryAttack && secondaryAttack.CanRestoreNow)
+        else if (secondaryAttack && secondaryAttack.CanAttemptRestore)
         {
             secondaryAttack.RestoreResource();
         }

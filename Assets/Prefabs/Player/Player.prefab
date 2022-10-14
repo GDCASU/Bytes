@@ -5144,6 +5144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f08b724a54c264ebee78438ecd6629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _input: {fileID: 0}
   mouseSensitvity: 100
   camHeight: 0.75
   player: {fileID: 8225854368876441687}
@@ -11570,12 +11571,10 @@ GameObject:
   - component: {fileID: 8225854368876441682}
   - component: {fileID: 8225854368876441683}
   - component: {fileID: 1947202456}
-  - component: {fileID: 5150005152611419329}
   - component: {fileID: 5331444266740828653}
   - component: {fileID: 1947202455}
-  - component: {fileID: 1501375669}
-  - component: {fileID: 1533742258}
   - component: {fileID: 1975860786}
+  - component: {fileID: 1947202458}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -11751,21 +11750,9 @@ MonoBehaviour:
     m_ActionName: Player/Dash[/Keyboard/rightShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &5150005152611419329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8225854368876441680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da1da6a8bfe70284faa70c7f5ff339e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5331444266740828653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11799,6 +11786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40532f9b615919f43bbc32af80cd246b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _input: {fileID: 0}
   jumpMechanic: 1
   crouchMechanic: 1
   vaultMechanic: 1
@@ -11910,37 +11898,6 @@ MonoBehaviour:
   ignores:
     serializedVersion: 2
     m_Bits: 0
---- !u!114 &1501375669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8225854368876441680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d1a3102a349d114fb9eb029f8a80114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <WeaponContainer>k__BackingField: {fileID: 646967955}
-  <ProjectileSpawn>k__BackingField: {fileID: 3610357520889994798}
-  currentWeaponIndex: 0
-  weapons:
-  - {fileID: 6576096071312733772}
-  - {fileID: 0}
---- !u!114 &1533742258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8225854368876441680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d850b575cae95f247902bb51ed118681, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxAbilities: 3
 --- !u!114 &1975860786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11953,6 +11910,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3a89060184c6334abedc06ba1317699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1947202458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8225854368876441680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f14d4d13faa20f045835f0155c75d4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAbilities: 3
 --- !u!1 &8247261416745651063
 GameObject:
   m_ObjectHideFlags: 0
@@ -12853,15 +12823,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1287404319}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6576096071312733772 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
-    type: 3}
-  m_PrefabInstance: {fileID: 1287404319}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 830cf415a13dfc649b6c32ef25a0574b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

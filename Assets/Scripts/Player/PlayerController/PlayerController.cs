@@ -6,6 +6,8 @@ public partial class PlayerController : MonoBehaviour
 {
     #region Variables
 
+    [SerializeField] InputReader _inputReader = default;
+
     #region Movement Mechanics
     [Header("Additional Mechanics")]
     public bool jumpMechanic;
@@ -132,11 +134,13 @@ public partial class PlayerController : MonoBehaviour
         baseMovementVariables.StartVariables(capCollider, transform);
         if (capCollider.radius * 2 * transform.lossyScale.x >=
             transform.lossyScale.y * capCollider.height) crouchMechanic = false;
+        /*
         if (InputManager.CurrentControlScheme == "Gamepad")
         {
             baseMovementVariables.holdSprint = false;
             crouchVariables.holdCrouch = false;
         }
+        */
     }
 
     void Update()

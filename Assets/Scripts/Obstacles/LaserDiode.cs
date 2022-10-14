@@ -55,10 +55,10 @@ public class LaserDiode : MonoBehaviour
         if (Physics.SphereCast(laser.position, laserRadius, worldLaserDirection, out RaycastHit hit, laserMaxDistance))
         {
             GameObject objectHit = hit.collider.gameObject;
-            if (objectHit.CompareTag("Player") && objectHit.GetComponent<Player>())
+            if (objectHit.CompareTag("Player") && objectHit.GetComponent<OldPlayer>())
             {
                 // Cause damage to the player
-                objectHit.GetComponent<Player>().ReceiveDamage(damage);
+                objectHit.GetComponent<OldPlayer>().ReceiveDamage(damage);
             }
             // Laser extends to the object it hits
             lineRenderer.SetPosition(0, Vector3.zero);

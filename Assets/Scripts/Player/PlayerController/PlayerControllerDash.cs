@@ -22,11 +22,11 @@ public partial class PlayerController
     void DashInput()
     {
         // Press the right shift key to dash
-        if(isDashEnabled && InputManager.PlayerActions.Dash.WasPerformedThisFrame() && dashVariables.canDash)
+        if(isDashEnabled && _inputReader.Gameplay.Dash.WasPerformedThisFrame() && dashVariables.canDash)
         {
             Vector3 dashDirection = new Vector3(0, 0, 1);
-            float xDir = InputManager.PlayerActions.Move.ReadValue<Vector2>().x;
-            float zDir = InputManager.PlayerActions.Move.ReadValue<Vector2>().y;
+            float xDir = _inputReader.Gameplay.Move.ReadValue<Vector2>().x;
+            float zDir = _inputReader.Gameplay.Move.ReadValue<Vector2>().y;
 
             // Dash forward by default if no movement keys are pressed. Otherwise, dash in the direction the player is moving.
             if (xDir != 0.0f || zDir != 0.0f) dashDirection = new Vector3(xDir, 0, zDir);

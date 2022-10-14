@@ -1,6 +1,6 @@
 /*
  * Author: Cristion Dominguez
- * Date: ???
+ * Date: 6 Oct. 2022
  */
 
 using System.Collections;
@@ -40,7 +40,7 @@ public abstract class Character : MonoBehaviour
     public abstract void ReceiveHealth(float health);
 }
 
-public enum CharacterType: int
+public enum CharacterType : int
 {
     Player,
     Enemy

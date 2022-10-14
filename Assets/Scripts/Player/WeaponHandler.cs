@@ -3,11 +3,10 @@
  * Date: ???
  */
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(IWeaponWielder))]
 public class WeaponHandler : MonoBehaviour
 {
     [field: SerializeField] public Transform WeaponContainer { get; private set; }
@@ -15,15 +14,21 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] int currentWeaponIndex;
     [SerializeField] Weapon[] weapons;
 
-    Character wielder;
+    IWeaponWielder wielder;
 
     Weapon currentWeapon;
     int maxWeapons = 0;
     int numOfWeapons = 0;
 
-    private void Awake() => wielder = GetComponent<Character>();
+    private void Awake()
+    {
+        wielder = GetComponent<IWeaponWielder>();
+        wielder.Enabled += Dev_Enable;
+        wielder.Disabled += Dev_Disable;
+        wielder.Started += Dev_Start;
+    }
 
-    void Start()
+    void Dev_Start()
     {
         maxWeapons = weapons.Length;
         for (int i = 0; i < maxWeapons; i++)
@@ -34,7 +39,7 @@ public class WeaponHandler : MonoBehaviour
                 WeaponEquipData data = new WeaponEquipData();
                 data.container = WeaponContainer;
                 data.projectileSpawn = ProjectileSpawn;
-                data.target = wielder.Target;
+                data.target = CharacterType.Enemy;  // [REPLACE]
                 weapon.PrepareWeapon(data);
                 weapon.gameObject.SetActive(false);
                 numOfWeapons++;
@@ -46,55 +51,44 @@ public class WeaponHandler : MonoBehaviour
         SetCurrentWeapon(currentWeaponIndex);
     }
 
-    public void Dev_OnEnable()
+    public void Dev_Enable()
     {
-        InputManager.PlayerActions.SwitchWeapon.performed += OnSwitchWeapon;
+        wielder.PrimaryAttackPerformed += OnPrimaryAttackPerformed;
+        wielder.PrimaryAttackCanceled += OnPrimaryAttackCanceled;
 
-        InputManager.PlayerActions.Block.performed += OnBlock;
-        InputManager.PlayerActions.Block.canceled += OnBlock;
+        wielder.SecondaryAttackPerformed += OnSecondaryAttackPerformed;
+        wielder.SecondaryAttackCanceled += OnSecondaryAttackCanceled;
 
-        InputManager.PlayerActions.Reload.performed += OnReload;
+        wielder.TertiaryAttackPerformed += OnTertiaryAttackPerformed;
+        wielder.TertiaryAttackCanceled += OnTertiaryAttackCanceled;
 
-        InputManager.PlayerActions.Shoot.performed += OnShoot;
-        InputManager.PlayerActions.Shoot.canceled += OnShoot;
+        wielder.UtilityPerformed += OnUtilityPerformed;
+        wielder.UtilityCanceled += OnUtilityCanceled;
 
-        InputManager.PlayerActions.Strike.performed += OnStrike;
+        wielder.SwitchWeaponPerformed += OnSwitchWeaponPerformed;
     }
-    public void Dev_OnDisable()
+    public void Dev_Disable()
     {
-        InputManager.PlayerActions.SwitchWeapon.performed -= OnSwitchWeapon;
+        wielder.PrimaryAttackPerformed -= OnPrimaryAttackPerformed;
+        wielder.PrimaryAttackCanceled -= OnPrimaryAttackCanceled;
 
-        InputManager.PlayerActions.Block.performed -= OnBlock;
-        InputManager.PlayerActions.Block.canceled -= OnBlock;
+        wielder.SecondaryAttackPerformed -= OnSecondaryAttackPerformed;
+        wielder.SecondaryAttackCanceled -= OnSecondaryAttackCanceled;
 
-        InputManager.PlayerActions.Reload.performed -= OnReload;
+        wielder.TertiaryAttackPerformed -= OnTertiaryAttackPerformed;
+        wielder.TertiaryAttackCanceled -= OnTertiaryAttackCanceled;
 
-        InputManager.PlayerActions.Shoot.performed -= OnShoot;
-        InputManager.PlayerActions.Shoot.canceled -= OnShoot;
+        wielder.UtilityPerformed -= OnUtilityPerformed;
+        wielder.UtilityCanceled -= OnUtilityCanceled;
 
-        InputManager.PlayerActions.Strike.performed -= OnStrike;
-    }
-
-    void OnSwitchWeapon(InputAction.CallbackContext context)
-    {
-        if (numOfWeapons <= 1) return;
-
-        currentWeapon.gameObject.SetActive(false);
-
-        if (context.ReadValue<float>() > 0)
-        {
-            currentWeaponIndex = currentWeaponIndex - 1 >= 0 ? currentWeaponIndex - 1 : weapons.Length - 1;
-        }
-        else
-        {
-            currentWeaponIndex = currentWeaponIndex + 1 < weapons.Length ? currentWeaponIndex + 1 : 0;
-        }
-
-        SetCurrentWeapon(currentWeaponIndex);
+        wielder.SwitchWeaponPerformed -= OnSwitchWeaponPerformed;
     }
 
     void SetCurrentWeapon(int weaponIndex)
     {
+        if (weaponIndex < 0 || weaponIndex >= weapons.Length)
+            return;
+
         currentWeapon = weapons[weaponIndex];
         if (currentWeapon)
             currentWeapon.gameObject.SetActive(true);
@@ -105,11 +99,42 @@ public class WeaponHandler : MonoBehaviour
         WeaponEquipData data = new WeaponEquipData();
         data.container = WeaponContainer;
         data.projectileSpawn = ProjectileSpawn;
-        data.target = wielder.Target;
+        data.target = CharacterType.Enemy; // [REPLACE]
         newWeapon.PrepareWeapon(data);
         weapons[weaponIndex] = newWeapon;
     }
 
+    void OnPrimaryAttackPerformed() { }
+    void OnPrimaryAttackCanceled() { }
+    void OnSecondaryAttackPerformed() { }
+    void OnSecondaryAttackCanceled() { }
+    void OnTertiaryAttackPerformed() { }
+    void OnTertiaryAttackCanceled() { }
+    void OnUtilityPerformed () { }
+    void OnUtilityCanceled() { }
+    public void OnSwitchWeaponPerformed(int switchValue)
+    {
+        if (numOfWeapons <= 1 || switchValue < -1 || switchValue > weapons.Length) return;
+
+        currentWeapon.gameObject.SetActive(false);
+
+        if (switchValue == -1)
+        {
+            currentWeaponIndex = currentWeaponIndex - 1 >= 0 ? currentWeaponIndex - 1 : weapons.Length - 1;
+        }
+        else if (switchValue == 0)
+        {
+            currentWeaponIndex = currentWeaponIndex + 1 < weapons.Length ? currentWeaponIndex + 1 : 0;
+        }
+        else
+        {
+            currentWeaponIndex = switchValue - 1;
+        }
+
+        SetCurrentWeapon(currentWeaponIndex);
+    }
+
+    // [REMOVE]
     void OnBlock(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Block(context.phase == InputActionPhase.Performed); }
     void OnReload(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Reload(); }
     void OnShoot(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Shoot(context.phase == InputActionPhase.Performed); }
