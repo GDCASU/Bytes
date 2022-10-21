@@ -10,11 +10,11 @@ using UnityEngine.InputSystem;
 public class WeaponHandler : MonoBehaviour
 {
     [field: SerializeField] public Transform WeaponContainer { get; private set; }
-    [field: SerializeField] public Transform ProjectileSpawn { get; protected set; }
+    [field: SerializeField] public Transform ProjectileSpawn { get; private set; }
     [SerializeField] int currentWeaponIndex;
     [SerializeField] Weapon[] weapons;
 
-    IWeaponWielder wielder;
+    public IWeaponWielder Wielder { get; private set; }
 
     Weapon currentWeapon;
     int maxWeapons = 0;
@@ -22,10 +22,10 @@ public class WeaponHandler : MonoBehaviour
 
     private void Awake()
     {
-        wielder = GetComponent<IWeaponWielder>();
-        wielder.Enabled += Dev_Enable;
-        wielder.Disabled += Dev_Disable;
-        wielder.Started += Dev_Start;
+        Wielder = GetComponent<IWeaponWielder>();
+        Wielder.Enabled += Dev_Enable;
+        Wielder.Disabled += Dev_Disable;
+        Wielder.Started += Dev_Start;
     }
 
     void Dev_Start()
@@ -53,35 +53,35 @@ public class WeaponHandler : MonoBehaviour
 
     public void Dev_Enable()
     {
-        wielder.PrimaryAttackPerformed += OnPrimaryAttackPerformed;
-        wielder.PrimaryAttackCanceled += OnPrimaryAttackCanceled;
+        Wielder.PrimaryAttackPerformed += OnPrimaryAttackPerformed;
+        Wielder.PrimaryAttackCanceled += OnPrimaryAttackCanceled;
 
-        wielder.SecondaryAttackPerformed += OnSecondaryAttackPerformed;
-        wielder.SecondaryAttackCanceled += OnSecondaryAttackCanceled;
+        Wielder.SecondaryAttackPerformed += OnSecondaryAttackPerformed;
+        Wielder.SecondaryAttackCanceled += OnSecondaryAttackCanceled;
 
-        wielder.TertiaryAttackPerformed += OnTertiaryAttackPerformed;
-        wielder.TertiaryAttackCanceled += OnTertiaryAttackCanceled;
+        Wielder.TertiaryAttackPerformed += OnTertiaryAttackPerformed;
+        Wielder.TertiaryAttackCanceled += OnTertiaryAttackCanceled;
 
-        wielder.UtilityPerformed += OnUtilityPerformed;
-        wielder.UtilityCanceled += OnUtilityCanceled;
+        Wielder.UtilityPerformed += OnUtilityPerformed;
+        Wielder.UtilityCanceled += OnUtilityCanceled;
 
-        wielder.SwitchWeaponPerformed += OnSwitchWeaponPerformed;
+        Wielder.SwitchWeaponPerformed += OnSwitchWeaponPerformed;
     }
     public void Dev_Disable()
     {
-        wielder.PrimaryAttackPerformed -= OnPrimaryAttackPerformed;
-        wielder.PrimaryAttackCanceled -= OnPrimaryAttackCanceled;
+        Wielder.PrimaryAttackPerformed -= OnPrimaryAttackPerformed;
+        Wielder.PrimaryAttackCanceled -= OnPrimaryAttackCanceled;
 
-        wielder.SecondaryAttackPerformed -= OnSecondaryAttackPerformed;
-        wielder.SecondaryAttackCanceled -= OnSecondaryAttackCanceled;
+        Wielder.SecondaryAttackPerformed -= OnSecondaryAttackPerformed;
+        Wielder.SecondaryAttackCanceled -= OnSecondaryAttackCanceled;
 
-        wielder.TertiaryAttackPerformed -= OnTertiaryAttackPerformed;
-        wielder.TertiaryAttackCanceled -= OnTertiaryAttackCanceled;
+        Wielder.TertiaryAttackPerformed -= OnTertiaryAttackPerformed;
+        Wielder.TertiaryAttackCanceled -= OnTertiaryAttackCanceled;
 
-        wielder.UtilityPerformed -= OnUtilityPerformed;
-        wielder.UtilityCanceled -= OnUtilityCanceled;
+        Wielder.UtilityPerformed -= OnUtilityPerformed;
+        Wielder.UtilityCanceled -= OnUtilityCanceled;
 
-        wielder.SwitchWeaponPerformed -= OnSwitchWeaponPerformed;
+        Wielder.SwitchWeaponPerformed -= OnSwitchWeaponPerformed;
     }
 
     void SetCurrentWeapon(int weaponIndex)

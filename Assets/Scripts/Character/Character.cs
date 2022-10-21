@@ -51,16 +51,16 @@ public static class CharacterTypeExtensions
     public static int GetLayer(this CharacterType type)
     {
         if (type == CharacterType.Player)
-            return Constants.Layer.Player;
+            return Constants.Layer.Protagonist;
         else
-            return Constants.Layer.Enemy;
+            return Constants.Layer.Antagonist;
     }
 
     public static int GetLayerMask(this CharacterType type)
     {
         if (type == CharacterType.Player)
-            return Constants.LayerMask.Player;
+            return Constants.LayerMask.Protagonist;
         else
-            return Constants.LayerMask.Enemy;
+            return Constants.LayerMask.Antagonist;
     }
 }

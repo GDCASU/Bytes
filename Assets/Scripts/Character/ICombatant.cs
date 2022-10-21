@@ -21,16 +21,16 @@ public static class CombatantAllegianceExtensions
     public static int GetLayer(this CombatantAllegiance type)
     {
         if (type == CombatantAllegiance.Protagonist)
-            return Constants.Layer.Player;
+            return Constants.Layer.Protagonist;
         else
-            return Constants.Layer.Enemy;
+            return Constants.Layer.Antagonist;
     }
 
     public static int GetLayerMask(this CombatantAllegiance type)
     {
         if (type == CombatantAllegiance.Antagonist)
-            return Constants.LayerMask.Player;
+            return Constants.LayerMask.Protagonist;
         else
-            return Constants.LayerMask.Enemy;
+            return Constants.LayerMask.Antagonist;
     }
 }
