@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -355,7 +355,7 @@ MonoBehaviour:
   lPrefab: {fileID: 6321413536967066871, guid: 97b96c366fb5e44489c9d5c503f211d0, type: 3}
   jPrefab: {fileID: 6321413536967066871, guid: 97b96c366fb5e44489c9d5c503f211d0, type: 3}
   bPrefab: {fileID: 6321413536967066871, guid: 97b96c366fb5e44489c9d5c503f211d0, type: 3}
-  maxRooms: 12
+  maxRooms: 7
   tRoomSpawnChance: 80
   hRoomSpawnChance: 35
   minX: 0
@@ -366,8 +366,6 @@ MonoBehaviour:
   maxZ: 0
   roomList: []
   linkedRooms: 
-  alreadyGBlue: 0
-  alreadyGRoom: 0
 --- !u!1 &1519603663
 GameObject:
   m_ObjectHideFlags: 0
