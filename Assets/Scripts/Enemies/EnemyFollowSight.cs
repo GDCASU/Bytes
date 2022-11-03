@@ -8,6 +8,7 @@ public class EnemyFollowSight : MonoBehaviour
     public Transform lookPoint;
     public float lookDistance = 10.0f;
     public float lookRadius = 10.0f;
+    public float tooCloseRadius = 3.0f;
     public float rotationSpeed = 5.0f;
     public float attackCooldown = 1.0f;
     public int damage = 1;
@@ -17,7 +18,8 @@ public class EnemyFollowSight : MonoBehaviour
     private NavMeshAgent agent;
     private Vector3 lastSeenPlayerPos;
     private bool canAttack;
-    private bool spottedPlayer;
+    private bool foundSomething;
+    private bool firstSpottedPlayer;
     private RaycastHit hit;
 
     private void Start()
@@ -27,35 +29,37 @@ public class EnemyFollowSight : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         lastSeenPlayerPos = Vector3.zero;
         canAttack = true;
-        spottedPlayer = false;
+        firstSpottedPlayer = false;
     }
 
     private void Update()
     {
         float distanceFromTarget = Vector3.Distance(playerTarget.position, transform.position);
-        bool foundSomething = Physics.SphereCast(lookPoint.position, lookRadius, lookPoint.forward, out hit, lookDistance);
+        foundSomething = Physics.SphereCast(lookPoint.position, lookRadius, lookPoint.forward, out hit, lookDistance, Constants.LayerMask.Protagonist);
 
-        if (foundSomething && hit.collider.CompareTag("Player"))
+        if (distanceFromTarget <= agent.stoppingDistance)
         {
-            spottedPlayer = true;
-            lastSeenPlayerPos = playerTarget.position;
-            agent.SetDestination(lastSeenPlayerPos);
+            // Rotate to always face the player when they are close.
+            FaceTarget();
 
-            if (distanceFromTarget <= agent.stoppingDistance)
+            // Attack the player continuously when they are close.
+            if (canAttack)
             {
-                // Attack the player continuously when they are close.
-                if (canAttack)
-                {
-                    playerDamageable.ReceiveDamage(damage);
-                    canAttack = false;
-                    StartCoroutine(AttackCooldown());
-                }
-
-                // Rotate to always face the player when they are close.
-                FaceTarget();
+                playerDamageable.ReceiveDamage(damage);
+                canAttack = false;
+                StartCoroutine(AttackCooldown());
             }
         }
-        else if (spottedPlayer)
+        else if ((foundSomething && hit.collider.CompareTag("Player")) || (distanceFromTarget <= tooCloseRadius))
+        {
+            // Rotate to always face the player when they are close.
+            FaceTarget();
+
+            firstSpottedPlayer = true;
+            lastSeenPlayerPos = playerTarget.position;
+            agent.SetDestination(lastSeenPlayerPos);
+        }
+        else if (firstSpottedPlayer)
         {
             agent.SetDestination(lastSeenPlayerPos);
         }
