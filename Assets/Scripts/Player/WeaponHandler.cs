@@ -12,11 +12,11 @@ public class WeaponHandler : MonoBehaviour
     [field: SerializeField] public Transform WeaponContainer { get; private set; }
     [field: SerializeField] public Transform ProjectileSpawn { get; private set; }
     [SerializeField] int currentWeaponIndex;
-    [SerializeField] Weapon[] weapons;
+    [SerializeField] OldWeapon[] weapons;
 
     public IWeaponWielder Wielder { get; private set; }
 
-    Weapon currentWeapon;
+    OldWeapon currentWeapon;
     int maxWeapons = 0;
     int numOfWeapons = 0;
 
@@ -33,7 +33,7 @@ public class WeaponHandler : MonoBehaviour
         maxWeapons = weapons.Length;
         for (int i = 0; i < maxWeapons; i++)
         {
-            Weapon weapon = weapons[i];
+            OldWeapon weapon = weapons[i];
             if (weapon != null)
             {
                 WeaponEquipData data = new WeaponEquipData();
@@ -94,7 +94,7 @@ public class WeaponHandler : MonoBehaviour
             currentWeapon.gameObject.SetActive(true);
     }
 
-    void SetNewWeapon(Weapon newWeapon, int weaponIndex)
+    void SetNewWeapon(OldWeapon newWeapon, int weaponIndex)
     {
         WeaponEquipData data = new WeaponEquipData();
         data.container = WeaponContainer;
@@ -140,7 +140,7 @@ public class WeaponHandler : MonoBehaviour
     void OnShoot(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Shoot(context.phase == InputActionPhase.Performed); }
     void OnStrike(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Strike(); }
 
-    public void TakeNewWeapon(Weapon newWeapon)
+    public void TakeNewWeapon(OldWeapon newWeapon)
     {
         if (numOfWeapons < maxWeapons)
         {

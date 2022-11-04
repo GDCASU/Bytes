@@ -29,7 +29,7 @@ public partial class PlayerController
             {
                 case EquipableEntity.EntityType.Weapon:
                     print("Got Weapon");
-                    this.GetComponent<WeaponHandler>().TakeNewWeapon(entity.GetComponent<Weapon>());
+                    this.GetComponent<WeaponHandler>().TakeNewWeapon(entity.GetComponent<OldWeapon>());
                     break;
                 case EquipableEntity.EntityType.Ability:
                     print("Got Ability");

@@ -2,11 +2,14 @@ using System;
 
 public class EmptySkill : IWeaponSkill
 {
-    public event Action<IWeaponSkill> ObstructionRelinquished;
-    public bool IsObstructing => false;
+    public event Action<IWeaponSkill> Deactivated;
+    public SkillStatus Status => SkillStatus.Inactive;
     public SkillType Type => SkillType.Empty;
     public int Priority => int.MaxValue;
     public BaseResource Resource => null;
-    public void Perform(bool isStarting) { }
-    public void Interrupt() { }
+    public bool Obstructs(bool isStarting) => false;
+    public void Perform(bool isStarting, bool pauseImmediately = false) { }
+    public void Pause() { }
+    public void Resume() { }
+    public void Halt() { }
 }

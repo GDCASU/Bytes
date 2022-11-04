@@ -8,7 +8,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public abstract class Weapon: MonoBehaviour
+public abstract class OldWeapon: MonoBehaviour
 {
     [Header("Offset")]
     [SerializeField] protected Vector3 offsetPosition;
@@ -37,7 +37,7 @@ public abstract class Weapon: MonoBehaviour
     public abstract void NeglectWeapon(WeaponUnequipData data);
 }
 
-public abstract class MeleeWeapon : Weapon
+public abstract class MeleeWeapon : OldWeapon
 {
     [Header("Basic Properties")]
     [SerializeField] protected float damage;
@@ -50,7 +50,7 @@ public abstract class MeleeWeapon : Weapon
     public override void NeglectWeapon(WeaponUnequipData data) { }
 }
 
-public abstract class RangedWeapon: Weapon
+public abstract class RangedWeapon: OldWeapon
 {
     [Header("Basic Properties")]
     [SerializeField] protected int maxAmmo;
