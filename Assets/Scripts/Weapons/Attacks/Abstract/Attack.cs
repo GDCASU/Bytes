@@ -3,8 +3,8 @@ using UnityEngine;
 
 public abstract class Attack : MonoBehaviour
 {
-    public virtual bool HasResource { get => Resource; }
-    public abstract BaseResource Resource { get; }
+    public virtual bool HasResource { get => false; }
+    public abstract IResource Resource { get; }
     public virtual bool HasCooldown { get => Cooldown != null; }
     public abstract ICooldown Cooldown { get; }
     public abstract bool CanAttemptRestore { get; }

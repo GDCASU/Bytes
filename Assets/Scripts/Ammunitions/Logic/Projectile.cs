@@ -1,22 +1,19 @@
-/*
- * Author: Cristion Dominguez
- * Date: ???
- */
-
 using System;
 using System.Collections;
 using UnityEngine;
 
-public abstract class Projectile: MonoBehaviour
+[RequireComponent(typeof(ProjectileVisual))]
+public abstract class Projectile : MonoBehaviour, IPoolItem
 {
-    [SerializeField] protected float impactDamage;
-    [field: SerializeField] public float Lifespan { get; private set; }
+    public event Action<IPoolItem> Finished;
+    public abstract float Lifespan { get; }
 
+    [SerializeField] protected float impactDamage;
     protected ProjectileVisual visual;
     protected Ray ray;
-    protected CharacterType targetType;
+    protected CombatantAllegiance targetAllegiance;
     protected WaitForSeconds ageWait;
-    protected Action<Projectile> returnSelf;
+    protected bool isPoolAlive = true;
 
     protected virtual void Awake()
     {
@@ -27,14 +24,6 @@ public abstract class Projectile: MonoBehaviour
 
     protected virtual void OnValidate() => ageWait = new WaitForSeconds(Lifespan);
 
-    protected virtual void OnDisable()
-    {
-        if (visual)
-            visual.Stop();
-    }
-
-    public abstract void Launch(Ray ray, float launchSpeed, CharacterType targetType, Vector3 visualSpawnPosition);
-
     protected virtual void CommenceAging() => StartCoroutine(TrackAge());
 
     protected virtual IEnumerator TrackAge()
@@ -43,18 +32,31 @@ public abstract class Projectile: MonoBehaviour
         Perish();
     }
 
-    public virtual void ReturnSelfTo(Action<Projectile> someDelegate)
-    {
-        returnSelf = someDelegate;
-    }
-
     protected virtual void Perish()
     {
-        if (returnSelf != null)
-            returnSelf(this);
+        StopCoroutine(TrackAge());
+
+        if (visual)
+            visual.Stop();
+
+        if (isPoolAlive)
+        {   
+            gameObject.SetActive(false);
+            Finished(this);
+        }
         else
             Destroy(gameObject);
-
-        StopCoroutine(TrackAge());
     }
+
+    public virtual void OnGet()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public virtual void OnPoolDisposed()
+    {
+        isPoolAlive = false;
+    }
+
+    public abstract void Launch(Ray ray, float launchSpeed, CombatantAllegiance targetAllegiance, Vector3 visualSpawnPosition);   
 }

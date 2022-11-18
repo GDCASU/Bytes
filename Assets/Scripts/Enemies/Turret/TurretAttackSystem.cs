@@ -41,7 +41,7 @@ public class TurretAttackSystem : MonoBehaviour
     [SerializeField]
     private float spread;
     [SerializeField]
-    private Projectile bullet;
+    private Old_Projectile bullet;
     [SerializeField]
     private Transform[] bulletSpawns;
 
@@ -52,9 +52,9 @@ public class TurretAttackSystem : MonoBehaviour
     private float horizontalAnglesPerFixedUpdate;
     private float verticalAnglesPerFixedUpdate;
 
-    private ObjectPool<Projectile> bulletPool;
+    private ObjectPool<Old_Projectile> bulletPool;
     private int bulletSpawnIndex;
-    private Action<Action<Projectile>> notifyBulletToDestoySelf;
+    private Action<Action<Old_Projectile>> notifyBulletToDestoySelf;
 
     private WaitForSeconds pulseWait;
     private WaitForSeconds cooldownWait;
@@ -73,10 +73,10 @@ public class TurretAttackSystem : MonoBehaviour
     {
         float bulletLifespan = bullet.Lifespan;
         int capacity = bulletLifespan > 0f ? Mathf.CeilToInt(bulletLifespan * fireRate) : fireRate;
-        bulletPool = new ObjectPool<Projectile>(
+        bulletPool = new ObjectPool<Old_Projectile>(
             () =>
             {
-                Projectile projectile = Instantiate(bullet);
+                Old_Projectile projectile = Instantiate(bullet);
                 projectile.ReturnSelfTo((p) => bulletPool.Release(p));
                 notifyBulletToDestoySelf += projectile.ReturnSelfTo;
                 return projectile;
@@ -146,7 +146,7 @@ public class TurretAttackSystem : MonoBehaviour
             Transform bulletSpawn = bulletSpawns[bulletSpawnIndex];
             Vector3 direction = Spread.DeviateFromForwardDirection(bulletSpawn, spread);
 
-            Projectile projectile = bulletPool.Get();
+            Old_Projectile projectile = bulletPool.Get();
             projectile.transform.position = bulletSpawn.position;
             projectile.Launch(new Ray(bulletSpawn.position, direction), launchSpeed, targetType, bulletSpawn.position);
             bulletSpawnIndex = bulletSpawnIndex + 1 < bulletSpawns.Length ? bulletSpawnIndex + 1 : 0;

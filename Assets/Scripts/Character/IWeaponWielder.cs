@@ -4,7 +4,6 @@
  */
 
 using System;
-using UnityEngine.InputSystem;
 
 public interface IWeaponWielder: ICombatant
 {

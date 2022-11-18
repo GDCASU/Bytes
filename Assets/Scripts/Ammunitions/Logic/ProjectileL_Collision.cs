@@ -1,34 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ProjectileVisual))]
+[RequireComponent(typeof(Rigidbody))]
 public class ProjectileL_Collision : Projectile
 {
-    protected Rigidbody body;
+    [SerializeField] float _lifespan;
+    Rigidbody _body;
+
+    public override float Lifespan => _lifespan;
 
     protected override void Awake()
     {
         base.Awake();
-        body = GetComponent<Rigidbody>();
+        _body = GetComponent<Rigidbody>();
     }
 
-    public override void Launch(Ray ray, float launchSpeed, CharacterType targetType, Vector3 visualSpawnPosition)
+    public override void Launch(Ray ray, float launchSpeed, CombatantAllegiance targetAllegiance, Vector3 visualSpawnPosition)
     {
         CommenceAging();
-        this.targetType = targetType;
+        this.targetAllegiance = targetAllegiance;
 
         transform.rotation = Quaternion.LookRotation(ray.direction);
-        body.velocity = ray.direction * launchSpeed;
+        _body.velocity = ray.direction * launchSpeed;
 
-        ProjectileVisualData data = new ProjectileVisualData();
+        ProjectileVisualData data = new();
         data.startPosition = visualSpawnPosition;
         visual.Play(data);
     }
 
     protected void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == targetType.GetLayer())
+        if (collision.gameObject.layer == targetAllegiance.GetLayer())
         {
             collision.transform.root.GetComponent<Character>().ReceiveDamage(impactDamage);
             visual.Stop();

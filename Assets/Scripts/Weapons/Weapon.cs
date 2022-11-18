@@ -12,6 +12,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] AnimatorOverrideController _overrideController;
 
     public WeaponHandler Handler { get; private set; }
+    public AmmoInventory Inventory { get; private set; }
 
     IWeaponSkill _primarySkill, _secondarySkill, _tertiarySkill, _reloadSkill;
     SkillNode[] _nodes = new SkillNode[4];
@@ -53,6 +54,8 @@ public class Weapon : MonoBehaviour
         _nodes[1].skill = _secondarySkill;
         _nodes[2].skill = _tertiarySkill;
         _nodes[3].skill = _reloadSkill;
+
+        Inventory = GetComponent<AmmoInventory>();
     }
 
     private void OnEnable()
@@ -61,6 +64,10 @@ public class Weapon : MonoBehaviour
         _secondarySkill.Deactivated += PopFromStack;
         _tertiarySkill.Deactivated += PopFromStack;
         _reloadSkill.Deactivated += PopFromStack;
+
+        _primarySkill.ResourceExpended += PerformReload;
+        _secondarySkill.ResourceExpended += PerformReload;
+        _tertiarySkill.ResourceExpended += PerformReload;
     }
 
     private void OnDisable()
@@ -69,6 +76,10 @@ public class Weapon : MonoBehaviour
         _secondarySkill.Deactivated -= PopFromStack;
         _tertiarySkill.Deactivated -= PopFromStack;
         _reloadSkill.Deactivated -= PopFromStack;
+
+        _primarySkill.ResourceExpended += PerformReload;
+        _secondarySkill.ResourceExpended += PerformReload;
+        _tertiarySkill.ResourceExpended += PerformReload;
     }
 
     public void PerformPrimaryAttack(bool isStarting)
@@ -126,6 +137,9 @@ public class Weapon : MonoBehaviour
 
         SkillNode correspondingNode = _nodes[(int)skill.Type];
         SkillNode temp, iterator;
+
+        if (!skill.CanPerform(isStarting))
+            return;
 
         if (skill.Obstructs(isStarting))
         {

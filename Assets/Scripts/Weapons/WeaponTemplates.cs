@@ -57,15 +57,15 @@ public abstract class RangedWeapon: OldWeapon
     [SerializeField] protected int fireRate;
     [SerializeField] protected float reloadDuration;
     [SerializeField] protected float launchSpeed;
-    [SerializeField] protected Projectile projectile;
+    [SerializeField] protected Old_Projectile projectile;
     [SerializeField] protected Transform visualProjectileSpawn;
 
     [Header("Read-Only Properties")]
     [SerializeField] protected int currentAmmo;
 
     protected Transform projectileSpawn;
-    protected ObjectPool<Projectile> projectilePool;
-    protected Action<Action<Projectile>> notifyBulletToDestoySelf;
+    protected ObjectPool<Old_Projectile> projectilePool;
+    protected Action<Action<Old_Projectile>> notifyBulletToDestoySelf;
     protected Coroutine neglectRoutine;
     protected WaitForSeconds neglectWait = new WaitForSeconds(3f);
     protected bool canFire = true;
@@ -91,11 +91,11 @@ public abstract class RangedWeapon: OldWeapon
         }
 
         int capacity = projectile.Lifespan > 0f ? Mathf.CeilToInt(projectile.Lifespan * fireRate) : fireRate;
-        projectilePool = new ObjectPool<Projectile>
+        projectilePool = new ObjectPool<Old_Projectile>
         (
             () =>
             {
-                Projectile newProjectile = Instantiate(projectile);
+                Old_Projectile newProjectile = Instantiate(projectile);
                 newProjectile.ReturnSelfTo((p) => projectilePool.Release(p));
                 notifyBulletToDestoySelf += newProjectile.ReturnSelfTo;
                 return newProjectile;

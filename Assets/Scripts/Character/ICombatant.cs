@@ -3,8 +3,6 @@
  * Date: 6 Oct. 2022
  */
 
-using System;
-
 public interface ICombatant: ICharacter
 {
     public CombatantAllegiance Allegiance { get; }
@@ -18,6 +16,14 @@ public enum CombatantAllegiance: int
 
 public static class CombatantAllegianceExtensions
 {
+    public static CombatantAllegiance GetOpposite(this CombatantAllegiance type)
+    {
+        if (type == CombatantAllegiance.Protagonist)
+            return CombatantAllegiance.Antagonist;
+        else
+            return CombatantAllegiance.Protagonist;
+    }
+
     public static int GetLayer(this CombatantAllegiance type)
     {
         if (type == CombatantAllegiance.Protagonist)

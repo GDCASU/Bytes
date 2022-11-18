@@ -10,14 +10,17 @@ public class TestSkill : MonoBehaviour, IWeaponSkill
     SkillStatus _status = SkillStatus.Inactive;
 
     public event Action<IWeaponSkill> Deactivated;
+#pragma warning disable CS0067
+    public event Action ResourceExpended;
     public SkillStatus Status => _status;
     public SkillType Type => _type;
     public int Priority => _priority;
-    public BaseResource Resource => null;
+    public AmmoType AmmoType => 0;
     public bool Obstructs(bool isStarting)
     {
         return isStarting ? _shouldObstructOnPress : _shouldObstructOnRelease;
     }
+    public bool CanPerform(bool isStarting) => true;
     public void Perform(bool isStarting, bool pauseImmediately = false)
     {
         if (isStarting)

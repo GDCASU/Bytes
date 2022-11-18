@@ -1,55 +1,68 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class SingleOrRepeatingSkill : MonoBehaviour, IWeaponSkill
 {
+    public event Action<IWeaponSkill> Deactivated;
+#pragma warning disable CS0067
+    public event Action ResourceExpended;
+
     [SerializeField] protected SkillType type;
     [SerializeField] protected int priority;
-    [SerializeField] protected BaseResource resource;
-    [SerializeField] protected float delayDuration;
+    [SerializeField] protected AmmoType ammoType;
+    [SerializeField] protected float chargeDuration;
     [SerializeField] protected bool shouldRepeat;
-
     protected SkillStatus status = SkillStatus.Inactive;
-    protected bool isInputActive;
     protected bool isPatternRunning;
-    protected Weapon weapon;
-
-    public event Action<IWeaponSkill> Deactivated;
+    protected StaticResource ammo;
 
     public SkillStatus Status => status;
     public SkillType Type => type;
     public int Priority => priority;
-    public BaseResource Resource => resource;
-
-    public abstract float RepeatInterval { get; }
-    protected abstract bool CanPerform { get; }
-    protected abstract void UpdateDelayProgress(float elapsedTime);
-    protected abstract void UpdateIntervalProgress(float elapsedTime);
-    protected abstract void ExecuteManuever();
-
-    protected virtual void Awake()
+    public AmmoType AmmoType => ammoType;
+    public StaticResource Ammo
     {
-        weapon = GetComponent<Weapon>();
+        get => ammo;
+        set => ammo = value;
     }
 
-    public bool Obstructs(bool isStarting) => isStarting;
+    public abstract float RepeatInterval { get; }
+    protected abstract void UpdateChargeProgress(float elapsedTime);
+    protected abstract void UpdateIntervalProgress(float elapsedTime);
+    protected abstract void ExecuteManuever();
+    public abstract bool CanPerform(bool isStarting);
+    public virtual bool Obstructs(bool isStarting) => isStarting;
 
-    public void Perform(bool isStarting, bool pauseImmediately = false)
+    public virtual void Perform(bool isStarting, bool pauseImmediately = false)
     {
-        isInputActive = isStarting;
-
-        if (isStarting && !isPatternRunning && CanPerform)
+        switch (status)
         {
-            if (shouldRepeat)
-            {
-                ExecuteManuever();
-            }
-            else
-            {
-                StartCoroutine(CR_RunPattern());
-            }
+            case SkillStatus.Inactive:
+                if (isStarting)
+                {
+                    if (!pauseImmediately)
+                    {
+                        if (!isPatternRunning)
+                        {
+                            status = SkillStatus.Active;
+                            StartCoroutine(CR_RunPattern());
+                        }
+                    }
+                    else
+                    {
+                        status = SkillStatus.Paused;
+                    }
+                }
+                break;
+            
+            default:
+                if (!isStarting)
+                {
+                    status = SkillStatus.Inactive;
+                    Deactivated?.Invoke(this);
+                }
+                break;
         }
     }
 
@@ -58,57 +71,64 @@ public abstract class SingleOrRepeatingSkill : MonoBehaviour, IWeaponSkill
         status = SkillStatus.Paused;
     }
 
-    public void Resume() { }
-
-    public void Halt() { }
-
-    protected IEnumerator CR_RunPattern()
+    public void Resume()
     {
-        isPatternRunning = true;
-        status = SkillStatus.Active;
-
-        float elapsedTime = 0f;
-        while (isInputActive && elapsedTime < delayDuration)
+        if (CanPerform(true))
         {
-            elapsedTime += Time.deltaTime;
-            UpdateDelayProgress(elapsedTime);
-            yield return null;
+            status = SkillStatus.Active;
+            StartCoroutine(CR_RunPattern());
         }
-
-        if (!isInputActive)
-            yield break;
         else
-            UpdateDelayProgress(elapsedTime);
-
-        ExecuteManuever();
-        elapsedTime = 0f;
-
-        CheckIfCanPerform:
-        if (CanPerform)
         {
-            while (isInputActive)
-            {
-                if (elapsedTime < RepeatInterval)
-                    elapsedTime += Time.deltaTime;
-                else
-                {
-                    ExecuteManuever();
-                    elapsedTime = 0f;
-                    goto CheckIfCanPerform;
-                }
-
-                UpdateIntervalProgress(elapsedTime);
-                yield return null;
-            }
+            status = SkillStatus.Inactive;
+            Deactivated?.Invoke(this);
         }
+    }
 
-        isPatternRunning = false;
+    public void Halt()
+    {
         status = SkillStatus.Inactive;
     }
 
-    protected void StopPattern()
+    protected virtual IEnumerator CR_RunPattern()
     {
-        StopCoroutine(CR_RunPattern());
+        if (isPatternRunning)
+            yield break;
+
+        isPatternRunning = true;
+
+        float elapsedTime = 0f;
+        while (status == SkillStatus.Active && elapsedTime < chargeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            UpdateChargeProgress(elapsedTime);
+            yield return null;
+        }
+
+        if (status != SkillStatus.Active)
+            yield break;
+        else
+            UpdateChargeProgress(elapsedTime);
+
+        ExecuteManuever();
+        if (!shouldRepeat)
+            yield break;
+
+        elapsedTime = 0f;
+        while (status == SkillStatus.Active && CanPerform(true))
+        {
+            if (elapsedTime < RepeatInterval)
+                elapsedTime += Time.deltaTime;
+            else
+            {
+                ExecuteManuever();
+                elapsedTime = 0f;
+            }
+
+            UpdateIntervalProgress(elapsedTime);
+            yield return null;
+        }
+
         isPatternRunning = false;
     }
 }

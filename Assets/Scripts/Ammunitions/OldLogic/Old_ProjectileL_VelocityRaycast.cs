@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ProjectileVisual))]
-public class ProjectileL_VelocityRaycast : Projectile
+public class Old_ProjectileL_VelocityRaycast : Old_Projectile
 {
     [SerializeField]
     protected float width;

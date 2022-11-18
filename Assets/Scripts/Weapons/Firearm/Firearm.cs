@@ -89,7 +89,7 @@ public partial class Firearm : RangedWeapon
     void FireBullet()
     {
         Ray ray = new Ray(projectileSpawn.position, projectileSpawn.forward);
-        Projectile enabledProjectile = projectilePool.Get();
+        Old_Projectile enabledProjectile = projectilePool.Get();
         enabledProjectile.transform.position = projectileSpawn.position;
         enabledProjectile.Launch(ray, launchSpeed, Target, visualProjectileSpawn.position);
         currentAmmo--;

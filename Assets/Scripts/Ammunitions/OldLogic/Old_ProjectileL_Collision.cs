@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ProjectileVisual))]
-public class ProjectileL_Trigger : Projectile
+public class Old_ProjectileL_Collision : Old_Projectile
 {
     protected Rigidbody body;
 
@@ -26,15 +26,15 @@ public class ProjectileL_Trigger : Projectile
         visual.Play(data);
     }
 
-    protected void OnTriggerEnter(Collider other)
+    protected void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.layer == targetType.GetLayer())
+        if (collision.gameObject.layer == targetType.GetLayer())
         {
-            other.transform.root.GetComponent<Character>().ReceiveDamage(impactDamage);
+            collision.transform.root.GetComponent<Character>().ReceiveDamage(impactDamage);
             visual.Stop();
             Perish();
         }
-        else if (other.gameObject.layer == Constants.Layer.Environment)
+        else if (collision.gameObject.layer == Constants.Layer.Environment)
         {
             visual.Stop();
             Perish();
