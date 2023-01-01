@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 4078760484872816528}
   - component: {fileID: 4078760484872816495}
   - component: {fileID: 4078760484872816494}
+  - component: {fileID: 4392348713203813015}
   m_Layer: 7
   m_Name: Post
   m_TagString: Enemy
@@ -129,6 +130,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &4392348713203813015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078760484872816492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f851fac16665a14479840ad303e38f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4078760484924196078
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +153,6 @@ GameObject:
   - component: {fileID: 4078760484924196079}
   - component: {fileID: 4078760484924197650}
   - component: {fileID: 4078760484924197649}
-  - component: {fileID: 4078760484924197648}
   m_Layer: 7
   m_Name: Platform
   m_TagString: Untagged
@@ -213,19 +225,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4078760484924197648
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4078760484924196078}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4078760484987504185
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,6 +301,7 @@ GameObject:
   - component: {fileID: 4078760485498260333}
   - component: {fileID: 4078760485498260332}
   - component: {fileID: 4078760485498260331}
+  - component: {fileID: 7716085206314754755}
   m_Layer: 7
   m_Name: Barrel 2
   m_TagString: Enemy
@@ -388,6 +388,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &7716085206314754755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078760485498260329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f851fac16665a14479840ad303e38f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4078760485501376557
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,6 +412,7 @@ GameObject:
   - component: {fileID: 4078760485501376593}
   - component: {fileID: 4078760485501376592}
   - component: {fileID: 4078760485501376559}
+  - component: {fileID: 8665802967879592875}
   m_Layer: 7
   m_Name: Barrel 1
   m_TagString: Enemy
@@ -486,6 +499,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &8665802967879592875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078760485501376557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f851fac16665a14479840ad303e38f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4078760485601881491
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +523,7 @@ GameObject:
   - component: {fileID: 4078760485601881495}
   - component: {fileID: 4078760485601881494}
   - component: {fileID: 4078760485601881493}
+  - component: {fileID: 4286399609161948903}
   m_Layer: 7
   m_Name: Bolt
   m_TagString: Enemy
@@ -584,6 +610,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &4286399609161948903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078760485601881491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f851fac16665a14479840ad303e38f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4078760485659362098
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,6 +785,7 @@ GameObject:
   - component: {fileID: 4078760486134778525}
   - component: {fileID: 4078760486134778524}
   - component: {fileID: 4078760486134778523}
+  - component: {fileID: 8005617258441943549}
   m_Layer: 7
   m_Name: Base
   m_TagString: Enemy
@@ -832,6 +871,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8005617258441943549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078760486134778521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f851fac16665a14479840ad303e38f96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4078760486329786810
 GameObject:
   m_ObjectHideFlags: 0

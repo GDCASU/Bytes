@@ -25,7 +25,7 @@ public class ProjectileL_InstantRaycast : Projectile
             Physics.SphereCast(ray.origin, _width, ray.direction, out hit, _maxRange, targetAllegiance.GetLayerMask() | Constants.LayerMask.Environment) && hit.transform.root.CompareTag(targetAllegiance.ToString())
         )
         {
-            hit.transform.root.GetComponent<Character>().ReceiveDamage(impactDamage);
+            hit.transform.GetComponent<Hurtbox>().Owner.GetComponent<Character>().ReceiveDamage(impactDamage);
             endLinePosition = hit.point;
         }
 
