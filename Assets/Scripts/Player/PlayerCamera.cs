@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    [SerializeField] InputReader _inputReader = default;
+    [SerializeField] Player _player;
 
     public float mouseSensitvity = 100f;
     public float camHeight = .75f;
@@ -40,7 +40,7 @@ public class PlayerCamera : MonoBehaviour
 
         if (canRotate)
         {
-            Vector2 lookVector = _inputReader.Gameplay.Look.ReadValue<Vector2>();
+            Vector2 lookVector = _player.LookVector;
             float mouseX = lookVector.x * mouseSensitvity * Time.deltaTime;
             float mouseY = lookVector.y * mouseSensitvity * Time.deltaTime;
 

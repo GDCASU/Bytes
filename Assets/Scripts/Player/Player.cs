@@ -6,10 +6,17 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, IWeaponWielder
 {
-    [SerializeField] InputReader _inputReader = default;
     [SerializeField] CombatantAllegiance _allegiance = CombatantAllegiance.Protagonist;
-
     public CombatantAllegiance Allegiance => _allegiance;
+
+    PlayerInput _input;
+    public Vector2 LookVector { get; private set; }
+    public Vector2 MoveVector { get; private set; }
+    public bool IsSprintPressed { get; private set; }
+    public bool IsJumpPressed { get; private set; }
+    public bool IsCrouchPressed { get; private set; }
+    public bool IsDashPressed { get; private set; }
+    public bool IsInteractPressed { get; private set; }
 
     public event Action Enabled;
     public event Action Disabled;
@@ -21,46 +28,18 @@ public class Player : MonoBehaviour, IWeaponWielder
     public event Action SecondaryAttackCanceled;
     public event Action TertiaryAttackPerformed;
     public event Action TertiaryAttackCanceled;
-    public event Action UtilityPerformed;
-    public event Action UtilityCanceled;
+    public event Action ReloadPerformed;
+    public event Action ReloadCanceled;
     public event Action<int> SwitchWeaponPerformed;
 
     private void OnEnable()
     {
         Enabled?.Invoke();
-
-        _inputReader.Gameplay.UsePrimaryAbility.performed += OnPrimaryAttack;
-        _inputReader.Gameplay.UsePrimaryAbility.canceled += OnPrimaryAttack;
-
-        _inputReader.Gameplay.UseSecondaryAbility.performed += OnSecondaryAttack;
-        _inputReader.Gameplay.UseSecondaryAbility.canceled += OnSecondaryAttack;
-
-        _inputReader.Gameplay.UseTertiaryAbility.performed += OnTertiaryAttack;
-        _inputReader.Gameplay.UseTertiaryAbility.canceled += OnTertiaryAttack;
-
-        _inputReader.Gameplay.UseUtility.performed += OnUtility;
-        _inputReader.Gameplay.UseUtility.canceled += OnUtility;
-
-        _inputReader.Gameplay.SwitchWeapon.performed += OnSwitchWeapon;
     }
 
     private void OnDisable()
     {
         Disabled?.Invoke();
-
-        _inputReader.Gameplay.UsePrimaryAbility.performed -= OnPrimaryAttack;
-        _inputReader.Gameplay.UsePrimaryAbility.canceled -= OnPrimaryAttack;
-
-        _inputReader.Gameplay.UseSecondaryAbility.performed -= OnSecondaryAttack;
-        _inputReader.Gameplay.UseSecondaryAbility.canceled -= OnSecondaryAttack;
-
-        _inputReader.Gameplay.UseTertiaryAbility.performed -= OnTertiaryAttack;
-        _inputReader.Gameplay.UseTertiaryAbility.canceled -= OnTertiaryAttack;
-
-        _inputReader.Gameplay.UseUtility.performed -= OnUtility;
-        _inputReader.Gameplay.UseUtility.canceled -= OnUtility;
-
-        _inputReader.Gameplay.SwitchWeapon.performed -= OnSwitchWeapon;
     }
 
     private void Start()
@@ -73,7 +52,42 @@ public class Player : MonoBehaviour, IWeaponWielder
         Updated?.Invoke();
     }
 
-    void OnPrimaryAttack(InputAction.CallbackContext context)
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        LookVector = context.ReadValue<Vector2>();
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        MoveVector = context.ReadValue<Vector2>();
+    }
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        IsSprintPressed = context.performed;
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        IsJumpPressed = context.performed;
+    }
+
+    public void OnCrouch(InputAction.CallbackContext context)
+    {
+        IsCrouchPressed = context.performed;
+    }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        IsDashPressed = context.performed;
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        IsInteractPressed = context.performed;
+    }
+
+    public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
             PrimaryAttackPerformed?.Invoke();
@@ -81,7 +95,7 @@ public class Player : MonoBehaviour, IWeaponWielder
             PrimaryAttackCanceled?.Invoke();
     }
 
-    void OnSecondaryAttack(InputAction.CallbackContext context)
+    public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
             SecondaryAttackPerformed?.Invoke();
@@ -89,7 +103,7 @@ public class Player : MonoBehaviour, IWeaponWielder
             SecondaryAttackCanceled?.Invoke();
     }
 
-    void OnTertiaryAttack(InputAction.CallbackContext context)
+    public void OnTertiaryAttack(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
             TertiaryAttackPerformed?.Invoke();
@@ -97,15 +111,15 @@ public class Player : MonoBehaviour, IWeaponWielder
             TertiaryAttackCanceled?.Invoke();
     }
 
-    void OnUtility(InputAction.CallbackContext context)
+    public void OnReload(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-            UtilityPerformed?.Invoke();
+            ReloadPerformed?.Invoke();
         else if (context.phase == InputActionPhase.Canceled)
-            UtilityCanceled?.Invoke();
+            ReloadCanceled?.Invoke();
     }
 
-    void OnSwitchWeapon(InputAction.CallbackContext context)
+    public void OnSwitchWeapon(InputAction.CallbackContext context)
     {
         int switchValue = (int)context.ReadValue<float>();
 

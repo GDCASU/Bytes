@@ -20,9 +20,9 @@ public partial class PlayerController
     {
         if (crouchVariables.holdCrouch)
         {
-            crouchVariables.crouchBuffer = _inputReader.Gameplay.Crouch.IsPressed();
+            crouchVariables.crouchBuffer = _player.IsCrouchPressed;
         }
-        else if (_inputReader.Gameplay.Crouch.WasPressedThisFrame()) crouchVariables.crouchBuffer = !crouchVariables.crouchBuffer;
+        else if (_player.IsCrouchPressed) crouchVariables.crouchBuffer = !crouchVariables.crouchBuffer;
     } 
     public void HandleCrouchInput()
     {

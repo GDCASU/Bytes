@@ -13,7 +13,7 @@ public interface IWeaponWielder: ICombatant
     public event Action SecondaryAttackCanceled;
     public event Action TertiaryAttackPerformed;
     public event Action TertiaryAttackCanceled;
-    public event Action UtilityPerformed;
-    public event Action UtilityCanceled;
+    public event Action ReloadPerformed;
+    public event Action ReloadCanceled;
     public event Action<int> SwitchWeaponPerformed;
 }

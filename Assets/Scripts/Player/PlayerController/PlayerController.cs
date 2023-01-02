@@ -6,7 +6,7 @@ public partial class PlayerController : MonoBehaviour
 {
     #region Variables
 
-    [SerializeField] InputReader _inputReader = default;
+    [SerializeField] Player _player;
 
     #region Movement Mechanics
     [Header("Additional Mechanics")]
@@ -122,6 +122,7 @@ public partial class PlayerController : MonoBehaviour
 
     void Start()
     {
+        _player = GetComponent<Player>();
         lastViablePosition = transform.position;
         capCollider = GetComponent<CapsuleCollider>();
         rb = GetComponent<Rigidbody>();

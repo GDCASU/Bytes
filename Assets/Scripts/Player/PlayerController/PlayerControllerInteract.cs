@@ -13,7 +13,7 @@ public partial class PlayerController
     void InteractInput()
     {
         // Press the 'E' key to interact with a raycast
-        if (_inputReader.Gameplay.Interact.WasPerformedThisFrame() && Physics.Raycast(playerCamera.transform.position,
+        if (_player.IsInteractPressed && Physics.Raycast(playerCamera.transform.position,
             playerCamera.transform.forward, out RaycastHit hit, interactVariables.interactRange))
         {
             EquipableEntity entity = hit.transform.GetComponent<EquipableEntity>();

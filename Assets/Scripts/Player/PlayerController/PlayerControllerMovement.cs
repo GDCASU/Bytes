@@ -85,9 +85,9 @@ public partial class PlayerController
 
         if (baseMovementVariables.holdSprint)
         {
-            isSprinting = _inputReader.Gameplay.Sprint.IsPressed();
+            isSprinting = _player.IsSprintPressed;
         }
-        else if (_inputReader.Gameplay.Sprint.WasPressedThisFrame()) isSprinting = !isSprinting;
+        else if (_player.IsSprintPressed) isSprinting = !isSprinting;
         if (crouchMechanic) isSprinting = (crouchVariables.isCrouching ? false : isSprinting);
 
         speedIncrease = (isSprinting) ? baseMovementVariables.sprintSpeedIncrease : baseMovementVariables.walkSpeedIncrease;
@@ -100,8 +100,8 @@ public partial class PlayerController
         //else if (Input.GetKey(KeyCode.A)) x = -speedIncrease;
         //else x = 0;
 
-        xDir = _inputReader.Gameplay.Move.ReadValue<Vector2>().x;
-        zDir = _inputReader.Gameplay.Move.ReadValue<Vector2>().y;
+        xDir = _player.MoveVector.x;
+        zDir = _player.MoveVector.y;
     }
     private void GroundCheck()
     {

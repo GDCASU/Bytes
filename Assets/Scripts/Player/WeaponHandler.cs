@@ -62,8 +62,8 @@ public class WeaponHandler : MonoBehaviour
         Wielder.TertiaryAttackPerformed += OnTertiaryAttackPerformed;
         Wielder.TertiaryAttackCanceled += OnTertiaryAttackCanceled;
 
-        Wielder.UtilityPerformed += OnUtilityPerformed;
-        Wielder.UtilityCanceled += OnUtilityCanceled;
+        Wielder.ReloadPerformed += OnUtilityPerformed;
+        Wielder.ReloadCanceled += OnUtilityCanceled;
 
         Wielder.SwitchWeaponPerformed += OnSwitchWeaponPerformed;
     }
@@ -78,8 +78,8 @@ public class WeaponHandler : MonoBehaviour
         Wielder.TertiaryAttackPerformed -= OnTertiaryAttackPerformed;
         Wielder.TertiaryAttackCanceled -= OnTertiaryAttackCanceled;
 
-        Wielder.UtilityPerformed -= OnUtilityPerformed;
-        Wielder.UtilityCanceled -= OnUtilityCanceled;
+        Wielder.ReloadPerformed -= OnUtilityPerformed;
+        Wielder.ReloadCanceled -= OnUtilityCanceled;
 
         Wielder.SwitchWeaponPerformed -= OnSwitchWeaponPerformed;
     }
