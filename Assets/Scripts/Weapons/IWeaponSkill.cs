@@ -1,14 +1,5 @@
 using System;
 
-public enum SkillType
-{
-    Primary = 0,
-    Secondary = 1,
-    Tertiary = 2,
-    Reload = 3,
-    Empty = 4
-}
-
 public enum SkillStatus
 {
     Inactive,
@@ -16,20 +7,12 @@ public enum SkillStatus
     Paused
 }
 
-public enum SkillPattern
-{
-    Tap,
-    Repeat,
-    HoldAndRelease,
-    Continuous
-}
-
 public interface IWeaponSkill
 {
     public event Action<IWeaponSkill> Deactivated;
     public event Action ResourceExpended;
     public SkillStatus Status { get; }
-    public SkillType Type { get; }
+    public WeaponAbilityType Type { get; }
     public int Priority { get; }
     public AmmoType AmmoType { get; }
     public bool Obstructs(bool isStarting);

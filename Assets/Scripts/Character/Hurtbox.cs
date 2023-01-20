@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Hurtbox : MonoBehaviour
 {
-    public Transform Owner { get; private set; }
+    public Collider AttachedCollider { get; private set; }
+    public Damageable Owner { get; private set; }
 
-    private void Awake() => Owner = GetComponentInParent<Character>().transform;
+    private void Awake()
+    {
+        AttachedCollider = GetComponent<Collider>();
+        Owner = GetComponentInParent<Damageable>();
+    }
 }

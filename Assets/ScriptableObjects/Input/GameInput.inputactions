@@ -96,15 +96,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UseUtility",
-                    "type": "Button",
-                    "id": "3ab50958-be02-4b98-9e81-94948b4620c4",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Reload",
                     "type": "Button",
                     "id": "a67e15b2-cdb2-44ec-9739-811b40b54743",
@@ -123,9 +114,27 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Dash",
+                    "name": "UseFirstAugmentation",
                     "type": "Button",
-                    "id": "aaac01d8-bd04-4197-b172-8d427a4da80f",
+                    "id": "4f8ff0c8-35d1-411d-b72d-fbc15d93b0d6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseSecondAugmentation",
+                    "type": "Button",
+                    "id": "608106c6-8d87-4f63-abec-6a4a5ab21bf6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UseThirdAugmentation",
+                    "type": "Button",
+                    "id": "55d2b8ae-34a9-43fd-be0d-6c5639d13c40",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -477,7 +486,7 @@
                 {
                     "name": "",
                     "id": "5eab5a6a-ff78-46ce-9019-3e0c56d61c6b",
-                    "path": "<Keyboard>/q",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -542,23 +551,34 @@
                 },
                 {
                     "name": "",
-                    "id": "821ec9b9-6fd6-4fe0-86e7-2b4a6fdcf595",
-                    "path": "<Keyboard>/rightShift",
+                    "id": "02bb9864-bc3e-40e5-b51a-7e190dde2ad4",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Dash",
+                    "groups": "",
+                    "action": "UseFirstAugmentation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "7e8aec0d-d732-4dff-8664-ee5d4f64d621",
-                    "path": "<Mouse>/rightButton",
+                    "id": "1c4de792-f8f8-4e5e-b8b4-82945c4bfb1f",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UseUtility",
+                    "action": "UseSecondAugmentation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "288136a1-759a-4c6e-ba7d-b04d9628bc5d",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseThirdAugmentation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

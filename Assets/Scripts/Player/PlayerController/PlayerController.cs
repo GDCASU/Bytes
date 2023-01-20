@@ -6,7 +6,7 @@ public partial class PlayerController : MonoBehaviour
 {
     #region Variables
 
-    [SerializeField] Player _player;
+    Player _player;
 
     #region Movement Mechanics
     [Header("Additional Mechanics")]
@@ -23,8 +23,6 @@ public partial class PlayerController : MonoBehaviour
     public JumpVariables jumpVariables = new JumpVariables();
     public VaultVariables vaultVariables = new VaultVariables();
     public ClimbVariables climbVariables = new ClimbVariables();
-    public DashVariables dashVariables = new DashVariables();
-    public InteractVariables interactVariables = new InteractVariables();
     #endregion
 
     #region Player States
@@ -151,9 +149,6 @@ public partial class PlayerController : MonoBehaviour
             if (crouchMechanic) CrouchInput();
             MovementInput();
             if (jumpMechanic) JumpInput();
-            DashInput();
-            if (dashVariables.setUpDash && isGrounded) StartCoroutine(GroundedCooldown());
-            InteractInput();
         }
     }
     private void FixedUpdate()

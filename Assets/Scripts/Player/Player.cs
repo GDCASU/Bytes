@@ -1,55 +1,31 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: 4 Jan. 2023
+ */
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour, IWeaponWielder
+public class Player : MonoBehaviour
 {
-    [SerializeField] CombatantAllegiance _allegiance = CombatantAllegiance.Protagonist;
-    public CombatantAllegiance Allegiance => _allegiance;
-
-    PlayerInput _input;
     public Vector2 LookVector { get; private set; }
     public Vector2 MoveVector { get; private set; }
     public bool IsSprintPressed { get; private set; }
     public bool IsJumpPressed { get; private set; }
     public bool IsCrouchPressed { get; private set; }
-    public bool IsDashPressed { get; private set; }
-    public bool IsInteractPressed { get; private set; }
 
-    public event Action Enabled;
-    public event Action Disabled;
-    public event Action Started;
-    public event Action Updated;
-    public event Action PrimaryAttackPerformed;
-    public event Action PrimaryAttackCanceled;
-    public event Action SecondaryAttackPerformed;
-    public event Action SecondaryAttackCanceled;
-    public event Action TertiaryAttackPerformed;
-    public event Action TertiaryAttackCanceled;
-    public event Action ReloadPerformed;
-    public event Action ReloadCanceled;
-    public event Action<int> SwitchWeaponPerformed;
+    InteractionHandler _interactionHandler;
+    WeaponHandler _weaponHandler;
+    AugmentationHandler _augmentationHandler;
 
-    private void OnEnable()
+    private void Awake()
     {
-        Enabled?.Invoke();
-    }
-
-    private void OnDisable()
-    {
-        Disabled?.Invoke();
-    }
-
-    private void Start()
-    {
-        Started?.Invoke();
-    }
-
-    private void Update()
-    {
-        Updated?.Invoke();
+        _interactionHandler = GetComponent<InteractionHandler>();
+        _weaponHandler = GetComponent<WeaponHandler>();
+        _augmentationHandler = GetComponent<AugmentationHandler>();
     }
 
     public void OnLook(InputAction.CallbackContext context)
@@ -77,46 +53,42 @@ public class Player : MonoBehaviour, IWeaponWielder
         IsCrouchPressed = context.performed;
     }
 
-    public void OnDash(InputAction.CallbackContext context)
-    {
-        IsDashPressed = context.performed;
-    }
-
     public void OnInteract(InputAction.CallbackContext context)
     {
-        IsInteractPressed = context.performed;
+        if (context.performed)
+            _interactionHandler.AttemptInteraction();
     }
 
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-            PrimaryAttackPerformed?.Invoke();
+            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Primary, true);
         else if (context.phase == InputActionPhase.Canceled)
-            PrimaryAttackCanceled?.Invoke();
+            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Primary, false);
     }
 
     public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-            SecondaryAttackPerformed?.Invoke();
+            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Secondary, true);
         else if (context.phase == InputActionPhase.Canceled)
-            SecondaryAttackCanceled?.Invoke();
+            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Secondary, false);
     }
 
     public void OnTertiaryAttack(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-            TertiaryAttackPerformed?.Invoke();
+            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Tertiary, true);
         else if (context.phase == InputActionPhase.Canceled)
-            TertiaryAttackCanceled?.Invoke();
+            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Tertiary, false);
     }
 
     public void OnReload(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-            ReloadPerformed?.Invoke();
+            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Reload, true);
         else if (context.phase == InputActionPhase.Canceled)
-            ReloadCanceled?.Invoke();
+            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Reload, false);
     }
 
     public void OnSwitchWeapon(InputAction.CallbackContext context)
@@ -128,6 +100,41 @@ public class Player : MonoBehaviour, IWeaponWielder
         else if (switchValue == 120)
             switchValue = 0;
 
-        SwitchWeaponPerformed?.Invoke(switchValue);
+        _weaponHandler.SwitchWeapon(switchValue);
+    }
+
+    public void UseFirstAugmentation(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+            _augmentationHandler.TriggerAugmentation(0, true);
+        else if (context.phase == InputActionPhase.Canceled)
+            _augmentationHandler.TriggerAugmentation(0, false);
+    }
+
+    public void UseSecondAugmentation(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+            _augmentationHandler.TriggerAugmentation(1, true);
+        else if (context.phase == InputActionPhase.Canceled)
+            _augmentationHandler.TriggerAugmentation(1, false);
+    }
+
+    public void UseThirdAugmentation(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+            _augmentationHandler.TriggerAugmentation(2, true);
+        else if (context.phase == InputActionPhase.Canceled)
+            _augmentationHandler.TriggerAugmentation(2, false);
+    }
+
+    public void Pause(InputAction.CallbackContext context)
+    {
+        if (context.phase != InputActionPhase.Performed)
+            return;
+
+        if (Time.timeScale == 1)
+            Time.timeScale = 0;
+        else
+            Time.timeScale = 1;
     }
 }

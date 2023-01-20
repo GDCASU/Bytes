@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+/*
+ * Author: Cristion Dominguez
+ * Date: 19 Jan. 2023
+ */
+
+
 using UnityEngine;
 
-public class Dummy : Enemy
+public class Dummy : MonoBehaviour
 {
-    public override void ReceiveDamage(float damage)
-    {
-        print(name + " has received " + damage + " damage");
-    }
+    void Awake() => GetComponent<Damageable>().DamageReceived += PrintDamage;
 
-    public override void ReceiveHealth(float health)
-    {
-        print(name + " has received " + health + "health");
-    }
+    void PrintDamage(int damage) => Debug.Log("Dummy has received " + damage + " damage.");
 }

@@ -1,169 +1,144 @@
 /*
  * Author: Cristion Dominguez
- * Date: ???
+ * Date: 4 Jan. 2023
  */
 
+using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(IWeaponWielder))]
 public class WeaponHandler : MonoBehaviour
 {
+    public event Action Started;
+
     [field: SerializeField] public Transform WeaponContainer { get; private set; }
     [field: SerializeField] public Transform ProjectileSpawn { get; private set; }
-    [SerializeField] int currentWeaponIndex;
-    [SerializeField] OldWeapon[] weapons;
+    public ManeuverQueue MQueue { get; private set; }
+    public AmmoInventory Inventory { get; private set; }
+    public Damageable Combatant { get; private set; }
 
-    public IWeaponWielder Wielder { get; private set; }
-
-    OldWeapon currentWeapon;
-    int maxWeapons = 0;
-    int numOfWeapons = 0;
+    [SerializeField] int _currentWeaponIndex;
+    [SerializeField] int _switchPriority;
+    [SerializeField] float _switchDuration;
+    [SerializeField] Weapon[] _weapons;
+    Weapon _currentWeapon;
+    int _maxWeapons;
+    int _weaponCount;
+    int _incomingWeaponIndex;
+    Maneuver _switchManeuver;
+    Coroutine _switchRoutine;
+    WaitForSeconds _switchWait;
 
     private void Awake()
     {
-        Wielder = GetComponent<IWeaponWielder>();
-        Wielder.Enabled += Dev_Enable;
-        Wielder.Disabled += Dev_Disable;
-        Wielder.Started += Dev_Start;
+        Combatant = GetComponent<Damageable>();
+        MQueue = GetComponent<ManeuverQueue>();
+        _switchManeuver = new Maneuver(
+            "Weapon Switch",
+            _switchPriority,
+            (bool pauseImmediately) =>
+            {
+                if (pauseImmediately)
+                    _switchRoutine = StartCoroutine(CR_Switch());
+            },
+            () =>
+            {
+                StopCoroutine(_switchRoutine);
+                _switchManeuver.Dequeue();
+            },
+            () => { },
+            () =>
+            {
+                StopCoroutine(_switchRoutine);
+                _switchManeuver.Dequeue();
+            });
+
+        Inventory = GetComponent<AmmoInventory>();
     }
 
-    void Dev_Start()
+    private void OnValidate()
     {
-        maxWeapons = weapons.Length;
-        for (int i = 0; i < maxWeapons; i++)
+        _switchWait = new WaitForSeconds(_switchDuration);
+    }
+
+    void Start()
+    {
+        _maxWeapons = _weapons.Length;
+        for (int i = 0; i < _maxWeapons; i++)
+            _weapons[i].Interact(gameObject);
+
+        if (_weaponCount < 1)
+            Debug.LogError("There should be at least one weapon in the Weapons array.");
+
+        if (_currentWeaponIndex >= _maxWeapons)
+            _currentWeaponIndex = 0;
+        ReadyWeapon(_currentWeaponIndex);
+
+        Started?.Invoke();
+    }
+
+    public void TriggerWeaponSkill(WeaponAbilityType type, bool isStarting) => _currentWeapon.TriggerAbility(type, isStarting);
+
+    public void EquipWeapon(Weapon newWeapon)
+    {
+        int weaponIndex;
+        bool isReplacing = false;
+        if (_weaponCount < _maxWeapons)
         {
-            OldWeapon weapon = weapons[i];
-            if (weapon != null)
-            {
-                WeaponEquipData data = new WeaponEquipData();
-                data.container = WeaponContainer;
-                data.projectileSpawn = ProjectileSpawn;
-                data.target = CharacterType.Enemy;  // [REPLACE]
-                weapon.PrepareWeapon(data);
-                weapon.gameObject.SetActive(false);
-                numOfWeapons++;
-            }
+            weaponIndex = _weaponCount;
+            _weaponCount++;
+        }
+        else
+        {
+            weaponIndex = _currentWeaponIndex;
+            if (_weapons[weaponIndex])
+                _weapons[weaponIndex].Unequip();
+            isReplacing = true;
         }
 
-        if (currentWeaponIndex >= maxWeapons)
-            currentWeaponIndex = 0;
-        SetCurrentWeapon(currentWeaponIndex);
+        newWeapon.transform.SetParent(WeaponContainer);
+        newWeapon.transform.localPosition = newWeapon.EquipOffset;
+        newWeapon.Equip(gameObject);
+        _weapons[weaponIndex] = newWeapon;
+
+        if (isReplacing)
+            newWeapon.Ready();
+        else
+            newWeapon.gameObject.SetActive(false);
     }
 
-    public void Dev_Enable()
+    void ReadyWeapon(int weaponIndex)
     {
-        Wielder.PrimaryAttackPerformed += OnPrimaryAttackPerformed;
-        Wielder.PrimaryAttackCanceled += OnPrimaryAttackCanceled;
-
-        Wielder.SecondaryAttackPerformed += OnSecondaryAttackPerformed;
-        Wielder.SecondaryAttackCanceled += OnSecondaryAttackCanceled;
-
-        Wielder.TertiaryAttackPerformed += OnTertiaryAttackPerformed;
-        Wielder.TertiaryAttackCanceled += OnTertiaryAttackCanceled;
-
-        Wielder.ReloadPerformed += OnUtilityPerformed;
-        Wielder.ReloadCanceled += OnUtilityCanceled;
-
-        Wielder.SwitchWeaponPerformed += OnSwitchWeaponPerformed;
-    }
-    public void Dev_Disable()
-    {
-        Wielder.PrimaryAttackPerformed -= OnPrimaryAttackPerformed;
-        Wielder.PrimaryAttackCanceled -= OnPrimaryAttackCanceled;
-
-        Wielder.SecondaryAttackPerformed -= OnSecondaryAttackPerformed;
-        Wielder.SecondaryAttackCanceled -= OnSecondaryAttackCanceled;
-
-        Wielder.TertiaryAttackPerformed -= OnTertiaryAttackPerformed;
-        Wielder.TertiaryAttackCanceled -= OnTertiaryAttackCanceled;
-
-        Wielder.ReloadPerformed -= OnUtilityPerformed;
-        Wielder.ReloadCanceled -= OnUtilityCanceled;
-
-        Wielder.SwitchWeaponPerformed -= OnSwitchWeaponPerformed;
-    }
-
-    void SetCurrentWeapon(int weaponIndex)
-    {
-        if (weaponIndex < 0 || weaponIndex >= weapons.Length)
+        if (weaponIndex < 0 || weaponIndex >= _weapons.Length || !_weapons[weaponIndex])
             return;
 
-        currentWeapon = weapons[weaponIndex];
-        if (currentWeapon)
-            currentWeapon.gameObject.SetActive(true);
+        _currentWeapon?.Store();
+        _currentWeapon?.gameObject.SetActive(false);
+
+        _currentWeapon = _weapons[weaponIndex];
+        _currentWeapon.gameObject.SetActive(true);
+        _currentWeapon.Ready();
     }
 
-    void SetNewWeapon(OldWeapon newWeapon, int weaponIndex)
+    public void SwitchWeapon(int switchValue)
     {
-        WeaponEquipData data = new WeaponEquipData();
-        data.container = WeaponContainer;
-        data.projectileSpawn = ProjectileSpawn;
-        data.target = CharacterType.Enemy; // [REPLACE]
-        newWeapon.PrepareWeapon(data);
-        weapons[weaponIndex] = newWeapon;
-    }
+        if (_weaponCount <= 1 || switchValue < -1 || switchValue > _weaponCount || _switchManeuver.InQueue)
+            return;
 
-    void OnPrimaryAttackPerformed() { }
-    void OnPrimaryAttackCanceled() { }
-    void OnSecondaryAttackPerformed() { }
-    void OnSecondaryAttackCanceled() { }
-    void OnTertiaryAttackPerformed() { }
-    void OnTertiaryAttackCanceled() { }
-    void OnUtilityPerformed () { }
-    void OnUtilityCanceled() { }
-    public void OnSwitchWeaponPerformed(int switchValue)
-    {
-        if (numOfWeapons <= 1 || switchValue < -1 || switchValue > weapons.Length) return;
-
-        currentWeapon.gameObject.SetActive(false);
-
-        if (switchValue == -1)
-        {
-            currentWeaponIndex = currentWeaponIndex - 1 >= 0 ? currentWeaponIndex - 1 : weapons.Length - 1;
-        }
-        else if (switchValue == 0)
-        {
-            currentWeaponIndex = currentWeaponIndex + 1 < weapons.Length ? currentWeaponIndex + 1 : 0;
-        }
+        if (_incomingWeaponIndex == -1)
+            _currentWeaponIndex = _currentWeaponIndex - 1 >= 0 ? _currentWeaponIndex - 1 : _weaponCount - 1;
+        else if (_incomingWeaponIndex == 0)
+            _currentWeaponIndex = _currentWeaponIndex + 1 < _weaponCount ? _currentWeaponIndex + 1 : 0;
         else
-        {
-            currentWeaponIndex = switchValue - 1;
-        }
+            _currentWeaponIndex = _incomingWeaponIndex - 1;
 
-        SetCurrentWeapon(currentWeaponIndex);
+        MQueue.Enqueue(_switchManeuver);
     }
 
-    // [REMOVE]
-    void OnBlock(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Block(context.phase == InputActionPhase.Performed); }
-    void OnReload(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Reload(); }
-    void OnShoot(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Shoot(context.phase == InputActionPhase.Performed); }
-    void OnStrike(InputAction.CallbackContext context) { if (currentWeapon) currentWeapon.Strike(); }
-
-    public void TakeNewWeapon(OldWeapon newWeapon)
+    IEnumerator CR_Switch()
     {
-        if (numOfWeapons < maxWeapons)
-        {
-            // Add new weapon to empty slot
-            if (weapons[numOfWeapons] == null)
-            {
-                SetNewWeapon(newWeapon, numOfWeapons);
-                if (currentWeapon)
-                    newWeapon.gameObject.SetActive(false);
-                else
-                    SetCurrentWeapon(numOfWeapons);
-                numOfWeapons++;
-            }
-        } 
-        else
-        {
-            // Replace current weapon with the new one
-            WeaponUnequipData data = new WeaponUnequipData();
-            data.dropPosition = newWeapon.transform.position;
-            data.dropRotation = newWeapon.transform.rotation;
-            currentWeapon.NeglectWeapon(data);
-            SetNewWeapon(newWeapon, currentWeaponIndex);
-            SetCurrentWeapon(currentWeaponIndex);
-        }
+        yield return _switchWait;
+        ReadyWeapon(_incomingWeaponIndex);
+        _switchManeuver.Dequeue();
     }
 }
