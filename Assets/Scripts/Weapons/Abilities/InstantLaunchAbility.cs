@@ -20,6 +20,7 @@ public class InstantLaunchAbility : SequenceAbility
     SimplePool<Projectile> _pool;
     Coroutine _poolDisposalRoutine;
     WaitForSeconds _poolDisposedWait = new WaitForSeconds(3);
+    CharacterAllegiance _previousAllegiance;
 
     public override WeaponAbilityType Type => _type;
     public override AmmoType ExpectedAmmo => _ammoType;
@@ -47,8 +48,11 @@ public class InstantLaunchAbility : SequenceAbility
         Transform projectileSpawn = WeaponHost.Handler.ProjectileSpawn;
         Ray ray = new Ray(projectileSpawn.position, projectileSpawn.forward);
         Projectile projectile = _pool.Get();
-        projectile.Launch(ray, _launchSpeed, WeaponHost.Handler.Combatant.Allegiance.GetOpposite(), _projectileVisualSpawn.position);
+        projectile.Launch(ray, _launchSpeed, _projectileVisualSpawn.position, WeaponHost.Handler.Combatant);
         _ammo.Drain(_launchCost);
+
+        if (_ammo.Current == 0)
+            WeaponHost.TriggerAbility(WeaponAbilityType.Reload, true);
     }
 
     protected override void OnFailedEvent() => WeaponHost.TriggerAbility(WeaponAbilityType.Reload, true);
@@ -57,6 +61,8 @@ public class InstantLaunchAbility : SequenceAbility
     {
         if (_poolDisposalRoutine != null)
             StopCoroutine(_poolDisposalRoutine);
+
+        
     }
 
     void OnUnequip() => _poolDisposalRoutine = StartCoroutine(CR_CountdownPoolDisposal());

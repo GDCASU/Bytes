@@ -13,22 +13,33 @@ public class Damageable : MonoBehaviour
     public event Action Died;
 
     [SerializeField] StaticResource _health;
-    [SerializeField] CharacterAllegiance _allegiance;
-    [SerializeField] bool _isVisible = true;
-    [SerializeField] Transform[] _detectionPoints;
+    [SerializeField] CharacterAllegiance _personalAllegiance;
+    [SerializeField] CharacterAllegiance _opponentAllegiance;
+    [SerializeField] Transform[] _targetPoints;
     [SerializeField] IntEventChannelSO _healthUpdateEvent = default;
     [SerializeField] VoidEventChannelSO _deathEvent = default;
 
     public int CurrentHealth => _health.Current;
-    public CharacterAllegiance Allegiance => _allegiance;
+    public CharacterAllegiance PersonalAllegiance
+    {
+        get => _personalAllegiance;
+        set
+        {
+            _personalAllegiance = value;
+            foreach (Hurtbox box in Hurtboxes)
+                box.gameObject.layer = value.GetLayer();
+        }
+    }
+    public CharacterAllegiance OpponentAllegiance => _opponentAllegiance;
     public bool IsDead => _health.Current <= 0;
-    public bool IsVisible => _isVisible;
-    public Transform[] DetectionPoints => _detectionPoints;
+    public Transform[] TargetPoints => _targetPoints;
     public Hurtbox[] Hurtboxes { get; private set; }
 
     void Awake()
     {
         Hurtboxes = GetComponentsInChildren<Hurtbox>();
+        foreach (Hurtbox box in Hurtboxes)
+            box.gameObject.layer = PersonalAllegiance.GetLayer();
     }
 
     public void ReceiveDamage(int damage)

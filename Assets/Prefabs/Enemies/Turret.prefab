@@ -741,12 +741,11 @@ MonoBehaviour:
   _health:
     _max: 5
     _current: 5
-  _allegiance: 1
-  _isVisible: 1
-  _detectionPoints:
+  _personalAllegiance: 1
+  _opponentAllegiance: 0
+  _targetPoints:
   - {fileID: 1053589514307341930}
   - {fileID: 1053589513274231492}
-  - {fileID: 1053589514253864424}
   _healthUpdateEvent: {fileID: 0}
   _deathEvent: {fileID: 0}
 --- !u!114 &1053589514993486387

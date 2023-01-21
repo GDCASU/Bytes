@@ -22,7 +22,6 @@ namespace Constants
         public const int Antagonist = 7;
         public const int Touchable = 8;
         public const int Interactable = 9;
-        public const int Projectile = 10;
     }
 
     public static class LayerMask
@@ -32,7 +31,6 @@ namespace Constants
         public const int Antagonist = 1 << Layer.Antagonist;
         public const int Touchable = 1 << Layer.Touchable;
         public const int Interactable = 1 << Layer.Interactable;
-        public const int Projectile = 1 << Layer.Projectile;
     }
 
     public class WaitFor

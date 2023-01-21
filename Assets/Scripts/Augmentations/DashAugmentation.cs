@@ -97,7 +97,7 @@ public class DashAugmentation : Augmentation
         if (!_isEquipped)
             return;
 
-        if (other.gameObject.layer == _damageable.Allegiance.GetOpposite().GetLayer())
+        if (other.gameObject.layer == _damageable.OpponentAllegiance.GetLayer())
         {
             other.GetComponent<Hurtbox>().Owner.ReceiveDamage(_collisionDamage);
         }

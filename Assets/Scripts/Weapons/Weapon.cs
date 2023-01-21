@@ -23,6 +23,7 @@ public class Weapon : MonoBehaviour, IInteractable, IEquipable
 
     [SerializeField] AnimatorOverrideController _overrideController;
     IWeaponAbility[] _skills = new IWeaponAbility[4];
+    Collider _interactCollider;
 
     void Awake()
     {
@@ -40,6 +41,7 @@ public class Weapon : MonoBehaviour, IInteractable, IEquipable
         }
 
         Inventory = GetComponent<AmmoInventory>();
+        _interactCollider = GetComponent<Collider>();
     }
 
     void Start() => Started?.Invoke();
@@ -56,6 +58,7 @@ public class Weapon : MonoBehaviour, IInteractable, IEquipable
 
     public void Equip(GameObject equipper)
     {
+        _interactCollider.enabled = false;
         IsEquipped = true;
         Equiped?.Invoke();
     }
@@ -64,6 +67,7 @@ public class Weapon : MonoBehaviour, IInteractable, IEquipable
     {
         Store();
         Handler = null;
+        _interactCollider.enabled = true;
         IsEquipped = false;
         Unequiped?.Invoke();
     }

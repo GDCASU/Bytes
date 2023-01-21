@@ -30,7 +30,22 @@ public class ReloadAbility : MonoBehaviour, IWeaponAbility
     public void Trigger(bool isStarting)
     {
         if (isStarting)
-            WeaponHost.EnqueueManeuver(_maneuver);
+        {
+            bool isEmpty = true;
+            foreach (AmmoType ammoType in WeaponHost.ExpectedAmmos)
+            {
+                StaticResource handlerAmmo = WeaponHost.Handler.Inventory.GetAmmo(ammoType);
+                if (handlerAmmo.Current > 0)
+                {
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            if (!isEmpty)
+                WeaponHost.EnqueueManeuver(_maneuver);
+        }
+            
     }
 
     public void Cancel() => Halt();
@@ -47,7 +62,8 @@ public class ReloadAbility : MonoBehaviour, IWeaponAbility
 
     void Halt()
     {
-        StopCoroutine(_routine);
+        if (_routine != null)
+            StopCoroutine(_routine);
         _maneuver.Dequeue();
     }
 

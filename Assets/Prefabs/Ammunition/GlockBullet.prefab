@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7357380219364873564}
-  - component: {fileID: 5942591421759391390}
+  - component: {fileID: 499429105663927274}
   m_Layer: 0
-  m_Name: Line
+  m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,8 +32,9 @@ Transform:
   m_Father: {fileID: 7163302306377974611}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!120 &5942591421759391390
-LineRenderer:
+--- !u!96 &499429105663927274
+TrailRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -52,7 +53,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3b5fb0ec243dad343ba87554b16cbcaa, type: 2}
+  - {fileID: 2100000, guid: 000b31f3b7255254ba36d6df6205e226, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -73,9 +74,7 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  m_Time: 5
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -84,22 +83,13 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.25
         inSlope: 0
-        outSlope: -1
-        tangentMode: 65
+        outSlope: 0
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: -1
-        outSlope: 0
-        tangentMode: 5
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -138,8 +128,9 @@ LineRenderer:
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_UseWorldSpace: 1
-  m_Loop: 0
+  m_MinVertexDistance: 0.1
+  m_Autodestruct: 0
+  m_Emitting: 1
 --- !u!1 &7163302306377974615
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,9 +141,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7163302306377974611}
   - component: {fileID: 428001797116057796}
-  - component: {fileID: 8575352625685528154}
+  - component: {fileID: -7782709704963466082}
   m_Layer: 0
-  m_Name: InstantProjectile
+  m_Name: GlockBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -186,12 +177,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b948b5c0708d6b64cb1bbcd0a7b6796b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impactDamage: 1
+  impactDamage: 3
   _width: 0
-  _isInstant: 1
+  _isInstant: 0
   _lifespan: 1.5
   _maxRange: 60
---- !u!114 &8575352625685528154
+--- !u!114 &-7782709704963466082
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -200,9 +191,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7163302306377974615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 519a88c0d069d9e4f802088fa76d621a, type: 3}
+  m_Script: {fileID: 11500000, guid: 1bb70082c6c7d02428a8d1d3c0b35682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _line: {fileID: 5942591421759391390}
-  _width: 0.25
-  _dissipateDuration: 0.5
+  _trail: {fileID: 499429105663927274}
+  _headWidth: 0.05
+  _tailWidth: 0
+  _length: 0.75
+  _convergeDuration: 0.75

@@ -34,6 +34,7 @@ public class Turret : MonoBehaviour
     [SerializeField] float _droopRotationSpeed;
 
     Damageable _damageable;
+    Collider[] _detectedColliders = new Collider[10];
     Transform _visibleTarget;
     Rigidbody _targetBody;
     Damageable _targetDamageable;
@@ -89,7 +90,7 @@ public class Turret : MonoBehaviour
         while (_visibleTarget)
         {
             Vector3 visiblePointPosition;
-            if (IsTargetVisible(_visibleTarget, _targetDamageable.DetectionPoints, out visiblePointPosition))
+            if (IsTargetVisible(_visibleTarget, _targetDamageable.TargetPoints, out visiblePointPosition))
                 RotateTowardsTarget(visiblePointPosition);
             else
             {
@@ -110,7 +111,7 @@ public class Turret : MonoBehaviour
 
             Projectile projectile = _bulletPool.Get();
             projectile.transform.position = bulletSpawn.position;
-            projectile.Launch(new Ray(bulletSpawn.position, direction), _launchSpeed, _damageable.Allegiance.GetOpposite(), bulletSpawn.position);
+            projectile.Launch(new Ray(bulletSpawn.position, direction), _launchSpeed, bulletSpawn.position, _damageable);
             _bulletSpawnIndex = _bulletSpawnIndex + 1 < _bulletSpawns.Length ? _bulletSpawnIndex + 1 : 0;
 
             yield return _cooldownWait;
@@ -119,25 +120,22 @@ public class Turret : MonoBehaviour
 
     void CheckForTargetsInRange()
     {
-        Collider[] colliders = Physics.OverlapSphere(_aimPivot.position, _detectionDistance, _damageable.Allegiance.GetOpposite().GetLayerMask());
-        foreach (Collider collider in colliders)
+        int count = Physics.OverlapSphereNonAlloc(_aimPivot.position, _detectionDistance, _detectedColliders, _damageable.OpponentAllegiance.GetLayerMask(), QueryTriggerInteraction.Ignore);
+        for (int i = 0; i < count; i++)
         {
+            Collider collider = _detectedColliders[i];
             if (IsColliderVisible(collider))
             {
-                Damageable perceivedDamageable = collider.GetComponent<Hurtbox>().Owner;
-                if (!perceivedDamageable.IsVisible)
-                    continue;
-
-                _visibleTarget = perceivedDamageable.transform;
-                _targetBody = perceivedDamageable.GetComponent<Rigidbody>();
-                _targetDamageable = perceivedDamageable;
+                _visibleTarget = collider.transform;
+                _targetBody = collider.GetComponent<Rigidbody>();
+                _targetDamageable = collider.GetComponent<Damageable>();
                 break;
             }
         }
     }
 
     bool IsColliderVisible(Collider collider) =>
-        (Physics.Raycast(_aimPivot.position, collider.transform.position - _aimPivot.position, out _hit, _detectionDistance, _damageable.Allegiance.GetOpposite().GetLayerMask() | Constants.LayerMask.Environment) &&
+        (Physics.Raycast(_aimPivot.position, collider.transform.position - _aimPivot.position, out _hit, _detectionDistance, _damageable.OpponentAllegiance.GetLayerMask() | Constants.LayerMask.Environment, QueryTriggerInteraction.Ignore) &&
         collider == _hit.collider &&
         InVerticalSight(_hit.point));
 
@@ -145,7 +143,7 @@ public class Turret : MonoBehaviour
     {
         foreach (Transform point in detectionPoints)
         {
-            if (Physics.Raycast(_aimPivot.position, point.position - _aimPivot.position, out _hit, _detectionDistance, _damageable.Allegiance.GetOpposite().GetLayerMask() | Constants.LayerMask.Environment) &&
+            if (Physics.Raycast(_aimPivot.position, point.position - _aimPivot.position, out _hit, _detectionDistance, _damageable.OpponentAllegiance.GetLayerMask() | Constants.LayerMask.Environment, QueryTriggerInteraction.Ignore) &&
             _hit.transform.CompareTag(target.transform.tag) &&
             InVerticalSight(_hit.point))
             {

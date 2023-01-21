@@ -38,20 +38,23 @@ public class WeaponHandler : MonoBehaviour
             _switchPriority,
             (bool pauseImmediately) =>
             {
-                if (pauseImmediately)
+                if (!pauseImmediately)
                     _switchRoutine = StartCoroutine(CR_Switch());
             },
             () =>
             {
-                StopCoroutine(_switchRoutine);
+                if (_switchRoutine != null)
+                    StopCoroutine(_switchRoutine);
                 _switchManeuver.Dequeue();
             },
             () => { },
             () =>
             {
-                StopCoroutine(_switchRoutine);
+                if (_switchRoutine != null)
+                    StopCoroutine(_switchRoutine);
                 _switchManeuver.Dequeue();
             });
+        _switchWait = new WaitForSeconds(_switchDuration);
 
         Inventory = GetComponent<AmmoInventory>();
     }
@@ -65,7 +68,8 @@ public class WeaponHandler : MonoBehaviour
     {
         _maxWeapons = _weapons.Length;
         for (int i = 0; i < _maxWeapons; i++)
-            _weapons[i].Interact(gameObject);
+            _weapons[i]?.Interact(gameObject);
+
 
         if (_weaponCount < 1)
             Debug.LogError("There should be at least one weapon in the Weapons array.");
@@ -92,12 +96,19 @@ public class WeaponHandler : MonoBehaviour
         {
             weaponIndex = _currentWeaponIndex;
             if (_weapons[weaponIndex])
-                _weapons[weaponIndex].Unequip();
+            {
+                Weapon oldWeapon = _weapons[weaponIndex];
+                oldWeapon.transform.SetParent(null);
+                oldWeapon.transform.position = newWeapon.transform.position;
+                oldWeapon.transform.rotation = newWeapon.transform.rotation;
+                oldWeapon.Unequip();
+            }
             isReplacing = true;
         }
 
         newWeapon.transform.SetParent(WeaponContainer);
         newWeapon.transform.localPosition = newWeapon.EquipOffset;
+        newWeapon.transform.localRotation = Quaternion.identity;
         newWeapon.Equip(gameObject);
         _weapons[weaponIndex] = newWeapon;
 
@@ -112,6 +123,8 @@ public class WeaponHandler : MonoBehaviour
         if (weaponIndex < 0 || weaponIndex >= _weapons.Length || !_weapons[weaponIndex])
             return;
 
+        _currentWeaponIndex = weaponIndex;
+
         _currentWeapon?.Store();
         _currentWeapon?.gameObject.SetActive(false);
 
@@ -125,12 +138,12 @@ public class WeaponHandler : MonoBehaviour
         if (_weaponCount <= 1 || switchValue < -1 || switchValue > _weaponCount || _switchManeuver.InQueue)
             return;
 
-        if (_incomingWeaponIndex == -1)
-            _currentWeaponIndex = _currentWeaponIndex - 1 >= 0 ? _currentWeaponIndex - 1 : _weaponCount - 1;
-        else if (_incomingWeaponIndex == 0)
-            _currentWeaponIndex = _currentWeaponIndex + 1 < _weaponCount ? _currentWeaponIndex + 1 : 0;
+        if (switchValue == -1)
+            _incomingWeaponIndex = _currentWeaponIndex - 1 >= 0 ? _currentWeaponIndex - 1 : _weaponCount - 1;
+        else if (switchValue == 0)
+            _incomingWeaponIndex = _currentWeaponIndex + 1 < _weaponCount ? _currentWeaponIndex + 1 : 0;
         else
-            _currentWeaponIndex = _incomingWeaponIndex - 1;
+            _incomingWeaponIndex = switchValue - 1;
 
         MQueue.Enqueue(_switchManeuver);
     }

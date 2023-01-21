@@ -13,14 +13,6 @@ public enum CharacterAllegiance : int
 
 public static class CharacterAllegianceExtensions
 {
-    public static CharacterAllegiance GetOpposite(this CharacterAllegiance type)
-    {
-        if (type == CharacterAllegiance.Protagonist)
-            return CharacterAllegiance.Antagonist;
-        else
-            return CharacterAllegiance.Protagonist;
-    }
-
     public static int GetLayer(this CharacterAllegiance type)
     {
         if (type == CharacterAllegiance.Protagonist)

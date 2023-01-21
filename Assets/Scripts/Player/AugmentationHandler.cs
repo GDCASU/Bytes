@@ -13,6 +13,7 @@ public class AugmentationHandler : MonoBehaviour
     Coroutine _regenRoutine;
     WaitForSeconds _delayWait;
     WaitForSeconds _regenWait;
+    bool _isSceneLoading = true;
 
     public StaticResource Battery => _battery;
 
@@ -21,13 +22,19 @@ public class AugmentationHandler : MonoBehaviour
         Battery.Drained += CheckBattery;
         _delayWait = new WaitForSeconds(_batteryRegenDelay);
         _regenWait = new WaitForSeconds(1f / _batteryRegenRate);
+    }
 
+    void Start()
+    {
         for (int i = 0; i < _augmentations.Length; i++)
         {
             Augmentation equippedAugmentation = _augmentations[i];
             if (equippedAugmentation)
-                equippedAugmentation.Equip(gameObject);
+            {
+                equippedAugmentation.Interact(gameObject);
+            }
         }
+        _isSceneLoading = false;
     }
 
     void OnValidate()
@@ -46,6 +53,19 @@ public class AugmentationHandler : MonoBehaviour
 
     public void TakeAugmentation(Augmentation augmentation)
     {
+        if (_isSceneLoading)
+        {
+            for (int i = 0; i < _augmentations.Length; i++)
+            {
+                augmentation.transform.SetParent(_augmentationContainer.transform);
+                augmentation.transform.localPosition = Vector3.zero;
+                augmentation.transform.localRotation = Quaternion.identity;
+                augmentation.Equip(gameObject);
+            }
+            return;
+        }
+
+        // TODO: Program a UI to select which augment to replace when full.
         for (int i = 0; i < _augmentations.Length; i++)
         {
             Augmentation equippedAugmentation = _augmentations[i];
@@ -53,22 +73,27 @@ public class AugmentationHandler : MonoBehaviour
             {
                 _augmentations[i] = augmentation;
             }
-            else if (equippedAugmentation.GetType() != augmentation.GetType())
+            else if (equippedAugmentation.GetType() == augmentation.GetType())
             {
-                equippedAugmentation.Unequip();
+                break;
+            }
+            else if (i == _augmentations.Length - 1)
+            {
                 equippedAugmentation.transform.SetParent(null);
                 equippedAugmentation.transform.position = augmentation.transform.position;
                 equippedAugmentation.transform.rotation = augmentation.transform.rotation;
+                equippedAugmentation.Unequip();
 
                 _augmentations[i] = augmentation;
             }
             else
-                return;
+                continue;
 
             augmentation.transform.SetParent(_augmentationContainer.transform);
             augmentation.transform.localPosition = Vector3.zero;
-            augmentation.transform.rotation = Quaternion.identity;
+            augmentation.transform.localRotation = Quaternion.identity;
             augmentation.Equip(gameObject);
+            break;
         }
     }
 

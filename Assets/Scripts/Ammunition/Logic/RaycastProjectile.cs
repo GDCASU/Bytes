@@ -22,17 +22,23 @@ public class RaycastProjectile : Projectile
         visual.Finished += AttemptPerish;
     }
 
-    public override void Launch(Ray ray, float launchSpeed, CharacterAllegiance targetAllegiance, Vector3 visualSpawnPosition)
+    public override void Launch(Ray ray, float launchSpeed, Vector3 visualSpawnPosition, Damageable launcher)
     {
+        this.launcher = launcher;
+
         if (_isInstant)
         {
             RaycastHit hit;
             Vector3 endLinePosition = ray.origin + (ray.direction * _maxRange);
             if
             (
-                _width <= 0 ?
-                Physics.Raycast(ray, out hit, _maxRange, targetAllegiance.GetLayerMask() | Constants.LayerMask.Environment) && hit.transform.gameObject.layer == targetAllegiance.GetLayer() :
-                Physics.SphereCast(ray.origin, _width, ray.direction, out hit, _maxRange, targetAllegiance.GetLayerMask() | Constants.LayerMask.Environment) && hit.transform.gameObject.layer == targetAllegiance.GetLayer()
+                (
+                    _width <= 0 ?
+                    Physics.Raycast(ray, out hit, _maxRange, launcher.OpponentAllegiance.GetLayerMask() | Constants.LayerMask.Environment) :
+                    Physics.SphereCast(ray.origin, _width, ray.direction, out hit, _maxRange, launcher.OpponentAllegiance.GetLayerMask() | Constants.LayerMask.Environment)
+                )
+                &&
+                hit.transform.gameObject.layer == launcher.OpponentAllegiance.GetLayer()
             )
             {
                 hit.transform.GetComponent<Hurtbox>().Owner.ReceiveDamage(impactDamage);
@@ -59,13 +65,12 @@ public class RaycastProjectile : Projectile
             };
             visual.Play(data);
 
-            _travelRoutine = StartCoroutine(Travel(ray, launchSpeed, targetAllegiance));
+            _travelRoutine = StartCoroutine(Travel(ray, launchSpeed));
         }
     }
 
-    protected virtual IEnumerator Travel(Ray ray, float launchSpeed, CharacterAllegiance targetAllegiance)
+    protected virtual IEnumerator Travel(Ray ray, float launchSpeed)
     {
-        Vector3 projectilePosition = ray.origin;
         float distanceAlongRay = 0f;
         launchSpeed *= Time.fixedDeltaTime;
 
@@ -75,18 +80,18 @@ public class RaycastProjectile : Projectile
             if
             (
                 _width <= 0 ?
-                Physics.Raycast(projectilePosition, ray.direction, out hit, launchSpeed, targetAllegiance.GetLayerMask() | Constants.LayerMask.Environment) :
-                Physics.SphereCast(projectilePosition, _width, ray.direction, out hit, launchSpeed, targetAllegiance.GetLayerMask() | Constants.LayerMask.Environment)
+                Physics.Raycast(transform.position, ray.direction, out hit, launchSpeed, launcher.OpponentAllegiance.GetLayerMask() | Constants.LayerMask.Environment) :
+                Physics.SphereCast(transform.position, _width, ray.direction, out hit, launchSpeed, launcher.OpponentAllegiance.GetLayerMask() | Constants.LayerMask.Environment)
             )
             {
-                if (hit.transform.gameObject.layer == targetAllegiance.GetLayer())
+                if (hit.transform.gameObject.layer == launcher.OpponentAllegiance.GetLayer())
                     hit.transform.GetComponent<Hurtbox>().Owner.ReceiveDamage(impactDamage);
+
                 Perish();
             }
 
             distanceAlongRay += launchSpeed;
-            projectilePosition = ray.GetPoint(distanceAlongRay);
-            transform.position = projectilePosition;
+            transform.position = ray.GetPoint(distanceAlongRay);
 
             yield return Constants.WaitFor.fixedUpdate;
         }

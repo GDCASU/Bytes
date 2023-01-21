@@ -14,7 +14,7 @@ public abstract class Projectile : PoolItem
     [SerializeField] protected int impactDamage;
     protected IProjectileVisual visual;
     protected Ray ray;
-    protected CharacterAllegiance targetAllegiance;
+    protected Damageable launcher;
     protected WaitForSeconds ageWait;
     protected bool isPoolAlive = true;
 
@@ -60,5 +60,5 @@ public abstract class Projectile : PoolItem
         isPoolAlive = false;
     }
 
-    public abstract void Launch(Ray ray, float launchSpeed, CharacterAllegiance targetAllegiance, Vector3 visualSpawnPosition);
+    public abstract void Launch(Ray ray, float launchSpeed, Vector3 visualSpawnPosition, Damageable launcher);
 }
