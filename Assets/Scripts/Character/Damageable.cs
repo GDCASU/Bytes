@@ -15,9 +15,8 @@ public class Damageable : MonoBehaviour
     [SerializeField] StaticResource _health;
     [SerializeField] CharacterAllegiance _personalAllegiance;
     [SerializeField] CharacterAllegiance _opponentAllegiance;
-    [SerializeField] Transform[] _targetPoints;
-    [SerializeField] IntEventChannelSO _healthUpdateEvent = default;
-    [SerializeField] VoidEventChannelSO _deathEvent = default;
+    [SerializeField] Transform[] _targetTransforms;
+    [SerializeField] GameObjectEventChannelSO _deathEvent = default;
 
     public int CurrentHealth => _health.Current;
     public CharacterAllegiance PersonalAllegiance
@@ -32,7 +31,7 @@ public class Damageable : MonoBehaviour
     }
     public CharacterAllegiance OpponentAllegiance => _opponentAllegiance;
     public bool IsDead => _health.Current <= 0;
-    public Transform[] TargetPoints => _targetPoints;
+    public Transform[] TargetTransforms => _targetTransforms;
     public Hurtbox[] Hurtboxes { get; private set; }
 
     void Awake()
@@ -52,18 +51,19 @@ public class Damageable : MonoBehaviour
         if (_health.Current <= 0)
         {
             Died?.Invoke();
-            _deathEvent?.RaiseEvent();
+            _deathEvent?.RaiseEvent(gameObject);
         }
 
         DamageReceived?.Invoke(damage);
-        _healthUpdateEvent?.RaiseEvent(_health.Current);
     }
 
     public void ReceiveHealing(int healing)
     {
+        if (IsDead)
+            return;
+
         _health.Fill(healing);
 
         HealingReceived?.Invoke(healing);
-        _healthUpdateEvent?.RaiseEvent(_health.Current);
     }
 }

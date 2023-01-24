@@ -18,15 +18,17 @@ namespace Constants
     public static class Layer
     {
         public const int Environment = 0;
-        public const int Protagonist = 6;
-        public const int Antagonist = 7;
-        public const int Touchable = 8;
-        public const int Interactable = 9;
+        public const int Character = 6;
+        public const int Protagonist = 7;
+        public const int Antagonist = 8;
+        public const int Touchable = 9;
+        public const int Interactable = 10;
     }
 
     public static class LayerMask
     {
         public const int Environment = 1 << Layer.Environment;
+        public const int Character = 1 << Layer.Character;
         public const int Protagonist = 1 << Layer.Protagonist;
         public const int Antagonist = 1 << Layer.Antagonist;
         public const int Touchable = 1 << Layer.Touchable;

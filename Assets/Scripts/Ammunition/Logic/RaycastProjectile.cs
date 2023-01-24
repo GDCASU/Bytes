@@ -38,10 +38,10 @@ public class RaycastProjectile : Projectile
                     Physics.SphereCast(ray.origin, _width, ray.direction, out hit, _maxRange, launcher.OpponentAllegiance.GetLayerMask() | Constants.LayerMask.Environment)
                 )
                 &&
-                hit.transform.gameObject.layer == launcher.OpponentAllegiance.GetLayer()
+                hit.collider.gameObject.layer == launcher.OpponentAllegiance.GetLayer()
             )
             {
-                hit.transform.GetComponent<Hurtbox>().Owner.ReceiveDamage(impactDamage);
+                hit.collider.GetComponent<Hurtbox>().Owner.ReceiveDamage(impactDamage);
                 endLinePosition = hit.point;
             }
 
@@ -84,8 +84,8 @@ public class RaycastProjectile : Projectile
                 Physics.SphereCast(transform.position, _width, ray.direction, out hit, launchSpeed, launcher.OpponentAllegiance.GetLayerMask() | Constants.LayerMask.Environment)
             )
             {
-                if (hit.transform.gameObject.layer == launcher.OpponentAllegiance.GetLayer())
-                    hit.transform.GetComponent<Hurtbox>().Owner.ReceiveDamage(impactDamage);
+                if (hit.collider.gameObject.layer == launcher.OpponentAllegiance.GetLayer())
+                    hit.collider.GetComponent<Hurtbox>().Owner.ReceiveDamage(impactDamage);
 
                 Perish();
             }

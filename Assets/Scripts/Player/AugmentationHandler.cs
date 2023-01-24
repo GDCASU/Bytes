@@ -1,9 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AugmentationHandler : MonoBehaviour
 {
+    public StaticResource Battery => _battery;
+    public ManeuverQueue MQueue { get; private set; }
+
     [SerializeField] StaticResource _battery;
     [SerializeField] float _batteryRegenDelay;
     [SerializeField] float _batteryRegenRate;
@@ -14,12 +16,11 @@ public class AugmentationHandler : MonoBehaviour
     WaitForSeconds _delayWait;
     WaitForSeconds _regenWait;
     bool _isSceneLoading = true;
-
-    public StaticResource Battery => _battery;
-
+    
     void Awake()
     {
         Battery.Drained += CheckBattery;
+        MQueue = GetComponent<ManeuverQueue>();
         _delayWait = new WaitForSeconds(_batteryRegenDelay);
         _regenWait = new WaitForSeconds(1f / _batteryRegenRate);
     }
