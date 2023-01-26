@@ -81,7 +81,7 @@ public class WeaponHandler : MonoBehaviour
         Started?.Invoke();
     }
 
-    public void TriggerWeaponSkill(WeaponAbilityType type, bool isStarting) => _currentWeapon.TriggerAbility(type, isStarting);
+    public void TriggerWeaponAbility(WeaponAbilityType type, bool isStarting) => _currentWeapon.TriggerAbility(type, isStarting);
 
     public void EquipWeapon(Weapon newWeapon)
     {

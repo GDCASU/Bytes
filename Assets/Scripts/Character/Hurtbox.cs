@@ -1,5 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+/*
+ * Author: Cristion Dominguez
+ * Date: 13 Jan. 2023
+ */
+
 using UnityEngine;
 
 public class Hurtbox : MonoBehaviour

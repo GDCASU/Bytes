@@ -1,3 +1,8 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: 23 Jan. 2023
+ */
+
 using System;
 using System.Collections;
 using UnityEngine;

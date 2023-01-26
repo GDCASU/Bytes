@@ -62,33 +62,33 @@ public class Player : MonoBehaviour
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Primary, true);
+            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Primary, true);
         else if (context.phase == InputActionPhase.Canceled)
-            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Primary, false);
+            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Primary, false);
     }
 
     public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Secondary, true);
+            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Secondary, true);
         else if (context.phase == InputActionPhase.Canceled)
-            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Secondary, false);
+            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Secondary, false);
     }
 
     public void OnTertiaryAttack(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Tertiary, true);
+            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Tertiary, true);
         else if (context.phase == InputActionPhase.Canceled)
-            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Tertiary, false);
+            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Tertiary, false);
     }
 
     public void OnReload(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Reload, true);
+            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Reload, true);
         else if (context.phase == InputActionPhase.Canceled)
-            _weaponHandler.TriggerWeaponSkill(WeaponAbilityType.Reload, false);
+            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Reload, false);
     }
 
     public void OnSwitchWeapon(InputAction.CallbackContext context)

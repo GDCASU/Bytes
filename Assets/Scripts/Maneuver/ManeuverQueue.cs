@@ -1,15 +1,18 @@
+/*
+ * Author: Cristion Dominguez
+ * Date: 9 Jan. 2023
+ */
+
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Maneuver
 {
-    // Do not touch.
+    // Only the Manuever Queue should alter these variables.
     public Maneuver prev;
     public Maneuver next;
     public Action<Maneuver> dequeuing;
-    // Touch.
+    // These variables are able to be freely read and modified.
     public readonly string name;
     public readonly int priority;
     Action<bool> _performing;
