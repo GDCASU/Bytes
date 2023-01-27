@@ -101,13 +101,14 @@ MonoBehaviour:
   offsetPosition: {x: 0.5, y: -0.22, z: 0.4}
   offsetRotation: {x: 0, y: 0, z: 0}
   maxAmmo: 10
-  fireRate: 5
+  fireRate: 15
   reloadDuration: 1
-  launchSpeed: 20
+  launchSpeed: 30
   projectile: {fileID: 2104053451812614757, guid: 4dc80902a384e454791a8f2f720ece0b,
     type: 3}
   visualProjectileSpawn: {fileID: 4368469367402757710}
   currentAmmo: 0
+  weaponType: 1
   isAutomatic: 0
 --- !u!114 &1584524808288262364
 MonoBehaviour:

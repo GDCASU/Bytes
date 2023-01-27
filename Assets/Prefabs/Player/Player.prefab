@@ -182,6 +182,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 646967955}
+  - component: {fileID: 2479044689396508340}
   m_Layer: 0
   m_Name: Weapon Container
   m_TagString: Untagged
@@ -205,6 +206,27 @@ Transform:
   m_Father: {fileID: 3610357520889994798}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2479044689396508340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646967954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee276545ab81843adb67ed6658c43476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laStart: 50
+  maStart: 50
+  haStart: 50
+  laMax: 500
+  maMax: 500
+  haMax: 500
+  lightAmmo: 0
+  mediumAmmo: 0
+  heavyAmmo: 0
 --- !u!1 &1806158314
 GameObject:
   m_ObjectHideFlags: 0

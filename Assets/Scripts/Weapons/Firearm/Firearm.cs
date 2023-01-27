@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 public partial class Firearm : RangedWeapon
 {
     [Header("Specialized Properties")]
+    [SerializeField] int weaponType; // 1 = light // 2 = medium // 3 = heavy
     [SerializeField] bool isAutomatic;
     
     bool isTriggerHeld;
@@ -18,12 +19,16 @@ public partial class Firearm : RangedWeapon
     WaitForSeconds shootCooldownWait;
     WaitForSeconds reloadWait;
 
+    AmmoStorage ammoStorage;
+
     FirearmAnimatorInvoker animInvoker;
 
     protected override void Awake()
     {
         base.Awake();
         currentAmmo = maxAmmo;
+
+        ammoStorage = gameObject.GetComponentInParent<AmmoStorage>();
 
         animInvoker = GetComponent<FirearmAnimatorInvoker>();
         animInvoker.Bind(animator);
@@ -135,13 +140,34 @@ public partial class Firearm : RangedWeapon
 
     IEnumerator CR_Reload()
     {
-        animInvoker.Play(FirearmAnimation.Reload);
+        int ammoReloaded = 0;
 
-        canFire = false;
-        isReloading = true;
-        yield return reloadWait;
-        currentAmmo = maxAmmo;
-        isReloading = false;
-        canFire = true;
+        switch (weaponType) { // determines which ammo to reload and assigns ammoReloaded to the returned value
+            case 1:
+                ammoReloaded = ammoStorage.lightReloaded(maxAmmo, currentAmmo);
+                break;
+            case 2:
+                ammoReloaded = ammoStorage.mediumReloaded(maxAmmo, currentAmmo);
+                break;
+            case 3:
+                ammoReloaded = ammoStorage.heavyReloaded(maxAmmo, currentAmmo);
+                break;
+        }//end switch
+
+        if (ammoReloaded > 0) {
+            animInvoker.Play(FirearmAnimation.Reload);
+
+            canFire = false;
+            isReloading = true;
+            yield return reloadWait;
+            currentAmmo = ammoReloaded;
+            isReloading = false;
+            canFire = true;
+        }
+        else
+        {
+            //no ammo to reload
+        }
+
     }
 }
