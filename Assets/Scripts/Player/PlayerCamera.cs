@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
+    [SerializeField] Player _player;
+
     public float mouseSensitvity = 100f;
     public float camHeight = .75f;
     public Transform player;
@@ -35,17 +37,20 @@ public class PlayerCamera : MonoBehaviour
     {
         horizontalRotationHelper.position = transform.position;
         transform.position = player.position + player.up * camHeight;
+
         if (canRotate)
         {
-            float mouseX = InputManager.PlayerActions.Look.ReadValue<Vector2>().x * mouseSensitvity * Time.deltaTime;
-            float mouseY = InputManager.PlayerActions.Look.ReadValue<Vector2>().y * mouseSensitvity * Time.deltaTime;
+            Vector2 lookVector = _player.LookVector;
+            float mouseX = lookVector.x * mouseSensitvity * Time.deltaTime;
+            float mouseY = lookVector.y * mouseSensitvity * Time.deltaTime;
 
             mouseX = HorizontalRotation(mouseX);
             mouseY = VerticalRotation(mouseY);
 
             transform.localRotation = Quaternion.Euler(mouseY, mouseX, 0f);
         }
-        else transform.localRotation = player.localRotation;
+        else
+            transform.localRotation = player.localRotation;
     }
     public void ToggleRotation(bool value) => canRotate = value;
     public void RestartRotation()

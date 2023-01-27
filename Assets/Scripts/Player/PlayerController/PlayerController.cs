@@ -6,6 +6,8 @@ public partial class PlayerController : MonoBehaviour
 {
     #region Variables
 
+    Player _player;
+
     #region Movement Mechanics
     [Header("Additional Mechanics")]
     public bool jumpMechanic;
@@ -21,8 +23,6 @@ public partial class PlayerController : MonoBehaviour
     public JumpVariables jumpVariables = new JumpVariables();
     public VaultVariables vaultVariables = new VaultVariables();
     public ClimbVariables climbVariables = new ClimbVariables();
-    public DashVariables dashVariables = new DashVariables();
-    public InteractVariables interactVariables = new InteractVariables();
     #endregion
 
     #region Player States
@@ -120,6 +120,7 @@ public partial class PlayerController : MonoBehaviour
 
     void Start()
     {
+        _player = GetComponent<Player>();
         lastViablePosition = transform.position;
         capCollider = GetComponent<CapsuleCollider>();
         rb = GetComponent<Rigidbody>();
@@ -132,11 +133,13 @@ public partial class PlayerController : MonoBehaviour
         baseMovementVariables.StartVariables(capCollider, transform);
         if (capCollider.radius * 2 * transform.lossyScale.x >=
             transform.lossyScale.y * capCollider.height) crouchMechanic = false;
+        /*
         if (InputManager.CurrentControlScheme == "Gamepad")
         {
             baseMovementVariables.holdSprint = false;
             crouchVariables.holdCrouch = false;
         }
+        */
     }
 
     void Update()
@@ -146,9 +149,6 @@ public partial class PlayerController : MonoBehaviour
             if (crouchMechanic) CrouchInput();
             MovementInput();
             if (jumpMechanic) JumpInput();
-            DashInput();
-            if (dashVariables.setUpDash && isGrounded) StartCoroutine(GroundedCooldown());
-            InteractInput();
         }
     }
     private void FixedUpdate()

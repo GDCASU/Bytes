@@ -10,7 +10,7 @@ public class LaserDiode : MonoBehaviour
     [Range(-1, 1)] public float laserDirZ;
     public float laserMaxDistance = 100.0f;
     public float laserRadius = 1.5f;
-    public float damage = 1.0f;
+    public int damage = 1;
 
     [Header("Flicker Variables")]
     public bool isFlickering = false;
@@ -52,14 +52,12 @@ public class LaserDiode : MonoBehaviour
     {
         // NOTE: Check where the laser hits from the beginning to the end of it. Adjust the GameObject's model and colliders
         // to fit with the laser's hit limits.
-        if (Physics.SphereCast(laser.position, laserRadius, worldLaserDirection, out RaycastHit hit, laserMaxDistance))
+        if (Physics.SphereCast(laser.position, laserRadius, worldLaserDirection, out RaycastHit hit, laserMaxDistance, Constants.LayerMask.Protagonist | Constants.LayerMask.Environment))
         {
-            GameObject objectHit = hit.collider.gameObject;
-            if (objectHit.CompareTag("Player") && objectHit.GetComponent<Player>())
-            {
-                // Cause damage to the player
-                objectHit.GetComponent<Player>().ReceiveDamage(damage);
-            }
+            if (hit.transform.gameObject.layer == Constants.Layer.Protagonist)
+                hit.transform.GetComponent<Hurtbox>().Owner.ReceiveDamage(damage);
+                
+
             // Laser extends to the object it hits
             lineRenderer.SetPosition(0, Vector3.zero);
             lineRenderer.SetPosition(1, localLaserDirection * hit.distance);

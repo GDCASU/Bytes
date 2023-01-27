@@ -22,7 +22,7 @@ public partial class PlayerController
     }
     public void JumpInput()
     {
-        if (InputManager.PlayerActions.Jump.WasPressedThisFrame())
+        if (_player.IsJumpPressed)
         {
             _jumpBuffer = jumpVariables.jumpBuffer;
         }
