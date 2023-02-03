@@ -287,33 +287,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &903139166 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 646967954, guid: e2d15272dd5b07347bf136160a82d690,
-    type: 3}
-  m_PrefabInstance: {fileID: 1947202453}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &903139168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903139166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee276545ab81843adb67ed6658c43476, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  laStart: 50
-  maStart: 50
-  haStart: 50
-  laMax: 500
-  maMax: 500
-  haMax: 500
-  lightAmmo: 0
-  mediumAmmo: 0
-  heavyAmmo: 0
 --- !u!1 &1011450356
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,6 +372,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6576096071312733772, guid: e2d15272dd5b07347bf136160a82d690,
+        type: 3}
+      propertyPath: weaponType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6576096071312733772, guid: e2d15272dd5b07347bf136160a82d690,
         type: 3}
       propertyPath: currentAmmo

@@ -10,8 +10,11 @@ using UnityEngine.InputSystem;
 
 public partial class Firearm : RangedWeapon
 {
+    public enum WeaponType {Light = 0, Medium = 1, Heavy = 2};
+    
+
     [Header("Specialized Properties")]
-    [SerializeField] int weaponType; // 1 = light // 2 = medium // 3 = heavy
+    [SerializeField] int weaponType;
     [SerializeField] bool isAutomatic;
     
     bool isTriggerHeld;
@@ -20,6 +23,22 @@ public partial class Firearm : RangedWeapon
     WaitForSeconds reloadWait;
 
     AmmoStorage ammoStorage;
+
+    //rotations
+    private Vector3 currRotation;
+    private Vector3 targetRotation;
+
+    //Recoil Values
+    [Header("Recoil Values")]
+    [SerializeField] private float recoilX;
+    [SerializeField] private float recoilY;
+    [SerializeField] private float recoilZ;
+
+    //Recoil Settings
+    [Header("Recoil Settings")]
+    [SerializeField] private Transform cameraRecoilTransform;
+    [SerializeField] private float snapFactor;
+    [SerializeField] private float returnSpeed;
 
     FirearmAnimatorInvoker animInvoker;
 
@@ -36,6 +55,13 @@ public partial class Firearm : RangedWeapon
         data.shootSpeed = fireRate;
         data.reloadSpeed = 1f / reloadDuration;
         animInvoker.SetParameters(data);
+    }
+
+    protected void Update()
+    {
+        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
+        currRotation = Vector3.Slerp(currRotation, targetRotation, snapFactor * Time.fixedDeltaTime);
+        cameraRecoilTransform.localRotation = Quaternion.Euler(currRotation);
     }
 
     protected void OnValidate()
@@ -108,6 +134,10 @@ public partial class Firearm : RangedWeapon
     {
         if (!canFire || isReloading || currentAmmo == maxAmmo) return;
         StartCoroutine(CR_Reload());
+    }
+
+    private void recoilFire() {
+        targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
     }
 
     IEnumerator CR_ContinouslyFireBullets()

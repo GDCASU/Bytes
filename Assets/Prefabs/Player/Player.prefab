@@ -400,7 +400,7 @@ Transform:
   - {fileID: 164369410}
   - {fileID: 1878126032}
   m_Father: {fileID: 8225854368876441687}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &69374050845824282
 GameObject:
@@ -763,6 +763,38 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &489847669088654695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7965890415529821994}
+  m_Layer: 2
+  m_Name: CameraRecoil
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7965890415529821994
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489847669088654695}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3610357520889994798}
+  m_Father: {fileID: 8225854368876441687}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &510375892430275789
 GameObject:
   m_ObjectHideFlags: 0
@@ -5049,8 +5081,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3607897196712715668}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.7, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.70000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5059,8 +5091,8 @@ Transform:
   - {fileID: 170006946440683318}
   - {fileID: 8075258208031613953}
   - {fileID: 646967955}
-  m_Father: {fileID: 8225854368876441687}
-  m_RootOrder: 1
+  m_Father: {fileID: 7965890415529821994}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &3628790565199125366
 Camera:
@@ -11593,8 +11625,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6181723294126060280}
-  - {fileID: 3610357520889994798}
   - {fileID: 2053439829}
+  - {fileID: 7965890415529821994}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12791,6 +12823,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
         type: 3}
+      propertyPath: recoilX
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
+      propertyPath: recoilY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
+      propertyPath: recoilZ
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
       propertyPath: offset.x
       value: 0.45
       objectReference: {fileID: 0}
@@ -12805,6 +12852,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2104053451812614757, guid: 4dc80902a384e454791a8f2f720ece0b,
         type: 3}
+    - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
+      propertyPath: snapFactor
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
+      propertyPath: returnSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
         type: 3}
       propertyPath: reloadDuration
@@ -12825,6 +12882,11 @@ PrefabInstance:
       propertyPath: offsetPosition.z
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
+      propertyPath: cameraRecoilTransform
+      value: 
+      objectReference: {fileID: 7965890415529821994}
     - target: {fileID: 8715611490153474015, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
         type: 3}
       propertyPath: m_ApplyRootMotion

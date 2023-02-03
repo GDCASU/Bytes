@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AmmoStorage : MonoBehaviour
 {
+
     [Header("Start Ammo")]
     [SerializeField] int laStart = 0;
     [SerializeField] int maStart = 0;
