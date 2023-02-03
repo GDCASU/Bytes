@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 6357858820262782186}
   - component: {fileID: 6357858820262782187}
   - component: {fileID: 6357858820262782190}
-  - component: {fileID: 6357858820262782191}
+  - component: {fileID: 4106819931617608875}
   m_Layer: 7
   m_Name: EnemyFollow
   m_TagString: Enemy
@@ -219,7 +219,7 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6357858820262782191
+--- !u!114 &4106819931617608875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,7 +231,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f700211a9ae8a449a084263f5b8f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Type>k__BackingField: 1
+  <MaxHealth>k__BackingField: 10
+  <DetectionPoints>k__BackingField: []
+  <Health>k__BackingField: 10
   lookRadius: 10
   rotationSpeed: 5
   attackCooldown: 1
-  damage: 10
+  damage: 1

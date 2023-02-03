@@ -232,12 +232,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0dbbc2a58655904399055461983e5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookPoint: {fileID: 4127698981344833176}
-  lookDistance: 10
+  <Type>k__BackingField: 1
+  <MaxHealth>k__BackingField: 10
+  <DetectionPoints>k__BackingField: []
+  <Health>k__BackingField: 10
   lookRadius: 5
   rotationSpeed: 5
   attackCooldown: 1
   damage: 1
+  lookPoint: {fileID: 4127698981344833176}
+  lookDistance: 10
+  tooCloseRadius: 3
 --- !u!1 &2578531907368588453
 GameObject:
   m_ObjectHideFlags: 0

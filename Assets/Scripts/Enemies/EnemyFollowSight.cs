@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyFollowSight : MonoBehaviour
+/// <summary>
+/// Enemy will follow the player if it sees the player with a line of view.
+/// 
+/// Author: Alben Trang
+/// </summary>
+public class EnemyFollowSight : EnemyFollowBase
 {
+    [Header("Enemy Follow Sight Variables")]
     public Transform lookPoint;
     public float lookDistance = 10.0f;
-    public float lookRadius = 10.0f;
     public float tooCloseRadius = 3.0f;
-    public float rotationSpeed = 5.0f;
-    public float attackCooldown = 1.0f;
-    public int damage = 1;
 
-    private Transform playerTarget;
     private Damageable playerDamageable;
     private NavMeshAgent agent;
     private Vector3 lastSeenPlayerPos;
-    private bool canAttack;
     private bool foundSomething;
     private bool firstSpottedPlayer;
     private RaycastHit hit;
@@ -63,24 +63,5 @@ public class EnemyFollowSight : MonoBehaviour
         {
             agent.SetDestination(lastSeenPlayerPos);
         }
-    }
-
-    private void FaceTarget()
-    {
-        Vector3 dirToTarget = (playerTarget.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(dirToTarget.x, 0, dirToTarget.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-    }
-
-    private IEnumerator AttackCooldown()
-    {
-        yield return new WaitForSeconds(attackCooldown);
-        canAttack = true;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(lookPoint.position, lookPoint.forward * lookDistance);
     }
 }
