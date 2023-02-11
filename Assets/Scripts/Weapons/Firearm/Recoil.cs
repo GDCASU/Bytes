@@ -20,18 +20,15 @@ public class Recoil : MonoBehaviour
     [SerializeField] private float snapFactor;
     [SerializeField] private float returnSpeed;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Target Rotatoin: " + targetRotation.ToString()) ;
+
         targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
         currRotation = Vector3.Slerp(currRotation, targetRotation, snapFactor * Time.fixedDeltaTime);
         transform.localRotation = Quaternion.Euler(currRotation);
+        //Debug.Log("Recoil Rotation: " + transform.localRotation.ToString());
     }
 
     public void recoilFire() {

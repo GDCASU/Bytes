@@ -17,6 +17,13 @@ public class PlayerCamera : MonoBehaviour
 
     float xRotationHelper;
 
+    [Header("Recoil Values")]
+    [SerializeField] float xRecoil;
+    [SerializeField] float yRecoil;
+    [SerializeField] float returnStrength;
+    [SerializeField] float recoilSnappiness;
+    private Vector3 recoilOffest = new Vector3(0,0,0);
+
     private void Start()
     {
         transform.localRotation = player.transform.rotation;
@@ -43,9 +50,16 @@ public class PlayerCamera : MonoBehaviour
             mouseX = HorizontalRotation(mouseX);
             mouseY = VerticalRotation(mouseY);
 
-            transform.localRotation = Quaternion.Euler(mouseY, mouseX, 0f);
+            //recoil
+            recoilOffest = Vector3.Lerp(recoilOffest, new Vector3(mouseX, mouseY, 0), returnStrength * Vector3.Magnitude(recoilOffest - new Vector3(mouseX, mouseY, 0)) * Time.deltaTime);
+
+            transform.localRotation = Quaternion.Euler(mouseY + recoilOffest.x, mouseX + recoilOffest.y, 0f);
         }
         else transform.localRotation = player.localRotation;
+
+        //recoil reset
+        
+
     }
     public void ToggleRotation(bool value) => canRotate = value;
     public void RestartRotation()
@@ -74,4 +88,13 @@ public class PlayerCamera : MonoBehaviour
         if (moveDown) camHeight -= cameraDisplacement;
         else camHeight += cameraDisplacement;
     }
+
+    //----------------Recoil Methods----------------
+
+    public void recoilFire(float recoilStr)
+    {
+        recoilOffest.x += Random.Range(0,xRecoil);
+        recoilOffest.y += Random.Range(-yRecoil, yRecoil);
+    }
+
 }

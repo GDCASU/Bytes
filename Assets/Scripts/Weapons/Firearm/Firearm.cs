@@ -24,21 +24,10 @@ public partial class Firearm : RangedWeapon
 
     AmmoStorage ammoStorage;
 
-    //rotations
-    private Vector3 currRotation;
-    private Vector3 targetRotation;
-
-    //Recoil Values
     [Header("Recoil Values")]
-    [SerializeField] private float recoilX;
-    [SerializeField] private float recoilY;
-    [SerializeField] private float recoilZ;
-
-    //Recoil Settings
-    [Header("Recoil Settings")]
-    [SerializeField] private Transform cameraRecoilTransform;
-    [SerializeField] private float snapFactor;
-    [SerializeField] private float returnSpeed;
+    [SerializeField] Camera cam;
+    PlayerCamera camPlayerCam;
+    [SerializeField] float recoilStrength = 1;
 
     FirearmAnimatorInvoker animInvoker;
 
@@ -46,6 +35,8 @@ public partial class Firearm : RangedWeapon
     {
         base.Awake();
         currentAmmo = maxAmmo;
+
+        camPlayerCam = cam.GetComponent<PlayerCamera>();
 
         ammoStorage = gameObject.GetComponentInParent<AmmoStorage>();
 
@@ -55,13 +46,6 @@ public partial class Firearm : RangedWeapon
         data.shootSpeed = fireRate;
         data.reloadSpeed = 1f / reloadDuration;
         animInvoker.SetParameters(data);
-    }
-
-    protected void Update()
-    {
-        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
-        currRotation = Vector3.Slerp(currRotation, targetRotation, snapFactor * Time.fixedDeltaTime);
-        cameraRecoilTransform.localRotation = Quaternion.Euler(currRotation);
     }
 
     protected void OnValidate()
@@ -125,6 +109,7 @@ public partial class Firearm : RangedWeapon
         enabledProjectile.Launch(ray, launchSpeed, Target, visualProjectileSpawn.position);
         currentAmmo--;
 
+        camPlayerCam.recoilFire(recoilStrength);
         animInvoker.Play(FirearmAnimation.Shoot);
     }
 
@@ -134,10 +119,6 @@ public partial class Firearm : RangedWeapon
     {
         if (!canFire || isReloading || currentAmmo == maxAmmo) return;
         StartCoroutine(CR_Reload());
-    }
-
-    private void recoilFire() {
-        targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
     }
 
     IEnumerator CR_ContinouslyFireBullets()
