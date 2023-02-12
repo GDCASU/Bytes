@@ -466,7 +466,7 @@ public class MapGeneratorRyan : MonoBehaviour
             if (alreadyGBlue && !alreadyGRoom)
             {
                 alreadyGRoom = true;
-                GenRooms();
+                //GenRooms();
             }
             else if (!alreadyGBlue)
                 Debug.Log("Error: Blueprint needs to be generated before the rooms.");

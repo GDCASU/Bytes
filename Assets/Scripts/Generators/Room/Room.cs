@@ -8,7 +8,9 @@ public enum RoomShape
 {
     General,
     Tall,
-    Hall
+    Hall,
+    Big,
+    Boss
 }
 
 public class Room : MonoBehaviour
@@ -16,6 +18,32 @@ public class Room : MonoBehaviour
     public RoomShape shape;
     public List<GameObject> entrancewayList;
     public List<GameObject> entrancewayList2;
+
+    private bool[] activeEntranceways;
+
+    public Vector3 roomPostion;
+
+    private void Start()
+    {
+        switch(shape)
+        {
+            case RoomShape.General:
+                activeEntranceways = new bool[6];
+                break;
+            case RoomShape.Tall:
+                activeEntranceways = new bool[12];
+                break;
+            case RoomShape.Hall:
+                activeEntranceways = new bool[12];
+                break;
+            case RoomShape.Big:
+                activeEntranceways = new bool[24];
+                break;
+            case RoomShape.Boss:
+                activeEntranceways = new bool[8];
+                break;
+        }
+    }
 
     public void ActivateEntrance(int entranceNum)
     {
