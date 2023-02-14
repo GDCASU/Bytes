@@ -134,9 +134,9 @@ MonoBehaviour:
     _current: 100
   _personalAllegiance: 1
   _opponentAllegiance: 0
-  _targetPoints: []
-  _healthUpdateEvent: {fileID: 0}
-  _deathEvent: {fileID: 0}
+  _targetTransforms:
+  - {fileID: 8312515569119562520}
+  _deathEvent: {fileID: 11400000, guid: 2af28553fad5fdb43b6840f422bafee1, type: 2}
 --- !u!114 &8312515569119562521
 MonoBehaviour:
   m_ObjectHideFlags: 0
