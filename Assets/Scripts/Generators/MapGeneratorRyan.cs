@@ -21,12 +21,10 @@ public class MapGeneratorRyan : MonoBehaviour
     public GameObject gPrefab;
     public GameObject tPrefab;
     public GameObject hPrefab;
-    public GameObject lPrefab;
-    public GameObject jPrefab;
     public GameObject bPrefab;
 
     [Header("Conditions")]
-    public int maxRooms;
+    public int maxRooms = 15;
     public int tRoomSpawnChance;
     public int hRoomSpawnChance;
 
@@ -69,7 +67,7 @@ public class MapGeneratorRyan : MonoBehaviour
             bool inRoomList = false;
             for (int i = roomList.Count - 1; i >= 0; i--) // Looping back through list and Checking for collisions with other rooms
             {
-                if (Vector3.Equals(curPos, roomList[i].GetComponent<Room>().transform.position))
+                if (Vector3.Equals(curPos, roomList[i].GetComponent<BlueprintRoom>().position))
                 {
                     inRoomList = true;
                     break;

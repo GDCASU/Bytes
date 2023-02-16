@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 // Learned about Map Generation here: https://www.youtube.com/watch?v=LnbZLnCXSyI
-public class MapGenerator : MonoBehaviour
+public class MapGeneratorAlben : MonoBehaviour
 {
     private enum StartType { BackToStart, Continue, PickRandom }
 

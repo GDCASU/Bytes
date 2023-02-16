@@ -15,36 +15,49 @@ public class MapGenerator : MonoBehaviour
     public List<GameObject> bPrefab;
 
     [Header("Trails")]
-    public List<Room> mainTrail;
-    public List<Room> augmentationTrail;
-    public List<Room> keycardTrail;
-    public List<Room> trialTrail;
-    public List<Room> bossTrail;
-
-    public List<Room> masterTrail; // All trails combined
+    public List<BlueprintRoom> masterTrail = new List<BlueprintRoom>(); // All trails combined
+    public List<BlueprintRoom> mainTrail = new List<BlueprintRoom>();
+    public List<BlueprintRoom> augmentationTrail = new List<BlueprintRoom>();
+    public List<BlueprintRoom> keycardTrail = new List<BlueprintRoom>();
+    public List<BlueprintRoom> trialTrail = new List<BlueprintRoom>();
+    public List<BlueprintRoom> bossTrail = new List<BlueprintRoom>();
 
     [Header("Conditions")]
+    
     public int mainTrailMaxRooms = 10;
     public int augmentationTrailMaxRooms = 1;
     public int keycardTrailMaxRooms = 2;
     public int trialTrailMaxRooms = 2;
     public int bossTrailMaxRooms = 2;
 
+    int roomFaces = 6;
+    int maxRooms = 20;
+    int entrFlagIdx = 0;
+    void Start()
+    {
+        maxRooms = mainTrailMaxRooms + augmentationTrailMaxRooms + keycardTrailMaxRooms + trialTrailMaxRooms + bossTrailMaxRooms;
+
+        Procedure();
+    }
+
     void Procedure()
     {
-        RandomWalker(mainTrailMaxRooms, Vector3.zero, mainTrail, null);
+        RandomWalker(mainTrailMaxRooms, Vector3.zero, mainTrail, null); // Main Trail to boss
     }
 
     #region RandomWalker
-    void RandomWalker(int maxRooms, Vector3 startingPos, List<Room> trail, Room startingRoom)
+    void RandomWalker(int maxRooms, Vector3 startingPos, List<BlueprintRoom> trail, BlueprintRoom startingRoom)
     {
         Vector3 curPos = startingPos; // Set the position of the starting room
-        Vector3 tempPos;
+        BlueprintRoom curRoom = null;
+        Vector3 tempPos; // new postion to be choosen
 
         if (startingRoom == null)
         {
-            Room newRoom = new Room(curPos);
+            BlueprintRoom newRoom = new BlueprintRoom(curPos);
             trail.Add(newRoom);
+            masterTrail.Add(newRoom);
+            curRoom = newRoom;
         }
 
         int failedAttempts = 0;
@@ -53,36 +66,67 @@ public class MapGenerator : MonoBehaviour
             tempPos = curPos;
             switch (UnityEngine.Random.Range(1, 7)) // Choosing position of next room
             {
-                case 1: tempPos += Vector3.right * cellSize; break; // (0, cellSize, 0) * Cell Unit Size
-                case 2: tempPos += Vector3.left * cellSize; break; // (0, -cellSize, 0) * Cell Unit Size
-                case 3: tempPos += Vector3.forward * cellSize; break; // (cellSize, 0, 0) * Cell Unit Size
-                case 4: tempPos += Vector3.back * cellSize; break; // (-cellSize, 0, 0) * Cell Unit Size
-                case 5: tempPos += Vector3.up * cellSize; break; // (0, 0, cellSize) * Cell Unit Size
-                case 6: tempPos += Vector3.down * cellSize; break; // (0, 0, -cellSize) * Cell Unit Size
+                case 1: tempPos += Vector3.right * cellSize; // E0 (cellSize, 0, 0) * Cell Unit Size
+                    entrFlagIdx = 0;
+                    break;
+                case 2: tempPos += Vector3.left * cellSize; // E1 (-cellSize, 0, 0) * Cell Unit Size
+                    entrFlagIdx = 1;
+                    break;
+                case 3: tempPos += Vector3.forward * cellSize; // E2 (0, 0, cellSize) * Cell Unit Size
+                    entrFlagIdx = 2;
+                    break;
+                case 4: tempPos += Vector3.back * cellSize; // E3 (0, 0, -cellSize) * Cell Unit Size
+                    entrFlagIdx = 3;
+                    break;
+                case 5: tempPos += Vector3.up * cellSize;  // E4 (0, cellSize, 0) * Cell Unit Size
+                    entrFlagIdx = 4;
+                    break;
+                case 6: tempPos += Vector3.down * cellSize; // E5 (0, -cellSize, 0) * Cell Unit Size
+                    entrFlagIdx = 5;
+                    break; 
             }
 
             bool inRoomList = false;
-            for (int i = masterTrail.Count - 1; i >= 0; i--) // Looping back through master list and Checking for collisions with any other rooms
+            BlueprintRoom conflictedRoom = null;
+            foreach(BlueprintRoom room in masterTrail) // Check master trail for conflicting rooms
             {
-                if (Vector3.Equals(tempPos, masterTrail[i]))
+                if (Vector3.Equals(tempPos, room.position)) // Test Failed
                 {
+                    conflictedRoom = room;
                     inRoomList = true;
                     failedAttempts++;
                     break;
                 }
             }
-            if (!inRoomList)
+
+            if (!inRoomList) // Test Passed
             {
-                curPos = tempPos;
-                Room newRoom = new Room(curPos);
+                curPos = tempPos; // Change Current Position to new position
+
+                BlueprintRoom newRoom = new BlueprintRoom(curPos);
+                FlagDoorways(newRoom, curRoom, entrFlagIdx);
+
+                curRoom = newRoom;
                 trail.Add(newRoom);
                 masterTrail.Add(newRoom);
             }
-            if (failedAttempts > 4)
+
+            if (failedAttempts > 6) // If failed backtrack
             {
                 curPos = tempPos;
+                curRoom = conflictedRoom;
             }
         }
+    }
+
+    void FlagDoorways(BlueprintRoom newRoom, BlueprintRoom prevRoom,  int entrFlagIdx) // Flag the entranceways to be activated in each room
+    {
+        if (entrFlagIdx % 2 == 0) // If choosen an even numbered side (E4) then set opposite (E3) to true
+            newRoom.activeEntranceways[entrFlagIdx + 1] = true;
+        else // If choosen an odd numbered side (E3) then set opposite (E4) to true
+            newRoom.activeEntranceways[entrFlagIdx - 1] = true;
+
+        prevRoom.activeEntranceways[entrFlagIdx] = true;
     }
 
     private void GenerateBlueprintRoom(Vector3 roomPosition)

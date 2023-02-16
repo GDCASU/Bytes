@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -179,6 +179,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &318839230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 318839232}
+  - component: {fileID: 318839231}
+  m_Layer: 0
+  m_Name: New Map Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &318839231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318839230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c34ff1f1cb180e7448ed579072493183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellSize: 10
+  bluePrintPrefab: {fileID: 6321413536967066871, guid: 97b96c366fb5e44489c9d5c503f211d0,
+    type: 3}
+  gPrefab: []
+  tPrefab: []
+  hPrefab: []
+  bPrefab: []
+  mainTrailMaxRooms: 10
+  augmentationTrailMaxRooms: 1
+  keycardTrailMaxRooms: 2
+  trialTrailMaxRooms: 2
+  bossTrailMaxRooms: 2
+--- !u!4 &318839232
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318839230}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &381666537
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,7 +369,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1028085542
 Transform:
   m_ObjectHideFlags: 0
@@ -342,14 +398,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellSize: 10
-  bluePrintPrefab: {fileID: 0}
-  gPrefab: {fileID: 0}
-  tPrefab: {fileID: 0}
-  hPrefab: {fileID: 0}
-  lPrefab: {fileID: 0}
-  jPrefab: {fileID: 0}
-  bPrefab: {fileID: 0}
-  maxRooms: 0
+  bluePrintPrefab: {fileID: 6321413536967066871, guid: 97b96c366fb5e44489c9d5c503f211d0,
+    type: 3}
+  gPrefab: {fileID: 7523805458283857721, guid: 2c8745d3895119f4bbc52939e875ccde, type: 3}
+  tPrefab: {fileID: 16586390388644377, guid: 074648d60cd54ba4caac6107b9238317, type: 3}
+  hPrefab: {fileID: 160632190577553635, guid: 5e3f735d944e5c247b3cfc9db09314c3, type: 3}
+  bPrefab: {fileID: 7523805458283857721, guid: 99511c27320fdae458442eeca089b50e, type: 3}
+  maxRooms: 15
   tRoomSpawnChance: 0
   hRoomSpawnChance: 0
   roomList: []
@@ -365,6 +420,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Managers
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934196562559041229, guid: ce9c08a336a94b244838a903a859b647,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5934196562559041231, guid: ce9c08a336a94b244838a903a859b647,
         type: 3}
@@ -550,6 +610,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8225854368876441680, guid: e2d15272dd5b07347bf136160a82d690,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8225854368876441687, guid: e2d15272dd5b07347bf136160a82d690,
         type: 3}
       propertyPath: m_RootOrder
@@ -618,6 +683,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ProjectileContainer
+      objectReference: {fileID: 0}
+    - target: {fileID: 9209602276005009200, guid: cbad6e7fe10732a4080eeb28c1baafad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9209602276005009215, guid: cbad6e7fe10732a4080eeb28c1baafad,
         type: 3}
