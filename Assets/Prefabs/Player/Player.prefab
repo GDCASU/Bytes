@@ -8165,8 +8165,8 @@ MonoBehaviour:
   recoilX: -2
   recoilY: 2
   recoilZ: 0.35
-  snapFactor: 6
-  returnSpeed: 2
+  snapFactor: 2
+  returnSpeed: 6
 --- !u!1 &6383913138255828826
 GameObject:
   m_ObjectHideFlags: 0
@@ -12892,6 +12892,21 @@ PrefabInstance:
     - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
         type: 3}
       propertyPath: zRecoil
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
+      propertyPath: bloomCap
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
+      propertyPath: bloomDec
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,
+        type: 3}
+      propertyPath: bloomInc
       value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 6576096072594345299, guid: 8e9a5d4b6f205d04ea18ecbc44784083,

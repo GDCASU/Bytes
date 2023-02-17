@@ -707,6 +707,10 @@ MonoBehaviour:
   currentAmmo: 0
   weaponType: 2
   isAutomatic: 1
+  xRecoil: -2.5
+  yRecoil: 2.5
+  zRecoil: 0.35
+  camHolder: {fileID: 0}
 --- !u!114 &100136065207097141
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,13 +10,13 @@ using UnityEngine.InputSystem;
 
 public partial class Firearm : RangedWeapon
 {
-    public enum WeaponType {Light = 0, Medium = 1, Heavy = 2};
-    
+    public enum WeaponType { Light = 0, Medium = 1, Heavy = 2 };
+
 
     [Header("Specialized Properties")]
     [SerializeField] int weaponType;
     [SerializeField] bool isAutomatic;
-    
+
     bool isTriggerHeld;
     bool continousRoutineActive;
     WaitForSeconds shootCooldownWait;
@@ -28,9 +28,14 @@ public partial class Firearm : RangedWeapon
     [SerializeField] float xRecoil;
     [SerializeField] float yRecoil;
     [SerializeField] float zRecoil;
-
     [SerializeField] GameObject camHolder;
     Recoil camRecoil;
+
+    [Header("Bloom Values")]
+    [SerializeField] float bloomInc;
+    [SerializeField] float bloomDec;
+    [SerializeField] float bloomCap;
+    public float bloom = 0;
 
     FirearmAnimatorInvoker animInvoker;
 
@@ -52,6 +57,17 @@ public partial class Firearm : RangedWeapon
         data.shootSpeed = fireRate;
         data.reloadSpeed = 1f / reloadDuration;
         animInvoker.SetParameters(data);
+    }
+
+    protected void Update()
+    {
+        if (bloom >= 0) {
+            bloom -= bloomDec * Time.deltaTime;
+        }
+        else
+        {
+            bloom = 0;
+        }
     }
 
     protected void OnValidate()
@@ -109,11 +125,27 @@ public partial class Firearm : RangedWeapon
 
     void FireBullet()
     {
-        Ray ray = new Ray(projectileSpawn.position, projectileSpawn.forward);
+        Ray ray;
+        if (bloom >= 0) {
+           ray = new Ray(projectileSpawn.position, projectileSpawn.forward + new Vector3(Random.Range(-bloom, bloom), Random.Range(-bloom, bloom), 0)); // added Vector3 is for bloom
+        }
+        else {
+            ray = new Ray(projectileSpawn.position, projectileSpawn.forward); // added Vector3 is for bloom
+
+        }
+
         Projectile enabledProjectile = projectilePool.Get();
         enabledProjectile.transform.position = projectileSpawn.position;
         enabledProjectile.Launch(ray, launchSpeed, Target, visualProjectileSpawn.position);
         currentAmmo--;
+
+        //bloom----------
+        bloom += bloomInc;
+        if (bloom >= bloomCap)
+        {
+            bloom = bloomCap;
+        }
+        //---------------
 
         camRecoil.recoilFire();
         animInvoker.Play(FirearmAnimation.Shoot);
