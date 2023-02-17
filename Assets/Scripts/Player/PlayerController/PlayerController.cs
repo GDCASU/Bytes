@@ -47,6 +47,7 @@ public partial class PlayerController : MonoBehaviour
     #region Basic Movement
     private float surfaceSlope;
     private float maxVelocity;
+    private float maxAirVelocity;
     private float speedIncrease;
     private float friction;
     private float airControl;
