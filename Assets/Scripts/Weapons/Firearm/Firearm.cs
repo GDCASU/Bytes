@@ -25,9 +25,12 @@ public partial class Firearm : RangedWeapon
     AmmoStorage ammoStorage;
 
     [Header("Recoil Values")]
-    [SerializeField] Camera cam;
-    PlayerCamera camPlayerCam;
-    [SerializeField] float recoilStrength = 1;
+    [SerializeField] float xRecoil;
+    [SerializeField] float yRecoil;
+    [SerializeField] float zRecoil;
+
+    [SerializeField] GameObject camHolder;
+    Recoil camRecoil;
 
     FirearmAnimatorInvoker animInvoker;
 
@@ -36,7 +39,10 @@ public partial class Firearm : RangedWeapon
         base.Awake();
         currentAmmo = maxAmmo;
 
-        camPlayerCam = cam.GetComponent<PlayerCamera>();
+        camRecoil = camHolder.GetComponent<Recoil>();
+        camRecoil.recoilX = xRecoil;
+        camRecoil.recoilY = yRecoil;
+        camRecoil.recoilZ = zRecoil;
 
         ammoStorage = gameObject.GetComponentInParent<AmmoStorage>();
 
@@ -109,7 +115,7 @@ public partial class Firearm : RangedWeapon
         enabledProjectile.Launch(ray, launchSpeed, Target, visualProjectileSpawn.position);
         currentAmmo--;
 
-        camPlayerCam.recoilFire(recoilStrength);
+        camRecoil.recoilFire();
         animInvoker.Play(FirearmAnimation.Shoot);
     }
 

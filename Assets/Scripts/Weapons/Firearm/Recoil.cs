@@ -10,10 +10,9 @@ public class Recoil : MonoBehaviour
     private Vector3 targetRotation;
 
     //recoils
-    [Header("Recoil Values")]
-    [SerializeField] private float recoilX;
-    [SerializeField] private float recoilY;
-    [SerializeField] private float recoilZ;
+    public float recoilX;
+    public float recoilY;
+    public float recoilZ;
 
     //Settings
     [Header("Recoil Settings")]
@@ -23,7 +22,7 @@ public class Recoil : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Target Rotatoin: " + targetRotation.ToString()) ;
+        Debug.Log("Current Rotatoin: " + transform.rotation.ToString()) ;
 
         targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
         currRotation = Vector3.Slerp(currRotation, targetRotation, snapFactor * Time.fixedDeltaTime);
