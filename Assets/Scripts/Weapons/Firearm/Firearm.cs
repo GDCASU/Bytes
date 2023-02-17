@@ -36,6 +36,7 @@ public partial class Firearm : RangedWeapon
     [SerializeField] float bloomDec;
     [SerializeField] float bloomCap;
     public float bloom = 0;
+    private bool isDecreasing = false;
 
     FirearmAnimatorInvoker animInvoker;
 
@@ -61,12 +62,14 @@ public partial class Firearm : RangedWeapon
 
     protected void Update()
     {
-        if (bloom >= 0) {
+        if (isDecreasing) {
             bloom -= bloomDec * Time.deltaTime;
         }
-        else
+
+        if (bloom <= 0)
         {
             bloom = 0;
+            isDecreasing = false;
         }
     }
 
@@ -140,6 +143,7 @@ public partial class Firearm : RangedWeapon
         currentAmmo--;
 
         //bloom----------
+        isDecreasing = true;
         bloom += bloomInc;
         if (bloom >= bloomCap)
         {
