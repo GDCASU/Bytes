@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 /// <summary>
 /// Drone base class for movement and performing actions.
@@ -31,9 +32,11 @@ public abstract class DroneBase : MonoBehaviour
 
     [Header("Reverse Roaming Variables")]
     [Tooltip("Number of seconds to rotate the drone 180 degrees")]
-    [SerializeField] private float rotateTime = 2.0f;
+    [SerializeField] [Range(0.01f, 1.0f)] private float reverseRotateRate = 0.01f;
     [Tooltip("Number of seconds to move the drone forward after the 180 degree rotation")]
-    [SerializeField] private float movementTime = 2.0f;
+    [SerializeField] [Range(0.01f, 1.0f)] private float reverseMovementRate = 0.01f;
+    [Tooltip("Distance the drone will move after reversing direction")]
+    [SerializeField][Range(0.01f, 1.0f)] private float reverseMovementDistance = 0.01f;
     [Tooltip("Distance the drone checks in front of it")]
     [SerializeField] private float distanceToObstacle = 5.0f;
 
@@ -74,11 +77,29 @@ public abstract class DroneBase : MonoBehaviour
     protected abstract void SecondaryAction();
 
     /// <summary>
-    /// Reverse the drone's direction and move back if the drone is directly in front of an obstacle
+    /// Reverse the drone's direction and move back if the drone is directly in front of an obstacle.
+    /// Recommended for FixedUpdate()
     /// </summary>
-    protected IEnumerator ReverseDirection()
+    protected void ReverseDirection()
     {
-        yield return null;
+        float slerp = 0;
+        float lerp = 0;
+        Quaternion startRotation = this.transform.rotation;
+        Quaternion endRotation = new Quaternion(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y + 180, this.transform.rotation.eulerAngles.z, 1);
+        Vector3 startPos = this.transform.position;
+        Vector3 endPos = new Vector3(this.transform.position.x, this.transform.position.y + reverseMovementDistance, this.transform.position.z);
+
+        while (slerp <= 1)
+        {
+            this.transform.rotation = Quaternion.Slerp(startRotation, endRotation, slerp);
+            slerp += reverseRotateRate;
+        }
+
+        while (lerp <= 1)
+        {
+            this.transform.position = Vector3.Lerp(startPos, endPos, lerp);
+            lerp += reverseMovementRate;
+        }
     }
 
     private void OnDrawGizmos()

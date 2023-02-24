@@ -521,5 +521,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bomber Drone
       objectReference: {fileID: 0}
+    - target: {fileID: 7031494382692140069, guid: a52bf8d553162124cb3ea81524487661,
+        type: 3}
+      propertyPath: obstacleCheckRayAngle
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031494382692140069, guid: a52bf8d553162124cb3ea81524487661,
+        type: 3}
+      propertyPath: obstacleCheckRayLength
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a52bf8d553162124cb3ea81524487661, type: 3}
