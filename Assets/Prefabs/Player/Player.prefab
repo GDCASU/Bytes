@@ -5034,7 +5034,7 @@ GameObject:
   - component: {fileID: 3689835918569515344}
   - component: {fileID: 3723664287192167154}
   - component: {fileID: 7616452329654053970}
-  - component: {fileID: 637134210}
+  - component: {fileID: 7713090775562194625}
   m_Layer: 0
   m_Name: Player Camera
   m_TagString: MainCamera
@@ -5050,7 +5050,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3607897196712715668}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -293.3694, y: -203.23239, z: 77.25545}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5154,7 +5154,7 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &637134210
+--- !u!114 &7713090775562194625
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8142,7 +8142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6379625696484813286}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 293.3694, y: 203.23239, z: -77.25545}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11941,7 +11941,7 @@ MonoBehaviour:
   playerState: 0
   previousState: 0
   useGravity: 1
-  playerCamera: {fileID: 637134210}
+  playerCamera: {fileID: 7713090775562194625}
   ignores:
     serializedVersion: 2
     m_Bits: 0

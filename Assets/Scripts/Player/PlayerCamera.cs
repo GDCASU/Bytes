@@ -21,7 +21,7 @@ public class PlayerCamera : MonoBehaviour
     {
         transform.localRotation = player.transform.rotation;
 
-        //if (transform.parent) transform.parent = null; | Commented out so that recoil will work
+        if (transform.parent) transform.parent = null; 
         transform.localRotation = player.localRotation;
 
         horizontalRotationHelper.parent = null;
