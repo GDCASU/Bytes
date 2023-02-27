@@ -20,11 +20,12 @@ public class BomberDrone : DroneBase
     [SerializeField] private float knockback = 7;
     [Tooltip("The distance it travels after its charge attack before it returns to roaming state")]
     [SerializeField] private float maxLaunchDistance = 15;
+    [Tooltip("The distance it roams before reversing its direction")]
+    [SerializeField] private float maxDistance = 15;
 
     protected override void Start()
     {
         base.Start();
-        
     }
 
     protected override void FixedUpdate()
@@ -39,13 +40,14 @@ public class BomberDrone : DroneBase
 
     protected override void RoamingAction()
     {
-        if (Vector3.Distance(target.transform.position, this.transform.position) <= closeToTargetRadius)
+        if (Vector3.Distance(transform.position, originalPosition) >= maxDistance)
         {
-
+            ReverseDirection();
+            originalPosition = this.transform.position;
         }
         else
         {
-            
+            transform.Translate(0.0f, 0.0f, droneSpeed * Time.deltaTime);
         }
     }
 

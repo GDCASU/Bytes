@@ -30,38 +30,59 @@ public abstract class DroneBase : MonoBehaviour
     [Tooltip("Separates the two raycasts that checks for obstacles with this angle in radians")]
     [SerializeField] [Range(0.0f, 1.57f)] protected float obstacleCheckRayAngle = 1.0f;
 
+    [Header("Return to Original Position Variables")]
+    [Tooltip("Rate to rotate the drone 180 degrees")]
+    [SerializeField] [Range(0.001f, 1.0f)] private float returnRotateRate = 0.01f;
+    [Tooltip("Rate to move the drone forward after the 180 degree rotation")]
+    [SerializeField] [Range(0.001f, 1.0f)] private float returnMovementRate = 0.01f;
+
     [Header("Reverse Roaming Variables")]
-    [Tooltip("Number of seconds to rotate the drone 180 degrees")]
-    [SerializeField] [Range(0.01f, 1.0f)] private float reverseRotateRate = 0.01f;
-    [Tooltip("Number of seconds to move the drone forward after the 180 degree rotation")]
-    [SerializeField] [Range(0.01f, 1.0f)] private float reverseMovementRate = 0.01f;
-    [Tooltip("Distance the drone will move after reversing direction")]
-    [SerializeField][Range(0.01f, 1.0f)] private float reverseMovementDistance = 0.01f;
+    [Tooltip("Rate to rotate the drone 180 degrees")]
+    [SerializeField] [Range(0.001f, 1.0f)] private float reverseRotateRate = 0.01f;
     [Tooltip("Distance the drone checks in front of it")]
     [SerializeField] private float distanceToObstacle = 5.0f;
 
     protected GameObject target;
+    protected Vector3 originalPosition;
     protected bool isActing;
+    protected float originalHeight;
+    protected bool foundTarget;
 
     protected virtual void Start()
     {
         target = GameObject.FindGameObjectWithTag(targetTag);
+        originalPosition = transform.position;
         isActing = false;
+        originalHeight = transform.position.y;
+        foundTarget = false;
     }
 
     protected virtual void FixedUpdate()
     {
-        if (Vector3.Distance(target.transform.position, this.transform.position) <= closeToTargetRadius)
+        if (!isActing)
         {
-            SecondaryAction();
-        }
-        else if (Vector3.Distance(target.transform.position, this.transform.position) <= detectTargetRadius)
-        {
-            InitialAction();
-        }
-        else
-        {
-            RoamingAction();
+            if (Vector3.Distance(target.transform.position, this.transform.position) <= closeToTargetRadius)
+            {
+                foundTarget = true;
+                SecondaryAction();
+            }
+            else if (Vector3.Distance(target.transform.position, this.transform.position) <= detectTargetRadius)
+            {
+                foundTarget = true;
+                InitialAction();
+            }
+            else
+            {
+                if (foundTarget)
+                {
+                    foundTarget = false;
+                    ReturnToOriginalPosition();
+                }
+                else
+                {
+                    RoamingAction();
+                }
+            }
         }
     }
 
@@ -77,17 +98,18 @@ public abstract class DroneBase : MonoBehaviour
     protected abstract void SecondaryAction();
 
     /// <summary>
-    /// Reverse the drone's direction and move back if the drone is directly in front of an obstacle.
-    /// Recommended for FixedUpdate()
+    /// The drone returns to its original position and rotation except the y axis
     /// </summary>
-    protected void ReverseDirection()
+    protected void ReturnToOriginalPosition()
     {
+        isActing = true;
+
         float slerp = 0;
         float lerp = 0;
         Quaternion startRotation = this.transform.rotation;
-        Quaternion endRotation = new Quaternion(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y + 180, this.transform.rotation.eulerAngles.z, 1);
+        Quaternion endRotation = new Quaternion(0, this.transform.rotation.eulerAngles.y, 0, 1);
         Vector3 startPos = this.transform.position;
-        Vector3 endPos = new Vector3(this.transform.position.x, this.transform.position.y + reverseMovementDistance, this.transform.position.z);
+        Vector3 endPos = new Vector3(this.transform.position.x, originalHeight, this.transform.position.z);
 
         while (slerp <= 1)
         {
@@ -98,19 +120,44 @@ public abstract class DroneBase : MonoBehaviour
         while (lerp <= 1)
         {
             this.transform.position = Vector3.Lerp(startPos, endPos, lerp);
-            lerp += reverseMovementRate;
+            lerp += returnMovementRate;
         }
+
+        isActing = false;
     }
 
-    private void OnDrawGizmos()
+    /// <summary>
+    /// Reverse the drone's direction and move back if the drone is directly in front of an obstacle.
+    /// </summary>
+    protected void ReverseDirection()
+    {
+        isActing = true;
+
+        float slerp = 0;
+        Quaternion startRotation = this.transform.rotation;
+        Quaternion endRotation = new Quaternion();
+        endRotation.eulerAngles = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180, transform.rotation.eulerAngles.z);
+
+        while (slerp <= 1)
+        {
+            this.transform.rotation = Quaternion.Slerp(startRotation, endRotation, slerp);
+            slerp += returnRotateRate;
+        }
+
+        isActing = false;
+    }
+
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, detectTargetRadius);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, closeToTargetRadius);
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(firePoint.position, new Vector3(-(Mathf.Sin(obstacleCheckRayAngle) * obstacleCheckRayLength), 0.0f, Mathf.Cos(obstacleCheckRayAngle) * obstacleCheckRayLength));
+        Gizmos.DrawLine(firePoint.position, new Vector3(transform.position.x + -(Mathf.Sin(obstacleCheckRayAngle) * obstacleCheckRayLength), 
+            transform.position.y, transform.position.z + Mathf.Cos(obstacleCheckRayAngle) * obstacleCheckRayLength));
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(firePoint.position, new Vector3(Mathf.Sin(obstacleCheckRayAngle) * obstacleCheckRayLength, 0.0f, Mathf.Cos(obstacleCheckRayAngle) * obstacleCheckRayLength));
-    }
+        Gizmos.DrawLine(firePoint.position, new Vector3(transform.position.x + Mathf.Sin(obstacleCheckRayAngle) * obstacleCheckRayLength, 
+            transform.position.y, transform.position.z + Mathf.Cos(obstacleCheckRayAngle) * obstacleCheckRayLength));
+    }*/
 }
