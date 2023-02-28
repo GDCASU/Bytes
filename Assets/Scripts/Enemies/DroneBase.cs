@@ -32,15 +32,15 @@ public abstract class DroneBase : MonoBehaviour
 
     [Header("Return to Original Position Variables")]
     [Tooltip("Rate to rotate the drone 180 degrees")]
-    [SerializeField] [Range(0.001f, 1.0f)] private float returnRotateRate = 0.01f;
+    [SerializeField] [Range(0.001f, 1.0f)] protected float returnRotateRate = 0.01f;
     [Tooltip("Rate to move the drone forward after the 180 degree rotation")]
-    [SerializeField] [Range(0.001f, 1.0f)] private float returnMovementRate = 0.01f;
+    [SerializeField] [Range(0.001f, 1.0f)] protected float returnMovementRate = 0.01f;
 
     [Header("Reverse Roaming Variables")]
     [Tooltip("Rate to rotate the drone 180 degrees")]
-    [SerializeField] [Range(0.001f, 1.0f)] private float reverseRotateRate = 0.01f;
+    [SerializeField] [Range(0.001f, 1.0f)] protected float reverseRotateRate = 0.01f;
     [Tooltip("Distance the drone checks in front of it")]
-    [SerializeField] private float distanceToObstacle = 5.0f;
+    [SerializeField] protected float distanceToObstacle = 5.0f;
 
     protected GameObject target;
     protected Vector3 originalPosition;
@@ -76,7 +76,7 @@ public abstract class DroneBase : MonoBehaviour
                 if (foundTarget)
                 {
                     foundTarget = false;
-                    ReturnToOriginalPosition();
+                    ReturnToOriginalHeight();
                 }
                 else
                 {
@@ -100,7 +100,7 @@ public abstract class DroneBase : MonoBehaviour
     /// <summary>
     /// The drone returns to its original position and rotation except the y axis
     /// </summary>
-    protected void ReturnToOriginalPosition()
+    protected void ReturnToOriginalHeight()
     {
         isActing = true;
 
@@ -146,18 +146,4 @@ public abstract class DroneBase : MonoBehaviour
 
         isActing = false;
     }
-
-    /*private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, detectTargetRadius);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, closeToTargetRadius);
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(firePoint.position, new Vector3(transform.position.x + -(Mathf.Sin(obstacleCheckRayAngle) * obstacleCheckRayLength), 
-            transform.position.y, transform.position.z + Mathf.Cos(obstacleCheckRayAngle) * obstacleCheckRayLength));
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(firePoint.position, new Vector3(transform.position.x + Mathf.Sin(obstacleCheckRayAngle) * obstacleCheckRayLength, 
-            transform.position.y, transform.position.z + Mathf.Cos(obstacleCheckRayAngle) * obstacleCheckRayLength));
-    }*/
 }
