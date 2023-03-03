@@ -9,7 +9,7 @@ using UnityEngine;
 /// A type of drone that will seek the player, then charge at the player, and then
 /// blow itself up to deal massive damage to the player.
 /// 
-/// Author: Alben Trang
+/// Author: Alben Trang and Ryan C.
 /// </summary>
 public class BomberDrone : DroneBase
 {
@@ -85,20 +85,8 @@ public class BomberDrone : DroneBase
     protected override void SecondaryAction()
     {
         isActing = true;
-        base.isActing = true;
 
         StartCoroutine(ChargeBuildup());
-        readyToExplode = true;
-        originalPosition = transform.position;
-        Vector3 endPosition = transform.TransformDirection(Vector3.forward) * maxLaunchDistance;
-        while (Vector3.Distance(endPosition, transform.position) > launchEndbuffer)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, endPosition, droneSpeed * Time.deltaTime);
-        }
-
-        readyToExplode = false;
-        ReturnToOriginalHeight();
-        isActing = false;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -124,5 +112,17 @@ public class BomberDrone : DroneBase
     {
         transform.LookAt(target.transform);
         yield return new WaitForSeconds(chargeTime);
+
+        readyToExplode = true;
+        originalPosition = transform.position;
+        Vector3 endPosition = transform.TransformDirection(Vector3.forward) * maxLaunchDistance;
+        while (Vector3.Distance(endPosition, transform.position) > launchEndbuffer)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, endPosition, droneSpeed * Time.deltaTime);
+        }
+
+        readyToExplode = false;
+        ReturnToOriginalHeight();
+        isActing = false;
     }
 }
