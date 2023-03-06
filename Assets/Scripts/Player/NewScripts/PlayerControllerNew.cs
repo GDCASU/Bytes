@@ -7,6 +7,8 @@ public partial class PlayerControllerNew : MonoBehaviour
     PlayerInput _input;
     Rigidbody rb;
 
+    [SerializeField] Transform orientation;
+
     [Header("Ground Check")]
     [SerializeField] float playerHieght;
     [SerializeField] LayerMask whatIsGround;
@@ -18,12 +20,15 @@ public partial class PlayerControllerNew : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         rb.freezeRotation = true;
+
+        startYScale = transform.localScale.y;
     }
 
     private void Update()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHieght * 0.5f + 0.2f, whatIsGround);
 
+        handleMoveState();
         speedControl();
     }
 
