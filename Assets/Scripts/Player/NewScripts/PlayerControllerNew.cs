@@ -22,14 +22,18 @@ public partial class PlayerControllerNew : MonoBehaviour
         rb.freezeRotation = true;
 
         startYScale = transform.localScale.y;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHieght * 0.5f + 0.2f, whatIsGround);
 
+        handleCamera();
         handleMoveState();
-        speedControl();
+        handleSpeedControl();
     }
 
     private void FixedUpdate()
