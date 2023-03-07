@@ -91,7 +91,7 @@ public partial class PlayerControllerNew
         else rb.drag = 0f;
     }
 
-    private void speedControl()
+    private void handleSpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
