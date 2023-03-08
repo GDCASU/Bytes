@@ -86,11 +86,23 @@ public class BomberDrone : DroneBase
     {
         transform.LookAt(target.transform);
 
-        // Chase player
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, droneSpeed * Time.deltaTime);
-
-        // Obstacle detection starts here
-        //transform.Translate(0.1f, 0.0f, 0.0f);
+        // Obstacle detection and avoidance
+        RaycastHit hit;
+        if (Physics.Raycast(firePoint.transform.position, new Vector3(firePoint.transform.position.x + -(Mathf.Sin(obstacleCheckRayAngle) * obstacleCheckRayLength),
+            firePoint.transform.position.y, firePoint.transform.position.z + Mathf.Cos(obstacleCheckRayAngle) * obstacleCheckRayLength), out hit, obstacleCheckRayLength))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(target.transform.position.x + obstacleAvoidanceSpeed, target.transform.position.y, target.transform.position.z), droneSpeed * Time.deltaTime);
+        }
+        else if (Physics.Raycast(firePoint.transform.position, new Vector3(firePoint.transform.position.x + (Mathf.Sin(obstacleCheckRayAngle) * obstacleCheckRayLength),
+            firePoint.transform.position.y, firePoint.transform.position.z + Mathf.Cos(obstacleCheckRayAngle) * obstacleCheckRayLength), out hit, obstacleCheckRayLength))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(target.transform.position.x - obstacleAvoidanceSpeed, target.transform.position.y, target.transform.position.z), droneSpeed * Time.deltaTime);
+        }
+        else
+        {
+            // Chase player
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, droneSpeed * Time.deltaTime);
+        }
     }
 
     protected override void SecondaryAction()
@@ -99,7 +111,7 @@ public class BomberDrone : DroneBase
         originalPosition = transform.position;
         targetLastPosition = target.transform.position;
         launchEndPosition = (targetLastPosition - originalPosition).normalized * maxLaunchDistance;
-        transform.LookAt(target.transform);
+        transform.LookAt(launchEndPosition);
 
         StartCoroutine(ChargeBuildup());
     }

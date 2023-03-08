@@ -29,6 +29,8 @@ public abstract class DroneBase : MonoBehaviour
     [SerializeField] protected float obstacleCheckRayLength = 4.0f;
     [Tooltip("Separates the two raycasts that checks for obstacles with this angle in radians")]
     [SerializeField] [Range(0.0f, 1.57f)] protected float obstacleCheckRayAngle = 1.0f;
+    [Tooltip("Speed that the drone will avoid obstacles during its initial action")]
+    [SerializeField] protected float obstacleAvoidanceSpeed = 0.01f;
 
     [Header("Return to Original Position Variables")]
     [Tooltip("Rate to rotate the drone 180 degrees")]
