@@ -717,8 +717,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7031494382692140069, guid: a52bf8d553162124cb3ea81524487661,
         type: 3}
+      propertyPath: lerpRate
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031494382692140069, guid: a52bf8d553162124cb3ea81524487661,
+        type: 3}
       propertyPath: maxDistance
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031494382692140069, guid: a52bf8d553162124cb3ea81524487661,
+        type: 3}
+      propertyPath: collisionRadius
+      value: 0.26
       objectReference: {fileID: 0}
     - target: {fileID: 7031494382692140069, guid: a52bf8d553162124cb3ea81524487661,
         type: 3}

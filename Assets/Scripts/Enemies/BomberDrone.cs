@@ -30,13 +30,21 @@ public class BomberDrone : DroneBase
     [SerializeField] private float launchEndbuffer = 1;
     [Tooltip("The distance it roams before reversing its direction")]
     [SerializeField] private float maxDistance = 15;
+    [Tooltip("The time the drone will launch before returning to its roaming state")]
+    [SerializeField] private float launchTime = 5;
 
+    private Vector3 targetLastPosition;
+    private Vector3 launchEndPosition;
     private bool readyToExplode;
+    private bool isLaunching;
 
     protected override void Start()
     {
         base.Start();
+        targetLastPosition = Vector3.zero;
+        launchEndPosition  = Vector3.zero;
         readyToExplode = false;
+        isLaunching = false;
     }
 
     protected override void FixedUpdate()
@@ -46,9 +54,12 @@ public class BomberDrone : DroneBase
             ReverseDirection();
             originalPosition = this.transform.position;
         }
+        else if (isLaunching)
+        {
+            LaunchToTarget();
+        }
         else if (!isActing)
         {
-            print("Here");
             base.FixedUpdate();
         }
     }
@@ -85,11 +96,59 @@ public class BomberDrone : DroneBase
     protected override void SecondaryAction()
     {
         isActing = true;
+        originalPosition = transform.position;
+        targetLastPosition = target.transform.position;
+        launchEndPosition = (targetLastPosition - originalPosition).normalized * maxLaunchDistance;
+        transform.LookAt(target.transform);
 
         StartCoroutine(ChargeBuildup());
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /// <summary>
+    /// Wait after a few seconds to charge before launching itself towards the target
+    /// </summary>
+    private IEnumerator ChargeBuildup()
+    {
+        yield return new WaitForSeconds(chargeTime);
+        readyToExplode = true;
+        isLaunching = true;
+    }
+
+    /// <summary>
+    /// Move towards the direction of the target's first position when it got close to the drone and triggered it
+    /// </summary>
+    private void LaunchToTarget()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, launchEndPosition, droneSpeed * Time.deltaTime);
+        Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale / 2, transform.rotation, LayerMask.GetMask("Protagonist", "Default"));
+        if (colliders.Length > 0)
+        {
+            foreach (Collider collider in colliders)
+            {
+                if (collider.gameObject.GetComponent<Damageable>() != null)
+                {
+                    collider.gameObject.GetComponent<Damageable>().ReceiveDamage(damage);
+                }
+
+                if (collider.gameObject.GetComponent<Rigidbody>() != null)
+                {
+                    collider.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explosionForce,
+                        transform.position, explosionRadius, upwardsModifier, forceMode);
+                }
+            }
+
+            Destroy(gameObject);
+        }
+        else if (Vector3.Distance(transform.position, launchEndPosition) < launchEndbuffer)
+        {
+            readyToExplode = false;
+            ReturnToOriginalHeight();
+            isActing = false;
+            isLaunching = false;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
     {
         if (readyToExplode)
         {
@@ -106,23 +165,5 @@ public class BomberDrone : DroneBase
 
             Destroy(gameObject);
         }
-    }
-
-    private IEnumerator ChargeBuildup()
-    {
-        transform.LookAt(target.transform);
-        yield return new WaitForSeconds(chargeTime);
-
-        readyToExplode = true;
-        originalPosition = transform.position;
-        Vector3 endPosition = transform.TransformDirection(Vector3.forward) * maxLaunchDistance;
-        while (Vector3.Distance(endPosition, transform.position) > launchEndbuffer)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, endPosition, droneSpeed * Time.deltaTime);
-        }
-
-        readyToExplode = false;
-        ReturnToOriginalHeight();
-        isActing = false;
     }
 }
