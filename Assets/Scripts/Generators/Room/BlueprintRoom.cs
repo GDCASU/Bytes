@@ -15,6 +15,6 @@ public class BlueprintRoom // Psudo Room used for room generation algorithm
     public BlueprintRoom(Vector3 postion)
     {
         position = postion;
-        activeEntranceways = new bool[24];
+        activeEntranceways = new bool[6];
     }
 }

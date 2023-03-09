@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapGenerator : MonoBehaviour
 {
-    const int roomFaces = 6;
+    const int ROOM_FACES = 6;
 
     [Header("Settings")]
-    public float gridCellSize = 10;
+    public float gridCellSize = 40;
+    public bool debug = true;
 
     [Header("Max Rooms")]
     public int mainTrailMaxRooms = 10;
@@ -31,47 +33,69 @@ public class MapGenerator : MonoBehaviour
     public List<GameObject> bPrefab;
 
     [Header("Trails")]
-    public List<BlueprintRoom> masterTrail = new List<BlueprintRoom>(); // All trails combined
-    public List<BlueprintRoom> mainTrail = new List<BlueprintRoom>(); // Trail to Boss Room
-    public List<BlueprintRoom> augmentationTrail = new List<BlueprintRoom>(); // Trail to Augmentation Room
-    public List<BlueprintRoom> keycardTrail = new List<BlueprintRoom>(); // Trail to Keycard Room
-    public List<BlueprintRoom> trialTrail = new List<BlueprintRoom>(); // Trail to Trial Room
-    public List<BlueprintRoom> bossTrail = new List<BlueprintRoom>(); // Trail to Boss Room
+    public List<BlueprintRoom> masterTrail; // All trails combined
+    public List<BlueprintRoom> mainTrail; // Trail to Boss Room
+    public List<BlueprintRoom> augmentationTrail; // Trail to Augmentation Room
+    public List<BlueprintRoom> keycardTrail; // Trail to Keycard Room
+    public List<BlueprintRoom> trialTrail; // Trail to Trial Room
+    public List<BlueprintRoom> bossTrail; // Trail to Boss Room
 
-    int maxRooms = 0;
     int entrFlagIdx = 0;
     void Start()
     {
-        maxRooms = mainTrailMaxRooms + augmentationTrailMaxRooms + keycardTrailMaxRooms + trialTrailMaxRooms + bossTrailMaxRooms;
+        masterTrail = new List<BlueprintRoom>(); // All trails combined
+        mainTrail = new List<BlueprintRoom>(); // Trail to Boss Room
+        augmentationTrail = new List<BlueprintRoom>(); // Trail to Augmentation Room
+        keycardTrail = new List<BlueprintRoom>(); // Trail to Keycard Room
+        trialTrail = new List<BlueprintRoom>(); // Trail to Trial Room
+        bossTrail = new List<BlueprintRoom>(); // Trail to Boss Room
 
-        Procedure();
+        if (!debug)
+            Procedure();
     }
 
     void Procedure()
     {
-        RandomWalker(mainTrailMaxRooms, Vector3.zero, mainTrail, null); // Main Trail to boss
+        RandomWalker(mainTrailMaxRooms, mainTrail, null); // Main Trail to boss
+
+        int randomIdx = UnityEngine.Random.Range(1, (mainTrail.Count - 1));
+        BlueprintRoom randomStartingRoom = mainTrail[randomIdx];
+        RandomWalker(augmentationTrailMaxRooms, augmentationTrail, randomStartingRoom); // Trail to Augmentation Room
+
+        randomIdx = UnityEngine.Random.Range(1, (mainTrail.Count - 1));
+        randomStartingRoom = mainTrail[randomIdx];
+        RandomWalker(trialTrailMaxRooms, trialTrail, randomStartingRoom); // Trial Trail Generation
+
+        randomIdx = UnityEngine.Random.Range(1, (mainTrail.Count - 1));
+        randomStartingRoom = mainTrail[randomIdx];
+        RandomWalker(keycardTrailMaxRooms, keycardTrail, randomStartingRoom); // Keycard Trail Generation
     }
 
     #region RandomWalker
-    void RandomWalker(int maxRooms, Vector3 startingPos, List<BlueprintRoom> trail, BlueprintRoom startingRoom)
+    void RandomWalker(int maxRooms, List<BlueprintRoom> trail, BlueprintRoom startingRoom)
     {
-        Vector3 curPos = startingPos; // Set the position of the starting room
+        Vector3 curPos = Vector3.zero; // Set the position of the starting room
         BlueprintRoom curRoom = null;
-        Vector3 tempPos; // new postion to be choosen
+        Vector3 tempPos = Vector3.zero; // new postion to be choosen
 
-        if (startingRoom == null)
+        if (startingRoom == null) // If there are not yet any rooms
         {
             BlueprintRoom newRoom = new BlueprintRoom(curPos);
             trail.Add(newRoom);
             masterTrail.Add(newRoom);
             curRoom = newRoom;
         }
+        else
+        {
+            curPos = startingRoom.position;
+            curRoom = startingRoom;
+        }
 
         int failedAttempts = 0;
         while (trail.Count < maxRooms)
         {
             tempPos = curPos;
-            switch (UnityEngine.Random.Range(1, 7)) // Choosing position of next room
+            switch (UnityEngine.Random.Range(1, ROOM_FACES + 1)) // Choosing position of next room from 6 possible directions
             {
                 case 1: tempPos += Vector3.right * gridCellSize; // E0 (cellSize, 0, 0) * Cell Unit Size
                     entrFlagIdx = 0;
@@ -94,12 +118,12 @@ public class MapGenerator : MonoBehaviour
             }
 
             bool inRoomList = false;
-            BlueprintRoom conflictedRoom = null;
+            BlueprintRoom collidedRoom = null;
             foreach(BlueprintRoom room in masterTrail) // Check master trail for colliding rooms (the temp pos is inside another designated room space)
             {
                 if (Vector3.Equals(tempPos, room.position)) // Test Failed
                 {
-                    conflictedRoom = room;
+                    collidedRoom = room;
                     inRoomList = true;
                     failedAttempts++;
                     break;
@@ -121,10 +145,10 @@ public class MapGenerator : MonoBehaviour
                 failedAttempts = 0;
             }
 
-            if (failedAttempts > 6) // If failed backtrack (very rare)
+            if (failedAttempts >= ROOM_FACES) // If failed too many times backtrack (very rare)
             {
                 curPos = tempPos;
-                curRoom = conflictedRoom;
+                curRoom = collidedRoom;
                 failedAttempts = 0;
             }
         }
@@ -145,6 +169,82 @@ public class MapGenerator : MonoBehaviour
         GameObject genRoom = Instantiate(bluePrintPrefab, roomPosition, Quaternion.identity) as GameObject;
         genRoom.name = $"{bluePrintPrefab.name}";
         genRoom.transform.SetParent(transform);
+    }
+    #endregion
+
+    #region DebugGUI
+    bool alreadyGMain, alreadyGAugmentation, alreadyGTrial,
+        alreadyGKeycard;
+    void OnGUI()
+    {
+        if (debug)
+        {
+            if (GUILayout.Button("Reload Scene"))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload Active Scene
+            }
+
+            if (GUILayout.Button("Generate Main Trail"))
+            {
+                if (!alreadyGMain)
+                {
+                    RandomWalker(mainTrailMaxRooms, mainTrail, null); // Main Trial Generation
+
+                    alreadyGMain = true;
+                    Debug.Log("Main Trail Generated");
+                }
+                else
+                    Debug.Log("Error: Already generated Main Trail");
+            }
+
+            if (GUILayout.Button("Generate Augmentation Trail"))
+            {
+                if (!alreadyGAugmentation)
+                {
+                    int randomIdx = UnityEngine.Random.Range(1, (mainTrail.Count - 1));
+                    BlueprintRoom randomStartingRoom = mainTrail[randomIdx];
+
+                    RandomWalker(augmentationTrailMaxRooms, augmentationTrail, randomStartingRoom); // Augmentation Trail Generation
+
+                    alreadyGAugmentation = true;
+                    Debug.Log($"Augmentation Trail Generated at room index : {randomIdx}");
+                }
+                else
+                    Debug.Log("Error: Already generated Augmentation Trail");
+            }
+
+            if (GUILayout.Button("Generate Trial Trail"))
+            {
+                if (!alreadyGTrial)
+                {
+                    int randomIdx = UnityEngine.Random.Range(1, (mainTrail.Count - 1));
+                    BlueprintRoom randomStartingRoom = mainTrail[randomIdx];
+
+                    RandomWalker(trialTrailMaxRooms, trialTrail, randomStartingRoom); // Trial Trail Generation
+
+                    alreadyGTrial = true;
+                    Debug.Log($"Trial Trail Generated at room index : {randomIdx}");
+                }
+                else
+                    Debug.Log("Error: Already generated Trial Trail");
+            }
+
+            if (GUILayout.Button("Generate Keycard Trail"))
+            {
+                if (!alreadyGKeycard)
+                {
+                    int randomIdx = UnityEngine.Random.Range(1, (mainTrail.Count - 1));
+                    BlueprintRoom randomStartingRoom = mainTrail[randomIdx];
+
+                    RandomWalker(keycardTrailMaxRooms, keycardTrail, randomStartingRoom); // Keycard Trail Generation
+
+                    alreadyGKeycard = true;
+                    Debug.Log($"Keycard Trail Generated at room index : {randomIdx}");
+                }
+                else
+                    Debug.Log("Error: Already generated Keycard Trail");
+            }
+        }
     }
     #endregion
 }
