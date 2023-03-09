@@ -7,6 +7,7 @@ using UnityEngine.WSA;
 
 public class BlueprintRoom // Psudo Room used for room generation algorithm
 {
+    public string roomName;
     public Vector3 position;
     public bool[] activeEntranceways;
 
