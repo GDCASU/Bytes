@@ -1802,7 +1802,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1461030869749715993}
-  - component: {fileID: 2869144866624536779}
   m_Layer: 0
   m_Name: B Room (Testing)
   m_TagString: Untagged
@@ -1853,27 +1852,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2869144866624536779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3745981130754854089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96507927e40f151489557d6825ac7fb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shape: 0
-  entrancewayList:
-  - {fileID: 7974695879060537746}
-  - {fileID: 1066370694259577215}
-  - {fileID: 4407986462341950074}
-  - {fileID: 7759793520043279947}
-  - {fileID: 844679291954752637}
-  - {fileID: 7518273877644100205}
-  entrancewayList2: []
 --- !u!1 &4407986462341950074
 GameObject:
   m_ObjectHideFlags: 0

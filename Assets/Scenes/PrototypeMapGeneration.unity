@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -208,18 +208,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34ff1f1cb180e7448ed579072493183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellSize: 10
-  bluePrintPrefab: {fileID: 6321413536967066871, guid: 97b96c366fb5e44489c9d5c503f211d0,
-    type: 3}
-  gPrefab: []
-  tPrefab: []
-  hPrefab: []
-  bPrefab: []
+  gridCellSize: 40
   mainTrailMaxRooms: 10
   augmentationTrailMaxRooms: 1
   keycardTrailMaxRooms: 2
   trialTrailMaxRooms: 2
   bossTrailMaxRooms: 2
+  tRoomChance: 0.5
+  hRoomChance: 0.5
+  bRoomChance: 1
+  bluePrintPrefab: {fileID: 6321413536967066871, guid: e51bed9445296ab4fa410e913798c95c,
+    type: 3}
+  gPrefab: []
+  tPrefab: []
+  hPrefab: []
+  bPrefab: []
 --- !u!4 &318839232
 Transform:
   m_ObjectHideFlags: 0
