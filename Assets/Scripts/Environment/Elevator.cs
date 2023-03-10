@@ -54,6 +54,13 @@ public class Elevator : MonoBehaviour
         movePlatform = true;
     }
 
+    // Sets the movePlatform bool to true and sets the inserted game object as a child to the platform
+    public void MovePlatform(GameObject player)
+    {
+        movePlatform = true;
+        player.transform.SetParent(platform);
+    }
+
     public void Triggered(Collider other)
     {
         Debug.Log("Trigger Enter");
@@ -62,6 +69,7 @@ public class Elevator : MonoBehaviour
             Debug.Log("Player Collision");
             if (CheckSendPlayer(other.gameObject))
             {
+                other.gameObject.transform.SetParent(platform.transform);
                 MovePlatform();
             }
         }
@@ -74,25 +82,34 @@ public class Elevator : MonoBehaviour
         timer += speed * Time.deltaTime;
 
         // Set platform to go backwards
-        if (timer >= 1f)
+        if (timer >= 1f || timer <= 0f)
         {
             speed *= -1;
             movePlatform = false;
+
+            // Check platform's children for the player.
+            for(int i = 0; i < platform.childCount; i++)
+            {
+                if(platform.GetChild(i).tag == "Player")
+                {
+                    platform.GetChild(i).SetParent(transform.root.parent);
+                }
+            }
         }
     }
 
     // Checks if the elevator is at the lower point and the player is within bounds to be carried
     private bool CheckSendPlayer(GameObject player)
     {
-        bool returnVal = platform.position == pointA.position;  // Platform is at correct position
-        returnVal = returnVal &&
+        bool returnVal; // = platform.position == pointA.position;  // Platform is at correct position
+        returnVal = //returnVal &&
             player.transform.position.y > platform.position.y;  // Player is above platform
         returnVal = returnVal &&
-            player.transform.position.x < transform.position.x + transform.localScale.x &&
-            player.transform.position.x > transform.position.x - transform.localScale.x &&
-            player.transform.position.z < transform.position.z + transform.localScale.z &&
-            player.transform.position.z > transform.position.z - transform.localScale.z;
-
+            player.transform.position.x < platform.position.x + platform.localScale.x &&
+            player.transform.position.x > platform.position.x - platform.localScale.x &&
+            player.transform.position.z < platform.position.z + platform.localScale.z &&
+            player.transform.position.z > platform.position.z - platform.localScale.z;
+        Debug.Log(returnVal);
         return returnVal;
     }
 }
