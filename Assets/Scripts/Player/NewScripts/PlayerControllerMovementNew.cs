@@ -4,8 +4,9 @@ using UnityEngine;
 
 public partial class PlayerControllerNew
 {
-    [Header("Movement")]
     private float moveSpeed;
+
+    [Header("Movement")]
     [SerializeField] float walkSpeed;
     [SerializeField] float sprintSpeed;
     [SerializeField] float groundDrag;

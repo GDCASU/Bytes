@@ -29,16 +29,23 @@ public partial class PlayerControllerNew : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("FPC Update Called");
+
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHieght * 0.5f + 0.2f, whatIsGround);
 
         handleCamera();
         handleMoveState();
         handleSpeedControl();
+
+        Debug.Log("Player Move Input: " + _input.LookVector.ToString());
     }
 
     private void FixedUpdate()
     {
+        Debug.Log("FPC FixedUpdate Called");
+
         handleMove();
         handleJump();
+        handleCrouch();
     }
 }
