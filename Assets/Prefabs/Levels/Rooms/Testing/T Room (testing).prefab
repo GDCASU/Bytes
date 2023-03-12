@@ -175,6 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 16586390388644390}
+  - component: {fileID: 5782591060949272658}
   m_Layer: 0
   m_Name: T Room (testing)
   m_TagString: Untagged
@@ -211,6 +212,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5782591060949272658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16586390388644377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7772bd6817d71da4cb79d4b81d054ed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  activeEntranceways: 
+  roomShape: 2
+  roomType: 0
 --- !u!1 &159377872133900164
 GameObject:
   m_ObjectHideFlags: 0
