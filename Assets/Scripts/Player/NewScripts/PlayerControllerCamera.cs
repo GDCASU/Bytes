@@ -17,7 +17,7 @@ public partial class PlayerControllerNew
     private void handleCamera()
     {
         //rotate the camera
-        Vector2 mouseInput = _input.MoveVector;
+        Vector2 mouseInput = _input.LookVector;
         float mouseX = mouseInput.x * Time.deltaTime * xSens;
         float mouseY = mouseInput.y * Time.deltaTime * ySens;
 

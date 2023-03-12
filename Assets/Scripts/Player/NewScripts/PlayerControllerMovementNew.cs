@@ -79,6 +79,7 @@ public partial class PlayerControllerNew
 
         if (grounded) { //moving on ground
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            Debug.Log("here");
         }
         else if (!grounded)
         {
