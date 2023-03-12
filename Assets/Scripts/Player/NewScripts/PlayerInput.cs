@@ -36,7 +36,6 @@ public class PlayerInput : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         MoveVector = context.ReadValue<Vector2>();
-        Debug.Log($"Movement Vector: {MoveVector}");
     }
 
     public void OnSprint(InputAction.CallbackContext context)
