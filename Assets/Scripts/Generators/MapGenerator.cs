@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
+
+public enum TrailType
+{
+    Master,
+    Main,
+    Augmentation,
+    Trial,
+    Keycard,
+    Boss
+}
 
 public class MapGenerator : MonoBehaviour
 {
@@ -56,11 +67,11 @@ public class MapGenerator : MonoBehaviour
         if (!debug)
         {
             BlueprintProcedure();
+            RoomGenerationProcedure();
         }
     }
 
-    #region BlueprintProcedure
-    void BlueprintProcedure()
+    void BlueprintProcedure() // Generate Blueprint
     {
         RandomWalker(mainTrailMaxRooms, mainTrail, null); // Main Trail to boss
 
@@ -77,6 +88,12 @@ public class MapGenerator : MonoBehaviour
         RandomWalker(keycardTrailMaxRooms, keycardTrail, randomStartingRoom); // Keycard Trail Generation
     }
 
+    void RoomGenerationProcedure() // Generate Rooms
+    {
+
+    }
+
+    #region BlueprintProcedure
     void RandomWalker(int maxRooms, List<BlueprintRoom> trail, BlueprintRoom startingRoom)
     {
         Vector3 curPos = Vector3.zero; // Set the position of the starting room
@@ -188,7 +205,103 @@ public class MapGenerator : MonoBehaviour
     #endregion
 
     #region RoomGenerationProcedure
-    
+
+    public void GenerateRooms(List<BlueprintRoom> trail, TrailType trailType)
+    {
+        switch (trailType)
+        {
+            case TrailType.Master:
+                break;
+            case TrailType.Main:
+                // Generate Starting Room G-Room varient
+                // Tag Room as Starting
+                // loop through all blueprint rooms
+                    // if can spawn B-Room & passed B-Room spawn chance
+                        // spawn B-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else if can spawn T-Room & passed T-Room spawn chance
+                        // Spawn T-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else if can spawn H-Room & passed H-Room spawn chance
+                        // Spawn H-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else
+                        // Spawn G-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                break;
+            case TrailType.Augmentation:
+                // loop through all blueprint rooms
+                    // if can spawn B-Room & passed B-Room spawn chance
+                        // spawn B-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else if can spawn T-Room & passed T-Room spawn chance
+                        // Spawn T-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else if can spawn H-Room & passed H-Room spawn chance
+                        // Spawn H-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else
+                        // Spawn G-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                // Tag last Room as Augmentation
+                break;
+            case TrailType.Trial:
+                // loop through all blueprint rooms
+                    // if can spawn B-Room & passed B-Room spawn chance
+                        // spawn B-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else if can spawn T-Room & passed T-Room spawn chance
+                        // Spawn T-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else if can spawn H-Room & passed H-Room spawn chance
+                        // Spawn H-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else
+                        // Spawn G-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                // Tag last Room as Trial
+                break;
+            case TrailType.Keycard:
+                // loop through all blueprint rooms
+                    // if can spawn B-Room & passed B-Room spawn chance
+                        // spawn B-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else if can spawn T-Room & passed T-Room spawn chance
+                        // Spawn T-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else if can spawn H-Room & passed H-Room spawn chance
+                        // Spawn H-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                    // else
+                        // Spawn G-Room
+                        // Hook up blueprintRoom.entrancewayflags to new room
+                        // jump index to next empty blueprint room
+                // Tag last Room as Keycard
+                break;
+            case TrailType.Boss:
+                // Skip for now
+                break;
+            default:
+                Debug.Log("Error: Undefined trail type.");
+                break;
+        }
+    }
+
     #endregion
 
     #region DebugGUI
