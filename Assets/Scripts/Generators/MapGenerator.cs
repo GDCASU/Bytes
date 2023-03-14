@@ -205,7 +205,6 @@ public class MapGenerator : MonoBehaviour
     #endregion
 
     #region RoomGenerationProcedure
-
     public void GenerateRooms(List<BlueprintRoom> trail, TrailType trailType)
     {
         switch (trailType)
@@ -213,7 +212,7 @@ public class MapGenerator : MonoBehaviour
             case TrailType.Master:
                 break;
             case TrailType.Main:
-                // Generate Starting Room G-Room varient
+                GenerateRoom(RoomShape.GeneralRoom, RoomType.Start, trail, 0); // Generate Starting Room G-Room varient
                 // Tag Room as Starting
                 // loop through all blueprint rooms
                     // if can spawn B-Room & passed B-Room spawn chance
@@ -301,11 +300,64 @@ public class MapGenerator : MonoBehaviour
                 break;
         }
     }
+    
+    void GenerateRoom(RoomShape shape, RoomType type, List<BlueprintRoom> trail, int index)
+    {
+        GameObject genRoom = new GameObject();
+        switch (shape)
+        {
+            case RoomShape.GeneralRoom:
+                genRoom = Instantiate(gPrefab[Random.Range(0, (gPrefab.Count - 1))], trail[index].position, Quaternion.identity) as GameObject; // Instantiate G-Room at position of indexed blueprint room; use a random room in the G-Room list
+                genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index].activeEntranceways, 0); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array
+                genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
+                break;
+            case RoomShape.HallRoom:
+                genRoom = Instantiate(gPrefab[Random.Range(0, (gPrefab.Count - 1))], trail[index].position, Quaternion.identity) as GameObject; // Instantiate G-Room at position of indexed blueprint room; use a random room in the G-Room list
+                genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index].activeEntranceways, 0); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (first 6 elements : 0 - 5)
+                genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index + 1].activeEntranceways, 1); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (next 6 elements : 6 - 11)
+                genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
+                break;
+            case RoomShape.TallRoom:
+                break;
+            case RoomShape.BigRoom:
+                break;
+            default:
+                Debug.Log("Error: Room Shape Invalid.");
+                break;
+        }
 
+        switch (type)
+        {
+            case RoomType.General:
+                genRoom.GetComponent<Room>().roomType = RoomType.General;
+                break;
+            case RoomType.Start:
+                genRoom.GetComponent<Room>().roomType = RoomType.Start;
+                break;
+            case RoomType.Augmentation:
+                genRoom.GetComponent<Room>().roomType = RoomType.Augmentation;
+                break;
+            case RoomType.Keycard:
+                genRoom.GetComponent<Room>().roomType = RoomType.Keycard;
+                break;
+            case RoomType.Trail:
+                genRoom.GetComponent<Room>().roomType = RoomType.Trail;
+                break;
+            case RoomType.Boss:
+                genRoom.GetComponent<Room>().roomType = RoomType.Boss;
+                break;
+            case RoomType.Escape:
+                genRoom.GetComponent<Room>().roomType = RoomType.Escape;
+                break;
+
+        }
+    }
     #endregion
 
     #region DebugGUI
-    bool alreadyGMain, alreadyGAugmentation, alreadyGTrial,
+    bool alreadyBMain, alreadyBAugmentation, alreadyBTrial,     // Blueprint Procedure Flags
+        alreadyBKeycard;                                        
+    bool alreadyGMain, alreadyGAugmentation, alreadyGTrial,     // Room Generation Procedure Flags
         alreadyGKeycard;
 
     void OnGUI()
@@ -319,11 +371,11 @@ public class MapGenerator : MonoBehaviour
 
             if (GUILayout.Button("Generate Main Trail"))
             {
-                if (!alreadyGMain)
+                if (!alreadyBMain)
                 {
                     RandomWalker(mainTrailMaxRooms, mainTrail, null); // Main Trial Generation
 
-                    alreadyGMain = true;
+                    alreadyBMain = true;
                     Debug.Log("Main Trail Generated");
                 }
                 else
@@ -332,14 +384,14 @@ public class MapGenerator : MonoBehaviour
 
             if (GUILayout.Button("Generate Augmentation Trail"))
             {
-                if (!alreadyGAugmentation && alreadyGMain)
+                if (!alreadyBAugmentation && alreadyBMain)
                 {
                     int randomIdx = UnityEngine.Random.Range(1, (mainTrail.Count - 1));
                     BlueprintRoom randomStartingRoom = mainTrail[randomIdx];
 
                     RandomWalker(augmentationTrailMaxRooms, augmentationTrail, randomStartingRoom); // Augmentation Trail Generation
 
-                    alreadyGAugmentation = true;
+                    alreadyBAugmentation = true;
                     Debug.Log($"Augmentation Trail Generated at room index : {randomIdx}");
                 }
                 else
@@ -348,14 +400,14 @@ public class MapGenerator : MonoBehaviour
 
             if (GUILayout.Button("Generate Trial Trail"))
             {
-                if (!alreadyGTrial && alreadyGMain)
+                if (!alreadyBTrial && alreadyBMain)
                 {
                     int randomIdx = UnityEngine.Random.Range(1, (mainTrail.Count - 1));
                     BlueprintRoom randomStartingRoom = mainTrail[randomIdx];
 
                     RandomWalker(trialTrailMaxRooms, trialTrail, randomStartingRoom); // Trial Trail Generation
 
-                    alreadyGTrial = true;
+                    alreadyBTrial = true;
                     Debug.Log($"Trial Trail Generated at room index : {randomIdx}");
                 }
                 else
@@ -364,45 +416,61 @@ public class MapGenerator : MonoBehaviour
 
             if (GUILayout.Button("Generate Keycard Trail"))
             {
-                if (!alreadyGKeycard && alreadyGMain)
+                if (!alreadyBKeycard && alreadyBMain)
                 {
                     int randomIdx = UnityEngine.Random.Range(1, (mainTrail.Count - 1));
                     BlueprintRoom randomStartingRoom = mainTrail[randomIdx];
 
                     RandomWalker(keycardTrailMaxRooms, keycardTrail, randomStartingRoom); // Keycard Trail Generation
 
-                    alreadyGKeycard = true;
+                    alreadyBKeycard = true;
                     Debug.Log($"Keycard Trail Generated at room index : {randomIdx}");
                 }
                 else
                     Debug.Log("Error: Already generated Keycard Trail or Main Trail has not yet been generated.");
             }
 
-            if (GUILayout.Button("Print Entranceway Flags"))
+            if (GUILayout.Button("Print Entranceway Flags: Blueprint Rooms"))
             {
-                Debug.Log("Main Trail:");
-                if (mainTrail != null)
-                    PrintBRoomFlags(mainTrail);
-                else
-                    Debug.Log("\tNo Data.");
+                if (!alreadyGMain && !alreadyGAugmentation && !alreadyGTrial && !alreadyGKeycard)
+                {
+                    Debug.Log("Main Trail:");
+                    if (mainTrail != null)
+                        PrintBRoomFlags(mainTrail);
+                    else
+                        Debug.Log("\tNo Data.");
 
-                Debug.Log("Augmentation Trail:");
-                if (augmentationTrail != null)
-                    PrintBRoomFlags(augmentationTrail);
-                else
-                    Debug.Log("\tNo Data.");
+                    Debug.Log("Augmentation Trail:");
+                    if (augmentationTrail != null)
+                        PrintBRoomFlags(augmentationTrail);
+                    else
+                        Debug.Log("\tNo Data.");
 
-                Debug.Log("Trial Trail:");
-                if (trialTrail != null)
-                    PrintBRoomFlags(trialTrail);
-                else
-                    Debug.Log("\tNo Data.");
+                    Debug.Log("Trial Trail:");
+                    if (trialTrail != null)
+                        PrintBRoomFlags(trialTrail);
+                    else
+                        Debug.Log("\tNo Data.");
 
-                Debug.Log("Keycard Trail:");
-                if (keycardTrail != null)
-                    PrintBRoomFlags(keycardTrail);
+                    Debug.Log("Keycard Trail:");
+                    if (keycardTrail != null)
+                        PrintBRoomFlags(keycardTrail);
+                    else
+                        Debug.Log("\tNo Data.");
+                }
                 else
-                    Debug.Log("\tNo Data.");
+                    Debug.Log("Error: Room Generation has already begun. Therefore, cannot print flags.");
+            }
+
+            if (GUILayout.Button("Generate Rooms: Main Trail"))
+            {
+                if (alreadyBMain)
+                {
+                    GenerateRooms(mainTrail, TrailType.Main);
+                    Debug.Log("Main Trail Rooms Successfully Generated!");
+                }
+                else
+                    Debug.Log("Error: Main Trail has not yet been made.");
             }
         }
     }

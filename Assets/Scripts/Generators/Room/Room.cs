@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum RoomShape
+public enum RoomShape
 {
     GeneralRoom,
     HallRoom,
@@ -10,10 +10,11 @@ enum RoomShape
     BigRoom,
 };
 
-enum RoomType
+public enum RoomType
 {
     General,
     Start,
+    Augmentation,
     Keycard,
     Trail,
     Boss,
@@ -23,31 +24,47 @@ enum RoomType
 public class Room : MonoBehaviour
 {
     public Vector3 position;
-    public bool[] activeEntranceways;
+    public bool[,] activeEntranceways;
     public List<GameObject> entranceways;
 
-    [SerializeField] private RoomShape roomShape;
-    [SerializeField] private RoomType roomType;
+    public RoomShape roomShape;
+    public RoomType roomType;
 
-    private void Start()
+    void Awake()
     {
-        activeEntranceways = new bool[24];
+        activeEntranceways = new bool[4, 6];
     }
 
     public void ActivateAllEntranceways()
     {
-        for (int i = 0; i < activeEntranceways.Length; i++)
+        int enListIdx = 0;              // iterator for activeEntranceway List
+        for (int i = 0; i < 4; i++)
         {
-            if (activeEntranceways[i] == true)
+            for (int j = 0; j < 6; j++)
             {
-                ActivateEntranceway(i);
+                enListIdx = (i * 6) + j;
+                if (activeEntranceways[i, j] == true)   // Activate entrance if true in activeEntranceway List
+                    ActivateEntranceway(enListIdx);
             }
+        }
+    }
+
+    public void CopyBlueprintArrayFlags(bool[] blueArray, int roomOriginIndex)
+    {
+        for (int i = 0; i < blueArray.Length; i++) // iterate through all six faces of the Blueprint's flag array
+        {
+            activeEntranceways[roomOriginIndex, i] = blueArray[i]; // Copy into room array respectively
         }
     }
 
     private void ActivateEntranceway(int entranceNum)
     {
-        entranceways[entranceNum].transform.GetChild(0).gameObject.SetActive(false); // Deactivate Wall
-        entranceways[entranceNum].transform.GetChild(1).gameObject.SetActive(false); // Activate Entranceway
+        //if (entranceways[entranceNum] != null)
+        {
+            entranceways[entranceNum].transform.GetChild(0).gameObject.SetActive(false); // Deactivate Wall
+            entranceways[entranceNum].transform.GetChild(1).gameObject.SetActive(true); // Activate Entranceway
+        }
+        //else
+            //Debug.Log("Error: Could not activate entrance; entrance is null.");
     }
 }
