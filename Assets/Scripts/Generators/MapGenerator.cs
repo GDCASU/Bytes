@@ -221,6 +221,16 @@ public class MapGenerator : MonoBehaviour
     }
     #endregion
 
+    private enum RoomCase
+    {
+        PosZ = 0,
+        NegZ = 1,
+        PosX = 2,
+        NegX = 3,
+        PosY = 4,
+        NegY = 5
+    }
+
     #region RoomGenerationProcedure
     public void GenerateRooms(List<BlueprintRoom> trail, TrailType trailType)
     {
@@ -229,32 +239,30 @@ public class MapGenerator : MonoBehaviour
             case TrailType.Master:
                 break;
             case TrailType.Main:
-                mainRooms.Add(GenerateRoom(RoomShape.GeneralRoom, RoomType.Start, trail, 0, Quaternion.identity)); // Generate Starting Room G-Room varient
+                mainRooms.Add(GenerateRoom(RoomShape.GeneralRoom, RoomType.Start, trail, 0, 0)); // Generate Starting Room G-Room varient
                 for (int i = 1; i < mainTrail.Count; )   // loop through all blueprint rooms
                 {
                     float roomChanceRoll = Random.Range(0, 1.01f);
-                    Debug.Log(roomChanceRoll);
-                    Quaternion rotation = Quaternion.identity;
+                    RoomCase rCase = RoomCase.PosZ;
                     if (false)  // if can spawn B-Room & passed B-Room spawn chance
                     {
                         // spawn B-Room
                         // Hook up blueprintRoom.entrancewayflags to new room
                         i += 4; // jump index to next empty blueprint room
                     }
-                    else if (false)  // else if can spawn T-Room & passed T-Room spawn chance
+                    else if ((roomChanceRoll <= tRoomChance) && (i < mainTrail.Count - 1) && TRoomPositionCondition(trail[i].position, trail[i + 1].position, out rCase))  // else if can spawn T-Room & passed T-Room spawn chance && extra space for a 1x2 at end of trail
                     {
-                        // Spawn T-Room
-                        // Hook up blueprintRoom.entrancewayflags to new room
-                        i += 2;// jump index to next empty blueprint room
+                        mainRooms.Add(GenerateRoom(RoomShape.TallRoom, RoomType.General, trail, i, rCase)); // Spawn T-Room
+                        i += 2; // jump index to next empty blueprint room
                     }
-                    else if ((roomChanceRoll >= hRoomChance) && (i < mainTrail.Count - 1) && HRoomPositionCondition(trail[i].position, trail[i+1].position, rotation)) // else if can spawn H-Room & passed H-Room spawn chance && extra space for a 1x2 at end of trail
+                    else if ((roomChanceRoll <= hRoomChance) && (i < mainTrail.Count - 1) && HRoomPositionCondition(trail[i].position, trail[i + 1].position, out rCase)) // else if can spawn H-Room & passed H-Room spawn chance && extra space for a 2x1 at end of trail
                     {
-                        mainRooms.Add(GenerateRoom(RoomShape.HallRoom, RoomType.General, trail, i, rotation)); // Spawn H-Room
-                        i += 2;// jump index to next empty blueprint room
+                        mainRooms.Add(GenerateRoom(RoomShape.HallRoom, RoomType.General, trail, i, rCase)); // Spawn H-Room
+                        i += 2; // jump index to next empty blueprint room
                     }
                     else
                     {
-                        mainRooms.Add(GenerateRoom(RoomShape.GeneralRoom, RoomType.General, trail, i, rotation)); // Spawn G-Room
+                        mainRooms.Add(GenerateRoom(RoomShape.GeneralRoom, RoomType.General, trail, i, 0)); // Spawn G-Room
                         i++; // jump index to next empty blueprint room
                     }
                 }
@@ -327,28 +335,73 @@ public class MapGenerator : MonoBehaviour
                 break;
         }
     }
-    
-    bool HRoomPositionCondition(Vector3 originRoomPos, Vector3 nextRoomPos, Quaternion rotation)
+
+    bool TRoomPositionCondition(Vector3 originRoomPos, Vector3 nextRoomPos, out RoomCase rCase)
     {
-        if (originRoomPos.x == nextRoomPos.x                                // if both rooms have same x value
-            && originRoomPos.y == nextRoomPos.y                             // if both rooms have same y value
-            && (originRoomPos.z - nextRoomPos.z) < 0)                       // if difference of positions is positive
-            { return true; }
-        else if (originRoomPos.z == nextRoomPos.z                           // if both rooms on same z value
-            && originRoomPos.y == nextRoomPos.y                             // if both rooms on same y value
-            && (originRoomPos.x - nextRoomPos.x) >= 0)  // if both rooms differ by cellsize on x
-            {
-            //rotation.Set(0, 90, 0, 1);
-            //return true;
+        if (originRoomPos.x == nextRoomPos.x                // if both rooms have same x value
+            && originRoomPos.z == nextRoomPos.z             // if both rooms have same y value
+            && (originRoomPos.y - nextRoomPos.y) <= 0)      // if difference of z <= 0
+        {
+            rCase = RoomCase.PosY; // Room Case is used to specify the Room's rotation and movement on instantiation (Difference: origin - next)
+            return true;
+        }
+        else if (originRoomPos.x == nextRoomPos.x           // if both rooms on same x value
+            && originRoomPos.z == nextRoomPos.z             // if both rooms on same y value
+            && (originRoomPos.y - nextRoomPos.y) > 0)       // if difference of z > 0
+        {
+            rCase = RoomCase.NegY;
+            return true;
+        }
+        else
+        {
+            rCase = 0;
             return false;
-            }
-        else 
-            { return false; } // if both rooms differ by cellsize on y
+        } // if both rooms differ by cellsize on y
     }
 
-    GameObject GenerateRoom(RoomShape shape, RoomType type, List<BlueprintRoom> trail, int index, Quaternion rotation)
+    bool HRoomPositionCondition(Vector3 originRoomPos, Vector3 nextRoomPos, out RoomCase rCase)
+    {
+        if (originRoomPos.x == nextRoomPos.x                // if both rooms have same x value
+            && originRoomPos.y == nextRoomPos.y             // if both rooms have same y value
+            && (originRoomPos.z - nextRoomPos.z) <= 0)      // if difference of z <= 0
+        {
+            rCase = RoomCase.PosZ; // Room Case is used to specify the Room's rotation and movement on instantiation (Difference: origin - next)
+            return true; 
+        }
+        else if (originRoomPos.x == nextRoomPos.x           // if both rooms on same x value
+            && originRoomPos.y == nextRoomPos.y             // if both rooms on same y value
+            && (originRoomPos.z - nextRoomPos.z) > 0)       // if difference of z > 0
+        {
+            rCase = RoomCase.NegZ;
+            return true;
+        }
+        else if (originRoomPos.z == nextRoomPos.z           // if both rooms on same z value
+            && originRoomPos.y == nextRoomPos.y             // if both rooms on same y value
+            && (originRoomPos.x - nextRoomPos.x) <= 0)      // if difference of x <= 0
+        {
+            //rCase = RoomCase.PosX;
+            rCase = 0;                                      // *** Skipping PosX condition for now ***
+            return false;
+        }
+        else if (originRoomPos.z == nextRoomPos.z               // if both rooms on same z value
+                && originRoomPos.y == nextRoomPos.y             // if both rooms on same y value
+                && (originRoomPos.x - nextRoomPos.x) > 0)       // if difference of x > 0
+        {
+            //rCase = RoomCase.NegX;                        // *** Skipping NegX condition for now ***
+            rCase = 0;
+            return false;
+        }
+        else
+        {
+                rCase = 0;
+                return false;
+            } // if both rooms differ by cellsize on y
+    }
+
+    GameObject GenerateRoom(RoomShape shape, RoomType type, List<BlueprintRoom> trail, int index, RoomCase rCase)
     {
         GameObject genRoom = null;
+        Quaternion rotation = Quaternion.identity;
         switch (shape)
         {
             case RoomShape.GeneralRoom:
@@ -357,13 +410,52 @@ public class MapGenerator : MonoBehaviour
                 genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
                 break;
             case RoomShape.HallRoom:
-                genRoom = Instantiate(hPrefab[Random.Range(0, (hPrefab.Count - 1))], trail[index].position, rotation) as GameObject; // Instantiate G-Room at position of indexed blueprint room; use a random room in the G-Room list
-                Debug.Log("here");
-                genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index].activeEntranceways, 0); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (first 6 elements : 0 - 5)
-                genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index + 1].activeEntranceways, 1); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (next 6 elements : 6 - 11)
-                genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
+                if (rCase == RoomCase.PosZ)
+                {
+                    genRoom = Instantiate(hPrefab[Random.Range(0, (hPrefab.Count - 1))], trail[index].position, rotation) as GameObject; // Instantiate G-Room at position of indexed blueprint room; use a random room in the G-Room list
+                    genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index].activeEntranceways, 0); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (first 6 elements : 0 - 5)
+                    genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index + 1].activeEntranceways, 1); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (next 6 elements : 6 - 11)
+                    genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
+                }
+                else if (rCase == RoomCase.NegZ)
+                {
+                    genRoom = Instantiate(hPrefab[Random.Range(0, (hPrefab.Count - 1))], (trail[index + 1].position), rotation) as GameObject; // Instantiate G-Room at position of indexed blueprint room; use a random room in the G-Room list
+                    genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index].activeEntranceways, 1); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (first 6 elements : 0 - 5)
+                    genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index + 1].activeEntranceways, 0); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (next 6 elements : 6 - 11)
+                    genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
+                }
+                else if (rCase == RoomCase.PosX)
+                {
+                    // *** Skipping for now ***
+                }
+                else if (rCase == RoomCase.NegX)
+                {
+                    // *** Skipping for now ***
+                }
+                else
+                {
+                    Debug.Log("Error: Roomcase does not match any valid H-Room Cases.");
+                }
                 break;
             case RoomShape.TallRoom:
+                if (rCase == RoomCase.PosY)
+                {
+                    genRoom = Instantiate(tPrefab[Random.Range(0, (tPrefab.Count - 1))], trail[index].position, rotation) as GameObject; // Instantiate G-Room at position of indexed blueprint room; use a random room in the G-Room list
+                    genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index].activeEntranceways, 0); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (first 6 elements : 0 - 5)
+                    genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index + 1].activeEntranceways, 1); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (next 6 elements : 6 - 11)
+                    genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
+                }
+                else if (rCase == RoomCase.NegY)
+                {
+                    genRoom = Instantiate(tPrefab[Random.Range(0, (tPrefab.Count - 1))], (trail[index + 1].position), rotation) as GameObject; // Instantiate G-Room at position of indexed blueprint room; use a random room in the G-Room list
+                    genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index].activeEntranceways, 1); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (first 6 elements : 0 - 5)
+                    genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index + 1].activeEntranceways, 0); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (next 6 elements : 6 - 11)
+                    genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
+                }
+                else
+                {
+                    Debug.Log("Error: Roomcase does not match any valid T-Room Cases.");
+                }
                 break;
             case RoomShape.BigRoom:
                 break;
@@ -401,6 +493,16 @@ public class MapGenerator : MonoBehaviour
         return genRoom;
     }
     #endregion
+    
+    void ClearAllTrails()
+    {
+        masterTrail.Clear(); // All trails combined
+        mainTrail.Clear(); // Trail to Boss Room
+        augmentationTrail.Clear(); // Trail to Augmentation Room
+        keycardTrail.Clear(); // Trail to Keycard Room
+        trialTrail.Clear(); // Trail to Trial Room
+        bossTrail.Clear(); // Trail to Boss Room
+    }
 
     #region DebugGUI
     bool alreadyBMain, alreadyBAugmentation, alreadyBTrial,     // Blueprint Procedure Flags
