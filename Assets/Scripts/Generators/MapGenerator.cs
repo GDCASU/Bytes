@@ -232,11 +232,14 @@ public class MapGenerator : MonoBehaviour
                 mainRooms.Add(GenerateRoom(RoomShape.GeneralRoom, RoomType.Start, trail, 0, Quaternion.identity)); // Generate Starting Room G-Room varient
                 for (int i = 1; i < mainTrail.Count; )   // loop through all blueprint rooms
                 {
+                    float roomChanceRoll = Random.Range(0, 1.01f);
+                    Debug.Log(roomChanceRoll);
+                    Quaternion rotation = Quaternion.identity;
                     if (false)  // if can spawn B-Room & passed B-Room spawn chance
                     {
                         // spawn B-Room
                         // Hook up blueprintRoom.entrancewayflags to new room
-                        // jump index to next empty blueprint room
+                        i += 4; // jump index to next empty blueprint room
                     }
                     else if (false)  // else if can spawn T-Room & passed T-Room spawn chance
                     {
@@ -244,15 +247,14 @@ public class MapGenerator : MonoBehaviour
                         // Hook up blueprintRoom.entrancewayflags to new room
                         i += 2;// jump index to next empty blueprint room
                     }
-                    else if (false) // else if can spawn H-Room & passed H-Room spawn chance
+                    else if ((roomChanceRoll >= hRoomChance) && (i < mainTrail.Count - 1) && HRoomPositionCondition(trail[i].position, trail[i+1].position, rotation)) // else if can spawn H-Room & passed H-Room spawn chance && extra space for a 1x2 at end of trail
                     {
-                        // Spawn H-Room
-                        // Hook up blueprintRoom.entrancewayflags to new room
+                        mainRooms.Add(GenerateRoom(RoomShape.HallRoom, RoomType.General, trail, i, rotation)); // Spawn H-Room
                         i += 2;// jump index to next empty blueprint room
                     }
                     else
                     {
-                        mainRooms.Add(GenerateRoom(RoomShape.GeneralRoom, RoomType.General, trail, i, Quaternion.identity)); // Spawn G-Room
+                        mainRooms.Add(GenerateRoom(RoomShape.GeneralRoom, RoomType.General, trail, i, rotation)); // Spawn G-Room
                         i++; // jump index to next empty blueprint room
                     }
                 }
@@ -326,9 +328,27 @@ public class MapGenerator : MonoBehaviour
         }
     }
     
+    bool HRoomPositionCondition(Vector3 originRoomPos, Vector3 nextRoomPos, Quaternion rotation)
+    {
+        if (originRoomPos.x == nextRoomPos.x                                // if both rooms have same x value
+            && originRoomPos.y == nextRoomPos.y                             // if both rooms have same y value
+            && (originRoomPos.z - nextRoomPos.z) < 0)                       // if difference of positions is positive
+            { return true; }
+        else if (originRoomPos.z == nextRoomPos.z                           // if both rooms on same z value
+            && originRoomPos.y == nextRoomPos.y                             // if both rooms on same y value
+            && (originRoomPos.x - nextRoomPos.x) >= 0)  // if both rooms differ by cellsize on x
+            {
+            //rotation.Set(0, 90, 0, 1);
+            //return true;
+            return false;
+            }
+        else 
+            { return false; } // if both rooms differ by cellsize on y
+    }
+
     GameObject GenerateRoom(RoomShape shape, RoomType type, List<BlueprintRoom> trail, int index, Quaternion rotation)
     {
-        GameObject genRoom = new GameObject();
+        GameObject genRoom = null;
         switch (shape)
         {
             case RoomShape.GeneralRoom:
@@ -337,7 +357,8 @@ public class MapGenerator : MonoBehaviour
                 genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
                 break;
             case RoomShape.HallRoom:
-                genRoom = Instantiate(gPrefab[Random.Range(0, (gPrefab.Count - 1))], trail[index].position, rotation) as GameObject; // Instantiate G-Room at position of indexed blueprint room; use a random room in the G-Room list
+                genRoom = Instantiate(hPrefab[Random.Range(0, (hPrefab.Count - 1))], trail[index].position, rotation) as GameObject; // Instantiate G-Room at position of indexed blueprint room; use a random room in the G-Room list
+                Debug.Log("here");
                 genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index].activeEntranceways, 0); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (first 6 elements : 0 - 5)
                 genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index + 1].activeEntranceways, 1); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (next 6 elements : 6 - 11)
                 genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
