@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 318839232}
   - component: {fileID: 318839231}
   m_Layer: 0
-  m_Name: New Map Generator
+  m_Name: Map Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,7 +215,7 @@ MonoBehaviour:
   keycardTrailMaxRooms: 2
   trialTrailMaxRooms: 2
   bossTrailMaxRooms: 2
-  tRoomChance: 0.4
+  tRoomChance: 0.7
   hRoomChance: 0.5
   bRoomChance: 1
   bluePrintPrefab: {fileID: 6321413536967066871, guid: e51bed9445296ab4fa410e913798c95c,
@@ -228,6 +228,12 @@ MonoBehaviour:
   - {fileID: 160632190577553635, guid: 7bdc2485e76319446a664943149edc01, type: 3}
   bPrefab:
   - {fileID: 3745981130754854089, guid: b0442025bd998ca4a8c9440a8505aac8, type: 3}
+  masterRooms: []
+  mainRooms: []
+  augmentationRooms: []
+  keycardRooms: []
+  trialRooms: []
+  bossRooms: []
 --- !u!4 &318839232
 Transform:
   m_ObjectHideFlags: 0

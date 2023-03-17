@@ -221,6 +221,7 @@ public class MapGenerator : MonoBehaviour
     }
     #endregion
 
+    #region RoomGenerationProcedure
     private enum RoomCase
     {
         PosZ = 0,
@@ -231,15 +232,17 @@ public class MapGenerator : MonoBehaviour
         NegY = 5
     }
 
-    #region RoomGenerationProcedure
     public void GenerateRooms(List<BlueprintRoom> trail, TrailType trailType)
     {
         switch (trailType)
         {
             case TrailType.Master:
+
                 break;
+
             case TrailType.Main:
                 mainRooms.Add(GenerateRoom(RoomShape.GeneralRoom, RoomType.Start, trail, 0, 0)); // Generate Starting Room G-Room varient
+
                 for (int i = 1; i < mainTrail.Count; )   // loop through all blueprint rooms
                 {
                     float roomChanceRoll = Random.Range(0, 1.01f);
@@ -267,6 +270,7 @@ public class MapGenerator : MonoBehaviour
                     }
                 }
                 break;
+
             case TrailType.Augmentation:
                 // loop through all blueprint rooms
                     // if can spawn B-Room & passed B-Room spawn chance
@@ -287,6 +291,7 @@ public class MapGenerator : MonoBehaviour
                         // jump index to next empty blueprint room
                 // Tag last Room as Augmentation
                 break;
+
             case TrailType.Trial:
                 // loop through all blueprint rooms
                     // if can spawn B-Room & passed B-Room spawn chance
@@ -307,6 +312,7 @@ public class MapGenerator : MonoBehaviour
                         // jump index to next empty blueprint room
                 // Tag last Room as Trial
                 break;
+
             case TrailType.Keycard:
                 // loop through all blueprint rooms
                     // if can spawn B-Room & passed B-Room spawn chance
@@ -327,9 +333,11 @@ public class MapGenerator : MonoBehaviour
                         // jump index to next empty blueprint room
                 // Tag last Room as Keycard
                 break;
+
             case TrailType.Boss:
                 // Skip for now
                 break;
+
             default:
                 Debug.Log("Error: Undefined trail type.");
                 break;
@@ -412,14 +420,14 @@ public class MapGenerator : MonoBehaviour
             case RoomShape.HallRoom:
                 if (rCase == RoomCase.PosZ)
                 {
-                    genRoom = Instantiate(hPrefab[Random.Range(0, (hPrefab.Count - 1))], trail[index].position, rotation) as GameObject; // Instantiate G-Room at position of indexed blueprint room; use a random room in the G-Room list
+                    genRoom = Instantiate(hPrefab[Random.Range(0, (hPrefab.Count - 1))], trail[index].position, rotation) as GameObject; // Instantiate H-Room at position of indexed blueprint room; use a random room in the G-Room list
                     genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index].activeEntranceways, 0); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (first 6 elements : 0 - 5)
                     genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index + 1].activeEntranceways, 1); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (next 6 elements : 6 - 11)
                     genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
                 }
                 else if (rCase == RoomCase.NegZ)
                 {
-                    genRoom = Instantiate(hPrefab[Random.Range(0, (hPrefab.Count - 1))], (trail[index + 1].position), rotation) as GameObject; // Instantiate G-Room at position of indexed blueprint room; use a random room in the G-Room list
+                    genRoom = Instantiate(hPrefab[Random.Range(0, (hPrefab.Count - 1))], (trail[index + 1].position), rotation) as GameObject; // Instantiate H-Room at position of indexed blueprint room; use a random room in the G-Room list
                     genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index].activeEntranceways, 1); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (first 6 elements : 0 - 5)
                     genRoom.GetComponent<Room>().CopyBlueprintArrayFlags(trail[index + 1].activeEntranceways, 0); // Copy array of blueprint's entrencewayFlags to the newly generated room's entrancewayFlags array (next 6 elements : 6 - 11)
                     genRoom.GetComponent<Room>().ActivateAllEntranceways(); // Activate new rooms entranceways
