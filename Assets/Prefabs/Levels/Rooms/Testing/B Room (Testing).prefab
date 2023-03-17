@@ -950,7 +950,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3049279682653989010}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2629417953808323066
 MeshFilter:
@@ -1708,7 +1708,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3049279682653989010}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2629417954644615617
 MeshFilter:
@@ -2534,7 +2534,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
-  activeEntranceways: 
   entranceways:
   - {fileID: 5153640475484950152}
   - {fileID: 1165609843884382073}
@@ -2879,8 +2878,8 @@ Transform:
   m_Children:
   - {fileID: 1415767208511844224}
   - {fileID: 2629417953295800913}
-  - {fileID: 2629417954644615619}
   - {fileID: 2629417953808323068}
+  - {fileID: 2629417954644615619}
   m_Father: {fileID: 1461030869749715993}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
