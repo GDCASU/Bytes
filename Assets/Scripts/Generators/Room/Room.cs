@@ -16,7 +16,7 @@ public enum RoomType
     Start,
     Augmentation,
     Keycard,
-    Trail,
+    Trial,
     ToBoss
 }
 

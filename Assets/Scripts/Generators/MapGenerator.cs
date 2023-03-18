@@ -335,7 +335,7 @@ public class MapGenerator : MonoBehaviour
                     else if ((roomChanceRoll <= tRoomChance) && (i < trialTrail.Count - 1) && TRoomPositionCondition(trail[i].position, trail[i + 1].position, out rCase))  // else if can spawn T-Room & passed T-Room spawn chance && extra space for a 1x2 at end of trail
                     {
                         if (i + 2 >= trialTrail.Count) // if the next room to be generated is the last room in the trail
-                            rType = RoomType.Trail;
+                            rType = RoomType.Trial;
 
                         mainRooms.Add(GenerateRoom(RoomShape.TallRoom, rType, trail, i, rCase)); // Spawn T-Room
                         i += 2; // jump index to next empty blueprint room
@@ -343,7 +343,7 @@ public class MapGenerator : MonoBehaviour
                     else if ((roomChanceRoll <= hRoomChance) && (i < trialTrail.Count - 1) && HRoomPositionCondition(trail[i].position, trail[i + 1].position, out rCase)) // else if can spawn H-Room & passed H-Room spawn chance && extra space for a 2x1 at end of trail
                     {
                         if (i + 2 >= trialTrail.Count) // if the next room to be generated is the last room in the trail
-                            rType = RoomType.Trail;
+                            rType = RoomType.Trial;
 
                         mainRooms.Add(GenerateRoom(RoomShape.HallRoom, rType, trail, i, rCase)); // Spawn H-Room
                         i += 2; // jump index to next empty blueprint room
@@ -351,7 +351,7 @@ public class MapGenerator : MonoBehaviour
                     else
                     {
                         if (i + 1 >= trialTrail.Count) // if the next room to be generated is the last room in the trail
-                            rType = RoomType.Trail;
+                            rType = RoomType.Trial;
 
                         mainRooms.Add(GenerateRoom(RoomShape.GeneralRoom, rType, trail, i, 0)); // Spawn G-Room
                         i++; // jump index to next empty blueprint room
@@ -360,7 +360,7 @@ public class MapGenerator : MonoBehaviour
                 break;
 
             case TrailType.Keycard:
-                for (int i = 0; i < trialTrail.Count;)   // loop through all blueprint rooms
+                for (int i = 0; i < keycardTrail.Count;)   // loop through all blueprint rooms
                 {
                     float roomChanceRoll = Random.Range(0, 1.01f);
                     RoomCase rCase = RoomCase.PosZ;
@@ -372,26 +372,26 @@ public class MapGenerator : MonoBehaviour
                         // Hook up blueprintRoom.entrancewayflags to new room
                         i += 4; // jump index to next empty blueprint room
                     }
-                    else if ((roomChanceRoll <= tRoomChance) && (i < trialTrail.Count - 1) && TRoomPositionCondition(trail[i].position, trail[i + 1].position, out rCase))  // else if can spawn T-Room & passed T-Room spawn chance && extra space for a 1x2 at end of trail
+                    else if ((roomChanceRoll <= tRoomChance) && (i < keycardTrail.Count - 1) && TRoomPositionCondition(trail[i].position, trail[i + 1].position, out rCase))  // else if can spawn T-Room & passed T-Room spawn chance && extra space for a 1x2 at end of trail
                     {
-                        if (i + 2 >= trialTrail.Count) // if the next room to be generated is the last room in the trail
-                            rType = RoomType.Trail;
+                        if (i + 2 >= keycardTrail.Count) // if the next room to be generated is the last room in the trail
+                            rType = RoomType.Keycard;
 
                         mainRooms.Add(GenerateRoom(RoomShape.TallRoom, rType, trail, i, rCase)); // Spawn T-Room
                         i += 2; // jump index to next empty blueprint room
                     }
-                    else if ((roomChanceRoll <= hRoomChance) && (i < trialTrail.Count - 1) && HRoomPositionCondition(trail[i].position, trail[i + 1].position, out rCase)) // else if can spawn H-Room & passed H-Room spawn chance && extra space for a 2x1 at end of trail
+                    else if ((roomChanceRoll <= hRoomChance) && (i < keycardTrail.Count - 1) && HRoomPositionCondition(trail[i].position, trail[i + 1].position, out rCase)) // else if can spawn H-Room & passed H-Room spawn chance && extra space for a 2x1 at end of trail
                     {
-                        if (i + 2 >= trialTrail.Count) // if the next room to be generated is the last room in the trail
-                            rType = RoomType.Trail;
+                        if (i + 2 >= keycardTrail.Count) // if the next room to be generated is the last room in the trail
+                            rType = RoomType.Keycard;
 
                         mainRooms.Add(GenerateRoom(RoomShape.HallRoom, rType, trail, i, rCase)); // Spawn H-Room
                         i += 2; // jump index to next empty blueprint room
                     }
                     else
                     {
-                        if (i + 1 >= trialTrail.Count) // if the next room to be generated is the last room in the trail
-                            rType = RoomType.Trail;
+                        if (i + 1 >= keycardTrail.Count) // if the next room to be generated is the last room in the trail
+                            rType = RoomType.Keycard;
 
                         mainRooms.Add(GenerateRoom(RoomShape.GeneralRoom, rType, trail, i, 0)); // Spawn G-Room
                         i++; // jump index to next empty blueprint room
@@ -551,8 +551,8 @@ public class MapGenerator : MonoBehaviour
             case RoomType.Keycard:
                 genRoom.GetComponent<Room>().roomType = RoomType.Keycard;
                 break;
-            case RoomType.Trail:
-                genRoom.GetComponent<Room>().roomType = RoomType.Trail;
+            case RoomType.Trial:
+                genRoom.GetComponent<Room>().roomType = RoomType.Trial;
                 break;
             case RoomType.ToBoss:
                 genRoom.GetComponent<Room>().roomType = RoomType.ToBoss;
@@ -683,10 +683,11 @@ public class MapGenerator : MonoBehaviour
 
             if (GUILayout.Button("Generate Rooms: Main Trail"))
             {
-                if (alreadyBMain)
+                if (alreadyBMain && !alreadyGMain)
                 {
                     GenerateRooms(mainTrail, TrailType.Main);
                     Debug.Log("Main Trail Rooms Successfully Generated!");
+                    alreadyGMain = true;
                 }
                 else
                     Debug.Log("Error: Main Trail has not yet been made.");
@@ -694,10 +695,11 @@ public class MapGenerator : MonoBehaviour
 
             if (GUILayout.Button("Generate Rooms: Augmentation Trail"))
             {
-                if (alreadyBAugmentation)
+                if (alreadyBAugmentation && !alreadyGAugmentation)
                 {
                     GenerateRooms(augmentationTrail, TrailType.Augmentation);
                     Debug.Log("Augmentation Trail Rooms Successfully Generated!");
+                    alreadyGAugmentation = true;
                 }
                 else
                     Debug.Log("Error: Augmentation Trail has not yet been made.");
@@ -705,13 +707,26 @@ public class MapGenerator : MonoBehaviour
 
             if (GUILayout.Button("Generate Rooms: Trial Trail"))
             {
-                if (alreadyBTrial)
+                if (alreadyBTrial && !alreadyGTrial)
                 {
                     GenerateRooms(trialTrail, TrailType.Trial);
                     Debug.Log("Trial Trail Rooms Successfully Generated!");
+                    alreadyGTrial = true;
                 }
                 else
                     Debug.Log("Error: Trial Trail has not yet been made.");
+            }
+
+            if (GUILayout.Button("Generate Rooms: Keycard Trail"))
+            {
+                if (alreadyBKeycard && !alreadyGKeycard)
+                {
+                    GenerateRooms(keycardTrail, TrailType.Keycard);
+                    Debug.Log("Keycard Trail Rooms Successfully Generated!");
+                    alreadyGKeycard = true;
+                }
+                else
+                    Debug.Log("Error: Keycard Trail has not yet been made.");
             }
         }
     }
