@@ -210,22 +210,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridCellSize: 40
   debug: 1
-  mainTrailMaxRooms: 10
+  mainTrailMaxRooms: 15
   augmentationTrailMaxRooms: 1
-  keycardTrailMaxRooms: 2
+  keycardTrailMaxRooms: 3
   trialTrailMaxRooms: 2
-  bossTrailMaxRooms: 2
+  bossTrailMaxRooms: 0
   tRoomChance: 0.7
-  hRoomChance: 0.5
+  hRoomChance: 1
   bRoomChance: 1
   bluePrintPrefab: {fileID: 6321413536967066871, guid: e51bed9445296ab4fa410e913798c95c,
     type: 3}
   gPrefab:
-  - {fileID: 7523805458283857721, guid: bb2581f194ab998498a64ea3a3557224, type: 3}
+  - {fileID: 2788671453934971417, guid: 1ba01105fb3b7ce49844bacad078ce50, type: 3}
   tPrefab:
-  - {fileID: 16586390388644377, guid: bcae9f29c050b1b4a9c0e333b963a30c, type: 3}
+  - {fileID: 7002698807063327400, guid: 6984eeda2724e844aa998a1546358d5d, type: 3}
   hPrefab:
-  - {fileID: 160632190577553635, guid: 7bdc2485e76319446a664943149edc01, type: 3}
+  - {fileID: 263667326297343130, guid: f764bf8a8dfc2c247bafed7dbe80ac97, type: 3}
   bPrefab:
   - {fileID: 3745981130754854089, guid: b0442025bd998ca4a8c9440a8505aac8, type: 3}
   masterRooms: []

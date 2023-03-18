@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667325160217853}
   m_Layer: 0
-  m_Name: E1
+  m_Name: E1 (Origin)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667325161434647}
   m_Layer: 0
-  m_Name: E0
+  m_Name: E0 (Origin)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667325277879429}
   m_Layer: 0
-  m_Name: E4
+  m_Name: E4 (Origin)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,7 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667325399927881}
   m_Layer: 0
-  m_Name: E5
+  m_Name: E5 (Forward)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -338,7 +338,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667325794871988}
   m_Layer: 0
-  m_Name: E3
+  m_Name: E3 (Forward)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -469,7 +469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667325905446104}
   m_Layer: 0
-  m_Name: E5
+  m_Name: E5 (Origin)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -698,7 +698,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667325926290081}
   m_Layer: 0
-  m_Name: E1
+  m_Name: E1 (Forward)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -829,7 +829,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667326087078430}
   m_Layer: 0
-  m_Name: E2
+  m_Name: E2 (Forward)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1057,6 +1057,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 263667326297343131}
+  - component: {fileID: 3376023608072766116}
   m_Layer: 0
   m_Name: H0 Room
   m_TagString: Untagged
@@ -1081,6 +1082,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3376023608072766116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263667326297343130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7772bd6817d71da4cb79d4b81d054ed0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  entranceways:
+  - {fileID: 263667325161434646}
+  - {fileID: 263667325160217852}
+  - {fileID: 263667326826136337}
+  - {fileID: 263667326511096051}
+  - {fileID: 263667325277879428}
+  - {fileID: 263667325905446107}
+  - {fileID: 263667327032199233}
+  - {fileID: 263667325926290080}
+  - {fileID: 263667326087078417}
+  - {fileID: 263667325794871991}
+  - {fileID: 263667326539847232}
+  - {fileID: 263667325399927880}
+  roomShape: 0
+  roomType: 0
 --- !u!1 &263667326428936051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,7 +1218,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667326511096048}
   m_Layer: 0
-  m_Name: E3
+  m_Name: E3 (Origin)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1222,7 +1251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667326539847233}
   m_Layer: 0
-  m_Name: E4
+  m_Name: E4 (Forward)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1255,7 +1284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667326826136350}
   m_Layer: 0
-  m_Name: E2
+  m_Name: E2 (Origin)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1386,7 +1415,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667326859001272}
   m_Layer: 0
-  m_Name: Right Planes
+  m_Name: Forward Planes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1619,7 +1648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667326943298198}
   m_Layer: 0
-  m_Name: Left Planes
+  m_Name: Origin Planes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1656,7 +1685,7 @@ GameObject:
   m_Component:
   - component: {fileID: 263667327032199246}
   m_Layer: 0
-  m_Name: E0
+  m_Name: E0 (Forward)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
