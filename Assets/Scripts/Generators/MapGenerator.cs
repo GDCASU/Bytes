@@ -107,7 +107,10 @@ public class MapGenerator : MonoBehaviour
 
     void RoomGenerationProcedure() // 2. Generate Rooms
     {
-
+        GenerateRooms(mainTrail, TrailType.Main);
+        GenerateRooms(augmentationTrail, TrailType.Augmentation);
+        GenerateRooms(trialTrail, TrailType.Trial);
+        GenerateRooms(keycardTrail, TrailType.Keycard);
     }
 
     #region BlueprintProcedure
