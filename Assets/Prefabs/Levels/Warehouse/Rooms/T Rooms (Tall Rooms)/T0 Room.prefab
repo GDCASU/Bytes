@@ -5676,6 +5676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7002698807063327401}
+  - component: {fileID: 5798788016768835172}
   m_Layer: 0
   m_Name: T0 Room
   m_TagString: Untagged
@@ -5701,6 +5702,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5798788016768835172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7002698807063327400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96507927e40f151489557d6825ac7fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  entranceways:
+  - {fileID: 3132171176147843435}
+  - {fileID: 7002698807762107083}
+  - {fileID: 7002698807946694111}
+  - {fileID: 7002698808241442007}
+  - {fileID: 7002698808645839155}
+  - {fileID: 7002698808255653139}
+  - {fileID: 7002698808084099957}
+  - {fileID: 7002698808594320712}
+  - {fileID: 7002698807332754175}
+  - {fileID: 7002698808575250433}
+  - {fileID: 7002698807180139110}
+  - {fileID: 7002698807712623019}
+  roomShape: 0
+  roomType: 0
 --- !u!1 &7002698807162492406
 GameObject:
   m_ObjectHideFlags: 0
