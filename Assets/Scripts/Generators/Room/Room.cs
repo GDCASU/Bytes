@@ -17,8 +17,7 @@ public enum RoomType
     Augmentation,
     Keycard,
     Trail,
-    Boss,
-    Escape
+    ToBoss
 }
 
 public class Room : MonoBehaviour
