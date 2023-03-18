@@ -152,18 +152,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e020fd36d0fe74f8af3db61307bd88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrain: {fileID: 0}
-  mapLandmarks: []
-  objSpawnRate: 0
-  objSpawnMinSpacing: 0
-  objSpawnMaxSpacing: 0
-  dirType: 0
-  startPos: {x: 0, y: 0, z: 0}
-  startType: 0
-  minVector: {x: 0, y: 0, z: 0}
-  maxVector: {x: 0, y: 0, z: 0}
-  walkCycles: 10
-  walkLength: 10
+  gridCellSize: 40
+  debug: 1
+  mainTrailMaxRooms: 10
+  augmentationTrailMaxRooms: 1
+  keycardTrailMaxRooms: 2
+  trialTrailMaxRooms: 2
+  bossTrailMaxRooms: 2
+  tRoomChance: 0.4
+  hRoomChance: 0.5
+  bRoomChance: 1
+  bluePrintPrefab: {fileID: 0}
+  gPrefab: []
+  tPrefab: []
+  hPrefab: []
+  bPrefab: []
+  masterRooms: []
+  mainRooms: []
+  augmentationRooms: []
+  keycardRooms: []
+  trialRooms: []
+  bossRooms: []
 --- !u!4 &288400124
 Transform:
   m_ObjectHideFlags: 0
@@ -338,22 +347,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 1028085541}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44852e896d6c21740bc14b13c9c553dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 03e020fd36d0fe74f8af3db61307bd88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellSize: 10
-  bluePrintPrefab: {fileID: 0}
-  gPrefab: {fileID: 0}
-  tPrefab: {fileID: 0}
-  hPrefab: {fileID: 0}
-  lPrefab: {fileID: 0}
-  jPrefab: {fileID: 0}
-  bPrefab: {fileID: 0}
-  maxRooms: 0
-  tRoomSpawnChance: 0
-  hRoomSpawnChance: 0
-  roomList: []
-  prevRooms: 
+  gridCellSize: 40
+  debug: 0
+  mainTrailMaxRooms: 15
+  augmentationTrailMaxRooms: 1
+  keycardTrailMaxRooms: 3
+  trialTrailMaxRooms: 2
+  bossTrailMaxRooms: 0
+  tRoomChance: 0.4
+  hRoomChance: 0.5
+  bRoomChance: 1
+  bluePrintPrefab: {fileID: 6321413536967066871, guid: 97b96c366fb5e44489c9d5c503f211d0,
+    type: 3}
+  gPrefab:
+  - {fileID: 4280655013511312384, guid: 6450cc1dde7c6914682af23d5c3e4500, type: 3}
+  - {fileID: 4181973667467989309, guid: f1b4c89fec321d54395f466816ba94f8, type: 3}
+  tPrefab:
+  - {fileID: 2286834516413046755, guid: 6bb651e02198eaf42a7ec682687c9361, type: 3}
+  - {fileID: 2286834516413046755, guid: 6bb651e02198eaf42a7ec682687c9361, type: 3}
+  hPrefab:
+  - {fileID: 8919020459571496207, guid: f0df6557e2f1a0d48979d005d543def7, type: 3}
+  - {fileID: 7779104706460037438, guid: 4c93f15ef3f171745a04bf2dddbc9580, type: 3}
+  bPrefab:
+  - {fileID: 2788671453934971417, guid: 5fb0e114ed2eb954cb0f4094b0b3052f, type: 3}
+  masterRooms: []
+  mainRooms: []
+  augmentationRooms: []
+  keycardRooms: []
+  trialRooms: []
+  bossRooms: []
 --- !u!1001 &1041538968
 PrefabInstance:
   m_ObjectHideFlags: 0
