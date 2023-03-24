@@ -16,12 +16,12 @@ public partial class PlayerControllerNew
     [SerializeField] float jumpPower;
     [SerializeField] float jumpCooldown;
     [SerializeField] float airMultplier;
-    bool canJump;
+    bool canJump = true;
 
     [Header("Crounching")]
     [SerializeField] float crouchSpeed;
     [SerializeField] float crouchYScale;
-    [SerializeField] float startYScale;
+    private float startYScale;
 
     Vector2 moveInput;
     float horizontalInput;
@@ -77,20 +77,22 @@ public partial class PlayerControllerNew
 
         moveDirection = orientation.forward * verticelInput + orientation.right * horizontalInput;
 
+        //Moving the Player
         if (grounded) { //moving on ground
+            Debug.Log("Moving on the Ground");
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-            Debug.Log("here");
         }
         else if (!grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultplier, ForceMode.Force);
         }
 
+        //Handling Drag
         if (grounded)
         {
             rb.drag = groundDrag;
         }
-        else rb.drag = 0f;
+        else rb.drag = airDrag;
     }
 
     private void handleSpeedControl()
@@ -111,9 +113,10 @@ public partial class PlayerControllerNew
     {
         if (_input.IsJumpPressed && canJump && grounded)
         {
+            Debug.Log("Trying to Jump");
             canJump = false;
             jump();
-            Invoke(nameof(jump), jumpCooldown);
+            Invoke(nameof(resetJump), jumpCooldown);
         }
     }
     private void jump()
@@ -132,10 +135,12 @@ public partial class PlayerControllerNew
     #region Crouching
     private void handleCrouch()
     {
+
         if (moveState == MovementState.crounching)
         {
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            Debug.Log("Adding Crouch Force");
         }
         else
         {

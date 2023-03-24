@@ -61,10 +61,12 @@ public class PlayerInput : MonoBehaviour
 
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
+        /* --Commented to Help Debug First Person Controller--
         if (context.phase == InputActionPhase.Performed)
             _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Primary, true);
         else if (context.phase == InputActionPhase.Canceled)
             _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Primary, false);
+        */
     }
 
     public void OnSecondaryAttack(InputAction.CallbackContext context)
