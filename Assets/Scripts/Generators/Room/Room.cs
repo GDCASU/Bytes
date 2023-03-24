@@ -22,12 +22,12 @@ public enum RoomType
 
 public class Room : MonoBehaviour
 {
-    public Vector3 position;
+    [HideInInspector] public Vector3 position;
     public bool[,] activeEntranceways;
     public List<GameObject> entranceways;
 
     public RoomShape roomShape;
-    public RoomType roomType;
+    [HideInInspector] public RoomType roomType;
 
     void Awake()
     {
