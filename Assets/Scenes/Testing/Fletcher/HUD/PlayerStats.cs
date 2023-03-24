@@ -1,21 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class PlayerStats : MonoBehaviour 
 {
-	readonly public int maxHealth = 100; //Sets the max health possible within the game
-	readonly public int limitBattery = 10; //Sets the max battery possible within the game
+	readonly public int limitHealth = 500; //Limits the max amount of health you can upgrade to
+	readonly public int limitBattery = 10; //Limits the max amount of battery you can upgrade to
+	public int maxHealth; //current limit of the full health of the player, upgradable
 	public int health;
 	public int battery;
 	public int maxBattery; //Sets the max battery possible, can be changed to increase charges
 	
-	//FIXME: Add ammunition stats and more
+	//TODO: Add ammunition stats and more
 	
 	public PlayerStats() 
 	{
-		this.health = 100; //Starting health
-		this.battery = 5; //Starting Battery
-		this.maxBattery = 5; //Starting Max battery charges
+		health = 100;
+		battery = 5;
+		maxBattery = 5; //Starting max battery charges, upgradable
+		maxHealth = 100; 
 	}
 
 	public void takeDamage(int damage)
@@ -75,7 +78,7 @@ public class PlayerStats : MonoBehaviour
 		return true; //Battery gained successfully
 	}
 
-	public void increaseMaxBattery(int addedCharges) //Method upgrades the player's max amount of charges
+	public void upgradeMaxBattery(int addedCharges) //Method upgrades the player's max amount of charges
 	{
 		if (maxBattery + addedCharges > limitBattery) 
 		{
@@ -84,6 +87,20 @@ public class PlayerStats : MonoBehaviour
 		}
 		maxBattery += addedCharges;
 		Debug.Log("New Battery Limit = " + maxBattery.ToString());
+	}
+
+	public bool upgradeMaxHealth(int upgradeNum) {
+
+		if (maxHealth >= limitHealth) 
+		{
+			return false; //Cant upgrade health any further
+		}
+		if (maxHealth > limitHealth) 
+		{
+			maxHealth = limitHealth; //Allows last upgrade of health
+		}
+		Debug.Log("New Health Limit = " + maxHealth.ToString());
+		return true; //Successfully upgraded Health
 	}
 
 	public void deathEvent() {
