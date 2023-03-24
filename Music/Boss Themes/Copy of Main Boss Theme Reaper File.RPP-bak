@@ -1,4 +1,4 @@
-<REAPER_PROJECT 0.1 "6.75/win64" 1679091703
+<REAPER_PROJECT 0.1 "6.75/win64" 1679094023
   <NOTES 0 2
   >
   RIPPLE 0
@@ -16,8 +16,8 @@
   TIMEMODE 7 5 -1 30 0 0 -1
   VIDEO_CONFIG 0 0 256
   PANMODE 3
-  CURSOR 26.58521251016544
-  ZOOM 326.39949734018512 8378 0
+  CURSOR 23
+  ZOOM 132.84546762728391 2494 0
   VZOOMEX 3 0
   USE_REC_CFG 0
   RECMODE 1
@@ -91,9 +91,11 @@
   >
   MARKER 1 0 intro 0 0 1 R {3EC76F20-F0F7-4688-A95D-F988509541C0}
   MARKER 1 0 intro 1 0 1 R {0EA928C7-704E-4F9F-B5F7-70267425D656}
-  MARKER 1 23.34068581675489 "" 1 0 1 R
-  MARKER 2 23.34068581675489 transition 1 0 1 R {B23CFEA7-3B3B-4DDA-B51E-0F5D381659CB}
-  MARKER 2 29.33333333333333 "" 1 0 1 R
+  MARKER 1 22.97406192707156 "" 1 0 1 R
+  MARKER 2 22.97406192707156 transition 1 0 1 R {B23CFEA7-3B3B-4DDA-B51E-0F5D381659CB}
+  MARKER 2 28.97351387853814 "" 1 0 1 R
+  MARKER 3 22.99260011475525 "add bass drums" 0 0 1 R {D7E0D94B-500C-4FC6-8CDD-AC5FAF66642F}
+  MARKER 2 34.33918367346908 rhfhc 0 0 1 R {19DACD21-746E-4AEE-BB80-C01F7C529EE3}
   MARKER 1 79.82485854120672 Bridge 0 0 1 R {21B6DE9B-EE6D-4F25-88FC-CA8EE85F3424}
   <PROJBAY
   >
@@ -126,10 +128,10 @@
       LENGTH 5.66666666666666
       LOOP 1
       ALLTAKES 0
-      FADEIN 1 1.034618 0 1 0 0 0
+      FADEIN 1 0.677408 0 1 0 0 0
       FADEOUT 1 0.01 0 1 0 0 0
       MUTE 0 0
-      SEL 0
+      SEL 1
       IGUID {2D9E1FD5-C617-4841-89EC-42F81D66E54C}
       IID 106
       NAME gooda.flac
@@ -143,9 +145,9 @@
       >
     >
     <ITEM
-      POSITION 52.29343832533971
+      POSITION 65.10572136541346
       SNAPOFFS 0
-      LENGTH 30.11765684051675
+      LENGTH 30.1176568405167
       LOOP 1
       ALLTAKES 0
       FADEIN 1 0.006667 0 1 0 0 0
@@ -157,33 +159,11 @@
       NAME LevelOneBoss_BridgeIdea_CBoesch_Feb24th.wav
       VOLPAN 1 0 1 -1
       SOFFS 0
-      PLAYRATE 1.5 1 0 -1 0 0.0025
+      PLAYRATE 1 1 0 -1 0 0.0025
       CHANMODE 0
       GUID {8CA9C161-11BB-4E94-AB6B-070CD9226F32}
       <SOURCE WAVE
         FILE "LevelOneBoss_BridgeIdea_CBoesch_Feb24th.wav"
-      >
-    >
-    <ITEM
-      POSITION 83.36758220206315
-      SNAPOFFS 0
-      LENGTH 68.29666666666688
-      LOOP 1
-      ALLTAKES 0
-      FADEIN 1 0.006667 0 1 0 0 0
-      FADEOUT 1 0.006667 0 1 0 0 0
-      MUTE 0 0
-      SEL 0
-      IGUID {6B3D2EF9-3868-41DF-88E1-B4F4EAECDF4D}
-      IID 2
-      NAME LevelOneBoss_CBoesch_Feb17th.wav
-      VOLPAN 1 0 1 -1
-      SOFFS 0
-      PLAYRATE 1.5 1 0 -1 0 0.0025
-      CHANMODE 0
-      GUID {FC8F14C3-B91E-4602-A218-77A84C5D4046}
-      <SOURCE WAVE
-        FILE "LevelOneBoss_CBoesch_Feb17th.wav"
       >
     >
   >
@@ -192,14 +172,14 @@
     PEAKCOL 16576
     BEAT -1
     AUTOMODE 0
-    VOLPAN 1 0 -1 -1 1
+    VOLPAN 0.21412339328026 0 -1 -1 1
     MUTESOLO 0 0 0
     IPHASE 0
     PLAYOFFS 0 1
     ISBUS 0 0
     BUSCOMP 0 0 0 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
-    SEL 1
+    SEL 0
     REC 0 0 1 0 0 0 0 0
     VU 2
     TRACKHEIGHT 0 0 0 0 0 0
@@ -232,9 +212,9 @@
       LOOP 1
       ALLTAKES 0
       FADEIN 1 0.01 0 1 0 0 0
-      FADEOUT 1.1 0.01 0.901411 1 1 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
       MUTE 0 0
-      SEL 1
+      SEL 0
       IGUID {B6DAF3A8-8845-401D-B106-36A6F0783BBE}
       IID 108
       NAME gouda.flac
@@ -247,42 +227,20 @@
         FILE "guitars\gouda.flac"
       >
     >
-    <ITEM
-      POSITION 50.66666666666666
-      SNAPOFFS 0
-      LENGTH 36.16120937263795
-      LOOP 1
-      ALLTAKES 0
-      FADEIN 1.1 0.006667 0.901411 1 1 0 0
-      FADEOUT 1 0.006667 0 1 0 0 0
-      MUTE 0 0
-      SEL 0
-      IGUID {F641E310-6327-4683-A08F-770515AAAF92}
-      IID 80
-      NAME parmessa.flac
-      VOLPAN 1 0 1 -1
-      SOFFS 0
-      PLAYRATE 1.5 1 0 -1 0 0.0025
-      CHANMODE 0
-      GUID {8683CF85-218E-4B6D-A0FE-3337E6F5CBE9}
-      <SOURCE FLAC
-        FILE "guitars\parmessa.flac"
-      >
-    >
   >
   <TRACK {92BB7755-1AFC-4CB6-AA3F-DE07D95044E6}
     NAME "Violin, Bass, and cello chords-Contrabasses"
     PEAKCOL 16576
     BEAT -1
     AUTOMODE 0
-    VOLPAN 1 0 -1 -1 1
+    VOLPAN 0.21412339328026 0 -1 -1 1
     MUTESOLO 0 0 0
     IPHASE 0
     PLAYOFFS 0 1
     ISBUS 0 0
     BUSCOMP 0 0 0 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
-    SEL 0
+    SEL 1
     REC 0 0 1 0 0 0 0 0
     VU 2
     TRACKHEIGHT 0 0 0 0 0 0
@@ -316,25 +274,25 @@
       >
     >
     <ITEM
-      POSITION 58.66666666666666
+      POSITION 28.97982404103244
       SNAPOFFS 0
-      LENGTH 9.89170068027213
+      LENGTH 68.29666666666694
       LOOP 1
       ALLTAKES 0
       FADEIN 1 0.006667 0 1 0 0 0
       FADEOUT 1 0.006667 0 1 0 0 0
       MUTE 0 0
       SEL 0
-      IGUID {73E09FAC-5BB2-4E3F-830A-B201FA1BEC10}
-      IID 79
-      NAME chedda.flac
+      IGUID {6B3D2EF9-3868-41DF-88E1-B4F4EAECDF4D}
+      IID 2
+      NAME LevelOneBoss_CBoesch_Feb17th.wav
       VOLPAN 1 0 1 -1
       SOFFS 0
-      PLAYRATE 1.5 1 0 -1 0 0.0025
+      PLAYRATE 1 1 0 -1 0 0.0025
       CHANMODE 0
-      GUID {C9BCE7BC-AADC-4231-B590-AE659131DBCB}
-      <SOURCE FLAC
-        FILE "guitars\chedda.flac"
+      GUID {FC8F14C3-B91E-4602-A218-77A84C5D4046}
+      <SOURCE WAVE
+        FILE "LevelOneBoss_CBoesch_Feb17th.wav"
       >
     >
   >
@@ -343,7 +301,7 @@
     PEAKCOL 16576
     BEAT -1
     AUTOMODE 0
-    VOLPAN 1 0 -1 -1 1
+    VOLPAN 1.13940545653072 0 -1 -1 1
     MUTESOLO 0 0 0
     IPHASE 0
     PLAYOFFS 0 1
@@ -384,9 +342,31 @@
       >
     >
     <ITEM
-      POSITION 58.92984872574648
+      POSITION 34.33642934914678
       SNAPOFFS 0
-      LENGTH 1.00012093726382
+      LENGTH 18.67253005138988
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.290269 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {B5D17592-9A77-4A2F-80D9-5A62A580DE5E}
+      IID 87
+      NAME "Boss Theme 1 Opening Chords-Violins.wav"
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 2 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {2DCB9D76-3B76-42B8-A1EE-1374DBEFEE18}
+      <SOURCE WAVE
+        FILE "Boss Theme 1 Opening Chords-Violins.wav"
+      >
+    >
+    <ITEM
+      POSITION 61.50002815995236
+      SNAPOFFS 0
+      LENGTH 1.0001209372638
       LOOP 1
       ALLTAKES 0
       FADEIN 1 0.006667 0 1 0 0 0
@@ -411,7 +391,7 @@
     PEAKCOL 16576
     BEAT -1
     AUTOMODE 0
-    VOLPAN 1 0 -1 -1 1
+    VOLPAN 1.58006628217258 0 -1 -1 1
     MUTESOLO 0 0 0
     IPHASE 0
     PLAYOFFS 0 1
@@ -452,6 +432,50 @@
       >
     >
     <ITEM
+      POSITION 34.33642934914678
+      SNAPOFFS 0
+      LENGTH 18.67253005138988
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.290269 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {95B71EDB-CC66-4D7C-B1D9-BBE228377FBF}
+      IID 88
+      NAME "Boss Theme 1 Opening Chords-Contrabasses.wav"
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 2 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {801C7C3B-4511-4F47-9023-A0F9D56EF32B}
+      <SOURCE WAVE
+        FILE "Boss Theme 1 Opening Chords-Contrabasses.wav"
+      >
+    >
+    <ITEM
+      POSITION 59.85902373659011
+      SNAPOFFS 0
+      LENGTH 36.16120937263782
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.006667 0 1 0 0 0
+      FADEOUT 1 0.006667 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {F641E310-6327-4683-A08F-770515AAAF92}
+      IID 80
+      NAME parmessa.flac
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 1.5 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {8683CF85-218E-4B6D-A0FE-3337E6F5CBE9}
+      <SOURCE FLAC
+        FILE "guitars\parmessa.flac"
+      >
+    >
+    <ITEM
       POSITION 64.02970221030746
       SNAPOFFS 0
       LENGTH 3.97227513227517
@@ -479,7 +503,7 @@
     PEAKCOL 16576
     BEAT -1
     AUTOMODE 0
-    VOLPAN 1 0 -1 -1 1
+    VOLPAN 1.64444525813245 0 -1 -1 1
     MUTESOLO 0 0 0
     IPHASE 0
     PLAYOFFS 0 1
@@ -504,7 +528,7 @@
       LOOP 1
       ALLTAKES 0
       FADEIN 1 0.006667 0 1 0 0 0
-      FADEOUT 1 0.672534 0 1 0 0 0
+      FADEOUT 1.1 0.672534 0.003355 1 1 0 0
       MUTE 0 0
       SEL 0
       IGUID {7AE788F5-DE52-4C34-B304-FCDDF60F8D09}
@@ -517,6 +541,50 @@
       GUID {E3BCAE34-9611-48DB-9B5B-D5506A046807}
       <SOURCE WAVE
         FILE "Boss Theme 1 Opening Chords-Contrabasses.wav"
+      >
+    >
+    <ITEM
+      POSITION 22.99664455675085
+      SNAPOFFS 0
+      LENGTH 6.66666666666667
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1.1 0.01 0.003355 1 1 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {D0D96FBB-30DD-4924-A703-FE96B1A4AAA4}
+      IID 120
+      NAME LevelOneBoss_DrumFill_OffBeats_180bpm.wav
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {D17A2104-9B42-4935-A2C1-2825590C676C}
+      <SOURCE WAVE
+        FILE "LevelOneBoss_DrumFill_OffBeats_180bpm.wav"
+      >
+    >
+    <ITEM
+      POSITION 34.33642934914678
+      SNAPOFFS 0
+      LENGTH 18.67253005138988
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.290269 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {62E9FF72-8BA4-40E8-BF19-574EF59587A0}
+      IID 89
+      NAME "Boss Theme 1 Opening Chords-Violoncellos.wav"
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 2 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {25980BC1-B870-4FE2-ABA4-FC4EA4C683F7}
+      <SOURCE WAVE
+        FILE "Boss Theme 1 Opening Chords-Violoncellos.wav"
       >
     >
     <ITEM
@@ -541,13 +609,35 @@
         FILE "KotoTremoloC_8beats_170bpm.wav"
       >
     >
+    <ITEM
+      POSITION 72.91931123445025
+      SNAPOFFS 0
+      LENGTH 9.89170068027229
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.006667 0 1 0 0 0
+      FADEOUT 1 0.006667 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {73E09FAC-5BB2-4E3F-830A-B201FA1BEC10}
+      IID 79
+      NAME chedda.flac
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 1.5 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {C9BCE7BC-AADC-4231-B590-AE659131DBCB}
+      <SOURCE FLAC
+        FILE "guitars\chedda.flac"
+      >
+    >
   >
   <TRACK {58413C10-B7A0-4226-8D57-66ED41E775A5}
     NAME chedda
     PEAKCOL 16576
     BEAT -1
     AUTOMODE 0
-    VOLPAN 1 0 -1 -1 1
+    VOLPAN 1.74533253398761 0 -1 -1 1
     MUTESOLO 0 0 0
     IPHASE 0
     PLAYOFFS 0 1
@@ -587,7 +677,7 @@
       LOOP 1
       ALLTAKES 0
       FADEIN 1 0.01 0 1 0 0 0
-      FADEOUT 1 0 0 1 0 0 0
+      FADEOUT 1.1 0 0.366624 1 1 0 0
       MUTE 0 0
       SEL 0
       IGUID {A53F3850-9A09-44D9-BEE9-A5DF566C527F}
@@ -600,6 +690,50 @@
       GUID {9782BDC4-F1EC-40AE-B283-493825D04D66}
       <SOURCE WAVE
         FILE "LevelOneBoss_DramaticDrums.wav"
+      >
+    >
+    <ITEM
+      POSITION 22.97406192707155
+      SNAPOFFS 0
+      LENGTH 7.47870182878539
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1.1 0.01 0.366624 1 1 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {5AAB8700-5ED1-4589-82FB-EF780A7E6693}
+      IID 114
+      NAME LevelOneBoss_DramaticCymbals.wav
+      VOLPAN 1 0 1 -1
+      SOFFS 1.43776075624858
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {A1667735-DFFA-43F2-AFB3-C49CA1F6549E}
+      <SOURCE WAVE
+        FILE "LevelOneBoss_DramaticCymbals.wav"
+      >
+    >
+    <ITEM
+      POSITION 34.33642934914678
+      SNAPOFFS 0
+      LENGTH 18.65747496493701
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.290269 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {EE5D0456-3DA8-4CDF-8B8A-173F2A0565BD}
+      IID 90
+      NAME "Boss Theme 1 Opening Chords-Contrabasses.wav"
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 2 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {2BEBB443-8E3A-4381-B4F9-C1241D8900D4}
+      <SOURCE WAVE
+        FILE "Boss Theme 1 Opening Chords-Contrabasses.wav"
       >
     >
   >
