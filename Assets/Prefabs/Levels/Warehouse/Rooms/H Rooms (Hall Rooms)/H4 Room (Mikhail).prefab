@@ -7890,6 +7890,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7779104706460037439}
+  - component: {fileID: 8711949222736921477}
   m_Layer: 0
   m_Name: H4 Room (Mikhail)
   m_TagString: Untagged
@@ -7915,6 +7916,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8711949222736921477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7779104706460037438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96507927e40f151489557d6825ac7fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  entranceways:
+  - {fileID: 7779104705314413490}
+  - {fileID: 7779104705313466712}
+  - {fileID: 7779104707004561077}
+  - {fileID: 7779104706111477079}
+  - {fileID: 7779104705465714976}
+  - {fileID: 7779104705513427327}
+  - {fileID: 7779104706666413541}
+  - {fileID: 7779104705560217348}
+  - {fileID: 7779104705728616373}
+  - {fileID: 7779104705957551891}
+  - {fileID: 7779104706147836900}
+  - {fileID: 7779104705008712172}
+  roomShape: 1
+  roomType: 0
 --- !u!1 &7779104706552346413
 GameObject:
   m_ObjectHideFlags: 0
