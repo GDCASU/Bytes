@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridCellSize: 40
   debug: 1
-  mainTrailMaxRooms: 100
+  mainTrailMaxRooms: 10
   augmentationTrailMaxRooms: 1
   keycardTrailMaxRooms: 3
   trialTrailMaxRooms: 2
@@ -364,6 +364,7 @@ MonoBehaviour:
     type: 3}
   gPrefab:
   - {fileID: 2788671453934971417, guid: 1ba01105fb3b7ce49844bacad078ce50, type: 3}
+  - {fileID: 620041865684117393, guid: 6b1ca81c9d24016469f1de7ccd4976d1, type: 3}
   tPrefab:
   - {fileID: 7002698807063327400, guid: 6984eeda2724e844aa998a1546358d5d, type: 3}
   hPrefab:
