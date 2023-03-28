@@ -60,6 +60,15 @@ public class MapGenerator : MonoBehaviour
     public List<GameObject> trialRooms;
     public List<GameObject> bossRooms;
 
+    [Header("Loot")]
+    public int increasedResourceChance = 0;
+    public int increasedAugmentationChance = 0;
+    public int increasedTacticalChance = 0;
+    public int increasedHealthUpgradeChance = 0;
+    public int increasedBatteryUpgradeChance = 0;
+
+    int resourceChanceMult, augmentationChanceMult, tacticalChanceMult,
+            healthUpgradeChanceMult, batteryUpgradeChanceMult;                    // Multipliers for chest chance increase (chest chances will increase with each room generation)
 
     int entrFlagIdx = 0;
     #endregion
@@ -80,6 +89,11 @@ public class MapGenerator : MonoBehaviour
         trialRooms = new List<GameObject>(); // Rooms to Trial Room
         bossRooms = new List<GameObject>(); // Rooms to Boss Room
 
+        resourceChanceMult = 0;
+        augmentationChanceMult = 0;
+        tacticalChanceMult = 0;
+        healthUpgradeChanceMult = 0;
+        batteryUpgradeChanceMult = 0;
 
         if (!debug)
         {
