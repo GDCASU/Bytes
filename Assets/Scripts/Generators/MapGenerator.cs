@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.VFX;
@@ -15,10 +16,22 @@ public enum TrailType
     Boss
 }
 
+public enum LootCode
+{
+    Resource,
+    Augmentation,
+    Tactical,
+    HealthUp,
+    BatteryUp
+}
+
+
 public class MapGenerator : MonoBehaviour
 {
     #region Variables
     const int ROOM_FACES = 6;
+
+    public static MapGenerator Instance { get; private set; }
 
     [Header("Settings")]
     public float gridCellSize = 40;
@@ -35,7 +48,6 @@ public class MapGenerator : MonoBehaviour
     [Range(0, 1)] public float tRoomChance = 0.4f;
     [Range(0, 1)] public float hRoomChance = 0.5f;
     [Range(0, 1)] public float bRoomChance = 1.0f;
-
 
     [Header("Room Prefabs")]
     public GameObject bluePrintPrefab;
@@ -61,17 +73,22 @@ public class MapGenerator : MonoBehaviour
     public List<GameObject> bossRooms;
 
     [Header("Loot")]
-    public int increasedResourceChance = 0;
-    public int increasedAugmentationChance = 0;
-    public int increasedTacticalChance = 0;
-    public int increasedHealthUpgradeChance = 0;
-    public int increasedBatteryUpgradeChance = 0;
+    public float increasedResourceChance = 0;
+    public float increasedAugmentationChance = 0;
+    public float increasedTacticalChance = 0;
+    public float increasedHealthUpgradeChance = 0;
+    public float increasedBatteryUpgradeChance = 0;
 
-    int resourceChanceMult, augmentationChanceMult, tacticalChanceMult,
-            healthUpgradeChanceMult, batteryUpgradeChanceMult;                    // Multipliers for chest chance increase (chest chances will increase with each room generation)
+    float resourceChanceMult, augmentationChanceMult, tacticalChanceMult,
+            healthUpgradeChanceMult, batteryUpgradeChanceMult;             // Multipliers for chest chance increase (chest chances will increase with each room generation)
 
     int entrFlagIdx = 0;
     #endregion
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -89,11 +106,11 @@ public class MapGenerator : MonoBehaviour
         trialRooms = new List<GameObject>(); // Rooms to Trial Room
         bossRooms = new List<GameObject>(); // Rooms to Boss Room
 
-        resourceChanceMult = 0;
-        augmentationChanceMult = 0;
-        tacticalChanceMult = 0;
-        healthUpgradeChanceMult = 0;
-        batteryUpgradeChanceMult = 0;
+        resourceChanceMult = 1.0f;
+        augmentationChanceMult = 1.0f;
+        tacticalChanceMult = 1.0f;
+        healthUpgradeChanceMult = 1.0f;
+        batteryUpgradeChanceMult = 1.0f;
 
         if (!debug)
         {
@@ -596,6 +613,53 @@ public class MapGenerator : MonoBehaviour
     }
     #endregion
 
+    #region Loot
+    public void MultLoot(LootCode code)
+    {
+        switch (code)
+        {
+            case LootCode.Resource:
+                resourceChanceMult += increasedResourceChance;
+                break;
+            case LootCode.Augmentation:
+                augmentationChanceMult += increasedAugmentationChance;
+                break;
+            case LootCode.Tactical:
+                tacticalChanceMult += increasedTacticalChance;
+                break;
+            case LootCode.HealthUp:
+                healthUpgradeChanceMult += increasedHealthUpgradeChance;
+                break;
+            case LootCode.BatteryUp:
+                batteryUpgradeChanceMult += increasedBatteryUpgradeChance;
+                break;
+            default:
+                Debug.Log("Error: specified loot code does not exist in MultLoot().");
+                break;
+        }     
+    }
+
+    public float GetLootMult(LootCode code)
+    {
+        switch (code)
+        {
+            case LootCode.Resource:
+                return resourceChanceMult;
+            case LootCode.Augmentation:
+                return augmentationChanceMult;
+            case LootCode.Tactical:
+                return tacticalChanceMult;
+            case LootCode.HealthUp:
+                return healthUpgradeChanceMult;
+            case LootCode.BatteryUp:
+                return batteryUpgradeChanceMult;
+            default:
+                Debug.Log("Error: specified loot code does not exist in GetLootMult().");
+                return 0;
+        }
+    }
+    #endregion
+
     void ClearAllTrails()
     {
         masterTrail.Clear(); // All trails combined
@@ -605,6 +669,8 @@ public class MapGenerator : MonoBehaviour
         trialTrail.Clear(); // Trail to Trial Room
         bossTrail.Clear(); // Trail to Boss Room
     }
+
+    
 
     #region DebugGUI
     bool alreadyBMain, alreadyBAugmentation, alreadyBTrial,     // Blueprint Procedure Flags
