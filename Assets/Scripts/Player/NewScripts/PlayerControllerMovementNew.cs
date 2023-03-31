@@ -149,4 +149,14 @@ public partial class PlayerControllerNew
     }
     #endregion
 
+    #region Slope Movement
+    /*
+    public Vector3 getSlopeMoveDirection(Vector3 direction)
+    {
+        return Vector3.ProjectOnPlane();
+    }
+    */
+
+    #endregion
+
 }
