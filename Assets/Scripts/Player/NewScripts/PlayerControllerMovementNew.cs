@@ -16,6 +16,7 @@ public partial class PlayerControllerNew
     [SerializeField] float jumpPower;
     [SerializeField] float jumpCooldown;
     [SerializeField] float airMultplier;
+    [SerializeField] float fallForce;
     bool canJump = true;
 
     [Header("Crounching")]
@@ -23,29 +24,40 @@ public partial class PlayerControllerNew
     [SerializeField] float crouchYScale;
     private float startYScale;
 
+    [Header("Slope Movement")]
+    [SerializeField] float maxSlopeAngle;
+    private RaycastHit slopeHit;
+    private bool exitingSlope;
+
     Vector2 moveInput;
     float horizontalInput;
     float verticelInput;
 
     Vector3 moveDirection;
 
+    private MovementState previousMovementState;
     public MovementState moveState;
 
     public enum MovementState
     {
         walking,
         sprinting,
-        crounching,
+        crouching,
         air,
         free
     }
 
     //Handleing the Movement State
     public void handleMoveState()
-    {
+    { 
+        previousMovementState = moveState;
+
         if (grounded && _input.IsCrouchPressed) {//crouching
-            moveState = MovementState.crounching;
+            moveState = MovementState.crouching;
             moveSpeed = crouchSpeed;
+
+            if (previousMovementState != moveState) { enterCrouch(); }
+
         }
         else if (grounded && _input.IsSprintPressed && _input.MoveVector.magnitude > 0) //sprinting
         {
@@ -60,11 +72,14 @@ public partial class PlayerControllerNew
         else if (!grounded)//in air
         {
             moveState = MovementState.air;
+            handleAir();
         }
         else //free
         {
             moveState = MovementState.free;
         }
+
+        Debug.Log("Move State" + moveState);
     }
 
     #region Moving
@@ -77,9 +92,18 @@ public partial class PlayerControllerNew
 
         moveDirection = orientation.forward * verticelInput + orientation.right * horizontalInput;
 
+        //moveing player on slope
+        if (onSlope() && !exitingSlope)
+        { 
+            rb.AddForce(getSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
+
+            if (rb.velocity.y != 0)
+            {
+                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+            }
+        }
         //Moving the Player
-        if (grounded) { //moving on ground
-            Debug.Log("Moving on the Ground");
+        else if (grounded) { //moving on ground
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
         else if (!grounded)
@@ -93,17 +117,28 @@ public partial class PlayerControllerNew
             rb.drag = groundDrag;
         }
         else rb.drag = airDrag;
+
+        rb.useGravity = !onSlope();
     }
 
     private void handleSpeedControl()
     {
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        //limit velocity if needed
-        if (flatVel.magnitude> moveSpeed)
+        if (onSlope() && !exitingSlope)
         {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            if (rb.velocity.magnitude > moveSpeed)
+            {
+                rb.velocity = rb.velocity.normalized * moveSpeed;
+            }
+        }
+        else {
+            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+            //limit velocity if needed
+            if (flatVel.magnitude > moveSpeed)
+            {
+                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            }
         }
     }
     #endregion
@@ -113,7 +148,6 @@ public partial class PlayerControllerNew
     {
         if (_input.IsJumpPressed && canJump && grounded)
         {
-            Debug.Log("Trying to Jump");
             canJump = false;
             jump();
             Invoke(nameof(resetJump), jumpCooldown);
@@ -121,6 +155,8 @@ public partial class PlayerControllerNew
     }
     private void jump()
     {
+        exitingSlope = true;
+
         //reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
@@ -128,34 +164,74 @@ public partial class PlayerControllerNew
     }
     private void resetJump()
     {
+        exitingSlope = false;
         canJump = true;
     }
     #endregion
 
     #region Crouching
+    private void enterCrouch()
+    {
+        moveState = MovementState.crouching;
+        moveSpeed = crouchSpeed;
+
+        transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+        rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        Debug.Log("Adding Crouch Force");
+    }
+
     private void handleCrouch()
     {
-
-        if (moveState == MovementState.crounching)
+        if (moveState == MovementState.crouching)
         {
+            /*
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
             Debug.Log("Adding Crouch Force");
+            */
         }
         else
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
         }
     }
+
+    private void exitCrouch()
+    {
+        transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+    }
+    #endregion
+
+    #region In Air
+
+    private void handleAir()
+    {
+        if (rb.velocity.y <= 0)
+        {
+            rb.AddForce(Vector3.down * fallForce, ForceMode.Force);
+        }
+    }
+
     #endregion
 
     #region Slope Movement
-    /*
+
     public Vector3 getSlopeMoveDirection(Vector3 direction)
     {
-        return Vector3.ProjectOnPlane();
+        return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
-    */
+
+    public bool onSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHieght * 0.5f + 1f))
+        {
+            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            
+            return angle < maxSlopeAngle && angle != 0;
+        }
+
+        return false;
+    }
 
     #endregion
 
