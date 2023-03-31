@@ -79,7 +79,6 @@ public partial class PlayerControllerNew
 
         //Moving the Player
         if (grounded) { //moving on ground
-            Debug.Log("Moving on the Ground");
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
         else if (!grounded)
@@ -113,7 +112,6 @@ public partial class PlayerControllerNew
     {
         if (_input.IsJumpPressed && canJump && grounded)
         {
-            Debug.Log("Trying to Jump");
             canJump = false;
             jump();
             Invoke(nameof(resetJump), jumpCooldown);
