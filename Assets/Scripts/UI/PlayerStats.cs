@@ -7,6 +7,7 @@ public class PlayerStats : MonoBehaviour
 	readonly public int limitHealth = 500; //Limits the max amount of health you can upgrade to
 	readonly public int limitBattery = 10; //Limits the max amount of battery you can upgrade to
 	public int maxHealth; //current limit of the full health of the player, upgradable
+	public bool debugOn = false; //if true, prints values to console
 	public int health;
 	public int battery;
 	public int maxBattery; //Sets the max battery possible, can be changed to increase charges
@@ -29,7 +30,10 @@ public class PlayerStats : MonoBehaviour
 			return;
 		}
 		health -= damage;
-		Debug.Log("Damage Taken! " + "Health = " + health.ToString());
+		if (debugOn) 
+		{
+			Debug.Log("Damage Taken! " + "Health = " + health.ToString());
+		}
 	}
 
 	public bool gainHealth(int heal) //Boolean could be used to show something in the UI
@@ -44,7 +48,10 @@ public class PlayerStats : MonoBehaviour
 		{
 			health = maxHealth; //Stops at maxHealth
 		}
-		Debug.Log("Health Gained! " + "Health = " + health.ToString());
+		if (debugOn) 
+		{
+			Debug.Log("Health Gained! " + "Health = " + health.ToString());
+		}
 		return true; //Event: Player healed
 	}
 
@@ -55,7 +62,10 @@ public class PlayerStats : MonoBehaviour
 			return false; //Dont have enough battery to spend
 		}
 		battery -= batteryCost;
-		Debug.Log("Battery spent! " + "Battery = " + battery.ToString());
+		if (debugOn) 
+		{
+			Debug.Log("Battery spent! " + "Battery = " + battery.ToString());
+		}
 		return true; //Spent Battery
 	}
 
@@ -74,7 +84,10 @@ public class PlayerStats : MonoBehaviour
 		{
 			battery = maxBattery;
 		}
-		Debug.Log("Battery Gained! " + "Battery = " + battery.ToString());
+		if (debugOn) 
+		{
+			Debug.Log("Battery Gained! " + "Battery = " + battery.ToString());
+		}
 		return true; //Battery gained successfully
 	}
 
@@ -86,7 +99,10 @@ public class PlayerStats : MonoBehaviour
 			return;
 		}
 		maxBattery += addedCharges;
-		Debug.Log("New Battery Limit = " + maxBattery.ToString());
+		if (debugOn)
+		{
+			Debug.Log("New Battery Limit = " + maxBattery.ToString());
+		}
 	}
 
 	public bool upgradeMaxHealth(int upgradeNum) {
@@ -99,7 +115,10 @@ public class PlayerStats : MonoBehaviour
 		{
 			maxHealth = limitHealth; //Allows last upgrade of health
 		}
-		Debug.Log("New Health Limit = " + maxHealth.ToString());
+		if (debugOn) 
+		{
+			Debug.Log("New Health Limit = " + maxHealth.ToString());
+		}
 		return true; //Successfully upgraded Health
 	}
 
