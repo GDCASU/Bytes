@@ -18,14 +18,14 @@ public partial class PlayerController
 
         #region Acceleration
         [Header("Acceleration")]
-        public float walkSpeedIncrease = 1;
-        public float sprintSpeedIncrease = 2;
+        public float walkSpeedIncrease = 1f;
+        public float sprintSpeedIncrease = 2f;
         #endregion
 
         #region Velocity Caps
         [Header("Velocity Boundaries")]
         public float maxWalkVelocity = 7.5f;
-        public float maxSprintVelocity = 15;
+        public float maxSprintVelocity = 15f;
         public float minVelocity = .1f;
         #endregion
 
@@ -41,6 +41,8 @@ public partial class PlayerController
         [Range(0, 1)]
         public float inAirControl = .021f;
         public float minAirVelocity = 2f;
+        public float maxAirVelocityWalking = 7.5f;
+        public float maxAirVelocitySprinting = 15f;
         #endregion
 
         #region Gravity
@@ -92,6 +94,7 @@ public partial class PlayerController
 
         speedIncrease = (isSprinting) ? baseMovementVariables.sprintSpeedIncrease : baseMovementVariables.walkSpeedIncrease;
         maxVelocity = (isSprinting) ? baseMovementVariables.maxSprintVelocity : baseMovementVariables.maxWalkVelocity;
+        maxAirVelocity = (isSprinting) ? baseMovementVariables.maxAirVelocitySprinting : baseMovementVariables.maxAirVelocityWalking;
 
         //if (Input.GetKey(KeyCode.W)) z = speedIncrease;
         //else if (Input.GetKey(KeyCode.S)) z = -speedIncrease;
@@ -248,6 +251,7 @@ public partial class PlayerController
                         (currentForwardAndRight.magnitude < .1f && stuckBetweenSurfacesHelper > 1 ? 1f : airControl) +
                         currentForwardAndRight;
                     if (newVelocity.magnitude < baseMovementVariables.minAirVelocity) newVelocity = newVelocity.normalized * baseMovementVariables.minAirVelocity;
+                    else if (newVelocity.magnitude > maxAirVelocity) newVelocity = newVelocity.normalized * maxAirVelocity;
                     rb.velocity = newVelocity + rb.velocity.y * Vector3.up;
                 }
             }

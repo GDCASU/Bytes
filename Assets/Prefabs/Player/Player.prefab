@@ -2101,8 +2101,10 @@ MonoBehaviour:
     noInputFriction: 0.2
     groundFriction: 0.1
     inAirFriction: 0.004
-    inAirControl: 0.021
+    inAirControl: 0.35
     minAirVelocity: 2
+    maxAirVelocityWalking: 8
+    maxAirVelocitySprinting: 15
     initialGravity: -0.55
     gravityRate: 1.008
     maxGravity: -39.2
@@ -2133,7 +2135,7 @@ MonoBehaviour:
     jumpStrength: 6.5
     jumpStregthDecreaser: 0.05
     jumpInAirStrength: 0
-    jumpInAirControl: 0.01
+    jumpInAirControl: 0.35
     jumpingInitialGravity: -0.3
     highestPointHoldTime: 0.05
     justJumpedCooldown: 0.1
