@@ -55,88 +55,88 @@ public class PlayerInput : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (context.performed)
-            _interactionHandler.AttemptInteraction();
+        //if (context.performed)
+        //    _interactionHandler.AttemptInteraction();
     }
 
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
         
-        if (context.phase == InputActionPhase.Performed)
-            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Primary, true);
-        else if (context.phase == InputActionPhase.Canceled)
-            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Primary, false);
+        //if (context.phase == InputActionPhase.Performed)
+        //    _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Primary, true);
+        //else if (context.phase == InputActionPhase.Canceled)
+        //    _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Primary, false);
         
     }
 
     public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
-            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Secondary, true);
-        else if (context.phase == InputActionPhase.Canceled)
-            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Secondary, false);
+        //if (context.phase == InputActionPhase.Performed)
+        //    _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Secondary, true);
+        //else if (context.phase == InputActionPhase.Canceled)
+        //    _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Secondary, false);
     }
 
     public void OnTertiaryAttack(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
-            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Tertiary, true);
-        else if (context.phase == InputActionPhase.Canceled)
-            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Tertiary, false);
+        //if (context.phase == InputActionPhase.Performed)
+        //    _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Tertiary, true);
+        //else if (context.phase == InputActionPhase.Canceled)
+        //    _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Tertiary, false);
     }
 
     public void OnReload(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
-            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Reload, true);
-        else if (context.phase == InputActionPhase.Canceled)
-            _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Reload, false);
+        //if (context.phase == InputActionPhase.Performed)
+        //    _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Reload, true);
+        //else if (context.phase == InputActionPhase.Canceled)
+        //    _weaponHandler.TriggerWeaponAbility(WeaponAbilityType.Reload, false);
     }
 
     public void OnSwitchWeapon(InputAction.CallbackContext context)
     {
-        int switchValue = (int)context.ReadValue<float>();
+        //int switchValue = (int)context.ReadValue<float>();
 
-        if (switchValue == -120)
-            switchValue = -1;
-        else if (switchValue == 120)
-            switchValue = 0;
+        //if (switchValue == -120)
+        //    switchValue = -1;
+        //else if (switchValue == 120)
+        //    switchValue = 0;
 
-        _weaponHandler.SwitchWeapon(switchValue);
+        //_weaponHandler.SwitchWeapon(switchValue);
     }
 
     public void UseFirstAugmentation(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
-            _augmentationHandler.TriggerAugmentation(0, true);
-        else if (context.phase == InputActionPhase.Canceled)
-            _augmentationHandler.TriggerAugmentation(0, false);
+        //if (context.phase == InputActionPhase.Performed)
+        //    _augmentationHandler.TriggerAugmentation(0, true);
+        //else if (context.phase == InputActionPhase.Canceled)
+        //    _augmentationHandler.TriggerAugmentation(0, false);
     }
 
     public void UseSecondAugmentation(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
-            _augmentationHandler.TriggerAugmentation(1, true);
-        else if (context.phase == InputActionPhase.Canceled)
-            _augmentationHandler.TriggerAugmentation(1, false);
+        //if (context.phase == InputActionPhase.Performed)
+        //    _augmentationHandler.TriggerAugmentation(1, true);
+        //else if (context.phase == InputActionPhase.Canceled)
+        //    _augmentationHandler.TriggerAugmentation(1, false);
     }
 
     public void UseThirdAugmentation(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
-            _augmentationHandler.TriggerAugmentation(2, true);
-        else if (context.phase == InputActionPhase.Canceled)
-            _augmentationHandler.TriggerAugmentation(2, false);
+        //if (context.phase == InputActionPhase.Performed)
+        //    _augmentationHandler.TriggerAugmentation(2, true);
+        //else if (context.phase == InputActionPhase.Canceled)
+        //    _augmentationHandler.TriggerAugmentation(2, false);
     }
 
     public void Pause(InputAction.CallbackContext context)
     {
-        if (context.phase != InputActionPhase.Performed)
-            return;
+        //if (context.phase != InputActionPhase.Performed)
+        //    return;
 
-        if (Time.timeScale == 1)
-            Time.timeScale = 0;
-        else
-            Time.timeScale = 1;
+        //if (Time.timeScale == 1)
+        //    Time.timeScale = 0;
+        //else
+        //    Time.timeScale = 1;
     }
 }
