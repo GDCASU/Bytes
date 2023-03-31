@@ -34,6 +34,10 @@ public class PlayerStats : MonoBehaviour
 			}
 			return true; //Could tank damage
 		}
+		if (debugOn) 
+		{
+			Debug.Log("You died! Health is or went below 0");
+		}
 		return false; //Died
 	}
 
@@ -52,6 +56,10 @@ public class PlayerStats : MonoBehaviour
 			}
 			return true; //Event: Player healed
 		}
+		if (debugOn) 
+		{
+			Debug.Log("Cant gain anymore health!");
+		}
 		return false; //Event: Player has max health
 	}
 
@@ -66,6 +74,10 @@ public class PlayerStats : MonoBehaviour
 				Debug.Log("Battery spent! " + "Battery = " + battery.ToString());
 			}
 			return true; //Spent battery
+		}
+		if (debugOn) 
+		{
+			Debug.Log("Not enough battery!");
 		}
 		return false; //Don't have enough battery
 	}
@@ -89,6 +101,10 @@ public class PlayerStats : MonoBehaviour
 			}
 			return true; //Battery gained successfully
 		}
+		if (debugOn) 
+		{
+			Debug.Log("Cant gain anymore battery!");
+		}
 		return false; //Player has max battery
 	}
 
@@ -107,6 +123,10 @@ public class PlayerStats : MonoBehaviour
 			}
 			return true; //Battery upgraded successfully
 		}
+		if (debugOn) 
+		{
+			Debug.Log("Upgrade Limit for battery reached!");
+		}
 		return false; //Cant upgrade battery anymore
 	}
 
@@ -124,6 +144,10 @@ public class PlayerStats : MonoBehaviour
 				Debug.Log("New Health Limit = " + maxHealth.ToString());
 			}
 			return true; //Successfully upgraded Health
+		}
+		if (debugOn) 
+		{
+			Debug.Log("Upgrade Limit for health reached!");
 		}
 		return false; //Cant upgrade health any further
 	}
