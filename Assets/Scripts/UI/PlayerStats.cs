@@ -22,7 +22,7 @@ public class PlayerStats : MonoBehaviour
 		battery = 5;
 	}
 
-	public void takeDamage(int damage)
+	public bool takeDamage(int damage)
 	{
 		int newHealth = health - damage;
 		if ( newHealth > 0 ) //Enough Health to tank incoming damage
@@ -32,11 +32,9 @@ public class PlayerStats : MonoBehaviour
 			{
 				Debug.Log("Damage Taken! " + "Health = " + health.ToString());
 			}
+			return true; //Could tank damage
 		}
-		else 
-		{
-			deathEvent(); //Died, not implemented yet
-		}
+		return false; //Died
 	}
 
 	public bool gainHealth(int heal) //Boolean could be used to show something in the UI
@@ -128,10 +126,6 @@ public class PlayerStats : MonoBehaviour
 			return true; //Successfully upgraded Health
 		}
 		return false; //Cant upgrade health any further
-	}
-
-	public void deathEvent() {
-		//Place code here to execute when the player dies
 	}
 
 	//Getters
