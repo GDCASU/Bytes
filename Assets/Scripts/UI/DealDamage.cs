@@ -6,7 +6,9 @@ public class DealDamage : MonoBehaviour
 {
 	public void sendDamage (int dmg)
 	{
-		PlayerStats targetPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
-		targetPlayer.takeDamage(dmg);
+		GameObject parentPlayer = GameObject.FindGameObjectWithTag("Player");
+        GameObject childPlayer = parentPlayer.FindGameObjectWithTag("Player");
+		PlayerStats playerStats = childPlayer.GetComponentInChildren<PlayerStats>();
+		playerStats.takeDamage(dmg);
 	}
 }

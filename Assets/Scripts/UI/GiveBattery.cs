@@ -6,7 +6,9 @@ public class GiveBattery : MonoBehaviour
 {
 	public void givePlayerBattery (int chargeAmount)
 	{
-		PlayerStats targetPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
-		targetPlayer.gainBattery(chargeAmount);
+		GameObject parentPlayer = GameObject.FindGameObjectWithTag("Player");
+        GameObject childPlayer = parentPlayer.FindGameObjectWithTag("Player");
+		PlayerStats playerStats = childPlayer.GetComponentInChildren<PlayerStats>();
+		playerStats.gainBattery(chargeAmount);
 	}
 }
