@@ -12,7 +12,9 @@ public class BatteryBarScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        GameObject parentPlayer = GameObject.FindGameObjectWithTag("Player");
+        GameObject childPlayer = parentPlayer.FindGameObjectWithTag("Player");
+		PlayerStats playerStats = childPlayer.GetComponentInChildren<PlayerStats>();
         batteryBar.maxValue = playerStats.maxBattery;
     }
 
