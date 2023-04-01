@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class PlayerControllerNew : MonoBehaviour
+public partial class PlayerController : MonoBehaviour
 {
     PlayerInput _input;
     Rigidbody rb;
