@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class PlayerControllerNew
+public partial class PlayerController
 {
     private float moveSpeed;
 
@@ -177,7 +177,7 @@ public partial class PlayerControllerNew
 
         transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        Debug.Log("Adding Crouch Force");
+        // Debug.Log("Adding Crouch Force");
     }
 
     private void handleCrouch()
