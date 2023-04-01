@@ -1,115 +1,130 @@
-/*
- * By: Aaron Huggins
- * 
- * Description:
- * Moves an elevator platform between points when called to do so.
- * 
- * Public Functions:
- *      void MovePlatform();            // Calls the program to move the platform.
- *      void Triggered(Collider other); // Checks if the other is in a suitable position to be moved with the platform
- */
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Elevator : MonoBehaviour
 {
-    #region Variables
+    [Header("Modifiers")]
+    [SerializeField] float Height;
+    [SerializeField] float Speed = 1f;
+    [SerializeField] bool ScanForGround = true;
+    
+    private RaycastHit groundHit;
 
-    [Header("Reference Objects")]
-    [SerializeField] Transform platform;
-    [SerializeField] Transform pointA;
-    [SerializeField] Transform pointB;
-
-    [Header("Math Utility")]
-    [SerializeField] bool UseHeight;
-    [SerializeField] float height;
-    [SerializeField] float speed = 1f;
-
-    // State controls
+    private bool move = false;
     private float timer = 0f;
-    private bool movePlatform = false;
 
-    #endregion
+    [Header("References")]
+    [SerializeField] Transform origin;
+    [SerializeField] Transform bottom;
+    [SerializeField] Transform playerMover;
 
-    #region UnityEvents
+    [SerializeField] Transform elevator;
 
+    private PlayerControllerNew localPlayer;
+
+    #region Init
+
+    // Sets the elevator transforms to their appropriate positions based on Height and ScanForGround
     private void Start()
     {
-        // Place pointB "height" above pointA
-        if (UseHeight) pointB.position = pointA.position + new Vector3(0f, height, 0f);
+        if (ScanForGround) HandleGroundScan();
+        else HandlePureHeight();
     }
 
-    private void FixedUpdate()
+    // Scans for if ground is within the appropriate height range and sets the elevator to be at the ground
+    // if so. If not, handles the elevator as if pure height should be used.
+    void HandleGroundScan()
     {
-        if (movePlatform) HandleMovement();
+        Physics.Raycast(origin.position, Vector3.down, out groundHit);
+        if (groundHit.distance > Height)
+        {
+            // Set scale
+            Vector3 scale = elevator.localScale;
+            Vector3 newScale = new Vector3(scale.x, groundHit.distance / 2, scale.z);
+            elevator.localScale = newScale;
+
+            // Set position
+            elevator.position = new Vector3(origin.position.x, origin.position.y - newScale.y, origin.position.z);
+            bottom.position = groundHit.point;
+        }
+        else HandlePureHeight();
+    }
+
+    // Sets transforms based on "Height" only.
+    void HandlePureHeight()
+    {
+        // Set scale
+        Vector3 newScale = new Vector3(elevator.localScale.x, Height / 2, elevator.localScale.z);
+        elevator.localScale = newScale;
+
+        // Set position
+        elevator.position = new Vector3(origin.position.x, origin.position.y - newScale.y, origin.position.z);
+        bottom.position = origin.position - (Vector3.down * Height);
     }
 
     #endregion
 
-    // Sets the movePlatform bool to true. After reach an endpoint, movePlatform reverts to false.
-    public void MovePlatform()
+    #region Move Player
+
+    // Moves player if necessary
+    private void FixedUpdate()
     {
-        movePlatform = true;
+        if (move) HandleMovement();
     }
 
-    // Sets the movePlatform bool to true and sets the inserted game object as a child to the platform
-    public void MovePlatform(GameObject player)
+    // Activates when the player enters the elevator collider
+    public void Triggered(GameObject other)
     {
-        movePlatform = true;
-        player.transform.SetParent(platform);
+        if (other.tag == "Player") MovePlayer(other);
     }
 
-    public void Triggered(Collider other)
+    public void UnTrigger(GameObject other)
     {
-        Debug.Log("Trigger Enter");
-        if (other.gameObject.tag == "Player")
+        if(other.tag == "Player")
         {
-            Debug.Log("Player Collision");
-            if (CheckSendPlayer(other.gameObject))
-            {
-                other.gameObject.transform.SetParent(platform.transform);
-                MovePlatform();
-            }
+            move = false;
+            localPlayer.transform.SetParent(transform.root.parent);
         }
     }
 
-    // Contains the code to actually move the platform
-    private void HandleMovement()
+    // Handles the movement of the player using the playerMover object
+    void HandleMovement()
     {
-        platform.position = Vector3.Lerp(pointA.position, pointB.position, timer);
-        timer += speed * Time.deltaTime;
+        // Player should go down
+        if(localPlayer.moveState == PlayerControllerNew.MovementState.crounching) Speed = Speed > 0 ? -Speed : Speed;
+        // Player should go up
+        else Speed = Speed < 0 ? -Speed : Speed;
 
-        // Set platform to go backwards
-        if (timer >= 1f || timer <= 0f)
+        timer += Speed * Time.deltaTime;
+
+        // Ensure that timer is between 0 and 1
+        if (timer > 1f)
         {
-            speed *= -1;
-            movePlatform = false;
-
-            // Check platform's children for the player.
-            for(int i = 0; i < platform.childCount; i++)
-            {
-                if(platform.GetChild(i).tag == "Player")
-                {
-                    platform.GetChild(i).SetParent(transform.root.parent);
-                }
-            }
+            timer = 1f;
+            return;
         }
+        if(timer < 0f)
+        {
+            timer = 0f;
+            return;
+        }
+
+        // Move player
+        playerMover.position = Vector3.Lerp(bottom.position, origin.position, timer);
     }
 
-    // Checks if the elevator is at the lower point and the player is within bounds to be carried
-    private bool CheckSendPlayer(GameObject player)
+    // Tells elevator to move the player
+    public void MovePlayer(GameObject player)
     {
-        bool returnVal; // = platform.position == pointA.position;  // Platform is at correct position
-        returnVal = //returnVal &&
-            player.transform.position.y > platform.position.y;  // Player is above platform
-        returnVal = returnVal &&
-            player.transform.position.x < platform.position.x + platform.localScale.x &&
-            player.transform.position.x > platform.position.x - platform.localScale.x &&
-            player.transform.position.z < platform.position.z + platform.localScale.z &&
-            player.transform.position.z > platform.position.z - platform.localScale.z;
-        Debug.Log(returnVal);
-        return returnVal;
+        move = true;
+        player.transform.SetParent(playerMover);
+        localPlayer = player.GetComponent<PlayerControllerNew>();
+
+        // Set playerMover position and gather percentage
+        playerMover.localPosition = new Vector3(origin.position.x, (player.transform.localPosition.y - player.transform.localScale.y / 2), origin.position.z);
+        timer = (playerMover.position.y - bottom.position.y) / (origin.position.y - bottom.position.y);
     }
+
+    #endregion
 }
