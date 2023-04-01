@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour 
 {
+	public static PlayerStats playerStats;
+
 	public bool debugOn = false; //if true, prints values to console
 	readonly public int limitHealth = 500; //Limits the max amount of health you can upgrade to
 	readonly public int limitBattery = 10; //Limits the max amount of battery you can upgrade to
@@ -14,6 +16,11 @@ public class PlayerStats : MonoBehaviour
 	
 	//TODO: Add ammunition inventory and more
 	
+	void Awake()
+	{
+		playerStats = this;
+	}
+
 	public PlayerStats() 
 	{
 		maxHealth = 100;

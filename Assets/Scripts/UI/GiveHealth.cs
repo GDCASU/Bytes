@@ -6,7 +6,6 @@ public class GiveHealth : MonoBehaviour
 {
 	public void healPlayer (int healAmount)
 	{
-		PlayerStats targetPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
-		targetPlayer.gainHealth(healAmount);
+		PlayerStats.playerStats.gainHealth(healAmount);
 	}
 }

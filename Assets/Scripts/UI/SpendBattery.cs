@@ -6,7 +6,6 @@ public class SpendBattery : MonoBehaviour
 {
 	public void spendPlayerBattery (int chargeCost)
 	{
-		PlayerStats targetPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
-		targetPlayer.spendBattery(chargeCost);
+		PlayerStats.playerStats.spendBattery(chargeCost);
 	}
 }
