@@ -79,7 +79,7 @@ public partial class PlayerControllerNew
             moveState = MovementState.free;
         }
 
-        Debug.Log("Move State" + moveState);
+        // Debug.Log("Move State" + moveState);
     }
 
     #region Moving
