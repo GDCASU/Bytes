@@ -1248,7 +1248,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392529921242535764}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.25
   m_Height: 1.75
@@ -3148,7 +3148,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047972223639100917}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 847143404aa8cb147ac4730ab8e2d8bd, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -8130,6 +8130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54aea1b6c0bd0114f98e55710e8fa5b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  orientation: {fileID: 6724790139864271}
+  playerHieght: 2
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 2147483647
   cameraTrans: {fileID: 530165753153516978}
   cameraHolderTrans: {fileID: 390069889883205969}
   cameraPosition: {fileID: 1898792368389892162}
@@ -8139,17 +8144,14 @@ MonoBehaviour:
   sprintSpeed: 15
   groundDrag: 4
   airDrag: 0
-  jumpPower: 5
+  jumpPower: 100
   jumpCooldown: 0.25
   airMultplier: 0.5
+  fallForce: 0
   crouchSpeed: 17
   crouchYScale: 0.5
+  maxSlopeAngle: 0
   moveState: 0
-  orientation: {fileID: 6724790139864271}
-  playerHieght: 2
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 2147483647
 --- !u!114 &6670892536787077891
 MonoBehaviour:
   m_ObjectHideFlags: 0
