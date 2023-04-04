@@ -15,7 +15,7 @@ public class DashAugmentation : Augmentation
     bool _isEquipped;
     Player _player;
     Damageable _damageable;
-    PlayerController _controller;
+    PlayerControllerOld _controller;
     Rigidbody _rb;
 
     public override bool IsEquipped => _isEquipped;
@@ -38,7 +38,7 @@ public class DashAugmentation : Augmentation
     {
         _player = equipper.GetComponent<Player>();
         _damageable = equipper.GetComponent<Damageable>();
-        _controller = equipper.GetComponent<PlayerController>();
+        _controller = equipper.GetComponent<PlayerControllerOld>();
         _rb = equipper.GetComponent<Rigidbody>();
 
         _renderer.enabled = false;
