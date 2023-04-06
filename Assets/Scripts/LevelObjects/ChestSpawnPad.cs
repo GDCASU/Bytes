@@ -5,20 +5,24 @@ using UnityEngine;
 
 public class ChestSpawnPad : SpawnPad
 {
+    [Header("Debug")]
     public bool debug = false;
 
+    [Header("Chest Prefabs")]
     public GameObject resourceChest;
     public GameObject augmentationChest;
     public GameObject tacticalChest;
     public GameObject healthUpgradeChest;
     public GameObject batteryUpgradeChest;
 
+    [Header("Force Spawn")]
     public bool forceSpawnResource;
     public bool forceSpawnAugmentation;
     public bool forceSpawnTactical;
     public bool forceSpawnHealthUpgrade;
     public bool forceSpawnBatteryUpgrade;
 
+    [Header("Default Chances")]
     [Range(0, 100)] public float resourceChance;
     [Range(0, 100)] public float augmentationChance;
     [Range(0, 100)] public float tacticalChance;
