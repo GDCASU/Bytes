@@ -32,6 +32,7 @@ public class MapGenerator : MonoBehaviour
     const int ROOM_FACES = 6;
 
     public static MapGenerator Instance { get; private set; }
+    public LootGenerator lootGenerator;
 
     [Header("Settings")]
     public float gridCellSize = 40;
@@ -71,23 +72,15 @@ public class MapGenerator : MonoBehaviour
     public List<GameObject> keycardRooms;
     public List<GameObject> trialRooms;
     public List<GameObject> bossRooms;
-
-    [Header("Loot")]
-    public float increasedResourceChance = 0;
-    public float increasedAugmentationChance = 0;
-    public float increasedTacticalChance = 0;
-    public float increasedHealthUpgradeChance = 0;
-    public float increasedBatteryUpgradeChance = 0;
-
-    float resourceChanceMult, augmentationChanceMult, tacticalChanceMult,
-            healthUpgradeChanceMult, batteryUpgradeChanceMult;             // Multipliers for chest chance increase (chest chances will increase with each room generation)
-
-    int entrFlagIdx = 0;
     #endregion
 
     void Awake()
     {
         Instance = this;
+        if (GetComponent<LootGenerator>() != null)
+            lootGenerator = GetComponent<LootGenerator>();
+        else
+            Debug.Log("Error: Loot Generator Script could not be found.");
     }
 
     void Start()
@@ -106,12 +99,6 @@ public class MapGenerator : MonoBehaviour
         trialRooms = new List<GameObject>(); // Rooms to Trial Room
         bossRooms = new List<GameObject>(); // Rooms to Boss Room
 
-        resourceChanceMult = 1.0f;
-        augmentationChanceMult = 1.0f;
-        tacticalChanceMult = 1.0f;
-        healthUpgradeChanceMult = 1.0f;
-        batteryUpgradeChanceMult = 1.0f;
-
         if (!debug)
         {
             LabyrinthAlg();
@@ -122,6 +109,7 @@ public class MapGenerator : MonoBehaviour
     {
         BlueprintProcedure();
         RoomGenerationProcedure();
+        lootGenerator.SpawnLoot();
     }
 
     void BlueprintProcedure() // 1. Generate Blueprint Trails
@@ -150,6 +138,8 @@ public class MapGenerator : MonoBehaviour
     }
 
     #region BlueprintProcedure
+
+    int entrFlagIdx = 0;
     void RandomWalker(int maxRooms, List<BlueprintRoom> trail, BlueprintRoom startingRoom)
     {
         Vector3 curPos = Vector3.zero; // Set the position of the starting room
@@ -610,53 +600,6 @@ public class MapGenerator : MonoBehaviour
         }
 
         return genRoom;
-    }
-    #endregion
-
-    #region Loot
-    public void MultLoot(LootCode code)
-    {
-        switch (code)
-        {
-            case LootCode.Resource:
-                resourceChanceMult += increasedResourceChance;
-                break;
-            case LootCode.Augmentation:
-                augmentationChanceMult += increasedAugmentationChance;
-                break;
-            case LootCode.Tactical:
-                tacticalChanceMult += increasedTacticalChance;
-                break;
-            case LootCode.HealthUp:
-                healthUpgradeChanceMult += increasedHealthUpgradeChance;
-                break;
-            case LootCode.BatteryUp:
-                batteryUpgradeChanceMult += increasedBatteryUpgradeChance;
-                break;
-            default:
-                Debug.Log("Error: specified loot code does not exist in MultLoot().");
-                break;
-        }     
-    }
-
-    public float GetLootMult(LootCode code)
-    {
-        switch (code)
-        {
-            case LootCode.Resource:
-                return resourceChanceMult;
-            case LootCode.Augmentation:
-                return augmentationChanceMult;
-            case LootCode.Tactical:
-                return tacticalChanceMult;
-            case LootCode.HealthUp:
-                return healthUpgradeChanceMult;
-            case LootCode.BatteryUp:
-                return batteryUpgradeChanceMult;
-            default:
-                Debug.Log("Error: specified loot code does not exist in GetLootMult().");
-                return 0;
-        }
     }
     #endregion
 

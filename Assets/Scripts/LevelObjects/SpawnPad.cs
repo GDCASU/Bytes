@@ -6,6 +6,9 @@ public class SpawnPad : MonoBehaviour
 {
     protected Vector3 spawnPoint;
     protected MapGenerator mapGenerator;
+
+    [Header("Debug")]
+    [SerializeField] protected bool debug = false;
     // protected Room room;
     // protected RoomType roomType;
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e020fd36d0fe74f8af3db61307bd88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lootGenerator: {fileID: 0}
   gridCellSize: 40
   debug: 1
   mainTrailMaxRooms: 10
@@ -400,6 +401,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3389498943971153399, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7844583521089145587, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
       propertyPath: m_RootOrder
@@ -467,6 +473,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1028085542}
   - component: {fileID: 1028085543}
+  - component: {fileID: 1028085544}
   m_Layer: 0
   m_Name: Ryan's Map Generator
   m_TagString: Untagged
@@ -501,6 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e020fd36d0fe74f8af3db61307bd88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lootGenerator: {fileID: 0}
   gridCellSize: 40
   debug: 1
   mainTrailMaxRooms: 10
@@ -535,6 +543,18 @@ MonoBehaviour:
   increasedTacticalChance: 0
   increasedHealthUpgradeChance: 0
   increasedBatteryUpgradeChance: 0
+--- !u!114 &1028085544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028085541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b57c0d95f47d64a41accf6e9c4811279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1147994266
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -806,47 +826,19 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 516634678, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
-      propertyPath: debug
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 516634678, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
       propertyPath: healthChance
-      value: 80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 516634678, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
       propertyPath: batteryChance
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 516634678, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
-      propertyPath: resourceChance
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 516634678, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
       propertyPath: tacticalChance
-      value: 80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 516634678, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
       propertyPath: augmentationChance
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 516634678, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
-      propertyPath: forceSpawnResource
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 516634678, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
-      propertyPath: forceSpawnTactical
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 516634678, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
-      propertyPath: forceSpawnAugmentation
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 516634678, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
-      propertyPath: forceSpawnHealthUpgrade
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 516634678, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
-      propertyPath: forceSpawnBatteryUpgrade
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 58179195339825221, guid: 18a5d22ce778a4c4280938973018d754,
@@ -908,11 +900,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Chest Spawn Pad
-      objectReference: {fileID: 0}
-    - target: {fileID: 58179195339825594, guid: 18a5d22ce778a4c4280938973018d754,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18a5d22ce778a4c4280938973018d754, type: 3}

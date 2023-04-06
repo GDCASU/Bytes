@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class ChestSpawnPad : SpawnPad
 {
-    [Header("Debug")]
-    public bool debug = false;
-
     [Header("Chest Prefabs")]
     public GameObject resourceChest;
     public GameObject augmentationChest;

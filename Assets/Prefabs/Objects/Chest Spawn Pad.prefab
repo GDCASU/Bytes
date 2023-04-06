@@ -128,17 +128,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95e1240b7d5881240b4fdbedc17f98fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 1
   resourceChest: {fileID: 8432171908960840952, guid: abd4c7353173cbb4ca8a8b620359c514,
     type: 3}
-  tacticalChest: {fileID: 6188701533550675751, guid: b7c6cd208e9bf1c498537004034fb775,
-    type: 3}
   augmentationChest: {fileID: 8072457951373311066, guid: d29b88db0cd3e0f4ba8e01435090b4ab,
+    type: 3}
+  tacticalChest: {fileID: 6188701533550675751, guid: b7c6cd208e9bf1c498537004034fb775,
     type: 3}
   healthUpgradeChest: {fileID: 773367630140480504, guid: 90f1624dfef16ed4b883a7134bef54f6,
     type: 3}
   batteryUpgradeChest: {fileID: 1894789466982910639, guid: 2149d6e6c4339b941a7fee9c51c839e1,
     type: 3}
+  forceSpawnResource: 0
+  forceSpawnAugmentation: 0
+  forceSpawnTactical: 0
+  forceSpawnHealthUpgrade: 0
+  forceSpawnBatteryUpgrade: 0
   resourceChance: 0
-  tacticalChance: 0
-  healthChance: 0
-  batteryChance: 0
+  augmentationChance: 80
+  tacticalChance: 80
+  healthChance: 80
+  batteryChance: 80
