@@ -100,7 +100,7 @@ public class ChestSpawnPad : SpawnPad
             return true;
         }
         else
-            mapGenerator.MultLoot(LootCode.Resource);
+        //mapGenerator.MultLoot(LootCode.Resource);
 
         if (augmentationRoll <= augmentationChance)
         {
@@ -108,7 +108,7 @@ public class ChestSpawnPad : SpawnPad
             if (debug) Debug.Log($"Augmentation Chest Spawned by Chance: {augmentationRoll}%");
         }
         else
-            mapGenerator.MultLoot(LootCode.Augmentation);
+        //mapGenerator.MultLoot(LootCode.Augmentation);
 
         if (tacticalRoll <= tacticalChance)
         {
@@ -117,7 +117,7 @@ public class ChestSpawnPad : SpawnPad
             return true;
         }
         else
-            mapGenerator.MultLoot(LootCode.Tactical);
+        //mapGenerator.MultLoot(LootCode.Tactical);
 
         if (healthRoll <= healthChance)
         {
@@ -126,7 +126,7 @@ public class ChestSpawnPad : SpawnPad
             return true;
         }
         else
-            mapGenerator.MultLoot(LootCode.HealthUp);
+        //mapGenerator.MultLoot(LootCode.HealthUp);
 
         if (batteryRoll <= batteryChance)
         {
@@ -135,7 +135,8 @@ public class ChestSpawnPad : SpawnPad
             return true;
         }
         else
-            mapGenerator.MultLoot(LootCode.BatteryUp);
+        //mapGenerator.MultLoot(LootCode.BatteryUp);
+        { }
 
         return false;
     }

@@ -67,4 +67,9 @@ public class Room : MonoBehaviour
         //else
         //Debug.Log("Error: Could not activate entrance; entrance is null.");
     }
+
+    private void InitializeSpawners()
+    {
+        // Find childed object of SpawnPad
+    }
 }
