@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 <REAPER_PROJECT 0.1 "6.78/win64" 1680897224
+=======
+<REAPER_PROJECT 0.1 "6.75/win64" 1677275281
+>>>>>>> Stashed changes
   <NOTES 0 2
   >
   RIPPLE 0
@@ -12,6 +16,7 @@
   PANLAW 1
   PROJOFFS 0 0 0
   MAXPROJLEN 0 0
+<<<<<<< Updated upstream
   GRID 3199 8 1 8 1 0 0 0
   TIMEMODE 7 5 -1 30 0 0 -1
   VIDEO_CONFIG 0 0 256
@@ -19,6 +24,15 @@
   CURSOR 14.66666666666667
   ZOOM 17.09129222038383 0 0
   VZOOMEX 0 329
+=======
+  GRID 3455 8 1 8 1 0 0 0
+  TIMEMODE 1 5 -1 30 0 0 -1
+  VIDEO_CONFIG 0 0 256
+  PANMODE 3
+  CURSOR 120.37088159533386
+  ZOOM 217.80516726743249 25777 0
+  VZOOMEX 6 16
+>>>>>>> Stashed changes
   USE_REC_CFG 0
   RECMODE 1
   SMPTESYNC 0 30 100 40 1000 300 0 0 1 0 0
@@ -30,6 +44,7 @@
   >
   <APPLYFX_CFG
   >
+<<<<<<< Updated upstream
   RENDER_FILE "C:\Users\Dania\Downloads\Intro of Boss Theme.WAVV.wav"
   RENDER_FMT 0 2 44100
   RENDER_1X 0
@@ -37,6 +52,16 @@
   RENDER_RESAMPLE 3 0 1
   RENDER_ADDTOPROJ 0
   RENDER_STEMS 8
+=======
+  RENDER_FILE ""
+  RENDER_PATTERN ""
+  RENDER_FMT 0 2 0
+  RENDER_1X 0
+  RENDER_RANGE 1 0 0 18 1000
+  RENDER_RESAMPLE 3 0 1
+  RENDER_ADDTOPROJ 0
+  RENDER_STEMS 0
+>>>>>>> Stashed changes
   RENDER_DITHER 0
   TIMELOCKMODE 1
   TEMPOENVLOCKMODE 1
@@ -57,18 +82,32 @@
     MULT 1
   >
   GLOBAL_AUTO -1
+<<<<<<< Updated upstream
   TEMPO 180 4 4
   PLAYRATE 1 0 0.25 4
   SELECTION 90 108
   SELECTION2 90 108
+=======
+  TEMPO 120 4 4
+  PLAYRATE 1 0 0.25 4
+  SELECTION 73.62791633845984 40.08631000649481
+  SELECTION2 73.62791633845984 40.08631000649481
+>>>>>>> Stashed changes
   MASTERAUTOMODE 0
   MASTERTRACKHEIGHT 0 0
   MASTERPEAKCOL 16576
   MASTERMUTESOLO 0
+<<<<<<< Updated upstream
   MASTERTRACKVIEW 0 0.6667 0.5 0.5 0 -1 0 0 0 0 -1 -1 0
   MASTERHWOUT 0 0 1 0 0 0 0 -1
   MASTER_NCH 2 2
   MASTER_VOLUME 0.41604610749285 0 -1 -1 1
+=======
+  MASTERTRACKVIEW 0 0.6667 0.5 0.5 -1 -1 -1 0 0 0 -1 -1 0
+  MASTERHWOUT 0 0 1 0 0 0 0 -1
+  MASTER_NCH 2 2
+  MASTER_VOLUME 1 0 -1 -1 1
+>>>>>>> Stashed changes
   MASTER_PANMODE 3
   MASTER_FX 1
   MASTER_SEL 0
@@ -88,6 +127,7 @@
     ARM 0
     DEFSHAPE 1 -1 -1
   >
+<<<<<<< Updated upstream
   MARKER 2 0 Intro 1 0 1 R {B23CFEA7-3B3B-4DDA-B51E-0F5D381659CB}
   MARKER 2 10.66666666666667 "" 1 0 1 R
   MARKER 3 10.66666666666667 Chorus 1 0 1 R {7E3DD93D-1323-41D4-B2D2-73CE8F633416}
@@ -1568,6 +1608,13 @@
   >
   <TRACK {E7C59EFE-C219-463C-8479-3DD31C915424}
     NAME "Chorus- Gouda Guitar"
+=======
+  MARKER 1 119.73728781181008 Bridge 0 0 1 R {21B6DE9B-EE6D-4F25-88FC-CA8EE85F3424}
+  <PROJBAY
+  >
+  <TRACK {D4F0DBC3-483B-462F-B42E-E62FE8DE2C23}
+    NAME LevelOneBoss_CBoesch_Feb17th
+>>>>>>> Stashed changes
     PEAKCOL 16576
     BEAT -1
     AUTOMODE 0
@@ -1585,6 +1632,7 @@
     INQ 0 0 0 0.5 100 0 0 100
     NCHAN 2
     FX 1
+<<<<<<< Updated upstream
     TRACKID {E7C59EFE-C219-463C-8479-3DD31C915424}
     PERF 0
     MIDIOUT -1
@@ -1820,10 +1868,14 @@
     NCHAN 2
     FX 1
     TRACKID {4C2ADB4C-9E53-490E-9BF1-622E4D2402E5}
+=======
+    TRACKID {D4F0DBC3-483B-462F-B42E-E62FE8DE2C23}
+>>>>>>> Stashed changes
     PERF 0
     MIDIOUT -1
     MAINSEND 1 0
     <ITEM
+<<<<<<< Updated upstream
       POSITION 10.66666666666667
       SNAPOFFS 0
       LENGTH 67.66666666666666
@@ -1853,6 +1905,15 @@
       ALLTAKES 0
       FADEIN 1 5.287086 0 1 0 0 0
       FADEOUT 1 0.01 0 1 0 0 0
+=======
+      POSITION 32
+      SNAPOFFS 0
+      LENGTH 102.445
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1.1 0.01 14.711356 1 1 0 0
+>>>>>>> Stashed changes
       MUTE 0 0
       SEL 0
       IGUID {6B3D2EF9-3868-41DF-88E1-B4F4EAECDF4D}
@@ -1867,6 +1928,7 @@
         FILE "LevelOneBoss_CBoesch_Feb17th.wav"
       >
     >
+<<<<<<< Updated upstream
   >
   <TRACK {D1A53F2E-51DA-44CD-BC90-9ED10C245242}
     NAME Bass
@@ -2354,10 +2416,26 @@
       IGUID {FF582D5B-B994-41EC-A112-F882A6A4E5B8}
       IID 169
       NAME LevelOneBoss_Bridge_JustChords_180bpm.wav
+=======
+    <ITEM
+      POSITION 119.73364355719043
+      SNAPOFFS 0
+      LENGTH 45.17648526077507
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1.1 0.01 14.711356 1 1 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {4D4593AA-22E8-42A9-AFA1-E47B26FCB784}
+      IID 35
+      NAME LevelOneBoss_BridgeIdea_CBoesch_Feb24th.wav
+>>>>>>> Stashed changes
       VOLPAN 1 0 1 -1
       SOFFS 0
       PLAYRATE 1 1 0 -1 0 0.0025
       CHANMODE 0
+<<<<<<< Updated upstream
       GUID {44202657-7B2B-4A64-AB1E-411319DF13F4}
       <SOURCE WAVE
         FILE "LevelOneBoss_Bridge_JustChords_180bpm.wav"
@@ -2388,6 +2466,15 @@
     >
   >
   <TRACK {26B3EC2F-2F2A-4DE4-A4B3-7FA8841A5B0D}
+=======
+      GUID {8CA9C161-11BB-4E94-AB6B-070CD9226F32}
+      <SOURCE WAVE
+        FILE "LevelOneBoss_BridgeIdea_CBoesch_Feb24th.wav"
+      >
+    >
+  >
+  <TRACK {E7C59EFE-C219-463C-8479-3DD31C915424}
+>>>>>>> Stashed changes
     NAME ""
     PEAKCOL 16576
     BEAT -1
@@ -2396,6 +2483,7 @@
     MUTESOLO 0 0 0
     IPHASE 0
     PLAYOFFS 0 1
+<<<<<<< Updated upstream
     ISBUS 2 -1
     BUSCOMP 0 0 0 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
@@ -2448,22 +2536,37 @@
     BUSCOMP 0 0 0 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 -1 0
     SEL 0
+=======
+    ISBUS 0 0
+    BUSCOMP 0 0 0 0 0
+    SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
+    SEL 1
+>>>>>>> Stashed changes
     REC 0 0 1 0 0 0 0 0
     VU 2
     TRACKHEIGHT 0 0 0 0 0 0
     INQ 0 0 0 0.5 100 0 0 100
     NCHAN 2
     FX 1
+<<<<<<< Updated upstream
     TRACKID {06DE31BC-C3A2-4AE8-AF16-3F9A2A506109}
+=======
+    TRACKID {E7C59EFE-C219-463C-8479-3DD31C915424}
+>>>>>>> Stashed changes
     PERF 0
     MIDIOUT -1
     MAINSEND 1 0
     <FXCHAIN
+<<<<<<< Updated upstream
       WNDRECT 23 51 870 502
+=======
+      WNDRECT 796 212 962 525
+>>>>>>> Stashed changes
       SHOW 0
       LASTSEL 0
       DOCKED 0
       BYPASS 0 0 0
+<<<<<<< Updated upstream
       <VST "VST: ReaVerb (Cockos)" reaverb.dll 0 "" 1919252066<56535472657662726561766572620000> ""
         YnZlcu5e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAAKAAAAAEAAAAAABAA
         AAAQwUj85D8AAIA/AAAAAAAAgD8AAIA/AAAAPwAAgD8AAIA/AAAAQA==
@@ -2486,10 +2589,35 @@
       IGUID {4F886021-2917-4E53-8E28-C3BEC25DA523}
       IID 165
       NAME LevelOneBoss_DramaticDrums-glued.wav
+=======
+      <VST "VST: ReaVerbate (Cockos)" reaverbate.dll 0 "" 1920361016<56535472766238726561766572626174> ""
+        OGJ2cu9e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAAKAAAAAAAAAAAABAA
+        776t3g3wrd6ZJw1A7zs1P1mlvD4AAAA/AACAPwAAAAAAAIA/AAAAAA==
+        AFByb2dyYW0gMQAQAAAA
+      >
+      FLOATPOS 0 0 0 0
+      FXID {B49F0519-409C-4F8A-AC14-D57177D94533}
+      WAK 0 0
+    >
+    <ITEM
+      POSITION 0
+      SNAPOFFS 0
+      LENGTH 11.5
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1.1 0.01 0.5 1 1 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {C16FC8E3-3DEF-4E51-8701-0D745A886FAF}
+      IID 3
+      NAME "Violin, Bass, and cello chords-Contrabasses.wav"
+>>>>>>> Stashed changes
       VOLPAN 1 0 1 -1
       SOFFS 0
       PLAYRATE 1 1 0 -1 0 0.0025
       CHANMODE 0
+<<<<<<< Updated upstream
       GUID {80F126B1-AB41-44FE-9966-D4317699072D}
       <SOURCE WAVE
         FILE "LevelOneBoss_DramaticDrums-glued.wav"
@@ -2662,10 +2790,31 @@
       IGUID {1C3E5617-FED0-46E1-98AD-881D405D2B64}
       IID 165
       NAME LevelOneBoss_DramaticDrums-glued.wav
+=======
+      GUID {57FED46E-9076-47D5-85B3-D86B6D968F18}
+      <SOURCE WAVE
+        FILE "Violin, Bass, and cello chords-Contrabasses.wav"
+      >
+    >
+    <ITEM
+      POSITION 11
+      SNAPOFFS 0
+      LENGTH 12
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1.1 0.01 0.5 1 1 0 0
+      FADEOUT 1 1.855272 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {69E58F2C-717B-417B-A254-ABFA191C8C4D}
+      IID 3
+      NAME "Violin, Bass, and cello chords-Contrabasses.wav"
+>>>>>>> Stashed changes
       VOLPAN 1 0 1 -1
       SOFFS 0
       PLAYRATE 1 1 0 -1 0 0.0025
       CHANMODE 0
+<<<<<<< Updated upstream
       GUID {16A51DFA-9891-48E5-9B69-CB22B3B82F9E}
       <SOURCE WAVE
         FILE "LevelOneBoss_DramaticDrums-glued.wav"
@@ -2674,6 +2823,16 @@
   >
   <TRACK {21000E99-025D-40D5-AE3F-648B8D187373}
     NAME "Bridge theme"
+=======
+      GUID {C8C8F167-F0D5-4892-9F1D-48F08D20380D}
+      <SOURCE WAVE
+        FILE "Violin, Bass, and cello chords-Contrabasses.wav"
+      >
+    >
+  >
+  <TRACK {92BB7755-1AFC-4CB6-AA3F-DE07D95044E6}
+    NAME "Violin, Bass, and cello chords-Contrabasses"
+>>>>>>> Stashed changes
     PEAKCOL 16576
     BEAT -1
     AUTOMODE 0
@@ -2683,7 +2842,11 @@
     PLAYOFFS 0 1
     ISBUS 0 0
     BUSCOMP 0 0 0 0 0
+<<<<<<< Updated upstream
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
+=======
+    SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
+>>>>>>> Stashed changes
     SEL 0
     REC 0 0 1 0 0 0 0 0
     VU 2
@@ -2691,11 +2854,16 @@
     INQ 0 0 0 0.5 100 0 0 100
     NCHAN 2
     FX 1
+<<<<<<< Updated upstream
     TRACKID {21000E99-025D-40D5-AE3F-648B8D187373}
+=======
+    TRACKID {92BB7755-1AFC-4CB6-AA3F-DE07D95044E6}
+>>>>>>> Stashed changes
     PERF 0
     MIDIOUT -1
     MAINSEND 1 0
     <ITEM
+<<<<<<< Updated upstream
       POSITION 78.33333333333333
       SNAPOFFS 0
       LENGTH 42.64250315928221
@@ -2709,10 +2877,25 @@
       IGUID {4B31FF28-91D0-4D5E-B63E-8548DC726361}
       IID 170
       NAME LevelOneBoss_Bridge_180bpm.wav
+=======
+      POSITION 0
+      SNAPOFFS 0
+      LENGTH 11.5
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1.1 0.01 0.5 1 1 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {9B180C46-A057-42CE-AD58-FB7CF2E3B1FA}
+      IID 6
+      NAME "Violin, Bass, and cello chords-Violoncellos.wav"
+>>>>>>> Stashed changes
       VOLPAN 1 0 1 -1
       SOFFS 0
       PLAYRATE 1 1 0 -1 0 0.0025
       CHANMODE 0
+<<<<<<< Updated upstream
       GUID {9F6E6DB5-59A0-41FF-9B88-E8B0885EC3BE}
       <SOURCE WAVE
         FILE "LevelOneBoss_Bridge_180bpm.wav"
@@ -2744,6 +2927,38 @@
   >
   <TRACK {37F7A0FA-4573-4CD1-B88B-58F529B96999}
     NAME "Crash cymbal"
+=======
+      GUID {D77129B9-AF14-4232-BB86-4B6A9A1BDC23}
+      <SOURCE WAVE
+        FILE "Violin, Bass, and cello chords-Violoncellos.wav"
+      >
+    >
+    <ITEM
+      POSITION 11
+      SNAPOFFS 0
+      LENGTH 12
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1.1 0.01 0.5 1 1 0 0
+      FADEOUT 1 0.86228 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {DA4217E2-6519-4EB1-8662-B7A4DDC3C8F2}
+      IID 6
+      NAME "Violin, Bass, and cello chords-Violoncellos.wav"
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {87378F66-62E6-4B01-8668-43F035DFEC7F}
+      <SOURCE WAVE
+        FILE "Violin, Bass, and cello chords-Violoncellos.wav"
+      >
+    >
+  >
+  <TRACK {664834B3-6F7B-4E15-9065-82E7FF5CBDC0}
+    NAME "Violin, Bass, and cello chords-Violins"
+>>>>>>> Stashed changes
     PEAKCOL 16576
     BEAT -1
     AUTOMODE 0
@@ -2753,7 +2968,11 @@
     PLAYOFFS 0 1
     ISBUS 0 0
     BUSCOMP 0 0 0 0 0
+<<<<<<< Updated upstream
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
+=======
+    SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
+>>>>>>> Stashed changes
     SEL 0
     REC 0 0 1 0 0 0 0 0
     VU 2
@@ -2761,20 +2980,99 @@
     INQ 0 0 0 0.5 100 0 0 100
     NCHAN 2
     FX 1
+<<<<<<< Updated upstream
     TRACKID {37F7A0FA-4573-4CD1-B88B-58F529B96999}
+=======
+    TRACKID {664834B3-6F7B-4E15-9065-82E7FF5CBDC0}
+>>>>>>> Stashed changes
     PERF 0
     MIDIOUT -1
     MAINSEND 1 0
     <ITEM
+<<<<<<< Updated upstream
       POSITION 78.3277109379348
       SNAPOFFS 0
       LENGTH 2.38469630293518
+=======
+      POSITION 0
+      SNAPOFFS 0
+      LENGTH 11.5
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1.1 0.01 0.5 1 1 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {8C8A6EBE-1771-4148-8C6D-C6777562743D}
+      IID 5
+      NAME "Violin, Bass, and cello chords-Violins.wav"
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {F537FAA5-EB41-4637-90AE-9A4466D0A06A}
+      <SOURCE WAVE
+        FILE "Violin, Bass, and cello chords-Violins.wav"
+      >
+    >
+    <ITEM
+      POSITION 11
+      SNAPOFFS 0
+      LENGTH 12
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1.1 0.01 0.5 1 1 0 0
+      FADEOUT 1 0.567643 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {E38BF261-0303-432E-9328-C8B63BF37293}
+      IID 5
+      NAME "Violin, Bass, and cello chords-Violins.wav"
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {2AA2B852-3E68-4B97-98DB-A11D40166F70}
+      <SOURCE WAVE
+        FILE "Violin, Bass, and cello chords-Violins.wav"
+      >
+    >
+  >
+  <TRACK {34D5B5E5-C460-47CD-B436-98BCE6C6F7B7}
+    NAME KotoTremoloC_8beats_170bpm
+    PEAKCOL 16576
+    BEAT -1
+    AUTOMODE 0
+    VOLPAN 1 0 -1 -1 1
+    MUTESOLO 0 0 0
+    IPHASE 0
+    PLAYOFFS 0 1
+    ISBUS 0 0
+    BUSCOMP 0 0 0 0 0
+    SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
+    SEL 0
+    REC 0 0 1 0 0 0 0 0
+    VU 2
+    TRACKHEIGHT 0 0 0 0 0 0
+    INQ 0 0 0 0.5 100 0 0 100
+    NCHAN 2
+    FX 1
+    TRACKID {34D5B5E5-C460-47CD-B436-98BCE6C6F7B7}
+    PERF 0
+    MIDIOUT -1
+    MAINSEND 1 0
+    <ITEM
+      POSITION 25.5
+      SNAPOFFS 0
+      LENGTH 5.95841269841269
+>>>>>>> Stashed changes
       LOOP 1
       ALLTAKES 0
       FADEIN 1 0.01 0 1 0 0 0
       FADEOUT 1 0.01 0 1 0 0 0
       MUTE 0 0
       SEL 0
+<<<<<<< Updated upstream
       IGUID {A501485D-FFA4-43F4-BA83-95683E1C56F2}
       IID 214
       NAME LevelOneBoss_CrashCymbal.wav
@@ -2800,10 +3098,16 @@
       IGUID {B5E275AA-415B-4609-A76D-C888430C2B9D}
       IID 214
       NAME LevelOneBoss_CrashCymbal.wav
+=======
+      IGUID {F42C079F-9130-43AB-BD1A-5068094FD35A}
+      IID 14
+      NAME KotoTremoloC_4beats_170bpm.wav
+>>>>>>> Stashed changes
       VOLPAN 1 0 1 -1
       SOFFS 0
       PLAYRATE 1 1 0 -1 0 0.0025
       CHANMODE 0
+<<<<<<< Updated upstream
       GUID {8EC868E0-03C3-4E23-A725-37F54FFD5BA4}
       <SOURCE WAVE
         FILE "LevelOneBoss_CrashCymbal.wav"
@@ -2833,10 +3137,20 @@
     >
   >
   <TRACK {4F52C2BB-4696-4A94-BC51-C7BE183AB6DF}
+=======
+      GUID {A9AA7C7A-0AF8-448E-8016-24B315580622}
+      <SOURCE WAVE
+        FILE "KotoTremoloC_4beats_170bpm.wav"
+      >
+    >
+  >
+  <TRACK {84C1068A-D453-431F-A042-5A6D6CCDA8A6}
+>>>>>>> Stashed changes
     NAME ""
     PEAKCOL 16576
     BEAT -1
     AUTOMODE 0
+<<<<<<< Updated upstream
     VOLPAN 2.03159955910453 0 -1 -1 1
     MUTESOLO 0 0 0
     IPHASE 0
@@ -2844,6 +3158,15 @@
     ISBUS 2 -1
     BUSCOMP 0 0 0 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
+=======
+    VOLPAN 1 0 -1 -1 1
+    MUTESOLO 0 0 0
+    IPHASE 0
+    PLAYOFFS 0 1
+    ISBUS 0 0
+    BUSCOMP 0 0 0 0 0
+    SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
+>>>>>>> Stashed changes
     SEL 0
     REC 0 0 1 0 0 0 0 0
     VU 2
@@ -2851,11 +3174,16 @@
     INQ 0 0 0 0.5 100 0 0 100
     NCHAN 2
     FX 1
+<<<<<<< Updated upstream
     TRACKID {4F52C2BB-4696-4A94-BC51-C7BE183AB6DF}
+=======
+    TRACKID {84C1068A-D453-431F-A042-5A6D6CCDA8A6}
+>>>>>>> Stashed changes
     PERF 0
     MIDIOUT -1
     MAINSEND 1 0
     <ITEM
+<<<<<<< Updated upstream
       POSITION 79.66666666666667
       SNAPOFFS 0
       LENGTH 2.63048120569501
@@ -2869,10 +3197,25 @@
       IGUID {CA9B4C9B-BC9B-4FF6-BFBA-2D1C6AC9F71F}
       IID 268
       NAME " "
+=======
+      POSITION 25.5
+      SNAPOFFS 0
+      LENGTH 4
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {83D447A7-567F-4C5A-892F-DCA4CE3C7B1C}
+      IID 13
+      NAME KotoTremoloC_8beats_170bpm.wav
+>>>>>>> Stashed changes
       VOLPAN 1 0 1 -1
       SOFFS 0
       PLAYRATE 1 1 0 -1 0 0.0025
       CHANMODE 0
+<<<<<<< Updated upstream
       GUID {154C10CF-F490-408B-8A45-F70F8B26BEC0}
       <SOURCE WAVE
         FILE "C:\Users\Dania\Downloads\booss intro koto.wav"
@@ -3018,17 +3361,28 @@
     >
   >
   <TRACK {35A9E2C8-770C-4D77-9A9D-7F3443E77314}
+=======
+      GUID {33E6CE84-6A34-42B4-BEAF-430AA659E371}
+      <SOURCE WAVE
+        FILE "KotoTremoloC_8beats_170bpm.wav"
+      >
+    >
+  >
+  <TRACK {58413C10-B7A0-4226-8D57-66ED41E775A5}
+>>>>>>> Stashed changes
     NAME ""
     PEAKCOL 16576
     BEAT -1
     AUTOMODE 0
     VOLPAN 1 0 -1 -1 1
-    MUTESOLO 1 0 0
+<<<<<<< Updated upstream
+=======
+    MUTESOLO 0 0 0
     IPHASE 0
     PLAYOFFS 0 1
     ISBUS 0 0
     BUSCOMP 0 0 0 0 0
-    SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
+    SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
     SEL 0
     REC 0 0 1 0 0 0 0 0
     VU 2
@@ -3036,11 +3390,181 @@
     INQ 0 0 0 0.5 100 0 0 100
     NCHAN 2
     FX 1
-    TRACKID {35A9E2C8-770C-4D77-9A9D-7F3443E77314}
+    TRACKID {58413C10-B7A0-4226-8D57-66ED41E775A5}
+    PERF 0
+    MIDIOUT -1
+    MAINSEND 1 0
+  >
+  <TRACK {3D8F2F73-5E39-4B81-B993-CB419DA59EB0}
+    NAME ""
+    PEAKCOL 16576
+    BEAT -1
+    AUTOMODE 0
+    VOLPAN 1 0 -1 -1 1
+    MUTESOLO 0 0 0
+    IPHASE 0
+    PLAYOFFS 0 1
+    ISBUS 0 0
+    BUSCOMP 0 0 0 0 0
+    SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
+    SEL 0
+    REC 0 0 1 0 0 0 0 0
+    VU 2
+    TRACKHEIGHT 0 0 0 0 0 0
+    INQ 0 0 0 0.5 100 0 0 100
+    NCHAN 2
+    FX 1
+    TRACKID {3D8F2F73-5E39-4B81-B993-CB419DA59EB0}
     PERF 0
     MIDIOUT -1
     MAINSEND 1 0
     <ITEM
+      POSITION 0
+      SNAPOFFS 0
+      LENGTH 24.13560090702946
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {7B276505-A107-44B6-B74F-234AE57F6238}
+      IID 27
+      NAME queso.flac
+      VOLPAN 1 0 1 -1
+      SOFFS 1
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {27A2605F-74A8-4D9D-BF27-F17166F4DE3A}
+      <SOURCE FLAC
+        FILE "guitars\queso.flac"
+      >
+    >
+    <ITEM
+      POSITION 24.13560090702946
+      SNAPOFFS 0
+      LENGTH 1.50018140589569
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {E548563D-6524-4D2E-8A3C-8432BB9C2D9E}
+      IID 29
+      NAME 808CowbellCountIn_4beats_170bpm.wav
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {1AAD2541-6BB8-4C9C-9B3D-0C471888B0A3}
+      <SOURCE WAVE
+        FILE "808CowbellCountIn_4beats_170bpm.wav"
+      >
+    >
+  >
+  <TRACK {B851E280-8D5D-4839-A7C0-13B8D2F88C50}
+    NAME ""
+    PEAKCOL 16576
+    BEAT -1
+    AUTOMODE 0
+    VOLPAN 1 0 -1 -1 1
+    MUTESOLO 0 0 0
+    IPHASE 0
+    PLAYOFFS 0 1
+    ISBUS 0 0
+    BUSCOMP 0 0 0 0 0
+    SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
+    SEL 0
+    REC 0 0 1 0 0 0 0 0
+    VU 2
+    TRACKHEIGHT 0 0 0 0 0 0
+    INQ 0 0 0 0.5 100 0 0 100
+    NCHAN 2
+    FX 1
+    TRACKID {B851E280-8D5D-4839-A7C0-13B8D2F88C50}
+    PERF 0
+    MIDIOUT -1
+    MAINSEND 1 0
+    <ITEM
+      POSITION 32
+      SNAPOFFS 0
+      LENGTH 22.58825396825397
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {96E1B6C4-8308-49AD-B43D-ECC9DD7017EB}
+      IID 25
+      NAME gouda.flac
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {DC9CE011-CEAF-4A55-8679-B0C9A8BBB623}
+      <SOURCE FLAC
+        FILE "guitars\gouda.flac"
+      >
+    >
+    <ITEM
+      POSITION 54.58825396825397
+      SNAPOFFS 0
+      LENGTH 22.58825396825397
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {B4C396E2-5E40-4B15-AE01-D44CDE2C2020}
+      IID 25
+      NAME gouda.flac
+      VOLPAN 1 0 1 -1
+      SOFFS 0
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {2340419C-E39B-4B5C-B184-6DC606484F08}
+      <SOURCE FLAC
+        FILE "guitars\gouda.flac"
+      >
+    >
+  >
+  <TRACK {AF906C34-BC08-467C-B4CF-6C3E6BC160AE}
+    NAME Guia
+    PEAKCOL 16576
+    BEAT -1
+    AUTOMODE 0
+    VOLPAN 1 0 -1 -1 1
+>>>>>>> Stashed changes
+    MUTESOLO 1 0 0
+    IPHASE 0
+    PLAYOFFS 0 1
+    ISBUS 0 0
+    BUSCOMP 0 0 0 0 0
+<<<<<<< Updated upstream
+    SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
+=======
+    SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
+>>>>>>> Stashed changes
+    SEL 0
+    REC 0 0 1 0 0 0 0 0
+    VU 2
+    TRACKHEIGHT 0 0 0 0 0 0
+    INQ 0 0 0 0.5 100 0 0 100
+    NCHAN 2
+    FX 1
+<<<<<<< Updated upstream
+    TRACKID {35A9E2C8-770C-4D77-9A9D-7F3443E77314}
+=======
+    TRACKID {AF906C34-BC08-467C-B4CF-6C3E6BC160AE}
+>>>>>>> Stashed changes
+    PERF 0
+    MIDIOUT -1
+    MAINSEND 1 0
+    <ITEM
+<<<<<<< Updated upstream
       POSITION 201.66666666666663
       SNAPOFFS 0
       LENGTH 2.66666666666667
@@ -3107,4 +3631,146 @@
       >
     >
   >
+=======
+      POSITION 300
+      SNAPOFFS 0
+      LENGTH 21.5
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {7B977D6C-9D40-4DF1-B4E7-47F4CE73559F}
+      IID 19
+      NAME cheese_-_Copy.flac
+      VOLPAN 1 0 1 -1
+      SOFFS 25
+      PLAYRATE 2.5 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {B1742F3A-21D6-4510-BC27-9FA660D1E4C2}
+      <SOURCE FLAC
+        FILE "guitars\cheese.flac"
+      >
+    >
+    <ITEM
+      POSITION 324
+      SNAPOFFS 0
+      LENGTH 17
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {107A963A-528A-4609-AB51-49F3D3D21BEE}
+      IID 19
+      NAME cheese_-_Copy.flac
+      VOLPAN 1 0 1 -1
+      SOFFS 7.5
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {0953C5B8-56C2-44B7-99EF-62B331424EC3}
+      <SOURCE FLAC
+        FILE "guitars\cheese.flac"
+      >
+    >
+    <ITEM
+      POSITION 344
+      SNAPOFFS 0
+      LENGTH 16.03714285714284
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      SEL 0
+      IGUID {85FCE9F6-7E8E-46F0-81CB-14B04AA17AD7}
+      IID 19
+      NAME cheese_-_Copy.flac
+      VOLPAN 1 0 1 -1
+      SOFFS 46.5
+      PLAYRATE 2.5 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {39FD967A-1771-45CD-B1BC-7322237C37F2}
+      <SOURCE FLAC
+        FILE "guitars\cheese.flac"
+      >
+    >
+  >
+  <TRACK {59B736BE-F5D7-4EA0-89EF-117F3089A031}
+    NAME ""
+    PEAKCOL 16576
+    BEAT -1
+    AUTOMODE 0
+    VOLPAN 1 0 -1 -1 1
+    MUTESOLO 0 0 0
+    IPHASE 0
+    PLAYOFFS 0 1
+    ISBUS 0 0
+    BUSCOMP 0 0 0 0 0
+    SHOWINMIX 1 0.6667 0.5 1 0.5 -1 -1 -1
+    SEL 0
+    REC 1 4096 1 0 0 0 0 0
+    VU 2
+    TRACKHEIGHT 0 0 0 0 0 0
+    INQ 0 0 0 0.5 100 0 0 100
+    NCHAN 2
+    FX 1
+    TRACKID {59B736BE-F5D7-4EA0-89EF-117F3089A031}
+    PERF 0
+    MIDIOUT -1
+    MAINSEND 1 0
+    <FXCHAIN
+      WNDRECT 254 31 1396 675
+      SHOW 0
+      LASTSEL 0
+      DOCKED 0
+      BYPASS 0 0 0
+      <VST "VST3i: ANA-1000 Synthesizer (Jack Lund)" ANA-1000_Lurker_v1.vst3 0 "" 23797469{83EB4823B1724ACBA548E5392C5BF2A3} ""
+        3R5rAe5e7f4AAAAAAgAAAAEAAAAAAAAAAgAAAAAAAABrDQAAAQAAAP//EAA=
+        Ww0AAAEAAABXDQAAPD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8UHJlc2V0IHBsdWdpbklkPSJlYWNlZGRhNyI+CiA8UGFyYW0gaWQ9IjAiIHZhbD0iMCIgTUlEST0iNDE5
+        NDMwNDAwIiAvPgogPFBhcmFtIGlkPSIxIiB2YWw9IjAiIE1JREk9IjMzNTU0NDMyMCIgLz4KIDxQYXJhbSBpZD0iMiIgdmFsPSIwIiBNSURJPSI0MDI2NTMxODQiIC8+
+        CiA8UGFyYW0gaWQ9IjMiIHZhbD0iMCIgTUlEST0iMzUyMzIxNTM2IiAvPgogPFBhcmFtIGlkPSI0IiB2YWw9Ii0wLjc1IiBNSURJPSIzMTg3NjcxMDQiIC8+CiA8UGFy
+        YW0gaWQ9IjUiIHZhbD0iMCIgTUlEST0iMzg1ODc1OTY4IiAvPgogPFBhcmFtIGlkPSI2IiB2YWw9IjAiIE1JREk9IjEwMDY2MzI5NiIgLz4KIDxQYXJhbSBpZD0iNyIg
+        dmFsPSIwIiBNSURJPSI0Mzc1MTgzMzYiIC8+CiA8UGFyYW0gaWQ9IjgiIHZhbD0iMCIgTUlEST0iMzM1NTQ0OTYiIC8+CiA8UGFyYW0gaWQ9IjE2IiB2YWw9IiIgLz4K
+        IDxQYXJhbSBpZD0iMjQ3MDciIHZhbD0iaHR0cHM6Ly9MdXJrZXJCZWF0cy5JdnlTaXJlbmEuY29tIiBNSURJPSItMTY3NzcyMTYiIC8+CiA8UGFyYW0gaWQ9IjI4NDkx
+        IiB2YWw9IjMiIE1JREk9Ii0xNjc3NzIxNiIgLz4KIDxQYXJhbSBpZD0iNDM4NDg4NzciIHZhbD0iaHR0cHM6Ly9Ud2l0dGVyLmNvbS9QbHVnaW5zTHVya2VyLyIgTUlE
+        ST0iLTE2Nzc3MjE2IiAvPgogPFBhcmFtIGlkPSI3OTc2NTQ5MiIgaW5kZXg9IjQyIiB2YWw9IjEiIC8+CiA8UGFyYW0gaWQ9Ijk5MTY5NDQ1IiBpbmRleD0iMzAiIHZh
+        bD0iOS45MzQwOCIgLz4KIDxQYXJhbSBpZD0iMTAxNzk4MjQ4IiBpbmRleD0iNCIgdmFsPSIxMCIgLz4KIDxQYXJhbSBpZD0iMTU0OTQzMjIwIiBpbmRleD0iNDciIHZh
+        bD0iNi42ODMwNSIgLz4KIDxQYXJhbSBpZD0iMTgwMzE1MDU3IiBpbmRleD0iMjUiIHZhbD0iMSIgLz4KIDxQYXJhbSBpZD0iMjMwOTU5MjExIiBpbmRleD0iMzQiIHZh
+        bD0iLTAuMzg3OTY4IiAvPgogPFBhcmFtIGlkPSIyNTQ3NjEwODIiIGluZGV4PSIzMSIgdmFsPSIxMCIgLz4KIDxQYXJhbSBpZD0iMjg3Nzg2OTg2IiBpbmRleD0iMTAi
+        IHZhbD0iMSIgLz4KIDxQYXJhbSBpZD0iMjk1NTA3MDcwIiBpbmRleD0iMzkiIHZhbD0iOS4yOTM2OSIgLz4KIDxQYXJhbSBpZD0iMzE2MzI4MjE3IiBpbmRleD0iNDgi
+        IHZhbD0iOC45NTgxNCIgLz4KIDxQYXJhbSBpZD0iMzc0OTI5MDg5IiBpbmRleD0iMjkiIHZhbD0iNS43MDg2OCIgLz4KIDxQYXJhbSBpZD0iMzc1MzIwMjcyIiBpbmRl
+        eD0iNDYiIHZhbD0iMSIgLz4KIDxQYXJhbSBpZD0iMzgxMTUxNDU1IiBpbmRleD0iMjgiIHZhbD0iMCIgLz4KIDxQYXJhbSBpZD0iMzg1MDQ1MjI5IiBpbmRleD0iNTEi
+        IHZhbD0iMCIgLz4KIDxQYXJhbSBpZD0iMzg3Njk4NTY4IiBpbmRleD0iMzMiIHZhbD0iMSIgLz4KIDxQYXJhbSBpZD0iNDIwNDE5NzQ1IiBpbmRleD0iMjAiIHZhbD0i
+        NSIgLz4KIDxQYXJhbSBpZD0iNDU2ODMzMjA4IiBpbmRleD0iMTUiIHZhbD0iMi44OTI2MiIgLz4KIDxQYXJhbSBpZD0iNDY1OTcxNzg1IiBpbmRleD0iMjQiIHZhbD0i
+        NC4yMzY3OCIgLz4KIDxQYXJhbSBpZD0iNDg4MDY1MzUxIiBpbmRleD0iMzgiIHZhbD0iMCIgLz4KIDxQYXJhbSBpZD0iNTMyMzY3MjYxIiBpbmRleD0iNTAiIHZhbD0i
+        MTAiIC8+CiA8UGFyYW0gaWQ9IjY1NDgzMTM0MiIgaW5kZXg9IjQ5IiB2YWw9IjQuNjI4NjIiIC8+CiA8UGFyYW0gaWQ9IjY4MjQ1Nzg5OCIgaW5kZXg9IjUiIHZhbD0i
+        NS4xMTEwOSIgLz4KIDxQYXJhbSBpZD0iNzc5ODg2OTA2IiBpbmRleD0iMzciIHZhbD0iMSIgLz4KIDxQYXJhbSBpZD0iODM1MzkyNTk2IiBpbmRleD0iNDAiIHZhbD0i
+        OS45NDkzMiIgLz4KIDxQYXJhbSBpZD0iODQ2NTA0MzcyIiBpbmRleD0iMzUiIHZhbD0iOC43NzQ5MiIgLz4KIDxQYXJhbSBpZD0iOTAwNDcxODY0IiBpbmRleD0iMjMi
+        IHZhbD0iNyIgLz4KIDxQYXJhbSBpZD0iOTA0MjU1Nzk4IiBpbmRleD0iMTgiIHZhbD0iNS45MzI4OSIgLz4KIDxQYXJhbSBpZD0iOTE5OTAzNjAzIiBpbmRleD0iMTYi
+        IHZhbD0iMC4wNDkxMDYxIiAvPgogPFBhcmFtIGlkPSIxMDA5OTQyMzQxIiBpbmRleD0iMjIiIHZhbD0iOCIgLz4KIDxQYXJhbSBpZD0iMTA0OTI0NDcxOCIgaW5kZXg9
+        IjEyIiB2YWw9IjAiIC8+CiA8UGFyYW0gaWQ9IjEwNjI1NzU0OTQiIGluZGV4PSIxIiB2YWw9IjYiIC8+CiA8UGFyYW0gaWQ9IjEwOTM0NDg3MTciIGluZGV4PSIyMSIg
+        dmFsPSI5Ljk2NzE1IiAvPgogPFBhcmFtIGlkPSIxMTA1NDkxNTY5IiBpbmRleD0iMzYiIHZhbD0iOS45NTMyNyIgLz4KIDxQYXJhbSBpZD0iMTEwODQ0NjM3NyIgaW5k
+        ZXg9IjMyIiB2YWw9IjUiIC8+CiA8UGFyYW0gaWQ9IjExMzAyNTYxOTAiIGluZGV4PSIxMSIgdmFsPSIwIiAvPgogPFBhcmFtIGlkPSIxMTQxMDM2NzU4IiB2YWw9IjMi
+        IE1JREk9Ii0xNjc3NzIxNiIgLz4KIDxQYXJhbSBpZD0iMTE1ODQzMjYwMSIgaW5kZXg9IjQzIiB2YWw9IjAuMDQ4NzE0NiIgLz4KIDxQYXJhbSBpZD0iMTI3MTAzMzgy
+        NSIgaW5kZXg9IjI2IiB2YWw9IjUiIC8+CiA8UGFyYW0gaWQ9IjEzNDA0NDE1OTciIGluZGV4PSI1MiIgdmFsPSIwIiAvPgogPFBhcmFtIGlkPSIxMzQwNDk4NTA2IiBp
+        bmRleD0iOSIgdmFsPSIwLjAyNzQ3MDgiIC8+CiA8UGFyYW0gaWQ9IjEzNTc3NDkzNzIiIHZhbD0iMyIgTUlEST0iLTE2Nzc3MjE2IiAvPgogPFBhcmFtIGlkPSIxNDI0
+        NTE2NjU3IiBpbmRleD0iMyIgdmFsPSI2LjQyMjg1IiAvPgogPFBhcmFtIGlkPSIxNDMzNjk1OTcyIiBpbmRleD0iMTciIHZhbD0iMTAiIC8+CiA8UGFyYW0gaWQ9IjE0
+        MzcyMzM3MzIiIGluZGV4PSI3IiB2YWw9IjUiIC8+CiA8UGFyYW0gaWQ9IjE1MDY5NTA1MzEiIGluZGV4PSI0NCIgdmFsPSI2LjUyODA5IiAvPgogPFBhcmFtIGlkPSIx
+        NjI2NTkwNjI0IiBpbmRleD0iMCIgdmFsPSIxMiIgLz4KIDxQYXJhbSBpZD0iMTY0ODc4NTkxMSIgaW5kZXg9IjYiIHZhbD0iNSIgLz4KIDxQYXJhbSBpZD0iMTcxNzkx
+        NjMwMyIgaW5kZXg9IjE0IiB2YWw9IjkuOTk4NDIiIC8+CiA8UGFyYW0gaWQ9IjE3MjY0OTk5ODMiIGluZGV4PSIxOSIgdmFsPSI0IiAvPgogPFBhcmFtIGlkPSIxNzc0
+        NDk1NDU1IiBpbmRleD0iMTMiIHZhbD0iMTAiIC8+CiA8UGFyYW0gaWQ9IjE3ODgyNTgwNTEiIGluZGV4PSIyNyIgdmFsPSItMSIgLz4KIDxQYXJhbSBpZD0iMTgxNTgz
+        NTE5MyIgaW5kZXg9IjQ1IiB2YWw9IjEwIiAvPgogPFBhcmFtIGlkPSIxODIyNDU1NDU3IiBpbmRleD0iNDEiIHZhbD0iMCIgLz4KIDxQYXJhbSBpZD0iMTgyNDU2ODM4
+        MiIgdmFsPSJodHRwczovL1R3aXR0ZXIuY29tL0JlYXRzTHVya2VyLyIgTUlEST0iLTE2Nzc3MjE2IiAvPgogPFBhcmFtIGlkPSIxOTMxMjYyNjcyIiBpbmRleD0iMiIg
+        dmFsPSItNSIgLz4KIDxQYXJhbSBpZD0iMTkzOTg0MDEyMSIgaW5kZXg9IjgiIHZhbD0iMCIgLz4KPC9QcmVzZXQ+CgAAAAAAAAAA
+        AAAQAAAA
+      >
+      FLOATPOS 0 0 0 0
+      FXID {5EDBD7DB-AB9B-48B7-8C0C-2B7F64F7B278}
+      WAK 0 0
+    >
+  >
+>>>>>>> Stashed changes
 >
