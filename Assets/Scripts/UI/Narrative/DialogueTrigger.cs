@@ -6,13 +6,17 @@ public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
 
-    public void TriggerDialogue ()
+    private void OnTriggerEnter(Collider other)
     {
-        FindObjectOfType<DialogueTrigger>().StartDialogue(dialogue);
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("hree");
+            TriggerDialogue();
+        }
     }
 
-    void StartDialogue(Dialogue dialogue)
+    public void TriggerDialogue()
     {
-
+        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
 }
