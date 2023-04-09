@@ -27,116 +27,94 @@ public class ChestSpawnPad : SpawnPad
     [Range(0, 100)] public float batteryChance;
 
     private bool chestSpawnedbyForce, chestSpawnedbyChance;
-    void Start()
-    {
-        chestSpawnedbyForce = CheckForceSpawn();
 
-        if (!chestSpawnedbyForce)
-            chestSpawnedbyChance = SpawnChanceBasedChest();
-    }
-
-    bool CheckForceSpawn()
+    public bool CheckForceSpawn(LootCode lootCode)
     {
-        if (forceSpawnResource)
+        if (forceSpawnResource || lootCode == LootCode.Resource)
         {
-            // Spawn resource chest
+            Instantiate(resourceChest, gameObject.transform.position, Quaternion.identity, gameObject.transform);       // Spawn resource chest
             if (debug) Debug.Log("Resource Chest Spawned by Force");
             return true;
         }
-        if (forceSpawnAugmentation)
+        if (forceSpawnAugmentation || lootCode == LootCode.Augmentation)
         {
-            // Spawn Augmentation
+            Instantiate(augmentationChest, gameObject.transform.position, Quaternion.identity, gameObject.transform);           // Spawn Augmentation
             if (debug) Debug.Log("Augmentation Chest Spawned by Force");
             return true;
         }
-        if (forceSpawnTactical)
+        if (forceSpawnTactical || lootCode == LootCode.Tactical)
         {
-            // Spawn Tactical
+            Instantiate(tacticalChest, gameObject.transform.position, Quaternion.identity, gameObject.transform);       // Spawn Tactical
             if (debug) Debug.Log("Tactical Chest Spawned by Force");
             return true;
         }
-        if (forceSpawnHealthUpgrade)
+        if (forceSpawnHealthUpgrade || lootCode == LootCode.HealthUp)
         {
-            // Spawn Health Upgrade
+            Instantiate(healthUpgradeChest, gameObject.transform.position, Quaternion.identity, gameObject.transform);       // Spawn Health Upgrade
             if (debug) Debug.Log("Health Upgrade Chest Spawned by Force");
             return true;
         }
-        if (forceSpawnBatteryUpgrade)
+        if (forceSpawnBatteryUpgrade || lootCode == LootCode.BatteryUp)
         {
-            // Spawn Battery Upgrade
+            Instantiate(batteryUpgradeChest, gameObject.transform.position, Quaternion.identity, gameObject.transform);     // Spawn Battery Upgrade
             if (debug) Debug.Log("Battery Upgrade Chest Spawned by Force");
             return true;
         }
         return false;
     }
 
-    bool SpawnChanceBasedChest()
+    public bool SpawnChanceBasedChest(LootCode lootCode, int increasedChance)
     {
-        float resourceRoll = UnityEngine.Random.Range(0, 100.1f);
-        resourceRoll = (float)System.Math.Round(resourceRoll, 2);
+        int roll = UnityEngine.Random.Range(0, 100);
+        Debug.Log(roll);
+        Debug.Log(resourceChance + increasedChance);
+        Debug.Log(lootCode);
 
-        float augmentationRoll = UnityEngine.Random.Range(0, 100.1f);
-        augmentationRoll = (float)System.Math.Round(augmentationRoll, 2);
-
-        float tacticalRoll = UnityEngine.Random.Range(0, 100.1f);
-        tacticalRoll = (float)System.Math.Round(tacticalRoll, 2);
-
-        float healthRoll = UnityEngine.Random.Range(0, 100.1f);
-        healthRoll = (float)System.Math.Round(healthRoll, 2);
-
-        float batteryRoll = UnityEngine.Random.Range(0, 101.1f);
-        batteryRoll = (float)System.Math.Round(batteryRoll, 2);
-
-        // resourceRoll = (float)System.Math.Round(resourceRoll * mapGenerator.GetLootMult(LootCode.Resource), 2);
-        // augmentationRoll = (float)System.Math.Round(augmentationRoll * mapGenerator.GetLootMult(LootCode.Augmentation), 2);
-        // tacticalRoll = (float)System.Math.Round(tacticalRoll * mapGenerator.GetLootMult(LootCode.Tactical), 2);
-        // healthRoll = (float)System.Math.Round(healthRoll * mapGenerator.GetLootMult(LootCode.HealthUp), 2);
-        // batteryRoll = (float)System.Math.Round(batteryRoll * mapGenerator.GetLootMult(LootCode.BatteryUp), 2);
-
-        if (resourceRoll <= resourceChance)
+        if (lootCode == LootCode.Resource)
         {
-            // Spawn resource
-            if (debug) Debug.Log($"Resouce Chest Spawned by Chance: {resourceRoll}%");
-            return true;
+            if ((roll <= resourceChance + increasedChance) && (resourceChance > 0))
+            {
+                Instantiate(resourceChest, gameObject.transform.position, Quaternion.identity, gameObject.transform);           // Spawn resource
+                if (debug) Debug.Log($"Resouce Chest Spawned by Chance: {roll}%");
+                return true;
+            }
         }
-        else
-        //mapGenerator.MultLoot(LootCode.Resource);
-
-        if (augmentationRoll <= augmentationChance)
+        if (lootCode == LootCode.Augmentation)
         {
-            // Spawn Augmentation
-            if (debug) Debug.Log($"Augmentation Chest Spawned by Chance: {augmentationRoll}%");
+            if ((roll <= augmentationChance + increasedChance) && (augmentationChance > 0))
+            {
+                Instantiate(augmentationChest, gameObject.transform.position, Quaternion.identity, gameObject.transform);       // Spawn Augmentation
+                if (debug) Debug.Log($"Augmentation Chest Spawned by Chance: {roll}%");
+                return true;
+            }
         }
-        else
-        //mapGenerator.MultLoot(LootCode.Augmentation);
-
-        if (tacticalRoll <= tacticalChance)
+        if (lootCode == LootCode.Tactical)
         {
-            // Spawn tactical
-            if (debug) Debug.Log($"Tactical Chest Spawned by Chance: {tacticalRoll}%");
-            return true;
+            if ((roll <= tacticalChance + increasedChance) && (tacticalChance > 0))
+            {
+                Instantiate(tacticalChest, gameObject.transform.position, Quaternion.identity, gameObject.transform);       // Spawn tactical
+                if (debug) Debug.Log($"Tactical Chest Spawned by Chance: {roll}%");
+                return true;
+            }
         }
-        else
-        //mapGenerator.MultLoot(LootCode.Tactical);
-
-        if (healthRoll <= healthChance)
+        if (lootCode == LootCode.HealthUp)
         {
-            // Spawn health
-            if (debug) Debug.Log($"Health Upgrade Chest Spawned by Chance: {healthRoll}%");
-            return true;
+            if ((roll <= healthChance + increasedChance) && (healthChance > 0))
+            {
+                Instantiate(healthUpgradeChest, gameObject.transform.position, Quaternion.identity, gameObject.transform);       // Spawn health
+                if (debug) Debug.Log($"Health Upgrade Chest Spawned by Chance: {roll}%");
+                return true;
+            }
         }
-        else
-        //mapGenerator.MultLoot(LootCode.HealthUp);
-
-        if (batteryRoll <= batteryChance)
+        if (lootCode == LootCode.BatteryUp)
         {
-            // spawn battery
-            if (debug) Debug.Log($"Battery Upgrade Chest Spawned by Chance: {batteryRoll}%");
-            return true;
+            if ((roll <= batteryChance + increasedChance) && (batteryChance > 0))
+            {
+                Instantiate(batteryUpgradeChest, gameObject.transform.position, Quaternion.identity, gameObject.transform);       // spawn battery
+                if (debug) Debug.Log($"Battery Upgrade Chest Spawned by Chance: {roll}%");
+                return true;
+            }
         }
-        else
-        //mapGenerator.MultLoot(LootCode.BatteryUp);
-        { }
 
         return false;
     }

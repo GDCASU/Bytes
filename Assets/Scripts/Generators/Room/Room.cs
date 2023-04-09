@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public enum RoomShape
@@ -23,9 +24,12 @@ public enum RoomType
 
 public class Room : MonoBehaviour
 {
+    const string SPAWN_PAD_TAG = "Spawner";
+
     [HideInInspector] public Vector3 position;
     public bool[,] activeEntranceways;
     public List<GameObject> entranceways;
+    [HideInInspector] public List<SpawnPad> spawnPads;
 
     public RoomShape roomShape;
     [HideInInspector] public RoomType roomType;
@@ -33,6 +37,23 @@ public class Room : MonoBehaviour
     void Awake()
     {
         activeEntranceways = new bool[4, 6];
+        PopulateSpawnPadsList(this.transform);
+    }
+
+    public void PopulateSpawnPadsList(Transform parent) // Find All SpawnPads in Room
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            Transform child = parent.GetChild(i);
+            if (child.tag == SPAWN_PAD_TAG)
+            {
+                spawnPads.Add(child.gameObject.GetComponent<SpawnPad>());
+            }
+            if (child.childCount > 0)
+            {
+                PopulateSpawnPadsList(child);       // Recursive procedure to find objects in children of parent
+            }
+        }
     }
 
     public void ActivateAllEntranceways()
@@ -59,17 +80,7 @@ public class Room : MonoBehaviour
 
     private void ActivateEntranceway(int entranceNum)
     {
-        //if (entranceways[entranceNum] != null)
-        {
-            entranceways[entranceNum].transform.GetChild(0).gameObject.SetActive(false); // Deactivate Wall
-            entranceways[entranceNum].transform.GetChild(1).gameObject.SetActive(true); // Activate Entranceway
-        }
-        //else
-        //Debug.Log("Error: Could not activate entrance; entrance is null.");
-    }
-
-    private void InitializeSpawners()
-    {
-        // Find childed object of SpawnPad
+        entranceways[entranceNum].transform.GetChild(0).gameObject.SetActive(false); // Deactivate Wall
+        entranceways[entranceNum].transform.GetChild(1).gameObject.SetActive(true); // Activate Entranceway
     }
 }

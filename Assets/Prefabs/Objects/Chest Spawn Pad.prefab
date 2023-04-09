@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 516634678}
   m_Layer: 0
   m_Name: Chest Spawn Pad
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,8 +144,8 @@ MonoBehaviour:
   forceSpawnTactical: 0
   forceSpawnHealthUpgrade: 0
   forceSpawnBatteryUpgrade: 0
-  resourceChance: 0
-  augmentationChance: 80
-  tacticalChance: 80
-  healthChance: 80
-  batteryChance: 80
+  resourceChance: 20
+  augmentationChance: 0
+  tacticalChance: 0
+  healthChance: 5
+  batteryChance: 5
