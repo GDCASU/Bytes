@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ChestSpawnPad : SpawnPad
@@ -66,9 +67,6 @@ public class ChestSpawnPad : SpawnPad
     public bool SpawnChanceBasedChest(LootCode lootCode, int increasedChance)
     {
         int roll = UnityEngine.Random.Range(0, 100);
-        Debug.Log(roll);
-        Debug.Log(resourceChance + increasedChance);
-        Debug.Log(lootCode);
 
         if (lootCode == LootCode.Resource)
         {
@@ -118,6 +116,10 @@ public class ChestSpawnPad : SpawnPad
 
         return false;
     }
-    
 
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube(transform.position, new Vector3(1, 1, 2));
+    }
 }
