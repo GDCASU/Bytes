@@ -7,14 +7,26 @@ public class chargeUpdater : MonoBehaviour
 {
    //Script that changes the charge text on battery Bar
    public TMP_Text chargeText;
+   private PlayerStats playerStats;
+   private float calculation;
+
+    void Awake()
+    {
+        this.playerStats = StatusEvents.statusEvents.getStats();
+    }
     
     void Start()
     {
-        chargeText.text = (PlayerStats.playerStats.getBattery()).ToString();
+        chargeText.text = floorCharge().ToString();
     }
 
     void Update()
     {
-        chargeText.text = (PlayerStats.playerStats.getBattery()).ToString();
+        chargeText.text = floorCharge().ToString();
+    }
+
+    private int floorCharge()
+    {
+        return (int)Mathf.Floor(playerStats.battery);
     }
 }

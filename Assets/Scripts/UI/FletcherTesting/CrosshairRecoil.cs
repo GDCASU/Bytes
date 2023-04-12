@@ -6,22 +6,26 @@ using UnityEngine.UI;
 
 public class CrosshairRecoil : MonoBehaviour
 {
-    private float cos45 = Mathf.Sqrt(2.0f) / 2.0f; //Store trigonometric result for better efficiency
+    //Trigonometry and debugging
+    readonly private float cos45 = Mathf.Sqrt(2.0f) / 2.0f; //Store trigonometric result for better efficiency
+    public bool ENABLE_recoilTEST = false; //Makes recoilTest change the crosshair
+    public float recoilTEST;
+
     //Recoil Vars
     public float recoilFloor = 9.0f; //minimum distance from center, FIXME: WHEN RECOIL SYSTEM IS FINISHED, MAKE IT READONLY
-    public float recoilTEST;
+    
     //Wings of the crosshair
     public Image wingTopRight;
     public Image wingTopLeft;
     public Image wingBottomRight;
     public Image wingBottomLeft;
+    
     //Retrieve their RectTransforms, couldnt come up with better names soz :(
     private RectTransform wingUpRight;
     private RectTransform wingUpLeft;
     private RectTransform wingDownRight;
     private RectTransform wingDownLeft; 
     
-    // Start is called before the first frame update
     void Start()
     {
         //Get the RectTransforms
@@ -36,12 +40,21 @@ public class CrosshairRecoil : MonoBehaviour
         updatePositions(recoilTEST); //number makes sure that the "if" is entered
     }
 
-    // Update is called once per frame
     void Update()
     {
-        updatePositions(recoilTEST);
+        if (ENABLE_recoilTEST)
+        {
+            //Enables testing the crosshair with slider 
+            this.updatePositions(recoilTEST); 
+            //When weapons are finished, improve recoil float retrieval
+        }
     }
 
+    public void recoilChange(float inputRecoil)
+    {
+        this.updatePositions(inputRecoil);
+    }
+    
     private void updatePositions(float recoil) 
     {
         if (recoil > recoilFloor)
