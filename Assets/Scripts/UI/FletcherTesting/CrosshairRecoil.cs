@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CrosshairRecoil : MonoBehaviour
 {
-    private float radianAngle = (Mathf.PI / 4.0f); //Store radian angle for better efficiency (45°)
+    private float cos45 = Mathf.Sqrt(2.0f) / 2.0f; //Store trigonometric result for better efficiency
     //Recoil Vars
     public float recoilFloor = 9.0f; //minimum distance from center, FIXME: WHEN RECOIL SYSTEM IS FINISHED, MAKE IT READONLY
     public float recoilTEST;
@@ -62,7 +62,7 @@ public class CrosshairRecoil : MonoBehaviour
     private float calcShift (float radius) 
     {
         //Since they are at a 45°, the X and Y shift are the same
-        return radius * Mathf.Cos(this.radianAngle);
+        return radius * this.cos45;
     }
 
 }
