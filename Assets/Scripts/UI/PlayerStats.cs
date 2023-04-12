@@ -4,40 +4,40 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour 
 {
-	public static PlayerStats playerStats;
-
+	//Debugging
 	public bool debugOn = false; //if true, prints values to console
-	readonly public int limitHealth = 500; //Limits the max amount of health you can upgrade to
-	readonly public int limitBattery = 10; //Limits the max amount of battery you can upgrade to
-	public int maxBattery; //Sets the max battery possible, upgradeable
-	public int maxHealth; //current limit of the full health of the player, upgradeable
-	public int health; //Current health of the player
-	public int battery; //Current battery of the player
+
+	//Player Health and Battery
+	readonly public float limitHealth = 500.0f; //Limits the max amount of health you can upgrade to
+	readonly public float limitBattery = 10; //Limits the max amount of battery you can upgrade to
+	public float maxBattery; //Sets the max battery possible, upgradeable
+	public float maxHealth; //current limit of the full health of the player, upgradeable
+	public float health; //Current health of the player
+	public float battery; //Current battery of the player
 	
 	//TODO: Add ammunition inventory and more
-	
-	void Awake()
-	{
-		playerStats = this;
-	}
 
 	public PlayerStats() 
 	{
-		maxHealth = 100;
-		maxBattery = 5;
-		health = 100;
-		battery = 5;
+		//Health and Battery
+		maxHealth = 100.0f;
+		maxBattery = 5.0f;
+		health = 100.0f;
+		battery = 5.0f;
+
+		//Weapons
+		//TODO
 	}
 
-	public bool takeDamage(int damage)
+	public bool recieveDamage(float damage)
 	{
-		int newHealth = health - damage;
+		float newHealth = health - damage;
 		if ( newHealth > 0 ) //Enough Health to tank incoming damage
 		{
 			health = newHealth;
 			if (debugOn) 
 			{
-				Debug.Log("Damage Taken! " + "Health = " + health.ToString());
+				Debug.Log("Damage Taken! " + "Health = " + health.ToString()); //Possibly fix for long debug numbers
 			}
 			return true; //Could tank damage
 		}
@@ -48,7 +48,7 @@ public class PlayerStats : MonoBehaviour
 		return false; //Died
 	}
 
-	public bool gainHealth(int heal) //Boolean could be used to show something in the UI
+	public bool recieveHealth(float heal) //Boolean could be used to show something in the UI
 	{
 		if (health < maxHealth) 
 		{
@@ -70,9 +70,9 @@ public class PlayerStats : MonoBehaviour
 		return false; //Event: Player has max health
 	}
 
-	public bool spendBattery(int batteryCost)
+	public bool spendBattery(float batteryCost)
 	{
-		int newBattery = battery - batteryCost;
+		float newBattery = battery - batteryCost;
 		if ( newBattery >= 0 ) 
 		{
 			battery = newBattery;
@@ -89,7 +89,7 @@ public class PlayerStats : MonoBehaviour
 		return false; //Don't have enough battery
 	}
 
-	public bool gainBattery(int charges)
+	public bool recieveBattery(float charges)
 	{
 		/* 
 		According to the game design doc, battery only regenerates. This is here
@@ -115,7 +115,7 @@ public class PlayerStats : MonoBehaviour
 		return false; //Player has max battery
 	}
 
-	public bool upgradeMaxBattery(int addedCharges) //Method upgrades the player's max amount of charges
+	public bool raiseMaxBattery(float addedCharges) //Method upgrades the player's max amount of charges
 	{
 		if (maxBattery < limitBattery) 
 		{
@@ -137,7 +137,7 @@ public class PlayerStats : MonoBehaviour
 		return false; //Cant upgrade battery anymore
 	}
 
-	public bool upgradeMaxHealth(int upgradeNum) 
+	public bool raiseMaxHealth(float upgradeNum) 
 	{
 		if (maxHealth < limitHealth) 
 		{
@@ -157,28 +157,6 @@ public class PlayerStats : MonoBehaviour
 			Debug.Log("Upgrade Limit for health reached!");
 		}
 		return false; //Cant upgrade health any further
-	}
-
-	//Getters
-	public int getHealth() 
-	{
-		return this.health;
-	}
-
-	public int getBattery() 
-	{
-		return this.battery;
-	}
-
-	//Setters
-	public void setHealth(int health) 
-	{
-		this.health = health;
-	}
-
-	public void setBattery(int battery) 
-	{
-		this.battery = battery;
 	}
 
 }

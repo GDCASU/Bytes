@@ -5,19 +5,24 @@ using UnityEngine.UI;
 
 public class BatteryBarScript : MonoBehaviour
 {
-    
     public Slider batteryBar;
+    private PlayerStats playerStats;
     
-    // Start is called before the first frame update
+    void Awake()
+    {
+        //Should be more efficient to access stats quickly
+        this.playerStats = StatusEvents.statusEvents.getStats();
+    }
+    
     void Start()
     {
-        batteryBar.maxValue = PlayerStats.playerStats.maxBattery;
+        batteryBar.maxValue = playerStats.maxBattery;
+        batteryBar.value = playerStats.battery;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        batteryBar.value = PlayerStats.playerStats.battery;
-        batteryBar.maxValue = PlayerStats.playerStats.maxBattery;
+        batteryBar.maxValue = playerStats.maxBattery;
+        batteryBar.value = playerStats.battery;
     }
 }

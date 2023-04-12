@@ -7,16 +7,23 @@ public class HealthBarScript : MonoBehaviour
 {
     
     public Slider healthBar;
+    private PlayerStats playerStats;
     
-    // Start is called before the first frame update
+    void Awake()
+    {
+        //Should be more efficient to access stats quickly
+        this.playerStats = StatusEvents.statusEvents.getStats();
+    }
+    
     void Start()
     {
-        healthBar.maxValue = PlayerStats.playerStats.maxHealth;
+        healthBar.maxValue = this.playerStats.maxHealth;
+        healthBar.value = this.playerStats.health;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        healthBar.value = PlayerStats.playerStats.getHealth();
+        healthBar.maxValue = this.playerStats.maxHealth;
+        healthBar.value = this.playerStats.health;
     }
 }
