@@ -12,7 +12,7 @@ public class chargeUpdater : MonoBehaviour
 
     void Awake()
     {
-        this.playerStats = StatusEvents.statusEvents.getStats();
+        this.playerStats = StatusEvents.player.getStats();
     }
     
     void Start()
