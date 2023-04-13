@@ -8,6 +8,6 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player") platformMover.Triggered(other);
+        if (other.transform.root.gameObject.tag == "Player") platformMover.Triggered(other.gameObject);
     }
 }

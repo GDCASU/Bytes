@@ -21,7 +21,8 @@ public class Elevator : MonoBehaviour
 
     [SerializeField] Transform elevator;
 
-    private PlayerControllerNew localPlayer;
+    private PlayerController localPlayer;
+    private GameObject PlayerRoot;
 
     #region Init
 
@@ -37,8 +38,9 @@ public class Elevator : MonoBehaviour
     void HandleGroundScan()
     {
         Physics.Raycast(origin.position, Vector3.down, out groundHit);
-        if (groundHit.distance > Height)
+        if (groundHit.distance < Height)
         {
+            Debug.Log("Hit");
             // Set scale
             Vector3 scale = elevator.localScale;
             Vector3 newScale = new Vector3(scale.x, groundHit.distance / 2, scale.z);
@@ -65,7 +67,7 @@ public class Elevator : MonoBehaviour
 
     #endregion
 
-    #region Move Player
+    #region Events
 
     // Moves player if necessary
     private void FixedUpdate()
@@ -76,23 +78,43 @@ public class Elevator : MonoBehaviour
     // Activates when the player enters the elevator collider
     public void Triggered(GameObject other)
     {
-        if (other.tag == "Player") MovePlayer(other);
+        if (other.transform.root.tag == "Player") MovePlayer(other);
     }
 
     public void UnTrigger(GameObject other)
     {
-        if(other.tag == "Player")
+        if(other.transform.parent.gameObject == localPlayer.gameObject)
         {
             move = false;
-            localPlayer.transform.SetParent(transform.root.parent);
+            PlayerRoot.transform.SetParent(transform.root.parent);
         }
+    }
+
+    #endregion
+
+    #region Move Player
+
+    // Tells elevator to move the player
+    public void MovePlayer(GameObject player)
+    {
+        // Set start position
+        playerMover.position = new Vector3(origin.position.x, player.transform.position.y, origin.position.z);
+
+        // Set References
+        PlayerRoot = player.transform.root.gameObject;
+        player.transform.root.SetParent(playerMover);
+        localPlayer = player.GetComponentInParent<PlayerController>();
+
+        // Set States
+        move = true;
+        timer = (playerMover.position.y - bottom.position.y) / (origin.position.y - bottom.position.y);
     }
 
     // Handles the movement of the player using the playerMover object
     void HandleMovement()
     {
         // Player should go down
-        if(localPlayer.moveState == PlayerControllerNew.MovementState.crounching) Speed = Speed > 0 ? -Speed : Speed;
+        if(localPlayer.moveState == PlayerController.MovementState.crouching) Speed = Speed > 0 ? -Speed : Speed;
         // Player should go up
         else Speed = Speed < 0 ? -Speed : Speed;
 
@@ -112,18 +134,7 @@ public class Elevator : MonoBehaviour
 
         // Move player
         playerMover.position = Vector3.Lerp(bottom.position, origin.position, timer);
-    }
-
-    // Tells elevator to move the player
-    public void MovePlayer(GameObject player)
-    {
-        move = true;
-        player.transform.SetParent(playerMover);
-        localPlayer = player.GetComponent<PlayerControllerNew>();
-
-        // Set playerMover position and gather percentage
-        playerMover.localPosition = new Vector3(origin.position.x, (player.transform.localPosition.y - player.transform.localScale.y / 2), origin.position.z);
-        timer = (playerMover.position.y - bottom.position.y) / (origin.position.y - bottom.position.y);
+        localPlayer.gameObject.GetComponent<Rigidbody>().useGravity = false;
     }
 
     #endregion

@@ -61,15 +61,15 @@ public class PlatformMover : MonoBehaviour
         player.transform.SetParent(platform);
     }
 
-    public void Triggered(Collider other)
+    public void Triggered(GameObject other)
     {
         Debug.Log("Trigger Enter");
-        if (other.gameObject.tag == "Player")
+        if (other.transform.root.gameObject.tag == "Player")
         {
             Debug.Log("Player Collision");
-            if (CheckSendPlayer(other.gameObject))
+            if (CheckSendPlayer(other))
             {
-                other.gameObject.transform.SetParent(platform.transform);
+                other.transform.root.SetParent(platform.transform);
                 MovePlatform();
             }
         }
