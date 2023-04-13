@@ -1359,10 +1359,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 954239810}
+  - component: {fileID: 954239814}
   - component: {fileID: 954239812}
   - component: {fileID: 954239811}
   - component: {fileID: 954239813}
-  - component: {fileID: 954239814}
   m_Layer: 6
   m_Name: UI Manager
   m_TagString: Untagged
@@ -1546,12 +1546,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStatsHolder: {fileID: 1418493628}
   UIManagerHolder: {fileID: 954239809}
+  spend3Battery: 0
 --- !u!1 &1418493628 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5352873720764609560, guid: 2eacf2325958145d088d535918efe959,
     type: 3}
   m_PrefabInstance: {fileID: 1436122647}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1418493635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418493628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 957d18f482c558c4db274d1591525fe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugOn: 0
+  maxBattery: 5
+  maxHealth: 100
+  health: 100
+  battery: 5
+  batteryRegenSpeed: 0.4
+  timeOfCooldown: 2
+  currCooldown: 0
 --- !u!1001 &1436122647
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1643,7 +1664,7 @@ PrefabInstance:
     - target: {fileID: 2029725871249433294, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2237639679518807239, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
@@ -1820,9 +1841,7 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1969437489, guid: 2eacf2325958145d088d535918efe959, type: 3}
-    - {fileID: 745991176, guid: 2eacf2325958145d088d535918efe959, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eacf2325958145d088d535918efe959, type: 3}
 --- !u!1 &1556632466
 GameObject:

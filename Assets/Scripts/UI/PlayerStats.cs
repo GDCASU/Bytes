@@ -9,11 +9,14 @@ public class PlayerStats : MonoBehaviour
 
 	//Player Health and Battery
 	readonly public float limitHealth = 500.0f; //Limits the max amount of health you can upgrade to
-	readonly public float limitBattery = 10; //Limits the max amount of battery you can upgrade to
+	readonly public float limitBattery = 10f; //Limits the max amount of battery you can upgrade to
 	public float maxBattery; //Sets the max battery possible, upgradeable
 	public float maxHealth; //current limit of the full health of the player, upgradeable
 	public float health; //Current health of the player
 	public float battery; //Current battery of the player
+	public float batteryRegenSpeed; //battery regen in float, percent should be in decimal form
+	public float timeOfCooldown; //Sets an amount of time to pass before battery regen starts again
+	public float currCooldown; //Timer variable for timeOfCooldown
 	
 	//TODO: Add ammunition inventory and more
 
@@ -24,28 +27,42 @@ public class PlayerStats : MonoBehaviour
 		maxBattery = 5.0f;
 		health = 100.0f;
 		battery = 5.0f;
+		batteryRegenSpeed = 0.4f; //regen X of 1 charge in a second
+		timeOfCooldown = 2f; //2 seconds until battery starts regen again
+		currCooldown = 0f;
 
-		//Weapons
-		//TODO
+		//FIXME: Note down recharge calculation and set a reference percentage
+		//Possibly how long does it take to regen 1 charge
+		
+		//TODO: Weapons & Ammunition
 	}
 
-	public bool recieveDamage(float damage)
+	public void regenBattery()
 	{
-		float newHealth = health - damage;
-		if ( newHealth > 0 ) //Enough Health to tank incoming damage
+		if (currCooldown > 0f)
 		{
-			health = newHealth;
-			if (debugOn) 
+			currCooldown -= 1f * Time.deltaTime;
+			return;
+		}
+		if (battery < maxBattery)
+		{
+			//DeltaTime * increasePerSecond
+			battery += batteryRegenSpeed * Time.deltaTime;
+			if (battery > maxBattery)
 			{
-				Debug.Log("Damage Taken! " + "Health = " + health.ToString()); //Possibly fix for long debug numbers
+				battery = maxBattery;
 			}
-			return true; //Could tank damage
 		}
-		if (debugOn) 
-		{
-			Debug.Log("You died! Health is or went below 0");
-		}
-		return false; //Died
+	}
+	
+	public void raiseBatteryRegen(float floatPercent)
+	{
+		batteryRegenSpeed += floatPercent;
+	}
+
+	public void lowerBatteryRegen(float floatPercent)
+	{
+		batteryRegenSpeed -= floatPercent;
 	}
 
 	public bool recieveHealth(float heal) //Boolean could be used to show something in the UI
@@ -68,25 +85,6 @@ public class PlayerStats : MonoBehaviour
 			Debug.Log("Cant gain anymore health!");
 		}
 		return false; //Event: Player has max health
-	}
-
-	public bool spendBattery(float batteryCost)
-	{
-		float newBattery = battery - batteryCost;
-		if ( newBattery >= 0 ) 
-		{
-			battery = newBattery;
-			if (debugOn) 
-			{
-				Debug.Log("Battery spent! " + "Battery = " + battery.ToString());
-			}
-			return true; //Spent battery
-		}
-		if (debugOn) 
-		{
-			Debug.Log("Not enough battery!");
-		}
-		return false; //Don't have enough battery
 	}
 
 	public bool recieveBattery(float charges)
@@ -113,6 +111,45 @@ public class PlayerStats : MonoBehaviour
 			Debug.Log("Cant gain anymore battery!");
 		}
 		return false; //Player has max battery
+	}
+
+	public bool recieveDamage(float damage)
+	{
+		float newHealth = health - damage;
+		if ( newHealth > 0 ) //Enough Health to tank incoming damage
+		{
+			health = newHealth;
+			if (debugOn) 
+			{
+				Debug.Log("Damage Taken! " + "Health = " + health.ToString()); //Possibly fix for long debug numbers
+			}
+			return true; //Could tank damage
+		}
+		if (debugOn) 
+		{
+			Debug.Log("You died! Health is or went below 0");
+		}
+		return false; //Died
+	}
+
+	public bool spendBattery(float batteryCost)
+	{
+		float newBattery = battery - batteryCost;
+		if ( newBattery >= 0 ) 
+		{
+			battery = newBattery;
+			if (debugOn) 
+			{
+				Debug.Log("Battery spent! " + "Battery = " + battery.ToString());
+			}
+			currCooldown = timeOfCooldown;
+			return true; //Spent battery
+		}
+		if (debugOn) 
+		{
+			Debug.Log("Not enough battery!");
+		}
+		return false; //Don't have enough battery
 	}
 
 	public bool raiseMaxBattery(float addedCharges) //Method upgrades the player's max amount of charges

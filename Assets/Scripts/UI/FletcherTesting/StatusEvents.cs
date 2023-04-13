@@ -14,8 +14,11 @@ public class StatusEvents : MonoBehaviour
     public static StatusEvents player;
     public GameObject playerStatsHolder; //Assign to object that holds playerStats
     public GameObject UIManagerHolder; //Assign to object that holds the UI Manager
-    private PlayerStats playerStats;
     private CrosshairRecoil crosshairRecoil;
+    private PlayerStats playerStats;
+
+    //Testing
+    public bool spend3Battery = false; //Bool to test out battery regen without buttons
 
     private void Awake()
     {
@@ -24,9 +27,14 @@ public class StatusEvents : MonoBehaviour
         player = this;
     }
 
-    private void Start()
+    private void Update()
     {
-
+        if (spend3Battery)
+        {
+            useBattery(3f);
+            spend3Battery = false;
+        }
+        this.playerStats.regenBattery();
     }
 
     /*
@@ -116,9 +124,25 @@ public class StatusEvents : MonoBehaviour
         }
     }
     
-    public PlayerStats getStats()
+    //Methods neccesary for status bars to work
+    public float getHealth()
     {
-        //This methods is used by the status bars on the UI
-        return this.playerStats;
+        return playerStats.health;
     }
+
+    public float getBattery()
+    {
+        return playerStats.battery;
+    }
+
+    public float getMaxHealth()
+    {
+        return playerStats.maxHealth;
+    }
+
+    public float getMaxBattery()
+    {
+        return playerStats.maxBattery;
+    }
+
 }
