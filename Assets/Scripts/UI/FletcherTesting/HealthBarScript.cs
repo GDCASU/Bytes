@@ -12,7 +12,7 @@ public class HealthBarScript : MonoBehaviour
     void Awake()
     {
         //Should be more efficient to access stats quickly
-        this.playerStats = StatusEvents.statusEvents.getStats();
+        this.playerStats = StatusEvents.player.getStats();
     }
     
     void Start()

@@ -52,7 +52,7 @@ public class CrosshairRecoil : MonoBehaviour
 
     public void recoilChange(float inputRecoil)
     {
-        this.updatePositions(inputRecoil);
+        this.updatePositions(inputRecoil); //FIXME: Would be overwritten?
     }
     
     private void updatePositions(float recoil) 

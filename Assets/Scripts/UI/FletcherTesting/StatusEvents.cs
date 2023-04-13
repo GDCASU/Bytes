@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* This class handles all outside interactions that need to alter
+ * anything contained on PlayerStats and the UI.
+ * Use StatusEvents.player.method to access anything here from within
+ * other scripts around the game.
+*/
+
+
 public class StatusEvents : MonoBehaviour
 {
-    public static StatusEvents statusEvents;
+    public static StatusEvents player;
     public GameObject playerStatsHolder; //Assign to object that holds playerStats
     public GameObject UIManagerHolder; //Assign to object that holds the UI Manager
     private PlayerStats playerStats;
@@ -14,7 +21,7 @@ public class StatusEvents : MonoBehaviour
     {
         this.playerStats = playerStatsHolder.GetComponent<PlayerStats>();
         this.crosshairRecoil = UIManagerHolder.GetComponent<CrosshairRecoil>();
-        statusEvents = this;
+        player = this;
     }
 
     private void Start()
