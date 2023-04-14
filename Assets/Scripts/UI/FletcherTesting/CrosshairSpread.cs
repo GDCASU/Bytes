@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class CrosshairRecoil : MonoBehaviour
+public class CrosshairSpread : MonoBehaviour
 {
     //Trigonometry and debugging
     readonly private float cos45 = Mathf.Sqrt(2.0f) / 2.0f; //Store trigonometric result for better efficiency
-    public bool ENABLE_recoilTEST = false; //Makes recoilTest change the crosshair
-    public float recoilTEST;
+    public bool ENABLE_spreadTEST = false; //Makes spreadTest change the crosshair
+    public float spreadTEST;
 
-    //Recoil Vars
-    public float recoilFloor = 9.0f; //minimum distance from center, FIXME: WHEN RECOIL SYSTEM IS FINISHED, MAKE IT READONLY
+    //spread Vars
+    public float spreadFloor = 9.0f; //minimum distance from center, FIXME: WHEN spread SYSTEM IS FINISHED, MAKE IT READONLY
     
     //Wings of the crosshair
     public Image wingTopRight;
@@ -34,32 +34,32 @@ public class CrosshairRecoil : MonoBehaviour
         this.wingDownRight = wingBottomRight.GetComponent<RectTransform>();
         this.wingDownLeft = wingBottomLeft.GetComponent<RectTransform>(); 
         
-        //Set the recoil temporarly
-        recoilTEST = recoilFloor + 0.001f;
+        //Set the spread temporarly
+        spreadTEST = spreadFloor + 0.001f;
         //Set wings to the minimum amount of radius shift
-        updatePositions(recoilTEST); //number makes sure that the "if" is entered
+        updatePositions(spreadTEST); //number makes sure that the "if" is entered
     }
 
     void Update()
     {
-        if (ENABLE_recoilTEST)
+        if (ENABLE_spreadTEST)
         {
             //Enables testing the crosshair with slider 
-            this.updatePositions(recoilTEST); 
-            //When weapons are finished, improve recoil float retrieval
+            this.updatePositions(spreadTEST); 
+            //When weapons are finished, improve spread float retrieval
         }
     }
 
-    public void recoilChange(float inputRecoil)
+    public void spreadChange(float inputspread)
     {
-        this.updatePositions(inputRecoil); //FIXME: Would be overwritten?
+        this.updatePositions(inputspread);
     }
     
-    private void updatePositions(float recoil) 
+    private void updatePositions(float spread) 
     {
-        if (recoil > recoilFloor)
+        if (spread > spreadFloor)
         {
-            float shift = calcShift(recoil);
+            float shift = calcShift(spread);
 
             //Shift Top Right
             this.wingUpRight.anchoredPosition = new Vector3(+shift , +shift, 0);
