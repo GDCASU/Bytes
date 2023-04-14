@@ -129,6 +129,7 @@ public class PlayerStats : MonoBehaviour
 		{
 			Debug.Log("You died! Health is or went below 0");
 		}
+		health = 0f;
 		return false; //Died
 	}
 

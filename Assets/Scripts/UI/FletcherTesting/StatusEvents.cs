@@ -19,8 +19,11 @@ public class StatusEvents : MonoBehaviour
     private HealthBarScript healthBar;
 
     //Testing
+    public bool gain2Battery = false; //Bool to test Battery gain
+    public bool heal20HP = false; //Bool to test out Health gain
     public bool spend3Battery = false; //Bool to test out battery regen without buttons
     public bool deal30Damage = false; //Bool to test out Health acceleration
+    public bool dealPoint5Damage = false; //Bool to test HP float display
 
     private void Awake()
     {
@@ -32,6 +35,7 @@ public class StatusEvents : MonoBehaviour
 
     private void Update()
     {
+        //Testing bools
         if (spend3Battery)
         {
             useBattery(3f);
@@ -41,6 +45,21 @@ public class StatusEvents : MonoBehaviour
         {
             sendDamage(30);
             deal30Damage = false;
+        }
+        if (heal20HP) 
+        {
+            sendHealth(20);
+            heal20HP = false;
+        }
+        if (gain2Battery)
+        {
+            sendBattery(2f);
+            gain2Battery = false;
+        }
+        if (dealPoint5Damage)
+        {
+            sendDamage(0.5f);
+            dealPoint5Damage = false;
         }
         this.playerStats.regenBattery();
     }
