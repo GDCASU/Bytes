@@ -9,12 +9,14 @@ public class HealthBarScript : MonoBehaviour
     public Slider accelerationBar;
     private float accelerationHP;
     private float currentHP; //This value exists mostly for readability
-    public float accWaitTime = 1f; //Sets how long it takes for acceleration to start. In seconds
-    public float accSpeed = 1f; //How many seconds it takes decay to complete
+    public float accWaitTime; //Sets how long it takes for acceleration to start. In seconds
+    public float accSpeed; //How many seconds it takes decay to complete for a full bar
     private float accTime; 
     
     void Start()
     {
+        accSpeed = 2f;
+        accWaitTime = 1f;
         setHealthBar();
         setAccelerationBar();
         accelerationHP = healthBar.value;
@@ -35,7 +37,7 @@ public class HealthBarScript : MonoBehaviour
             }
             else //After "accWaitTime" seconds have passed, start decay
             {
-                accelerationBar.value -= (accelerationHP - currentHP) * Time.deltaTime;
+                accelerationBar.value -= (healthBar.maxValue * Time.deltaTime) / accSpeed;
                 if (accelerationBar.value <= currentHP) 
                 {
                     accelerationHP = currentHP;
