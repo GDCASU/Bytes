@@ -27,7 +27,7 @@ public class PlayerStats : MonoBehaviour
 		maxBattery = 5.0f;
 		health = 100.0f;
 		battery = 5.0f;
-		batteryRegenSpeed = 0.4f; //regen X of 1 charge in a second
+		batteryRegenSpeed = 0.8f; //regen X of 1 charge in a second
 		timeOfCooldown = 2f; //2 seconds until battery starts regen again
 		currCooldown = 0f;
 
@@ -142,7 +142,7 @@ public class PlayerStats : MonoBehaviour
 			{
 				Debug.Log("Battery spent! " + "Battery = " + battery.ToString());
 			}
-			currCooldown = timeOfCooldown;
+			currCooldown = timeOfCooldown; 
 			return true; //Spent battery
 		}
 		if (debugOn) 

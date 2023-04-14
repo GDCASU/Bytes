@@ -16,14 +16,17 @@ public class StatusEvents : MonoBehaviour
     public GameObject UIManagerHolder; //Assign to object that holds the UI Manager
     private CrosshairSpread crosshairSpread;
     private PlayerStats playerStats;
+    private HealthBarScript healthBar;
 
     //Testing
     public bool spend3Battery = false; //Bool to test out battery regen without buttons
+    public bool deal30Damage = false; //Bool to test out Health acceleration
 
     private void Awake()
     {
-        this.playerStats = playerStatsHolder.GetComponent<PlayerStats>();
-        this.crosshairSpread = UIManagerHolder.GetComponent<CrosshairSpread>();
+        playerStats = playerStatsHolder.GetComponent<PlayerStats>();
+        crosshairSpread = UIManagerHolder.GetComponent<CrosshairSpread>();
+        healthBar = UIManagerHolder.GetComponent<HealthBarScript>();
         player = this;
     }
 
@@ -33,6 +36,11 @@ public class StatusEvents : MonoBehaviour
         {
             useBattery(3f);
             spend3Battery = false;
+        }
+        if (deal30Damage)
+        {
+            sendDamage(30);
+            deal30Damage = false;
         }
         this.playerStats.regenBattery();
     }
@@ -48,14 +56,15 @@ public class StatusEvents : MonoBehaviour
     
     public void setSpread(float spread)
     {
-        this.crosshairSpread.spreadChange(spread);
+        crosshairSpread.spreadChange(spread);
     }
 
     public void sendDamage(float damage)
     {
         bool result = playerStats.recieveDamage(damage);
+        healthBar.AlertDamage();
         if (!result) {
-            this.deathEvent(); //Calls death event when health was not enough to tank damage
+            deathEvent(); //Calls death event when health was not enough to tank damage
         }
     }
 
