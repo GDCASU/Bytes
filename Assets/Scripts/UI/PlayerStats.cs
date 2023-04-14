@@ -4,51 +4,68 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour 
 {
-	public static PlayerStats playerStats;
-
+	//Debugging
 	public bool debugOn = false; //if true, prints values to console
-	readonly public int limitHealth = 500; //Limits the max amount of health you can upgrade to
-	readonly public int limitBattery = 10; //Limits the max amount of battery you can upgrade to
-	public int maxBattery; //Sets the max battery possible, upgradeable
-	public int maxHealth; //current limit of the full health of the player, upgradeable
-	public int health; //Current health of the player
-	public int battery; //Current battery of the player
+
+	//Player Health and Battery
+	readonly public float limitHealth = 500.0f; //Limits the max amount of health you can upgrade to
+	readonly public float limitBattery = 10f; //Limits the max amount of battery you can upgrade to
+	public float maxBattery; //Sets the max battery possible, upgradeable
+	public float maxHealth; //current limit of the full health of the player, upgradeable
+	public float health; //Current health of the player
+	public float battery; //Current battery of the player
+	public float batteryRegenSpeed; //battery regen in float, percent should be in decimal form
+	public float timeOfCooldown; //Sets an amount of time to pass before battery regen starts again
+	public float currCooldown; //Timer variable for timeOfCooldown
 	
 	//TODO: Add ammunition inventory and more
-	
-	void Awake()
-	{
-		playerStats = this;
-	}
 
 	public PlayerStats() 
 	{
-		maxHealth = 100;
-		maxBattery = 5;
-		health = 100;
-		battery = 5;
+		//Health and Battery
+		maxHealth = 100.0f;
+		maxBattery = 5.0f;
+		health = 100.0f;
+		battery = 5.0f;
+		batteryRegenSpeed = 0.8f; //regen X of 1 charge in a second
+		timeOfCooldown = 2f; //2 seconds until battery starts regen again
+		currCooldown = 0f;
+
+		//FIXME: Note down recharge calculation and set a reference percentage
+		//Possibly how long does it take to regen 1 charge
+		
+		//TODO: Weapons & Ammunition
 	}
 
-	public bool takeDamage(int damage)
+	public void regenBattery()
 	{
-		int newHealth = health - damage;
-		if ( newHealth > 0 ) //Enough Health to tank incoming damage
+		if (currCooldown > 0f)
 		{
-			health = newHealth;
-			if (debugOn) 
+			currCooldown -= 1f * Time.deltaTime;
+			return;
+		}
+		if (battery < maxBattery)
+		{
+			//DeltaTime * increasePerSecond
+			battery += batteryRegenSpeed * Time.deltaTime;
+			if (battery > maxBattery)
 			{
-				Debug.Log("Damage Taken! " + "Health = " + health.ToString());
+				battery = maxBattery;
 			}
-			return true; //Could tank damage
 		}
-		if (debugOn) 
-		{
-			Debug.Log("You died! Health is or went below 0");
-		}
-		return false; //Died
+	}
+	
+	public void raiseBatteryRegen(float floatPercent)
+	{
+		batteryRegenSpeed += floatPercent;
 	}
 
-	public bool gainHealth(int heal) //Boolean could be used to show something in the UI
+	public void lowerBatteryRegen(float floatPercent)
+	{
+		batteryRegenSpeed -= floatPercent;
+	}
+
+	public bool recieveHealth(float heal) //Boolean could be used to show something in the UI
 	{
 		if (health < maxHealth) 
 		{
@@ -70,26 +87,7 @@ public class PlayerStats : MonoBehaviour
 		return false; //Event: Player has max health
 	}
 
-	public bool spendBattery(int batteryCost)
-	{
-		int newBattery = battery - batteryCost;
-		if ( newBattery >= 0 ) 
-		{
-			battery = newBattery;
-			if (debugOn) 
-			{
-				Debug.Log("Battery spent! " + "Battery = " + battery.ToString());
-			}
-			return true; //Spent battery
-		}
-		if (debugOn) 
-		{
-			Debug.Log("Not enough battery!");
-		}
-		return false; //Don't have enough battery
-	}
-
-	public bool gainBattery(int charges)
+	public bool recieveBattery(float charges)
 	{
 		/* 
 		According to the game design doc, battery only regenerates. This is here
@@ -115,7 +113,47 @@ public class PlayerStats : MonoBehaviour
 		return false; //Player has max battery
 	}
 
-	public bool upgradeMaxBattery(int addedCharges) //Method upgrades the player's max amount of charges
+	public bool recieveDamage(float damage)
+	{
+		float newHealth = health - damage;
+		if ( newHealth > 0 ) //Enough Health to tank incoming damage
+		{
+			health = newHealth;
+			if (debugOn) 
+			{
+				Debug.Log("Damage Taken! " + "Health = " + health.ToString()); //Possibly fix for long debug numbers
+			}
+			return true; //Could tank damage
+		}
+		if (debugOn) 
+		{
+			Debug.Log("You died! Health is or went below 0");
+		}
+		health = 0f;
+		return false; //Died
+	}
+
+	public bool spendBattery(float batteryCost)
+	{
+		float newBattery = battery - batteryCost;
+		if ( newBattery >= 0 ) 
+		{
+			battery = newBattery;
+			if (debugOn) 
+			{
+				Debug.Log("Battery spent! " + "Battery = " + battery.ToString());
+			}
+			currCooldown = timeOfCooldown; 
+			return true; //Spent battery
+		}
+		if (debugOn) 
+		{
+			Debug.Log("Not enough battery!");
+		}
+		return false; //Don't have enough battery
+	}
+
+	public bool raiseMaxBattery(float addedCharges) //Method upgrades the player's max amount of charges
 	{
 		if (maxBattery < limitBattery) 
 		{
@@ -137,7 +175,7 @@ public class PlayerStats : MonoBehaviour
 		return false; //Cant upgrade battery anymore
 	}
 
-	public bool upgradeMaxHealth(int upgradeNum) 
+	public bool raiseMaxHealth(float upgradeNum) 
 	{
 		if (maxHealth < limitHealth) 
 		{
@@ -157,28 +195,6 @@ public class PlayerStats : MonoBehaviour
 			Debug.Log("Upgrade Limit for health reached!");
 		}
 		return false; //Cant upgrade health any further
-	}
-
-	//Getters
-	public int getHealth() 
-	{
-		return this.health;
-	}
-
-	public int getBattery() 
-	{
-		return this.battery;
-	}
-
-	//Setters
-	public void setHealth(int health) 
-	{
-		this.health = health;
-	}
-
-	public void setBattery(int battery) 
-	{
-		this.battery = battery;
 	}
 
 }
