@@ -135,6 +135,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &234000883 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4901088801138230736, guid: 2eacf2325958145d088d535918efe959,
+    type: 3}
+  m_PrefabInstance: {fileID: 2109565391}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &606798116
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,6 +311,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3229927890138238699, guid: 95b0af73e2eaf93468c77dca0511409f,
+        type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 234000883}
     - target: {fileID: 3229927890138238699, guid: 95b0af73e2eaf93468c77dca0511409f,
         type: 3}
       propertyPath: nameText
@@ -530,11 +541,53 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1685535459, guid: 2eacf2325958145d088d535918efe959, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1685535459, guid: 2eacf2325958145d088d535918efe959, type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1685535459, guid: 2eacf2325958145d088d535918efe959, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 916006359266707449, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
       propertyPath: dialogueText
       value: 
       objectReference: {fileID: 1685535459}
+    - target: {fileID: 1955077692524643650, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955077692524643650, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815319041961363808, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815319041961363808, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990064374427392920, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990064374427392920, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -236
+      objectReference: {fileID: 0}
     - target: {fileID: 3141482448471852018, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
       propertyPath: m_Name
@@ -559,6 +612,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: TriggerDialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4804397015613637512, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4804397015613637512, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608516086511700550, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7844583521089145587, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
@@ -613,6 +681,16 @@ PrefabInstance:
     - target: {fileID: 7844583521089145587, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8014966425295046026, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8014966425295046026, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
