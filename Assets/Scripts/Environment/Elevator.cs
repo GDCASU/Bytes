@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Elevator : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] Transform origin;
     [SerializeField] Transform bottom;
     [SerializeField] Transform playerMover;
+    [SerializeField] GameObject invisibleBox;
 
     [SerializeField] Transform elevator;
 
@@ -87,6 +89,7 @@ public class Elevator : MonoBehaviour
         {
             move = false;
             PlayerRoot.transform.SetParent(transform.root.parent);
+            invisibleBox.active = false;
         }
     }
 
@@ -108,13 +111,14 @@ public class Elevator : MonoBehaviour
         // Set States
         move = true;
         timer = (playerMover.position.y - bottom.position.y) / (origin.position.y - bottom.position.y);
+        invisibleBox.active = true;
     }
 
     // Handles the movement of the player using the playerMover object
     void HandleMovement()
     {
         // Player should go down
-        if(localPlayer.moveState == PlayerController.MovementState.crouching) Speed = Speed > 0 ? -Speed : Speed;
+        if(localPlayer.tryingToCrouch) Speed = Speed > 0 ? -Speed : Speed;
         // Player should go up
         else Speed = Speed < 0 ? -Speed : Speed;
 
@@ -134,7 +138,6 @@ public class Elevator : MonoBehaviour
 
         // Move player
         playerMover.position = Vector3.Lerp(bottom.position, origin.position, timer);
-        localPlayer.gameObject.GetComponent<Rigidbody>().useGravity = false;
     }
 
     #endregion
