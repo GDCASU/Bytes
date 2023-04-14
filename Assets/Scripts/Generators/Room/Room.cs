@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEditor;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ public class Room : MonoBehaviour
     [HideInInspector] public List<SpawnPad> spawnPads;
 
     public RoomShape roomShape;
-    [HideInInspector] public RoomType roomType;
+    public RoomType roomType;
 
     void Awake()
     {

@@ -53,19 +53,26 @@ public class LootGenerator : MonoBehaviour
                         GeneralRoomChestSpawnCase(spawnPad);
                         break;
                     case RoomType.Augmentation:
+                        AugmentationRoomSpawnCase(spawnPad);
+                        break;
+                    case RoomType.Keycard:
+                        KeycardRoomChestSpawnCase(spawnPad);
+                        break;
+                    case RoomType.Trial:
+                        TrialRoomChestSpawnCase(spawnPad);
                         break;
                     case RoomType.ToBoss:
                         break;
                 }
             }
 
-
             // foreach(ContainerSpawnPad spawnPad in room.spawnPads
+
         }
 
     }
 
-    public void GeneralRoomChestSpawnCase(ChestSpawnPad spawnPad)
+    private void GeneralRoomChestSpawnCase(ChestSpawnPad spawnPad)
     {
         if (spawnPad.CheckForceSpawn(LootCode.None))
             return;
@@ -93,6 +100,54 @@ public class LootGenerator : MonoBehaviour
         }
         else
             resourceChanceMult += increasedResourceChance;
+    }
+
+    bool augmentationFlag_A;
+    private void AugmentationRoomSpawnCase(ChestSpawnPad spawnPad)
+    {
+        if (!augmentationFlag_A)
+        {
+            spawnPad.CheckForceSpawn(LootCode.Augmentation);
+            augmentationFlag_A = true;
+        }
+    }
+
+    bool tacticalFlag_K;
+    private void KeycardRoomChestSpawnCase(ChestSpawnPad spawnPad)
+    {
+        if (!tacticalFlag_K)
+            spawnPad.CheckForceSpawn(LootCode.Tactical);
+
+        if (tacticalFlag_K)
+        {
+            int roll = UnityEngine.Random.Range(0, 101);
+            if (roll <= 50)
+            {
+                spawnPad.CheckForceSpawn(LootCode.HealthUp);
+            }
+            else
+                spawnPad.CheckForceSpawn(LootCode.BatteryUp);
+        }
+        tacticalFlag_K = true;
+    }
+
+    bool augmentationFlag_T;
+    private void TrialRoomChestSpawnCase(ChestSpawnPad spawnPad)
+    {
+        if (!augmentationFlag_T)
+            spawnPad.CheckForceSpawn(LootCode.Augmentation);
+
+        if (augmentationFlag_T)
+        {
+            int roll = UnityEngine.Random.Range(0, 101);
+            if (roll <= 50)
+            {
+                spawnPad.CheckForceSpawn(LootCode.HealthUp);
+            }
+            else
+                spawnPad.CheckForceSpawn(LootCode.BatteryUp);
+        }
+        augmentationFlag_T = true;
     }
 
     private void SpawnContainers()
