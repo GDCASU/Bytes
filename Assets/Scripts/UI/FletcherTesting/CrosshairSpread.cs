@@ -12,7 +12,8 @@ public class CrosshairSpread : MonoBehaviour
     public float spreadTEST;
 
     //spread Vars
-    public float spreadFloor = 9.0f; //minimum distance from center, FIXME: WHEN spread SYSTEM IS FINISHED, MAKE IT READONLY
+    public float spreadFloor = 9.0f;
+    //minimum distance from center, WHEN BULLET SPREAD SYSTEM IS FINISHED, MAKE IT READONLY
     
     //Wings of the crosshair
     public Image wingTopRight;
