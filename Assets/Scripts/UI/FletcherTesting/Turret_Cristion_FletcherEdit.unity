@@ -1630,6 +1630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStatsHolder: {fileID: 1418493628}
   UIManagerHolder: {fileID: 954239809}
+  UIObjectHolder: {fileID: 1436122648}
   gain2Battery: 0
   heal20HP: 0
   spend3Battery: 0
@@ -1759,6 +1760,10 @@ PrefabInstance:
     - target: {fileID: 1423579194, guid: 2eacf2325958145d088d535918efe959, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1483774600, guid: 2eacf2325958145d088d535918efe959, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1483774601, guid: 2eacf2325958145d088d535918efe959, type: 3}
       propertyPath: m_RootOrder
@@ -2007,6 +2012,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eacf2325958145d088d535918efe959, type: 3}
+--- !u!1 &1436122648 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1483774600, guid: 2eacf2325958145d088d535918efe959,
+    type: 3}
+  m_PrefabInstance: {fileID: 1436122647}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1507314034
 GameObject:
   m_ObjectHideFlags: 0
