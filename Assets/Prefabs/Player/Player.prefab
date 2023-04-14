@@ -2780,7 +2780,7 @@ GameObject:
   - component: {fileID: 8903532833947391296}
   m_Layer: 0
   m_Name: PlayerObj
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10924,6 +10924,7 @@ GameObject:
   - component: {fileID: 1162999475230808734}
   - component: {fileID: 2912806140844013965}
   - component: {fileID: 1685535459}
+  - component: {fileID: 8830430661050270495}
   m_Layer: 6
   m_Name: Dialogue
   m_TagString: Untagged
@@ -10995,6 +10996,19 @@ MonoBehaviour:
   m_Text: 'blah blah blah
 
 '
+--- !u!114 &8830430661050270495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7679821851487112236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc82238e4c0f16b40b946ed1a1deb23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeWriterSpeed: 50
 --- !u!1 &7796457889457671938
 GameObject:
   m_ObjectHideFlags: 0
@@ -11405,6 +11419,7 @@ GameObject:
   - component: {fileID: 2990064374427392920}
   - component: {fileID: 6885852004850061583}
   - component: {fileID: 4279379879263576828}
+  - component: {fileID: 4901088801138230736}
   m_Layer: 6
   m_Name: TextBox
   m_TagString: Untagged
@@ -11472,6 +11487,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &4901088801138230736
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7916751349472847088}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2a9f357be24995b41bca3803e5f2eeca, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7982868977941982342
 GameObject:
   m_ObjectHideFlags: 0
