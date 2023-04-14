@@ -10,6 +10,9 @@ public abstract class Augmentation : MonoBehaviour, IInteractable, IEquipable
     [SerializeField] protected int batteryCost;
     protected Collider interactCollider;
     protected AugmentationHandler handler;
+    
+    //delete this later
+    public bool equipNow;
 
     protected virtual void Awake()
     {
@@ -18,8 +21,17 @@ public abstract class Augmentation : MonoBehaviour, IInteractable, IEquipable
 
     public virtual void Interact(GameObject interactor)
     {
-        if (interactor.TryGetComponent(out handler))
+        if (interactor.TryGetComponent<AugmentationHandler>(out handler))
             handler.TakeAugmentation(this);
+    }
+
+    private void Update()
+    {
+        if (equipNow)
+        {
+            equipNow = false;
+            Interact(GameObject.Find("Player").transform.GetChild(1).gameObject);
+        }
     }
 
     public abstract bool IsEquipped { get; }

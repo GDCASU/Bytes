@@ -7771,6 +7771,7 @@ GameObject:
   - component: {fileID: 2081862822093474696}
   - component: {fileID: 6670892536787077891}
   - component: {fileID: 1470211172}
+  - component: {fileID: 513629785040610972}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -8181,6 +8182,28 @@ MonoBehaviour:
   maxHealth: 100
   health: 100
   battery: 5
+--- !u!114 &513629785040610972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5352873720764609560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d850b575cae95f247902bb51ed118681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _battery:
+    _max: 3
+    _current: 3
+  _batteryRegenDelay: 1
+  _batteryRegenRate: 1
+  _augmentationContainer: {fileID: 3260893714659370932}
+  _augmentations:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &5369865546152060963
 GameObject:
   m_ObjectHideFlags: 0

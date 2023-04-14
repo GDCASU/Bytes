@@ -12,7 +12,7 @@ public partial class PlayerController : MonoBehaviour
     [Header("Ground Check")]
     [SerializeField] float playerHieght;
     [SerializeField] LayerMask whatIsGround;
-    bool grounded;
+    [HideInInspector] public bool grounded;
 
     private void Awake()
     {
