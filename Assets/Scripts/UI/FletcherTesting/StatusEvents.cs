@@ -14,7 +14,7 @@ public class StatusEvents : MonoBehaviour
     public static StatusEvents player;
     public GameObject playerStatsHolder; //Assign to object that holds playerStats
     public GameObject UIManagerHolder; //Assign to object that holds the UI Manager
-    private CrosshairRecoil crosshairRecoil;
+    private CrosshairSpread crosshairSpread;
     private PlayerStats playerStats;
 
     //Testing
@@ -23,7 +23,7 @@ public class StatusEvents : MonoBehaviour
     private void Awake()
     {
         this.playerStats = playerStatsHolder.GetComponent<PlayerStats>();
-        this.crosshairRecoil = UIManagerHolder.GetComponent<CrosshairRecoil>();
+        this.crosshairSpread = UIManagerHolder.GetComponent<CrosshairSpread>();
         player = this;
     }
 
@@ -46,9 +46,9 @@ public class StatusEvents : MonoBehaviour
         //TODO: Will trigger with health check
     }
     
-    public void setRecoil(float recoil)
+    public void setSpread(float spread)
     {
-        this.crosshairRecoil.recoilChange(recoil);
+        this.crosshairSpread.spreadChange(spread);
     }
 
     public void sendDamage(float damage)
