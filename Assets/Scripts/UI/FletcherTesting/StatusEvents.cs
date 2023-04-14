@@ -13,7 +13,8 @@ public class StatusEvents : MonoBehaviour
 {
     public static StatusEvents player;
     public GameObject playerStatsHolder; //Assign to object that holds playerStats
-    public GameObject UIManagerHolder; //Assign to object that holds the UI Manager
+    public GameObject UIManagerHolder; //Assign to object that holds the UI Manager scripts
+    public GameObject UIObjectHolder; //Assign to object called "UI Holder"
     private CrosshairSpread crosshairSpread;
     private PlayerStats playerStats;
     private HealthBarScript healthBar;
@@ -63,10 +64,17 @@ public class StatusEvents : MonoBehaviour
         }
         this.playerStats.regenBattery();
     }
+    
+    public void hideUI()
+    {
+        UIObjectHolder.GetComponent<Renderer>().enabled = false;
+        //UIObjectHolder.SetActive(false); could also work, but this one disables scripts inside the UI objects too
+    }
 
-    /*
-    TODO: ADD BATTERY RECHARGING
-    */
+    public void showUI()
+    {
+        UIObjectHolder.GetComponent<Renderer>().enabled = true;
+    }
     
     private void deathEvent()
     {
