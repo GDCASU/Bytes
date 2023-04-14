@@ -108,15 +108,9 @@ public class PlayerInput : MonoBehaviour
     public void UseFirstAugmentation(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-        {
            _augmentationHandler.TriggerAugmentation(0, true);
-            print("Pressed");
-        }
         else if (context.phase == InputActionPhase.Canceled)
-        {
            _augmentationHandler.TriggerAugmentation(0, false);
-            print("Released");
-        }
     }
 
     public void UseSecondAugmentation(InputAction.CallbackContext context)

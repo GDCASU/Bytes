@@ -30,7 +30,7 @@ public abstract class Augmentation : MonoBehaviour, IInteractable, IEquipable
         if (equipNow)
         {
             equipNow = false;
-            Interact(GameObject.Find("Player").transform.GetChild(1).gameObject);
+            Interact(GameObject.Find("Player").transform.GetChild(1).gameObject); //arbitrarily grabs player object, change if player object heirarchy changes
         }
     }
 

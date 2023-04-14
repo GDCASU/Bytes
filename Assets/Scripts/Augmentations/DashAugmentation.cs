@@ -9,7 +9,8 @@ public class DashAugmentation : Augmentation
     [SerializeField] float _distance = 5f;
     [SerializeField] int _collisionDamage;
     [SerializeField] float _activeTime;
-    public float _dashForce = 6.0f;
+    [SerializeField] float _cooldown;
+    float _dashForce = 6.0f;
     Collider _damageCollider;
     Coroutine _damageRoutine;
     WaitForSeconds _activeWait;
@@ -17,11 +18,11 @@ public class DashAugmentation : Augmentation
     bool _isEquipped;
     PlayerInput _playerInput;
     Damageable _damageable;
-    PlayerController _controller;
     Rigidbody _rb;
     Transform _orientation;
     Vector3 _dashDirection;
     bool _active;
+    bool _onCooldown;
 
     public override bool IsEquipped => _isEquipped;
 
@@ -55,7 +56,6 @@ public class DashAugmentation : Augmentation
     {
         _playerInput = equipper.GetComponent<PlayerInput>();
         // _damageable = equipper.GetComponent<Damageable>();
-        _controller = equipper.GetComponent<PlayerController>();
         _rb = equipper.GetComponent<Rigidbody>();
 
         _renderer.enabled = false;
@@ -85,7 +85,7 @@ public class DashAugmentation : Augmentation
 
     public override void Trigger(bool inputPressed)
     {
-        if (!inputPressed)
+        if (!inputPressed || _onCooldown)
             return;
 
         // Dash forward by default if no movement keys are pressed. Otherwise, dash in the direction the player is moving.
@@ -103,6 +103,9 @@ public class DashAugmentation : Augmentation
             StopCoroutine(_damageRoutine);
         _damageRoutine = StartCoroutine(EnableDamageCollider());
 
+        _onCooldown = true;
+        Invoke(nameof(DisableCooldown), _cooldown);
+
         handler.Battery.Drain(batteryCost);
     }
 
@@ -113,6 +116,11 @@ public class DashAugmentation : Augmentation
         yield return _activeWait;
         _damageCollider.enabled = false;
         _active = false;
+    }
+
+    void DisableCooldown()
+    {
+        _onCooldown = false;
     }
 
     void OnTriggerEnter(Collider other)

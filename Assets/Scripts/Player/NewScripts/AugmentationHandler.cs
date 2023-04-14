@@ -120,8 +120,8 @@ public class AugmentationHandler : MonoBehaviour
         {
             yield return _regenWait;
             _battery.Fill(1);
+           _isBatteryDepleted = false;
         }
 
-        _isBatteryDepleted = false;
     }
 }
