@@ -297,64 +297,7 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1 &1028085541
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1028085542}
-  - component: {fileID: 1028085543}
-  m_Layer: 0
-  m_Name: Ryan's Map Generator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1028085542
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028085541}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1028085543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028085541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44852e896d6c21740bc14b13c9c553dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellSize: 10
-  bluePrintPrefab: {fileID: 0}
-  gPrefab: {fileID: 0}
-  tPrefab: {fileID: 0}
-  hPrefab: {fileID: 0}
-  lPrefab: {fileID: 0}
-  jPrefab: {fileID: 0}
-  bPrefab: {fileID: 0}
-  maxRooms: 0
-  tRoomSpawnChance: 0
-  hRoomSpawnChance: 0
-  roomList: []
-  prevRooms: 
---- !u!1001 &1067505836
+--- !u!1001 &825380060
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -431,6 +374,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eacf2325958145d088d535918efe959, type: 3}
+--- !u!1 &1028085541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1028085542}
+  - component: {fileID: 1028085543}
+  m_Layer: 0
+  m_Name: Ryan's Map Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1028085542
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028085541}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1028085543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028085541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44852e896d6c21740bc14b13c9c553dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellSize: 10
+  bluePrintPrefab: {fileID: 0}
+  gPrefab: {fileID: 0}
+  tPrefab: {fileID: 0}
+  hPrefab: {fileID: 0}
+  lPrefab: {fileID: 0}
+  jPrefab: {fileID: 0}
+  bPrefab: {fileID: 0}
+  maxRooms: 0
+  tRoomSpawnChance: 0
+  hRoomSpawnChance: 0
+  roomList: []
+  prevRooms: 
 --- !u!1001 &1147994266
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -55,8 +55,10 @@ public class PlayerInput : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        //if (context.performed)
-        //    _interactionHandler.AttemptInteraction();
+        if (context.performed)
+        {
+            
+        }
     }
 
     public void OnPrimaryAttack(InputAction.CallbackContext context)

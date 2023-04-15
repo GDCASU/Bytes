@@ -37,6 +37,7 @@ public partial class PlayerController
 
     private MovementState previousMovementState;
     public MovementState moveState;
+    public bool tryingToCrouch = false;
 
     public enum MovementState
     {
@@ -51,6 +52,10 @@ public partial class PlayerController
     public void handleMoveState()
     { 
         previousMovementState = moveState;
+
+        // Player is trying to crouch
+        if (_input.IsCrouchPressed) tryingToCrouch = true;
+        else tryingToCrouch = false;
 
         if (grounded && _input.IsCrouchPressed) {//crouching
             moveState = MovementState.crouching;
