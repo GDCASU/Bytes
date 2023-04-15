@@ -16,7 +16,10 @@ public enum LootCode
     Augmentation,
     Tactical,
     HealthUp,
-    BatteryUp
+    BatteryUp,
+    Ammo,
+    Health,
+    Keycard
 }
 
 public class SpawnPad : MonoBehaviour
