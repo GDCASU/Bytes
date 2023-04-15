@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class PlayerControllerNew
+public partial class PlayerController
 {
     private float moveSpeed;
 
@@ -37,6 +37,7 @@ public partial class PlayerControllerNew
 
     private MovementState previousMovementState;
     public MovementState moveState;
+    public bool tryingToCrouch = false;
 
     public enum MovementState
     {
@@ -51,6 +52,10 @@ public partial class PlayerControllerNew
     public void handleMoveState()
     { 
         previousMovementState = moveState;
+
+        // Player is trying to crouch
+        if (_input.IsCrouchPressed) tryingToCrouch = true;
+        else tryingToCrouch = false;
 
         if (grounded && _input.IsCrouchPressed) {//crouching
             moveState = MovementState.crouching;
@@ -79,7 +84,7 @@ public partial class PlayerControllerNew
             moveState = MovementState.free;
         }
 
-        Debug.Log("Move State" + moveState);
+        // Debug.Log("Move State" + moveState);
     }
 
     #region Moving
@@ -177,7 +182,7 @@ public partial class PlayerControllerNew
 
         transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        Debug.Log("Adding Crouch Force");
+        // Debug.Log("Adding Crouch Force");
     }
 
     private void handleCrouch()
