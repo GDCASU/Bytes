@@ -1,29 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
+using UnityEngine.WSA;
 
 public class LootGenerator : MonoBehaviour
 {
-    [Header("Loot")]
+    [Header("Chests")]
     public int increasedResourceChance = 0;
     public int increasedAugmentationChance = 0;
     public int increasedTacticalChance = 0;
     public int increasedHealthUpgradeChance = 0;
     public int increasedBatteryUpgradeChance = 0;
 
-    private List<GameObject> masterRooms;
+    [Header("Containers")]
+    public int increasedAmmoBoxChance = 0;
+    public int increasedHealthBoxChance = 0;
+    public int increasedKeycardBoxChance = 0;
+
+    List<GameObject> masterRooms;
 
     int resourceChanceMult, augmentationChanceMult, tacticalChanceMult,
             healthUpgradeChanceMult, batteryUpgradeChanceMult;             // Multipliers for chest chance increase (chest chances will increase with each room generation)
 
-    private void Start()
+    int ammoChanceMult, healthChanceMult, keycardChanceMult;
+
+    bool keycardSpawn;
+
+    void Start()
     {
         resourceChanceMult = 0;
         augmentationChanceMult = 0;
         tacticalChanceMult = 0;
         healthUpgradeChanceMult = 0;
         batteryUpgradeChanceMult = 0;
+
+        ammoChanceMult = 0;
+        healthChanceMult = 0;
+        keycardChanceMult = 0;
+
+        keycardSpawn = false;
     }
 
     public void SpawnLoot()
@@ -36,43 +53,82 @@ public class LootGenerator : MonoBehaviour
                 Room room_s = room.GetComponent<Room>();
                 ActivateSpawners(room_s, room_s.roomType);
             }
+
+            foreach (GameObject room in masterRooms)    // Look for ToBoss room
+            {
+                Room room_s = room.GetComponent<Room>();
+                if (room_s.roomType == RoomType.ToBoss)
+                    ActivateToBossSpawners(room_s);
+            }
         }
     }
 
-    private void ActivateSpawners(Room room, RoomType roomType)
+    void ActivateSpawners(Room room, RoomType roomType)
     {
         if (room.spawnPads.Count > 0) // Checking for atleast one spawnPad
         {
-            foreach (ChestSpawnPad spawnPad in room.spawnPads)
+            foreach (SpawnPad spawnPad in room.spawnPads)
             {
-                switch (roomType)
+                if (spawnPad is ChestSpawnPad)
                 {
-                    case RoomType.Start:    // No chest spawn in starting room
-                        break;
-                    case RoomType.General:
-                        GeneralRoomChestSpawnCase(spawnPad);
-                        break;
-                    case RoomType.Augmentation:
-                        AugmentationRoomSpawnCase(spawnPad);
-                        break;
-                    case RoomType.Keycard:
-                        KeycardRoomChestSpawnCase(spawnPad);
-                        break;
-                    case RoomType.Trial:
-                        TrialRoomChestSpawnCase(spawnPad);
-                        break;
-                    case RoomType.ToBoss:
-                        break;
+                    ChestSpawnPad chestSpawnPad = spawnPad as ChestSpawnPad;
+                    switch (roomType)
+                    {
+                        case RoomType.General:
+                            GeneralRoomChestSpawnCase(chestSpawnPad);
+                            break;
+                        case RoomType.Augmentation:
+                            AugmentationRoomSpawnCase(chestSpawnPad);
+                            break;
+                        case RoomType.Keycard:
+                            KeycardRoomChestSpawnCase(chestSpawnPad);
+                            break;
+                        case RoomType.Trial:
+                            TrialRoomChestSpawnCase(chestSpawnPad);
+                            break;
+                        case RoomType.ToBoss:
+                            GeneralRoomChestSpawnCase(chestSpawnPad);
+                            break;
+                    }
+                }
+                else if (spawnPad is ContainerSpawnPad)
+                {
+                    ContainerSpawnPad containerSpawnPad = spawnPad as ContainerSpawnPad;
+                    switch (roomType)
+                    {
+                        case RoomType.General:
+                            GeneralRoomContainerSpawnCase(containerSpawnPad);
+                            break;
+                        case RoomType.Keycard:
+                            KeycardRoomContainerSpawnCase(containerSpawnPad);
+                            break;
+                        case RoomType.Trial:
+                            TrialRoomContainerSpawnCase(containerSpawnPad);
+                            break;
+                    }
                 }
             }
-
-            // foreach(ContainerSpawnPad spawnPad in room.spawnPads
-
         }
-
     }
 
-    private void GeneralRoomChestSpawnCase(ChestSpawnPad spawnPad)
+    void ActivateToBossSpawners(Room room)
+    {
+        foreach (SpawnPad spawnPad in room.spawnPads)
+        {
+            if (spawnPad is ChestSpawnPad)
+            {
+                ChestSpawnPad chestSpawnPad = spawnPad as ChestSpawnPad;
+                GeneralRoomChestSpawnCase(chestSpawnPad);
+            }
+            else if (spawnPad is ContainerSpawnPad)
+            {
+                ContainerSpawnPad containerSpawnPad = spawnPad as ContainerSpawnPad;
+                ToBossRoomContianerSpawnCase(containerSpawnPad);
+            }
+        }
+    }
+
+    void GeneralRoomChestSpawnCase(ChestSpawnPad spawnPad)
     {
         if (spawnPad.CheckForceSpawn(LootCode.None))
             return;
@@ -100,10 +156,50 @@ public class LootGenerator : MonoBehaviour
         }
         else
             resourceChanceMult += increasedResourceChance;
+
+        if (spawnPad.SpawnChanceBasedChest(LootCode.Tactical, tacticalChanceMult))
+        {
+            tacticalChanceMult = 0;
+            return;
+        }
+        else
+            tacticalChanceMult += increasedTacticalChance;
+
+    }
+
+    void GeneralRoomContainerSpawnCase(ContainerSpawnPad spawnPad)
+    {
+        if (spawnPad.CheckForceSpawn(LootCode.None))
+            return;
+
+        if (!keycardSpawn && spawnPad.SpawnChanceBasedContainer(LootCode.Keycard, keycardChanceMult))
+        {
+            keycardChanceMult = 0;
+            keycardSpawn = true;
+            return;
+        }
+        else
+            keycardChanceMult += increasedKeycardBoxChance;
+
+        if (spawnPad.SpawnChanceBasedContainer(LootCode.Health, healthChanceMult))
+        {
+            healthChanceMult = 0;
+            return;
+        }
+        else
+            healthChanceMult += increasedHealthBoxChance;
+
+        if (spawnPad.SpawnChanceBasedContainer(LootCode.Ammo, ammoChanceMult))
+        {
+            ammoChanceMult = 0;
+            return;
+        }
+        else
+            ammoChanceMult += increasedAmmoBoxChance;
     }
 
     bool augmentationFlag_A;
-    private void AugmentationRoomSpawnCase(ChestSpawnPad spawnPad)
+    void AugmentationRoomSpawnCase(ChestSpawnPad spawnPad)
     {
         if (!augmentationFlag_A)
         {
@@ -113,12 +209,14 @@ public class LootGenerator : MonoBehaviour
     }
 
     bool tacticalFlag_K;
-    private void KeycardRoomChestSpawnCase(ChestSpawnPad spawnPad)
+    void KeycardRoomChestSpawnCase(ChestSpawnPad spawnPad)
     {
         if (!tacticalFlag_K)
+        {
             spawnPad.CheckForceSpawn(LootCode.Tactical);
-
-        if (tacticalFlag_K)
+            tacticalFlag_K = true;
+        }
+        else
         {
             int roll = UnityEngine.Random.Range(0, 101);
             if (roll <= 50)
@@ -128,11 +226,22 @@ public class LootGenerator : MonoBehaviour
             else
                 spawnPad.CheckForceSpawn(LootCode.BatteryUp);
         }
-        tacticalFlag_K = true;
+    }
+
+    bool healthFlag_K;
+    void KeycardRoomContainerSpawnCase(ContainerSpawnPad spawnPad)
+    {
+        if (!healthFlag_K)
+        {
+            spawnPad.CheckForceSpawn(LootCode.Health);
+            healthFlag_K = true;
+        }
+        else
+            spawnPad.CheckForceSpawn(LootCode.Ammo);
     }
 
     bool augmentationFlag_T;
-    private void TrialRoomChestSpawnCase(ChestSpawnPad spawnPad)
+    void TrialRoomChestSpawnCase(ChestSpawnPad spawnPad)
     {
         if (!augmentationFlag_T)
             spawnPad.CheckForceSpawn(LootCode.Augmentation);
@@ -150,8 +259,60 @@ public class LootGenerator : MonoBehaviour
         augmentationFlag_T = true;
     }
 
-    private void SpawnContainers()
+    bool healthFlag_T;
+    void TrialRoomContainerSpawnCase(ContainerSpawnPad spawnPad)
     {
+        if (!healthFlag_T)
+        {
+            spawnPad.CheckForceSpawn(LootCode.Health);
+            healthFlag_T = true;
+        }
+        else
+        {
+            if (spawnPad.SpawnChanceBasedContainer(LootCode.Keycard, increasedKeycardBoxChance))
+            {
+                keycardChanceMult = 0;
+                keycardSpawn = true;
+            }
+            else
+            {
+                spawnPad.CheckForceSpawn(LootCode.Ammo);
+            }
+        }
+    }
 
+    void ToBossRoomContianerSpawnCase(ContainerSpawnPad spawnPad)
+    {
+        if (!keycardSpawn)
+        {
+            spawnPad.CheckForceSpawn(LootCode.Keycard);
+            keycardChanceMult = 0;
+            keycardSpawn = true;
+        }
+        else
+        {
+            if (spawnPad.CheckForceSpawn(LootCode.None))
+                return;
+
+            if (spawnPad.SpawnChanceBasedContainer(LootCode.Health, healthChanceMult))
+            {
+                healthChanceMult = 0;
+                return;
+            }
+            else
+                batteryUpgradeChanceMult += increasedBatteryUpgradeChance;
+
+            if (spawnPad.SpawnChanceBasedContainer(LootCode.Ammo, ammoChanceMult))
+            {
+                ammoChanceMult = 0;
+                return;
+            }
+            else
+            {
+                ammoChanceMult += increasedAmmoBoxChance;
+                healthChanceMult += increasedHealthBoxChance;
+                keycardChanceMult += increasedKeycardBoxChance;
+            }
+        }
     }
 }

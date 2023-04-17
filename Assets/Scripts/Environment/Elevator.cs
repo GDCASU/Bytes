@@ -89,7 +89,7 @@ public class Elevator : MonoBehaviour
         {
             move = false;
             PlayerRoot.transform.SetParent(transform.root.parent);
-            invisibleBox.active = false;
+            invisibleBox.SetActive(false);
         }
     }
 
@@ -111,7 +111,7 @@ public class Elevator : MonoBehaviour
         // Set States
         move = true;
         timer = (playerMover.position.y - bottom.position.y) / (origin.position.y - bottom.position.y);
-        invisibleBox.active = true;
+        invisibleBox.SetActive(false);
     }
 
     // Handles the movement of the player using the playerMover object

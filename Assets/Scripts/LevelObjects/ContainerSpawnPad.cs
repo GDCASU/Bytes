@@ -21,7 +21,7 @@ public class ContainerSpawnPad : SpawnPad
     [Range(0, 100)] public float healthChance;
     [Range(0, 100)] public float keycardChance;
 
-    private bool chestSpawnedbyForce, chestSpawnedbyChance;
+    private bool containerSpawnedbyForce, containerSpawnedbyChance;
 
     public bool CheckForceSpawn(LootCode lootCode)
     {
@@ -46,7 +46,7 @@ public class ContainerSpawnPad : SpawnPad
         return false;
     }
 
-    public bool SpawnChanceBasedBox(LootCode lootCode, int increasedChance)
+    public bool SpawnChanceBasedContainer(LootCode lootCode, int increasedChance)
     {
         int roll = UnityEngine.Random.Range(0, 100);
 
@@ -73,7 +73,7 @@ public class ContainerSpawnPad : SpawnPad
             if ((roll <= keycardChance + increasedChance) && (keycardChance > 0))
             {
                 Instantiate(keycardBox, gameObject.transform.position, Quaternion.identity, gameObject.transform);       // Spawn tactical
-                if (debug) Debug.Log($"Tactical Chest Spawned by Chance: {roll}%");
+                if (debug) Debug.Log($"Keycard Box Spawned by Chance: {roll}%");
                 return true;
             }
         }

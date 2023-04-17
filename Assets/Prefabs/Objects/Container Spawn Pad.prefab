@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7217501484884403895}
   m_Layer: 0
   m_Name: Container Spawn Pad
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,12 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  ammoBox: {fileID: 0}
-  heathBox: {fileID: 0}
-  keycardBox: {fileID: 0}
+  ammoBox: {fileID: 4770032662409678540, guid: d8287517612126840a76f39aa7982a47, type: 3}
+  heathBox: {fileID: 1445179560726589744, guid: 058643e7402dc0c4baac59afae46810a,
+    type: 3}
+  keycardBox: {fileID: 2667184586742123780, guid: 721d76234a881644887c1aacb99fc35b,
+    type: 3}
   forceSpawnAmmo: 0
   forceSpawnHealth: 0
   forceSpawnKeycard: 0
-  ammoChance: 0
-  healthChance: 0
-  keycardChance: 0
+  ammoChance: 30
+  healthChance: 10
+  keycardChance: 10
