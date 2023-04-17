@@ -23,6 +23,11 @@ public class ContainerSpawnPad : SpawnPad
 
     private bool containerSpawnedbyForce, containerSpawnedbyChance;
 
+    void Start()
+    {
+        type = PadType.Container;
+    }
+
     public bool CheckForceSpawn(LootCode lootCode)
     {
         if (forceSpawnAmmo || lootCode == LootCode.Ammo)

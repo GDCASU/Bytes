@@ -28,12 +28,16 @@ public class SpawnPad : MonoBehaviour
     protected MapGenerator mapGenerator;
     protected PadType type;
 
-    [Header("Debug")]
-    [SerializeField] protected bool debug = false;
+    protected bool debug;
 
     private void Awake()
     {
         mapGenerator = MapGenerator.Instance;
+
+        if (mapGenerator.debug)
+            debug = true;
+        else
+            debug = false;
     }
 
     public PadType GetSpawnerType()

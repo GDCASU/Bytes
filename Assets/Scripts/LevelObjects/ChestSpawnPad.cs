@@ -29,6 +29,11 @@ public class ChestSpawnPad : SpawnPad
 
     private bool chestSpawnedbyForce, chestSpawnedbyChance;
 
+    void Start()
+    {
+        type = PadType.Chest;
+    }
+
     public bool CheckForceSpawn(LootCode lootCode)
     {
         if (forceSpawnResource || lootCode == LootCode.Resource)

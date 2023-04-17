@@ -7,6 +7,7 @@ using UnityEngine.WSA;
 
 public class LootGenerator : MonoBehaviour
 {
+    #region Variables
     [Header("Chests")]
     public int increasedResourceChance = 0;
     public int increasedAugmentationChance = 0;
@@ -27,6 +28,7 @@ public class LootGenerator : MonoBehaviour
     int ammoChanceMult, healthChanceMult, keycardChanceMult;
 
     bool keycardSpawn;
+    #endregion
 
     void Start()
     {
@@ -43,6 +45,7 @@ public class LootGenerator : MonoBehaviour
         keycardSpawn = false;
     }
 
+    #region Spawn Loot Procedure
     public void SpawnLoot()
     {
         masterRooms = MapGenerator.Instance.masterRooms;
@@ -125,9 +128,16 @@ public class LootGenerator : MonoBehaviour
                 ContainerSpawnPad containerSpawnPad = spawnPad as ContainerSpawnPad;
                 ToBossRoomContianerSpawnCase(containerSpawnPad);
             }
+            else if (spawnPad is TeleporterSpawnPad)
+            {
+                TeleporterSpawnPad teleporterSpawnPad = spawnPad as TeleporterSpawnPad;
+                teleporterSpawnPad.SpawnTeleporter();
+            }
         }
     }
+    #endregion
 
+    #region Spawn Cases
     void GeneralRoomChestSpawnCase(ChestSpawnPad spawnPad)
     {
         if (spawnPad.CheckForceSpawn(LootCode.None))
@@ -315,4 +325,5 @@ public class LootGenerator : MonoBehaviour
             }
         }
     }
+    #endregion
 }
