@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -138,26 +138,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1955077692524643650, guid: 2eacf2325958145d088d535918efe959,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955077692524643650, guid: 2eacf2325958145d088d535918efe959,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815319041961363808, guid: 2eacf2325958145d088d535918efe959,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815319041961363808, guid: 2eacf2325958145d088d535918efe959,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3141482448471852018, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
       propertyPath: m_Name
@@ -218,16 +198,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8014966425295046026, guid: 2eacf2325958145d088d535918efe959,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8014966425295046026, guid: 2eacf2325958145d088d535918efe959,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eacf2325958145d088d535918efe959, type: 3}
 --- !u!1 &1028085541
@@ -240,7 +210,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1028085542}
   - component: {fileID: 1028085543}
-  - component: {fileID: 1028085544}
   m_Layer: 0
   m_Name: Ryan's Map Generator
   m_TagString: Untagged
@@ -288,7 +257,7 @@ MonoBehaviour:
   bluePrintPrefab: {fileID: 6321413536967066871, guid: 97b96c366fb5e44489c9d5c503f211d0,
     type: 3}
   gPrefab:
-  - {fileID: 2788671453934971417, guid: 1ba01105fb3b7ce49844bacad078ce50, type: 3}
+  - {fileID: 2036480592865193046, guid: 8c7e0fa8456728d40ae3221f10e7448f, type: 3}
   - {fileID: 620041865684117393, guid: 6b1ca81c9d24016469f1de7ccd4976d1, type: 3}
   - {fileID: 4986774710628116258, guid: 842d8dc4970f36b4a97cc794ee2f4ae7, type: 3}
   - {fileID: 26696277884156492, guid: 0eb3358298a9693478de1a2d7ffa0be8, type: 3}
@@ -299,6 +268,7 @@ MonoBehaviour:
   hPrefab:
   - {fileID: 8919020459571496207, guid: f0df6557e2f1a0d48979d005d543def7, type: 3}
   - {fileID: 263667326297343130, guid: 020200abc8f50c64684d005954d2f5c7, type: 3}
+  - {fileID: 1972169027651960819, guid: 0928e594cced10d49935ccaa5de7538c, type: 3}
   bPrefab:
   - {fileID: 2788671453934971417, guid: 5fb0e114ed2eb954cb0f4094b0b3052f, type: 3}
   masterRooms: []
@@ -307,26 +277,6 @@ MonoBehaviour:
   keycardRooms: []
   trialRooms: []
   bossRooms: []
---- !u!114 &1028085544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028085541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b57c0d95f47d64a41accf6e9c4811279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  increasedResourceChance: 0
-  increasedAugmentationChance: 0
-  increasedTacticalChance: 0
-  increasedHealthUpgradeChance: 0
-  increasedBatteryUpgradeChance: 0
-  increasedAmmoBoxChance: 0
-  increasedHealthBoxChance: 0
-  increasedKeycardBoxChance: 0
 --- !u!1001 &1147994266
 PrefabInstance:
   m_ObjectHideFlags: 0
