@@ -18,7 +18,6 @@ public class GunSounds : MonoBehaviour
 
         if (_weaponinput.IsShooting) { //shooting
             SoundManager.PlaySound(SoundManager.Sound.GlockGunFire);
-            UnityEngine.Debug.Log("Glock Shooting");
         }
         /*
         else if (_weaponinput.IsEquiped) { //switching
@@ -28,14 +27,12 @@ public class GunSounds : MonoBehaviour
 
         else if (_reloadinput.IsReloading) { //reloading
             SoundManager.PlaySound(SoundManager.Sound.GlockReloadCycle);
-            UnityEngine.Debug.Log("Glock Reload");
             if (true) { //success
                 SoundManager.PlaySound(SoundManager.Sound.GlockActiveReloadSuccess);
                 UnityEngine.Debug.Log("Glock Success");
             }
             else { //failure
                 SoundManager.PlaySound(SoundManager.Sound.GlockActiveReloadFail);
-                UnityEngine.Debug.Log("Glock Failure");
             }
         }
     }

@@ -28,26 +28,22 @@ public class PlayerSounds : MonoBehaviour {
         if (_input.IsJumpPressed) //jumping
         { 
             SoundManager.PlaySound(SoundManager.Sound.PlayerJump);
-            UnityEngine.Debug.Log("Jump");
             jumpTime = Time.time;
             jumping = true;
         }
         else if (jumping == true && Time.time > jumpTime + 0.6) //landed jump
         {
             SoundManager.PlaySound(SoundManager.Sound.PlayerLandedJump);
-            UnityEngine.Debug.Log("Landed Jump" + jumping);
             jumping = false;
         }
         else if (_input.MoveVector.magnitude > 0) //walking
         { 
             SoundManager.PlaySound(SoundManager.Sound.PlayerWalk);
-            UnityEngine.Debug.Log("Walk");
         }
 
         else if (_input.IsSprintPressed) //running
         { 
             SoundManager.PlaySound(SoundManager.Sound.PlayerRun);
-            UnityEngine.Debug.Log("Run");
         }
     }
 
