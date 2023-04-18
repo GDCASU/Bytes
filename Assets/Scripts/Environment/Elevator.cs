@@ -31,6 +31,7 @@ public class Elevator : MonoBehaviour
     // Sets the elevator transforms to their appropriate positions based on Height and ScanForGround
     private void Start()
     {
+        invisibleBox.active = false;
         if (ScanForGround) HandleGroundScan();
         else HandlePureHeight();
     }
