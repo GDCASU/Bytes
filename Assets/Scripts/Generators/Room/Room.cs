@@ -4,6 +4,13 @@ using System.ComponentModel;
 using UnityEditor;
 using UnityEngine;
 
+public enum RoomState
+{
+    Uncleared = 0,
+    Combat,
+    Cleared
+}
+
 public enum RoomShape
 {
     GeneralRoom,
@@ -32,6 +39,7 @@ public class Room : MonoBehaviour
     public List<GameObject> entranceways;
     [HideInInspector] public List<SpawnPad> spawnPads;
 
+    public RoomState roomState;
     public RoomShape roomShape;
     public RoomType roomType;
 
