@@ -18,6 +18,9 @@ public class PlayerStats : MonoBehaviour
 	public float timeOfCooldown; //Sets an amount of time to pass before battery regen starts again
 	public float currCooldown; //Timer variable for timeOfCooldown
 	
+	//Skill Inventory
+	SkillInventory playerSkills = new SkillInventory();
+
 	//TODO: Add ammunition inventory and more
 
 	public PlayerStats() 
@@ -197,4 +200,48 @@ public class PlayerStats : MonoBehaviour
 		return false; //Cant upgrade health any further
 	}
 
+}
+
+public class SkillInventory 
+{
+	private SkillObject skill_1;
+	private SkillObject skill_2;
+	private SkillObject skill_3;
+
+	public SkillInventory()
+	{
+		skill_1 = new SkillObject();
+		skill_2 = new SkillObject();
+		skill_3 = new SkillObject();
+	}
+
+	public SkillObject setSkill1(SkillObject newSkill)
+	{
+		return setSkill(skill_1, newSkill);
+	}
+
+	public SkillObject setSkill2(SkillObject newSkill)
+	{
+		return setSkill(skill_2, newSkill);
+	}
+
+	public SkillObject setSkill3(SkillObject newSkill)
+	{
+		return setSkill(skill_3, newSkill);
+	}
+	
+	private SkillObject setSkill(SkillObject skillSlot, SkillObject newSkill)
+	{
+		if (skillSlot.isEmpty())
+		{
+			skillSlot = newSkill;
+			return null;
+		}
+		else
+		{
+			SkillObject temp = skillSlot;
+			skillSlot = newSkill;
+			return temp;
+		}
+	}
 }
