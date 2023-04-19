@@ -9,7 +9,8 @@ public class Elevator : MonoBehaviour
     [SerializeField] float Height;
     [SerializeField] float Speed = 1f;
     [SerializeField] bool ScanForGround = true;
-    
+
+    private RaycastHit[] hitList;
     private RaycastHit groundHit;
 
     private bool move = false;
@@ -22,7 +23,6 @@ public class Elevator : MonoBehaviour
     [SerializeField] GameObject invisibleBox;
 
     [SerializeField] Transform elevator;
-
     private PlayerController localPlayer;
     private GameObject PlayerRoot;
 
@@ -31,7 +31,7 @@ public class Elevator : MonoBehaviour
     // Sets the elevator transforms to their appropriate positions based on Height and ScanForGround
     private void Start()
     {
-        invisibleBox.active = false;
+        invisibleBox.SetActive(false);
         if (ScanForGround) HandleGroundScan();
         else HandlePureHeight();
     }
@@ -40,17 +40,39 @@ public class Elevator : MonoBehaviour
     // if so. If not, handles the elevator as if pure height should be used.
     void HandleGroundScan()
     {
-        Physics.Raycast(origin.position, Vector3.down, out groundHit);
+        // Shoot a raycast and choose first non-hatch
+        Ray castDir = new Ray(origin.position, Vector3.down);
+        hitList = Physics.RaycastAll(castDir);
+        if (hitList[0].collider.tag == "Hatch") groundHit = hitList[1];
+        else groundHit = hitList[0];
+
         if (groundHit.distance < Height)
         {
-            Debug.Log("Hit");
-            // Set scale
-            Vector3 scale = elevator.localScale;
-            Vector3 newScale = new Vector3(scale.x, groundHit.distance / 2, scale.z);
+            // Gather current scaling information
+            Vector3 localScale = elevator.localScale;
+            Vector3 lossyScale = elevator.lossyScale;
+            Vector3 externalScale = new Vector3(lossyScale.x / localScale.x, lossyScale.y / localScale.y, lossyScale.z / localScale.z);
+
+            // Construct new scaling information (only y scale affected)
+            /*
+             * Mathematical Formula:
+             * Since a capsule's    height = (scale.y * 2),
+             * we can find that     scale.y = desired_height / 2
+             * However, the external scale affects the height. 
+             * It does this by multiplying every part of the transform of a 
+             * child object by the scaling of the parent object.
+             * So, the scale looks like this:
+             *                      ActualScale = LocalScale * ExternalScale
+             * In order to account for this, the scale must be divided by the ExternalScale, looking something like
+             *      ActualScale = (LocalScale / ExternalScale) * ExternalScale.
+             * Then the LocalScale will be equivalent to the ActualScale.
+             */
+            float scaleY = ((groundHit.distance / externalScale.y) / 2);
+            Vector3 newScale = new Vector3(localScale.x, scaleY, localScale.z);
             elevator.localScale = newScale;
 
             // Set position
-            elevator.position = new Vector3(origin.position.x, origin.position.y - newScale.y, origin.position.z);
+            elevator.position = new Vector3(origin.position.x, origin.position.y - (groundHit.distance / 2), origin.position.z);
             bottom.position = groundHit.point;
         }
         else HandlePureHeight();
@@ -112,7 +134,7 @@ public class Elevator : MonoBehaviour
         // Set States
         move = true;
         timer = (playerMover.position.y - bottom.position.y) / (origin.position.y - bottom.position.y);
-        invisibleBox.SetActive(false);
+        invisibleBox.SetActive(true);
     }
 
     // Handles the movement of the player using the playerMover object

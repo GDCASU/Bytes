@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1074695318420531880}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ElevatorOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1074695318420531881}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.31, y: 9.19, z: -1.86}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1074695318557389819}
   - component: {fileID: 1074695318557389816}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ElevatorWrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 1074695318853845439}
   - component: {fileID: 1074695318853845436}
   - component: {fileID: 1074695318853845432}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Elevator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ Transform:
   m_GameObject: {fileID: 1074695318853845426}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1074695318557389819}
@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 1074695319265387227}
   - component: {fileID: 1074695319265387224}
   - component: {fileID: 1074695319265387225}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1074695319494542491}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PlayerMover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1074695319612307505}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ElevatorBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 5891734187438702565}
   - component: {fileID: 1761734181192942182}
   - component: {fileID: 1624743564822137674}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: InvisibleBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
