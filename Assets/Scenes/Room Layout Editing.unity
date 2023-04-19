@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-117592
+  m_Name: pb_Mesh-12802
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -299,7 +299,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-117548
+  m_Name: pb_Mesh-12630
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -630,7 +630,7 @@ PrefabInstance:
     - target: {fileID: 6572090792259262866, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4
+      value: -3.31
       objectReference: {fileID: 0}
     - target: {fileID: 6572090792664805106, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
@@ -892,7 +892,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1906
+  m_Name: pb_Mesh-10128
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1206,6 +1206,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2049279107085384990, guid: 1ba01105fb3b7ce49844bacad078ce50,
+        type: 3}
+      propertyPath: m_Name
+      value: Hatch (Bot)
+      objectReference: {fileID: 0}
     - target: {fileID: 2788671453934971417, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
       propertyPath: m_Name
@@ -1271,6 +1276,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 373292351}
+    - target: {fileID: 3813574878544587571, guid: 1ba01105fb3b7ce49844bacad078ce50,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572090792259262864, guid: 1ba01105fb3b7ce49844bacad078ce50,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6572090792259262866, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
       propertyPath: m_LocalPosition.x
