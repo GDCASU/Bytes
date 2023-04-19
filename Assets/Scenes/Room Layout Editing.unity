@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4632
+  m_Name: pb_Mesh-17054
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -299,7 +299,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4460
+  m_Name: pb_Mesh-16882
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -632,6 +632,26 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1733908666}
+    - target: {fileID: 4105026074024482742, guid: 1ba01105fb3b7ce49844bacad078ce50,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572090791590805697, guid: 1ba01105fb3b7ce49844bacad078ce50,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572090791590805697, guid: 1ba01105fb3b7ce49844bacad078ce50,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.762
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572090792259262865, guid: 1ba01105fb3b7ce49844bacad078ce50,
+        type: 3}
+      propertyPath: Num_IgnoreWalls
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6699685667526436899, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
       propertyPath: m_Mesh
@@ -645,7 +665,7 @@ PrefabInstance:
     - target: {fileID: 6820017893198417414, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 40
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: 7473668107159788154, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
@@ -660,7 +680,7 @@ PrefabInstance:
     - target: {fileID: 8248746699080415536, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 205
+      value: 208
       objectReference: {fileID: 0}
     - target: {fileID: 8420261983203842145, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
@@ -717,7 +737,7 @@ PrefabInstance:
     - target: {fileID: 7844583521089145587, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7844583521089145587, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
@@ -897,7 +917,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2130
+  m_Name: pb_Mesh-14552
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1061,7 +1081,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1958
+  m_Name: pb_Mesh-14380
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1440,6 +1460,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 373292351}
+    - target: {fileID: 6572090792259262865, guid: 1ba01105fb3b7ce49844bacad078ce50,
+        type: 3}
+      propertyPath: Num_IgnoreWalls
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6699685667526436899, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
       propertyPath: m_Mesh
@@ -1453,7 +1478,7 @@ PrefabInstance:
     - target: {fileID: 6820017893198417414, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 40
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: 7473668107159788154, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
@@ -1468,7 +1493,7 @@ PrefabInstance:
     - target: {fileID: 8248746699080415536, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 208
+      value: 211
       objectReference: {fileID: 0}
     - target: {fileID: 8420261983203842145, guid: 1ba01105fb3b7ce49844bacad078ce50,
         type: 3}
