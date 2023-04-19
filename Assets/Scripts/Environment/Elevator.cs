@@ -32,6 +32,22 @@ public class Elevator : MonoBehaviour
     private void Start()
     {
         invisibleBox.SetActive(false);
+        invisibleBox.transform.localPosition *= 1 / elevator.lossyScale.y;
+        invisibleBox.transform.localScale = new Vector3(invisibleBox.transform.localScale.x, invisibleBox.transform.localScale.y / elevator.lossyScale.y, invisibleBox.transform.localScale.z);
+        if (invisibleBox.transform.position.y > playerMover.position.y)
+        {
+            Debug.Log(invisibleBox.transform.localPosition);
+            invisibleBox.transform.localPosition = 
+                new Vector3(
+                invisibleBox.transform.localPosition.x,
+                invisibleBox.transform.localPosition.y * -1,
+                invisibleBox.transform.localPosition.z);
+            Debug.Log("Greater | " + invisibleBox.transform.localPosition);
+        }
+
+        Debug.Log(invisibleBox.transform.position +
+            "\n" + playerMover.position);
+
         if (ScanForGround) HandleGroundScan();
         else HandlePureHeight();
     }
