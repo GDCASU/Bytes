@@ -9,6 +9,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] float Height;
     [SerializeField] float Speed = 1f;
     [SerializeField] bool ScanForGround = true;
+    [SerializeField] int Num_IgnoreWalls = 0;
 
     private RaycastHit[] hitList;
     private RaycastHit groundHit;
@@ -59,8 +60,8 @@ public class Elevator : MonoBehaviour
         // Shoot a raycast and choose first non-hatch
         Ray castDir = new Ray(origin.position, Vector3.down);
         hitList = Physics.RaycastAll(castDir);
-        if (hitList[0].collider.tag == "Hatch") groundHit = hitList[1];
-        else groundHit = hitList[0];
+
+        groundHit = hitList[Num_IgnoreWalls];
 
         if (groundHit.distance < Height)
         {
