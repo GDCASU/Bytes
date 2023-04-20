@@ -130,6 +130,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 301145436716500661, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: m_Mass
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 1955077692524643650, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -139,6 +144,51 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081862822093474696, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: xSens
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081862822093474696, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: ySens
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081862822093474696, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: airDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081862822093474696, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: jumpPower
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081862822093474696, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: walkSpeed
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081862822093474696, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: groundDrag
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081862822093474696, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: crouchSpeed
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081862822093474696, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: sprintSpeed
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081862822093474696, guid: 2eacf2325958145d088d535918efe959,
+        type: 3}
+      propertyPath: airMultplier
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2815319041961363808, guid: 2eacf2325958145d088d535918efe959,
         type: 3}
@@ -494,6 +544,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7345452201787637526, guid: ba9a0fc1b41ebc047a34fc70e8774549,
         type: 3}
+      propertyPath: gPrefab.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7345452201787637526, guid: ba9a0fc1b41ebc047a34fc70e8774549,
+        type: 3}
       propertyPath: hPrefab.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -507,6 +562,30 @@ PrefabInstance:
       propertyPath: bPrefab.Array.data[0]
       value: 
       objectReference: {fileID: 2788671453934971417, guid: 5fb0e114ed2eb954cb0f4094b0b3052f,
+        type: 3}
+    - target: {fileID: 7345452201787637526, guid: ba9a0fc1b41ebc047a34fc70e8774549,
+        type: 3}
+      propertyPath: gPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 620041865684117393, guid: 6b1ca81c9d24016469f1de7ccd4976d1,
+        type: 3}
+    - target: {fileID: 7345452201787637526, guid: ba9a0fc1b41ebc047a34fc70e8774549,
+        type: 3}
+      propertyPath: gPrefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 7056367300371671064, guid: 390c02c317454d04b870c7796c729782,
+        type: 3}
+    - target: {fileID: 7345452201787637526, guid: ba9a0fc1b41ebc047a34fc70e8774549,
+        type: 3}
+      propertyPath: gPrefab.Array.data[2]
+      value: 
+      objectReference: {fileID: 2690914321850521681, guid: f1b4c89fec321d54395f466816ba94f8,
+        type: 3}
+    - target: {fileID: 7345452201787637526, guid: ba9a0fc1b41ebc047a34fc70e8774549,
+        type: 3}
+      propertyPath: gPrefab.Array.data[3]
+      value: 
+      objectReference: {fileID: 3865242620666494385, guid: b9dd2f1f70aa0d049aa248ab09c0e0ef,
         type: 3}
     - target: {fileID: 7345452201787637526, guid: ba9a0fc1b41ebc047a34fc70e8774549,
         type: 3}
