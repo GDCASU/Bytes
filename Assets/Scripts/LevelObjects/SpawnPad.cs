@@ -32,6 +32,9 @@ public class SpawnPad : MonoBehaviour
 
     private void Awake()
     {
+        if (MapGenerator.Instance == null)
+            return;
+
         mapGenerator = MapGenerator.Instance;
 
         if (mapGenerator.debug)

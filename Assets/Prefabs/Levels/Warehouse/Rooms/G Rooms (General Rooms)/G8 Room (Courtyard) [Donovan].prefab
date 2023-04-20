@@ -2756,7 +2756,6 @@ Transform:
   - {fileID: 222381054652184540}
   - {fileID: 7955077178311571965}
   - {fileID: 847413813650432381}
-  - {fileID: 7254029090787405185}
   m_Father: {fileID: 170399963931431487}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8102,6 +8101,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Teleporter Spawn Pad
       objectReference: {fileID: 0}
+    - target: {fileID: 3685220450371174048, guid: 2f290ee0ccf9e1343b7b092982fc7d11,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6167631219062759553, guid: 2f290ee0ccf9e1343b7b092982fc7d11,
         type: 3}
       propertyPath: m_RootOrder
@@ -8232,6 +8236,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Container Spawn Pad (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5395244601775775403, guid: 874efe00ada5a064b9c540ffabd22e0b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 874efe00ada5a064b9c540ffabd22e0b, type: 3}
 --- !u!4 &2269260862785747471 stripped
@@ -8307,6 +8316,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chest Spawn Pad (0)
       objectReference: {fileID: 0}
+    - target: {fileID: 58179195339825594, guid: 18a5d22ce778a4c4280938973018d754,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
 --- !u!4 &4823430856297317037 stripped
@@ -8381,6 +8395,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Container Spawn Pad (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395244601775775403, guid: 874efe00ada5a064b9c540ffabd22e0b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 874efe00ada5a064b9c540ffabd22e0b, type: 3}
@@ -8612,6 +8631,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chest Spawn Pad (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 58179195339825594, guid: 18a5d22ce778a4c4280938973018d754,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18a5d22ce778a4c4280938973018d754, type: 3}
 --- !u!4 &7036654978740436121 stripped
@@ -8687,6 +8711,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Container Spawn Pad (0)
       objectReference: {fileID: 0}
+    - target: {fileID: 5395244601775775403, guid: 874efe00ada5a064b9c540ffabd22e0b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 874efe00ada5a064b9c540ffabd22e0b, type: 3}
 --- !u!4 &5070814263403481939 stripped
@@ -8694,91 +8723,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3201102702893908106, guid: 874efe00ada5a064b9c540ffabd22e0b,
     type: 3}
   m_PrefabInstance: {fileID: 7652670501276273625}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &7656515966139424378
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1094140663735179235}
-    m_Modifications:
-    - target: {fileID: 1074695318420531880, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389817, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_Name
-      value: ElevatorWrapper
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389817, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.63
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9cf9a26ab14554c43855040e8dd78075, type: 3}
---- !u!4 &7254029090787405185 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1074695318557389819, guid: 9cf9a26ab14554c43855040e8dd78075,
-    type: 3}
-  m_PrefabInstance: {fileID: 7656515966139424378}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7807039450147768999
 PrefabInstance:
