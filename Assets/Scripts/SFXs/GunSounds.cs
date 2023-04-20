@@ -14,16 +14,12 @@ public class GunSounds : MonoBehaviour
     void Update()
     {
         Weapon _weaponinput = GetComponent<Weapon>();
+        WeaponHandler _weaponhandlerinput = GetComponent<WeaponHandler>();
         ReloadAbility _reloadinput = GetComponent<ReloadAbility>();
 
         if (_weaponinput.IsShooting) { //shooting
             SoundManager.PlaySound(SoundManager.Sound.GlockGunFire);
         }
-        /*
-        else if (_weaponinput.IsEquiped) { //switching
-            SoundManager.PlaySound(SoundManager.Sound.WeaponSwap);
-            UnityEngine.Debug.Log("Weapon Swap");
-        }*/
 
         else if (_reloadinput.IsReloading) { //reloading
             SoundManager.PlaySound(SoundManager.Sound.GlockReloadCycle);
@@ -35,10 +31,11 @@ public class GunSounds : MonoBehaviour
                 SoundManager.PlaySound(SoundManager.Sound.GlockActiveReloadFail);
             }
         }
+
+        if (_weaponhandlerinput.IsSwitching) //switching weapons
+        {
+            SoundManager.PlaySound(SoundManager.Sound.WeaponSwap);
+        }
     }
 
-    private Vector3 GetPosition()
-    {
-        throw new NotImplementedException();
-    }
 }

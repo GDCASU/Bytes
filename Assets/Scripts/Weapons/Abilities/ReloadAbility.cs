@@ -33,7 +33,7 @@ public class ReloadAbility : MonoBehaviour, IWeaponAbility
         if (isStarting)
         {
             bool isEmpty = true;
-            bool isReloading = true;
+            IsReloading = true;
             foreach (AmmoType ammoType in WeaponHost.ExpectedAmmos)
             {
                 StaticResource handlerAmmo = WeaponHost.Handler.Inventory.GetAmmo(ammoType);

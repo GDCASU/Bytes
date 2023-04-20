@@ -19,6 +19,7 @@ public class DashAugmentation : Augmentation
     Rigidbody _rb;
 
     public override bool IsEquipped => _isEquipped;
+    public bool IsDashing { get; private set; }
 
     protected override void Awake()
     {
@@ -66,10 +67,12 @@ public class DashAugmentation : Augmentation
     public override void Trigger(bool inputPressed)
     {
         if (!inputPressed)
+            IsDashing = false;
             return;
 
         // Dash forward by default if no movement keys are pressed. Otherwise, dash in the direction the player is moving.
         Vector3 dashDirection;
+        IsDashing = true;
         if (_player.MoveVector.x != 0.0f || _player.MoveVector.y != 0.0f)
             dashDirection = new Vector3(_player.MoveVector.x, 0, _player.MoveVector.y);
         else

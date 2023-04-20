@@ -97,6 +97,7 @@ public static class SoundManager {
         TrialStarted,
         PlayerStats,
         BossDefeat,
+        LevelOneAmbiace,
 
         // environment / interactable objects sounds
         DoorShut,
@@ -111,12 +112,13 @@ public static class SoundManager {
 
     // stores sounds needing a timer
     private static Dictionary<Sound, float> soundTimerDictionary;
+    private static GameObject oneShotGameObject;
+    private static AudioSource oneShotAudioSource;
 
     public static void Initialize() {
         soundTimerDictionary = new Dictionary<Sound, float>();
         soundTimerDictionary[Sound.PlayerWalk] = 0f;
         soundTimerDictionary[Sound.PlayerRun] = 0f;
-        soundTimerDictionary[Sound.PlayerJump] = 0f;
         soundTimerDictionary[Sound.GlockGunFire] = 0f;
     }
 
@@ -129,16 +131,22 @@ public static class SoundManager {
             AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
             audioSource.clip = GetAudioClip(sound);
             // audioSource.____ has lots of effects to add to the 3D sounds
-            audioSource.Play(); 
+            audioSource.Play();
+
+            Object.Destroy(soundGameObject, audioSource.clip.length);
         }
     }
 
     public static void PlaySound(Sound sound) {
         // creates game object sound
         if (CanPlaySound(sound)) {
-            GameObject soundGameObject = new GameObject("Sound");
-            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-            audioSource.PlayOneShot(GetAudioClip(sound));
+            if (oneShotGameObject == null)
+            {
+                oneShotGameObject = new GameObject("Sound");
+                oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
+            }
+            
+            oneShotAudioSource.PlayOneShot(GetAudioClip(sound));
         }
     }
 
