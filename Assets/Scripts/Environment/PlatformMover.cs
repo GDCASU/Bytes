@@ -37,6 +37,8 @@ public class PlatformMover : MonoBehaviour
 
     private void Start()
     {
+        platform.transform.position = pointA.position;
+
         // Place pointB "height" above pointA
         if (UseHeight) pointB.position = pointA.position + new Vector3(0f, height, 0f);
     }
