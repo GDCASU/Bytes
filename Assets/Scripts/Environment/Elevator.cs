@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class Elevator : MonoBehaviour
 {
+    [Header("Debug")]
+    bool debug = false;
+
     [Header("Modifiers")]
     [SerializeField] float Height;
     [SerializeField] float Speed = 1f;
@@ -37,13 +40,13 @@ public class Elevator : MonoBehaviour
         invisibleBox.transform.localScale = new Vector3(invisibleBox.transform.localScale.x, invisibleBox.transform.localScale.y / elevator.lossyScale.y, invisibleBox.transform.localScale.z);
         if (invisibleBox.transform.position.y > playerMover.position.y)
         {
-            Debug.Log(invisibleBox.transform.localPosition);
+            if (debug) Debug.Log(invisibleBox.transform.localPosition);
             invisibleBox.transform.localPosition = 
                 new Vector3(
                 invisibleBox.transform.localPosition.x,
                 invisibleBox.transform.localPosition.y * -1,
                 invisibleBox.transform.localPosition.z);
-            Debug.Log("Greater | " + invisibleBox.transform.localPosition);
+            if (debug) Debug.Log("Greater | " + invisibleBox.transform.localPosition);
         }
 
         Debug.Log(invisibleBox.transform.position +
