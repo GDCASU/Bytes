@@ -99,7 +99,7 @@ public static class SoundManager {
         TrialStarted,
         PlayerStats,
         BossDefeat,
-        LevelOneAmbiace,
+        LevelOneAmbiance,
 
         // environment / interactable objects sounds
         DoorShut,
@@ -108,6 +108,8 @@ public static class SoundManager {
         CrateDamage,
         CrateBreak,
         CanisterExplode,
+        Elevator2,
+        Elevator3,
 
         // Boss Japanese Mech sounds
     }
@@ -121,6 +123,7 @@ public static class SoundManager {
         soundTimerDictionary = new Dictionary<Sound, float>();
         soundTimerDictionary[Sound.PlayerWalk] = 0f;
         soundTimerDictionary[Sound.PlayerRun] = 0f;
+        soundTimerDictionary[Sound.PlayerJump] = 0f;
         soundTimerDictionary[Sound.GlockGunFire] = 0f;
         soundTimerDictionary[Sound.GlockReloadCycle] = 0f;
         soundTimerDictionary[Sound.WeaponSwap] = 0f;
@@ -155,6 +158,15 @@ public static class SoundManager {
         }
     }
 
+    public static void StopSound(Sound sound, Vector3 position) {
+        // stops and destroys game object sound
+        GameObject soundGameObject = new GameObject("3DSound");
+        soundGameObject.transform.position = position;
+        AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+        audioSource.clip = GetAudioClip(sound);
+        audioSource.Stop();
+    }
+
     private static bool CanPlaySound(Sound sound) {
         switch (sound) {
             default:
@@ -163,6 +175,8 @@ public static class SoundManager {
                 return DelaySound(sound, 0.5f);
             case Sound.PlayerRun:
                 return DelaySound(sound, 0.3f);
+            case Sound.PlayerJump:
+                return DelaySound(sound, 0.5f);
             case Sound.GlockGunFire:
                 return DelaySound(sound, 0.3f);
             case Sound.GlockReloadCycle:
