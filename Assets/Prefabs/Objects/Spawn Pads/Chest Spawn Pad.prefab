@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &58179195339825594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 58179195339825221}
+  - component: {fileID: 516634678}
+  m_Layer: 0
+  m_Name: Chest Spawn Pad
+  m_TagString: Spawner
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &58179195339825221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58179195339825594}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &516634678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58179195339825594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e1240b7d5881240b4fdbedc17f98fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceChest: {fileID: 2269114222524048708, guid: 9cae22ac850276b4c91abb5b04ca5bcc,
+    type: 3}
+  augmentationChest: {fileID: 1850321859786639149, guid: 05d0f6060529f65498e3c43bd3bcc709,
+    type: 3}
+  tacticalChest: {fileID: 1982845603588790688, guid: 756653eab294ac1439467994f805cbe8,
+    type: 3}
+  healthUpgradeChest: {fileID: 4009970338295208176, guid: 92355f5bd5fbbd349ba13d40853b428b,
+    type: 3}
+  batteryUpgradeChest: {fileID: 4946575211898995022, guid: e2fb0617f25fc7d42b816dbb94165880,
+    type: 3}
+  forceSpawnResource: 0
+  forceSpawnAugmentation: 0
+  forceSpawnTactical: 0
+  forceSpawnHealthUpgrade: 0
+  forceSpawnBatteryUpgrade: 0
+  resourceChance: 10
+  augmentationChance: 0
+  tacticalChance: 10
+  healthChance: 5
+  batteryChance: 5

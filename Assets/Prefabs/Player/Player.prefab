@@ -3304,7 +3304,7 @@ GameObject:
   - component: {fileID: 8903532833947391296}
   m_Layer: 0
   m_Name: PlayerObj
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8866,7 +8866,7 @@ GameObject:
   - component: {fileID: 7981155560063554062}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9246,6 +9246,7 @@ MonoBehaviour:
   crouchYScale: 0.5
   maxSlopeAngle: 45
   moveState: 0
+  tryingToCrouch: 0
 --- !u!114 &6670892536787077891
 MonoBehaviour:
   m_ObjectHideFlags: 0

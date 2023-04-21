@@ -1,35 +1,106 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem.Layouts;
-using UnityEngine.WSA;
+
+public enum RoomState
+{
+    Uncleared = 0,
+    Combat,
+    Cleared
+}
 
 public enum RoomShape
 {
+    GeneralRoom,
+    HallRoom,
+    TallRoom,
+    BigRoom,
+};
+
+public enum RoomType
+{
     General,
-    Tall,
-    Hall
+    Start,
+    Augmentation,
+    Keycard,
+    Trial,
+    ToBoss,
+    Escape
 }
 
 public class Room : MonoBehaviour
 {
-    public RoomShape shape;
-    public List<GameObject> entrancewayList;
-    public List<GameObject> entrancewayList2;
+    const string SPAWN_PAD_TAG = "Spawner";
 
-    public void ActivateEntrance(int entranceNum)
+    [HideInInspector] public Vector3 position;
+    public bool[,] activeEntranceways;
+    public List<GameObject> entranceways;
+    [HideInInspector] public List<SpawnPad> spawnPads;
+
+    public RoomState roomState;
+    public RoomShape roomShape;
+    public RoomType roomType;
+
+    void Awake()
     {
-        if (!entrancewayList[entranceNum].activeInHierarchy)
+        activeEntranceways = new bool[4, 6];
+        PopulateSpawnPadsList(this.transform);
+    }
+
+    private void Start()
+    {
+        /*
+        if (roomType == RoomType.Start)
+            roomState = RoomState.Cleared;
+        else
+            roomState = RoomState.Combat;
+        */
+        roomState = RoomState.Cleared;
+    }
+
+    public void PopulateSpawnPadsList(Transform parent) // Find All SpawnPads in Room
+    {
+        for (int i = 0; i < parent.childCount; i++)
         {
-             entrancewayList[entranceNum].SetActive(true);
+            Transform child = parent.GetChild(i);
+            if (child.tag == SPAWN_PAD_TAG)
+            {
+                spawnPads.Add(child.gameObject.GetComponent<SpawnPad>());
+            }
+            if (child.childCount > 0)
+            {
+                PopulateSpawnPadsList(child);       // Recursive procedure to find objects in children of parent
+            }
         }
     }
 
-    public void ActivateAltEntrance(int entranceNum)
+    public void ActivateAllEntranceways()
     {
-        if (!entrancewayList2[entranceNum].activeInHierarchy)
+        int enListIdx = 0;              // iterator for activeEntranceway List
+        for (int i = 0; i < 4; i++)
         {
-            entrancewayList2[entranceNum].SetActive(true);
+            for (int j = 0; j < 6; j++)
+            {
+                enListIdx = (i * 6) + j;
+                if (activeEntranceways[i, j] == true)   // Activate entrance if true in activeEntranceway List
+                    ActivateEntranceway(enListIdx);
+            }
         }
+    }
+
+    public void CopyBlueprintArrayFlags(bool[] blueArray, int roomOriginIndex)
+    {
+        for (int i = 0; i < blueArray.Length; i++) // iterate through all six faces of the Blueprint's flag array
+        {
+            activeEntranceways[roomOriginIndex, i] = blueArray[i]; // Copy into room array respectively
+        }
+    }
+
+    private void ActivateEntranceway(int entranceNum)
+    {
+        entranceways[entranceNum].transform.GetChild(0).gameObject.SetActive(false); // Deactivate Wall
+        entranceways[entranceNum].transform.GetChild(1).gameObject.SetActive(true); // Activate Entranceway
     }
 }
