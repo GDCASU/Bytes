@@ -49,6 +49,17 @@ public class Room : MonoBehaviour
         PopulateSpawnPadsList(this.transform);
     }
 
+    private void Start()
+    {
+        /*
+        if (roomType == RoomType.Start)
+            roomState = RoomState.Cleared;
+        else
+            roomState = RoomState.Combat;
+        */
+        roomState = RoomState.Cleared;
+    }
+
     public void PopulateSpawnPadsList(Transform parent) // Find All SpawnPads in Room
     {
         for (int i = 0; i < parent.childCount; i++)
