@@ -149,6 +149,8 @@ public class WeaponHandler : MonoBehaviour
             _incomingWeaponIndex = switchValue - 1;
 
         MQueue.Enqueue(_switchManeuver);
+
+        IsSwitching = false;
     }
 
     IEnumerator CR_Switch()

@@ -67,6 +67,7 @@ public class ReloadAbility : MonoBehaviour, IWeaponAbility
         if (_routine != null)
             StopCoroutine(_routine);
         _maneuver.Dequeue();
+        IsReloading = false;
     }
 
     IEnumerator CR_Reload()

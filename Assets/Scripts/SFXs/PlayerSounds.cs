@@ -25,20 +25,19 @@ public class PlayerSounds : MonoBehaviour {
     void Update() {
         Player _playerinput = GetComponent<Player>();
 
-        if (_playerinput.AugmentationOne) //augmentation one (aka ___)
+        if (_playerinput.AugmentationOne) //augmentation one (aka dash)
         {
             SoundManager.PlaySound(SoundManager.Sound.Dash);
         }
-        else if (_playerinput.AugmentationTwo) //augmentation two (aka ___)
+        else if (_playerinput.AugmentationTwo) //augmentation two (aka rocket boost)
         {
             SoundManager.PlaySound(SoundManager.Sound.RocketBlast);
         }
-        else if (_playerinput.AugmentationThree) //augmentation three (aka ___)
+        else if (_playerinput.AugmentationThree) //augmentation three (aka stomp)
         {
             SoundManager.PlaySound(SoundManager.Sound.StompMotion);
         }
-
-        if (_playerinput.IsJumpPressed) //jumping
+        else if (_playerinput.IsJumpPressed) //jumping
         {
             SoundManager.PlaySound(SoundManager.Sound.PlayerJump);
             jumpTime = Time.time;
@@ -49,7 +48,7 @@ public class PlayerSounds : MonoBehaviour {
             SoundManager.PlaySound(SoundManager.Sound.PlayerLandedJump);
             jumping = false;
         }
-        else if (_playerinput.MoveVector.magnitude > 0) //walking
+        else if (_playerinput.MoveVector.magnitude > 0 && ! _playerinput.AugmentationOne && ! jumping) //walking
         {
             SoundManager.PlaySound(SoundManager.Sound.PlayerWalk);
         }

@@ -5,12 +5,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // add sounds into files with SoundManager.PlaySound(SoundManager.Sound.[sound_name])
 // add 3D sounds into files with SoundManager.PlaySound(SoundManager.Sound.[sound_name], GetPosition())
 
 public static class SoundManager {
+    
     public enum Sound {
         // list of sounds needed to be implemented
 
@@ -120,6 +122,9 @@ public static class SoundManager {
         soundTimerDictionary[Sound.PlayerWalk] = 0f;
         soundTimerDictionary[Sound.PlayerRun] = 0f;
         soundTimerDictionary[Sound.GlockGunFire] = 0f;
+        soundTimerDictionary[Sound.GlockReloadCycle] = 0f;
+        soundTimerDictionary[Sound.WeaponSwap] = 0f;
+        soundTimerDictionary[Sound.Dash]= 0f;
     }
 
     public static void PlaySound(Sound sound, Vector3 position)
@@ -145,7 +150,7 @@ public static class SoundManager {
                 oneShotGameObject = new GameObject("Sound");
                 oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
             }
-            
+            UnityEngine.Debug.Log("Playing: " + sound);
             oneShotAudioSource.PlayOneShot(GetAudioClip(sound));
         }
     }
@@ -155,43 +160,17 @@ public static class SoundManager {
             default:
                 return true;
             case Sound.PlayerWalk:
-                if (soundTimerDictionary.ContainsKey(sound)) {
-                    float LastTimePlayed = soundTimerDictionary[sound];
-                    float playerMoveTimerMax = 0.5f;
-
-                    if (LastTimePlayed + playerMoveTimerMax < Time.time) {
-                        soundTimerDictionary[sound] = Time.time;
-                        return true;
-                    }
-                    else { return false; }
-                }
-                else { return true; }
+                return DelaySound(sound, 0.5f);
             case Sound.PlayerRun:
-                if (soundTimerDictionary.ContainsKey(sound)) {
-                    float LastTimePlayed = soundTimerDictionary[sound];
-                    float playerMoveTimerMax = 0.3f;
-
-                    if (LastTimePlayed + playerMoveTimerMax < Time.time) {
-                        soundTimerDictionary[sound] = Time.time;
-                        return true;
-                    }
-                    else { return false; }
-                }
-                else { return true; }
+                return DelaySound(sound, 0.3f);
             case Sound.GlockGunFire:
-                if (soundTimerDictionary.ContainsKey(sound))
-                {
-                    float LastTimePlayed = soundTimerDictionary[sound];
-                    float firingTimerMax = 0.3f;
-
-                    if (LastTimePlayed + firingTimerMax < Time.time)
-                    {
-                        soundTimerDictionary[sound] = Time.time;
-                        return true;
-                    }
-                    else { return false; }
-                }
-                else { return true; }
+                return DelaySound(sound, 0.3f);
+            case Sound.GlockReloadCycle:
+                return DelaySound(sound, 1f);
+            case Sound.WeaponSwap: 
+                return DelaySound(sound, 1f);
+            case Sound.Dash:
+                return DelaySound(sound, 0.3f);
         }
     }
 
@@ -206,5 +185,21 @@ public static class SoundManager {
         }
         UnityEngine.Debug.LogError("Sound not found");
         return null;
+    }
+
+    private static bool DelaySound(Sound sound, float inputTimerMax) 
+    {
+        if (soundTimerDictionary.ContainsKey(sound))
+        {
+            float LastTimePlayed = soundTimerDictionary[sound];
+            if (LastTimePlayed + inputTimerMax < Time.time)
+            {
+                soundTimerDictionary[sound] = Time.time;
+                return true;
+            }
+            else { return false; }
+        }
+        else { return true; }
+        
     }
 }

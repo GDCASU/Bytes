@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
         else if (context.phase == InputActionPhase.Canceled)
         {
             _augmentationHandler.TriggerAugmentation(0, false);
-            AugmentationOne = true;
+            AugmentationOne = false;
         }
     }
 

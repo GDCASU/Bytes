@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -26,16 +27,20 @@ public class EnemySounds : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if (_health.Current == 0 && ! deathDone) //death noise
+        if (_health.Current == 0 && !deathDone) //death noise
         {
-            SoundManager.PlaySound(SoundManager.Sound.BalliTurrDeath);
+            SoundManager.PlaySound(SoundManager.Sound.BalliTurrDeath, GetPosition());
             deathDone = true;
         }
 
-        else if (damage > 0 && ! damageDone) //took damage 
+        else if (damage > 0 && !damageDone && _health.Current > 0) //took damage 
         {
-            SoundManager.PlaySound(SoundManager.Sound.BalliTurrDamage);
+            SoundManager.PlaySound(SoundManager.Sound.BalliTurrDamage, GetPosition());
             damageDone = true;
         }
+    }
+    private Vector3 GetPosition()
+    {
+        return gameObject.transform.position;
     }
 }
