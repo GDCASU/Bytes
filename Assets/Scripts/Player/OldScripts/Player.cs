@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     public bool IsSprintPressed { get; private set; }
     public bool IsJumpPressed { get; private set; }
     public bool IsCrouchPressed { get; private set; }
+    public bool AugmentationOne { get; private set; }
+    public bool AugmentationTwo { get; private set; }
+    public bool AugmentationThree { get; private set; }
 
     InteractionHandler _interactionHandler;
     WeaponHandler _weaponHandler;
@@ -106,25 +109,43 @@ public class Player : MonoBehaviour
     public void UseFirstAugmentation(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
+        {
             _augmentationHandler.TriggerAugmentation(0, true);
+            AugmentationOne = true;
+        }
         else if (context.phase == InputActionPhase.Canceled)
+        {
             _augmentationHandler.TriggerAugmentation(0, false);
+            AugmentationOne = false;
+        }
     }
 
     public void UseSecondAugmentation(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
+        {
             _augmentationHandler.TriggerAugmentation(1, true);
+            AugmentationTwo = true;
+        }
         else if (context.phase == InputActionPhase.Canceled)
+        {
             _augmentationHandler.TriggerAugmentation(1, false);
+            AugmentationTwo = false;
+        }
     }
 
     public void UseThirdAugmentation(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
+        {
             _augmentationHandler.TriggerAugmentation(2, true);
+            AugmentationThree = true;
+        }
         else if (context.phase == InputActionPhase.Canceled)
+        {
             _augmentationHandler.TriggerAugmentation(2, false);
+            AugmentationThree = false;
+        }
     }
 
     public void Pause(InputAction.CallbackContext context)

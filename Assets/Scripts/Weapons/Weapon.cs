@@ -20,6 +20,7 @@ public class Weapon : MonoBehaviour, IInteractable, IEquipable
     public WeaponHandler Handler { get; private set; }
     public AmmoInventory Inventory { get; private set; }
     public List<AmmoType> ExpectedAmmos { get; private set; }
+    public bool IsShooting { get; private set; }
 
     [SerializeField] AnimatorOverrideController _overrideController;
     IWeaponAbility[] _skills = new IWeaponAbility[4];
@@ -85,6 +86,7 @@ public class Weapon : MonoBehaviour, IInteractable, IEquipable
     public void TriggerAbility(WeaponAbilityType type, bool isStarting)
     {
         IWeaponAbility skill = _skills[(int)type];
+        IsShooting = isStarting;
         if (skill == null)
             return;
 

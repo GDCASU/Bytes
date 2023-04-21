@@ -16,6 +16,7 @@ public class WeaponHandler : MonoBehaviour
     public ManeuverQueue MQueue { get; private set; }
     public AmmoInventory Inventory { get; private set; }
     public Damageable Combatant { get; private set; }
+    public bool IsSwitching { get; private set; }
 
     [SerializeField] int _currentWeaponIndex;
     [SerializeField] int _switchPriority;
@@ -135,6 +136,8 @@ public class WeaponHandler : MonoBehaviour
 
     public void SwitchWeapon(int switchValue)
     {
+        IsSwitching = true;
+
         if (_weaponCount <= 1 || switchValue < -1 || switchValue > _weaponCount || _switchManeuver.InQueue)
             return;
 
@@ -146,6 +149,8 @@ public class WeaponHandler : MonoBehaviour
             _incomingWeaponIndex = switchValue - 1;
 
         MQueue.Enqueue(_switchManeuver);
+
+        IsSwitching = false;
     }
 
     IEnumerator CR_Switch()

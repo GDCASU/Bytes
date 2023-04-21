@@ -18,6 +18,7 @@ public class ReloadAbility : MonoBehaviour, IWeaponAbility
     public WeaponAbilityPattern Pattern => WeaponAbilityPattern.Tap;
     public AmmoType ExpectedAmmo => AmmoType.None;
     public Weapon WeaponHost { get; private set; }
+    public bool IsReloading { get; private set; }
 
     void Awake()
     {
@@ -32,6 +33,7 @@ public class ReloadAbility : MonoBehaviour, IWeaponAbility
         if (isStarting)
         {
             bool isEmpty = true;
+            IsReloading = true;
             foreach (AmmoType ammoType in WeaponHost.ExpectedAmmos)
             {
                 StaticResource handlerAmmo = WeaponHost.Handler.Inventory.GetAmmo(ammoType);
@@ -65,6 +67,7 @@ public class ReloadAbility : MonoBehaviour, IWeaponAbility
         if (_routine != null)
             StopCoroutine(_routine);
         _maneuver.Dequeue();
+        IsReloading = false;
     }
 
     IEnumerator CR_Reload()
