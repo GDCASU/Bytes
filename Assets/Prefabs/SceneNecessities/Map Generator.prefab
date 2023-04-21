@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7345452201787637512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7345452201787637525}
+  - component: {fileID: 7345452201787637526}
+  - component: {fileID: 7345452201787637527}
+  m_Layer: 0
+  m_Name: Map Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7345452201787637525
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7345452201787637512}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7345452201787637526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7345452201787637512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e020fd36d0fe74f8af3db61307bd88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridCellSize: 40
+  debug: 1
+  mainTrailMaxRooms: 10
+  augmentationTrailMaxRooms: 1
+  keycardTrailMaxRooms: 2
+  trialTrailMaxRooms: 2
+  bossTrailMaxRooms: 2
+  tRoomChance: 0.4
+  hRoomChance: 0.5
+  bRoomChance: 1
+  bluePrintPrefab: {fileID: 6321413536967066871, guid: 97b96c366fb5e44489c9d5c503f211d0,
+    type: 3}
+  gPrefab:
+  - {fileID: 1328002931337768112, guid: f1b4c89fec321d54395f466816ba94f8, type: 3}
+  - {fileID: 620041865684117393, guid: 6b1ca81c9d24016469f1de7ccd4976d1, type: 3}
+  - {fileID: 7056367300371671064, guid: 390c02c317454d04b870c7796c729782, type: 3}
+  tPrefab:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  hPrefab:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  bPrefab: []
+  masterRooms: []
+  mainRooms: []
+  augmentationRooms: []
+  keycardRooms: []
+  trialRooms: []
+  bossRooms: []
+--- !u!114 &7345452201787637527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7345452201787637512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b57c0d95f47d64a41accf6e9c4811279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  increasedResourceChance: 10
+  increasedAugmentationChance: 0
+  increasedTacticalChance: 5
+  increasedHealthUpgradeChance: 3
+  increasedBatteryUpgradeChance: 3
+  increasedAmmoBoxChance: 10
+  increasedHealthBoxChance: 5
+  increasedKeycardBoxChance: 5
