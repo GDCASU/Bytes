@@ -158,4 +158,9 @@ public class Player : MonoBehaviour
         else
             Time.timeScale = 1;
     }
+
+    public Vector3 GetPosition()
+    {
+        throw new NotImplementedException();
+    }
 }

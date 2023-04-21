@@ -36,6 +36,7 @@ public class Door : MonoBehaviour
             Door_R.SetActive(true);
             rigidbodyCollider.gameObject.SetActive(true);
             doorState = true;
+            SoundManager.PlaySound(SoundManager.Sound.ChestOpen, GetPosition());
         }
         else
         {
@@ -64,7 +65,13 @@ public class Door : MonoBehaviour
         if (doorState == false && other.CompareTag(PLAYER_TAG))
         {
             ToggleDoors(true);
+            SoundManager.PlaySound(SoundManager.Sound.DoorShut, GetPosition());
         }
+    }
+
+    private Vector3 GetPosition()
+    {
+        return gameObject.transform.position;
     }
 
 }

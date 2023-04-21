@@ -737,6 +737,7 @@ GameObject:
   - component: {fileID: 8604102530291637280}
   - component: {fileID: 1607518647798949472}
   - component: {fileID: 1053589514993486387}
+  - component: {fileID: 2143727293190505443}
   m_Layer: 6
   m_Name: Turret
   m_TagString: Enemy
@@ -869,6 +870,21 @@ MonoBehaviour:
   - {fileID: 1053589514325823293}
   _droopAngle: 60
   _droopRotationSpeed: 15
+--- !u!114 &2143727293190505443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053589514993486389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53cc865e9aa512a4ab3566ce677a3ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health:
+    _max: 0
+    _current: 0
 --- !u!1 &1053589515053048980
 GameObject:
   m_ObjectHideFlags: 0

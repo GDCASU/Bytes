@@ -99,7 +99,6 @@ public static class SoundManager {
         TrialStarted,
         PlayerStats,
         BossDefeat,
-        LevelOneAmbiance,
 
         // environment / interactable objects sounds
         DoorShut,
@@ -110,6 +109,10 @@ public static class SoundManager {
         CanisterExplode,
         Elevator2,
         Elevator3,
+        LevelOneAmbiance,
+        BossTheme,
+        DangerZone,
+
 
         // Boss Japanese Mech sounds
     }
@@ -185,6 +188,10 @@ public static class SoundManager {
                 return DelaySound(sound, 1f);
             case Sound.Dash:
                 return DelaySound(sound, 0.3f);
+            case Sound.DangerZone:
+                return DelaySound(sound, 100f);
+            case Sound.LevelOneAmbiance:
+                return DelaySound(sound, 100f);
         }
     }
 

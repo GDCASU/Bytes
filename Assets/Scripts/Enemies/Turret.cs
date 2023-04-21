@@ -97,6 +97,7 @@ public class Turret : MonoBehaviour
 
     void RotateTowardsPosition(Vector3 point)
     {
+        SoundManager.PlaySound(SoundManager.Sound.BalliTurrRotating, GetPosition());
         Vector3 predictedTargetPosition = AimPrediction.FirstOrderIntercept(_aimPivot.position, Vector3.zero, _launchSpeed, point, _opponentRB.velocity);
         predictedTargetPosition = _aimPivot.InverseTransformPoint(predictedTargetPosition);
         
@@ -144,5 +145,10 @@ public class Turret : MonoBehaviour
 
         _bulletPool.Dispose();
         enabled = false;
+    }
+
+    public Vector3 GetPosition()
+    {
+        throw new NotImplementedException();
     }
 }

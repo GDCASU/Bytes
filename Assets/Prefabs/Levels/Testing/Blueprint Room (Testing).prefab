@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1422388791075947683}
   - component: {fileID: -4564006205491728442}
+  - component: {fileID: -6761447574523438593}
   m_Layer: 0
   m_Name: Blueprint Room (Testing)
   m_TagString: Untagged
@@ -128,6 +129,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96507927e40f151489557d6825ac7fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shape: 0
-  entrancewayList: []
-  entrancewayList2: []
+  position: {x: 0, y: 0, z: 0}
+  entranceways: []
+  spawnPads: []
+  roomState: 0
+  roomShape: 0
+  roomType: 0
+--- !u!114 &-6761447574523438593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6321413536967066871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e6ed5431a9c7841b5411e2fd4223fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
