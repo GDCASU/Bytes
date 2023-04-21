@@ -7,8 +7,8 @@ public partial class PlayerController
     private float moveSpeed;
 
     [Header("Movement")]
-    [SerializeField] float walkSpeed;
-    [SerializeField] float sprintSpeed;
+    [SerializeField] public float walkSpeed;
+    [SerializeField] public float sprintSpeed;
     [SerializeField] float groundDrag;
     [SerializeField] float airDrag;
 
@@ -20,7 +20,7 @@ public partial class PlayerController
     bool canJump = true;
 
     [Header("Crounching")]
-    [SerializeField] float crouchSpeed;
+    [SerializeField] public float crouchSpeed;
     [SerializeField] float crouchYScale;
     private float startYScale;
 

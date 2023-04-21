@@ -117,10 +117,10 @@ public class PlayerInput : MonoBehaviour
 
     public void UseSecondAugmentation(InputAction.CallbackContext context)
     {
-        //if (context.phase == InputActionPhase.Performed)
-        //    _augmentationHandler.TriggerAugmentation(1, true);
-        //else if (context.phase == InputActionPhase.Canceled)
-        //    _augmentationHandler.TriggerAugmentation(1, false);
+        if (context.phase == InputActionPhase.Performed)
+           _augmentationHandler.TriggerAugmentation(1, true);
+        else if (context.phase == InputActionPhase.Canceled)
+           _augmentationHandler.TriggerAugmentation(1, false);
     }
 
     public void UseThirdAugmentation(InputAction.CallbackContext context)

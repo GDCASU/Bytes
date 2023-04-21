@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3847945873826294521}
   - component: {fileID: 3847945873826294526}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Damage Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 3847945875495807749}
   - component: {fileID: 3847945875495807758}
   - component: {fileID: 3847945875495807753}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Dash Augmentation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   batteryCost: 1
-  equipNow: 0
+  equipNow: 1
   _distance: 5
   _collisionDamage: 10
   _activeTime: 0.1
+  _cooldown: 0

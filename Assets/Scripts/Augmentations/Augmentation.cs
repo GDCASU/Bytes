@@ -25,6 +25,15 @@ public abstract class Augmentation : MonoBehaviour, IInteractable, IEquipable
             handler.TakeAugmentation(this);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        // if (other.tag == "Player") 
+        {
+            print("bruh");
+            equipNow = true;
+        }
+    }
+
     private void Update()
     {
         if (equipNow)

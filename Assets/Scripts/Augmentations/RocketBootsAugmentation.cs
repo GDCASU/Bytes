@@ -11,6 +11,12 @@ public class RocketBootsAugmentation : Augmentation
     [SerializeField] int _damage;
     [SerializeField] float _cooldown;
     [SerializeField] float _fullChargeTime;
+    float startCS;
+    float startWS;
+    float startSS;
+    float endCS;
+    float endWS;
+    float endSS;
     Collider _damageCollider;
     Coroutine _chargeRoutine;
     Renderer _renderer;
@@ -43,6 +49,13 @@ public class RocketBootsAugmentation : Augmentation
         interactCollider.enabled = false;
         _damageCollider.gameObject.layer = equipper.layer;
         _controller = equipper.GetComponent<PlayerController>();
+
+        startWS = _controller.walkSpeed;
+        startSS = _controller.sprintSpeed;
+        startCS = _controller.crouchSpeed;
+        endWS = startWS * .25f;
+        endSS = startSS * .25f;
+        endCS = startCS * .25f;
 
         // foreach (Hurtbox box in _damageable.Hurtboxes)
         // {
@@ -91,6 +104,10 @@ public class RocketBootsAugmentation : Augmentation
             StopCoroutine(_chargeRoutine);
         _chargeRoutine = StartCoroutine(ChargeJump());
 
+        _controller.walkSpeed = endWS;
+        _controller.sprintSpeed = endSS;
+        _controller.crouchSpeed = endCS;
+
         _onCooldown = true;
     }
 
@@ -112,6 +129,9 @@ public class RocketBootsAugmentation : Augmentation
 
         handler.Battery.Drain(batteryCost);
         Invoke(nameof(DisableCooldown), _cooldown);
+        _controller.walkSpeed = startWS;
+        _controller.sprintSpeed = startSS;
+        _controller.crouchSpeed = startCS;
     }
 
     void DisableCooldown()

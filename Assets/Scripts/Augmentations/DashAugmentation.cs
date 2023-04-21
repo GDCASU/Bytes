@@ -95,7 +95,7 @@ public class DashAugmentation : Augmentation
             _dashDirection = _orientation.forward;
 
         _dashDirection *= _dashForce;
-        print(_dashDirection);
+        
         // _rb.AddForce(dashDirection, ForceMode.Impulse);
         // _rb.AddForce(new Vector3(dashDirection.x, 0, dashDirection.z), ForceMode.VelocityChange);
 
