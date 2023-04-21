@@ -15,8 +15,8 @@ public class Door : MonoBehaviour
     [Header("Debug")]
     public bool debug;
 
-    private Room room;
-    private bool doorState; // true for closed, false for opened
+    protected Room room;
+    protected bool doorState; // true for closed, false for opened
 
     void Awake()
     {
