@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
+using UnityEngine.WSA;
+
 public class LootGenerator : MonoBehaviour
 {
     #region Variables
