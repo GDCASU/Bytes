@@ -5,9 +5,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySounds : MonoBehaviour {
+    public bool deathDone { get; private set; } = false;
+
     [SerializeField] StaticResource _health;
-    int lastHealth;
-    bool deathDone = false;
     bool damageDone = false;
     int damage;
     void Awake() => GetComponent<Damageable>().DamageReceived += Damage;
@@ -21,7 +21,6 @@ public class EnemySounds : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        lastHealth = _health.Current;
     }
 
     // Update is called once per frame

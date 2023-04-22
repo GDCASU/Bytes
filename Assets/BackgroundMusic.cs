@@ -14,10 +14,8 @@ public class BackgroundMusic : MonoBehaviour
     {
         Turret _turretinput = GetComponent<Turret>();
         Player _playerinput = GetComponent<Player>();
-        Vector3 vector = new Vector3(Input.GetAxisRaw("Horizontal"), 0,
-            Input.GetAxisRaw("Vertical"));
 
-        if (_turretinput.GetPosition() == vector + _playerinput.GetPosition())
+        if (true)
         {
             SoundManager.PlaySound(SoundManager.Sound.DangerZone);
         }

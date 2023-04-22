@@ -16,6 +16,9 @@ public class PlayerInput : MonoBehaviour
     public bool IsSprintPressed { get; private set; }
     public bool IsJumpPressed { get; private set; }
     public bool IsCrouchPressed { get; private set; }
+    public bool AugmentationOne { get; private set; }
+    public bool AugmentationTwo { get; private set; }
+    public bool AugmentationThree { get; private set; }
 
     InteractionHandler _interactionHandler;
     WeaponHandler _weaponHandler;

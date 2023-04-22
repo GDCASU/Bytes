@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ElevatorMusic : MonoBehaviour
 {
-    int musicNumber = 0;
     float initial;
     float initial2;
     float final;

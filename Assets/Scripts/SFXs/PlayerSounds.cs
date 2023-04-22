@@ -23,9 +23,9 @@ public class PlayerSounds : MonoBehaviour {
         SoundManager.Initialize();
     }
     void Update() {
-        Player _playerinput = GetComponent<Player>();
+        PlayerInput _playerinput = GetComponent<PlayerInput>();
 
-        if (_playerinput.AugmentationOne) //augmentation one (aka dash)
+        /*if (_playerinput.AugmentationOne) //augmentation one (aka dash)
         {
             SoundManager.PlaySound(SoundManager.Sound.Dash);
         }
@@ -36,8 +36,8 @@ public class PlayerSounds : MonoBehaviour {
         else if (_playerinput.AugmentationThree) //augmentation three (aka stomp)
         {
             SoundManager.PlaySound(SoundManager.Sound.StompMotion);
-        }
-        else if (_playerinput.IsJumpPressed) //jumping
+        } */
+        if (_playerinput.IsJumpPressed) //jumping
         {
             SoundManager.PlaySound(SoundManager.Sound.PlayerJump);
             jumpTime = Time.time;

@@ -189,9 +189,9 @@ public static class SoundManager {
             case Sound.Dash:
                 return DelaySound(sound, 0.3f);
             case Sound.DangerZone:
-                return DelaySound(sound, 100f);
+                return DelaySound(sound, 1000f);
             case Sound.LevelOneAmbiance:
-                return DelaySound(sound, 100f);
+                return DelaySound(sound, 1000f);
         }
     }
 
