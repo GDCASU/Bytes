@@ -11,6 +11,7 @@ public class NavMeshEnemy : MonoBehaviour
 
     [Header("Enemy Values")]
     [SerializeField] float damage;
+    [SerializeField] float health = 10f;
 
     /*  INTERNALS   */
     private float timer = .2f;
@@ -40,5 +41,11 @@ public class NavMeshEnemy : MonoBehaviour
         {
             player.recieveDamage(damage);
         }
+    }
+
+    public void Damage(float amount)
+    {
+        health -= amount;
+        if (health <= 0) Destroy(gameObject);
     }
 }
